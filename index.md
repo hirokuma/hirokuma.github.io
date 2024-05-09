@@ -2,6 +2,8 @@
 
 * [Blogger](https://hiro99ma.blogspot.com/)
 * 2024
+  * May
+    * 05/08 [WSL2のmirroredネットワークモード](2024/20240508-wsl2.md)
   * April
     * 04/14 [WSL2でシンボリックリンクしたディレクトリはWindows側からはファイルに見える](2024/20240414-wsl.md)
     * 04/13 [systemctlはforkingにすると見た目上早くなる](2024/20240413-systemd.md)
