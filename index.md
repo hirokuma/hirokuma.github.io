@@ -3,6 +3,7 @@
 * [Blogger](https://hiro99ma.blogspot.com/)
 * 2024
   * May
+    * 05/11 [WSL2のファイアウォール設定](2024/20240511-wsl2-firewall.md)
     * 05/11 [WSL2のmirroredが動くようになったがよくわからん](2024/20240511-wsl2.md)
     * 05/08 [WSL2のmirroredネットワークモード](2024/20240508-wsl2.md)
   * April
