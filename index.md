@@ -3,6 +3,7 @@
 * [Blogger](https://hiro99ma.blogspot.com/)
 * 2024
   * May
+    * 05/25 [nordic: J-Link LITE Cortex-M V8はM33未対応](2024/20240525-nrfconn.md)
     * 05/22 [nordic: nRF53はnRF Connect SDKだけなのか](2024/20240522-nrfconn.md)
     * 05/19 [nordic: 最近のnRFシリーズ](2024/20240519-nordic.md)
     * 05/18 [Bluetooth 5](2024/20240518-bl5.md)
