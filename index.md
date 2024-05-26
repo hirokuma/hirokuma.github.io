@@ -3,6 +3,7 @@
 * [過去サイト](https://hiro99ma.blogspot.com/)
 * 2024
   * May
+    * 05/26 [segger: J-Link OBという選択肢もあるが難しい](2024/20240526-nrf53dk.md)
     * 05/26 [nxp: LPC-Link2をJ-LinkにしてもNordicには使えない](2024/20240526-lpclink2.md)
     * 05/25 [nxp: LPC-Link 2をJ-Linkにする](2024/20240525-lpclink2.md)
     * 05/25 [nordic: J-Link LITE Cortex-M V8はM33未対応](2024/20240525-nrfconn.md)
