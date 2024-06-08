@@ -1,0 +1,35 @@
+# 2024/06/08
+
+## SEGGER Embedded Studio
+
+手元にあるnRF52832評価ボード(太陽誘電さん)を動かそうとしたが、BLEのAdvertisingっぽいものは飛ばなかった。  
+しかし、このボードも長いこと・・・何年も使っていなかったし、J-Link LITEも同じくらい使っていなかった。そもそも焼いたプログラムもこの評価ボード向けだったかどうかあやしい。何もかもがあやしい。
+それだけではない。当時開発していたPCから既に乗り換えたので開発環境がインストールされていないし、私の頭の中にも記憶にない。プロジェクト類を削除していないので探せば分かるのかもしれないが、大量にファイルがあるためもはや探せないのと同じである。
+
+GitHubに[nrf52832v12_bds_sample](https://github.com/hirokuma/nrf52832v12_bds_sample)というのがあった。
+記憶にないが、nRF52832 + nRF5 SDK v12 + Bluetooth Developer Studio という組み合わせだったらしい。Bluetooth Developer Studioはありがたかったのだが、当時既に公開停止になっていたはずだ。
+それに、当時は Eclipse + CDT というビルド環境だったと思う。この環境を今から作りたいかというと、うーん。。。
+
+これはもう、過去のことは忘れてやり直せということなのだろう。
+
+----
+
+コンパイラはgccだったはずだ。有料のものは使っていない。
+`arm-none-eabi`がプレフィクスだったので、どこかからダウンロードしていたのだろう。  
+SEGGERにはSES、SEGGER Embedded Studioという統合開発環境があり、Nordic Semiconductor版が提供されていたはずだ。
+
+[download](https://www.nordicsemi.com/Products/Development-tools/Segger-Embedded-Studio/Download#infotabs)
+
+今時点では2バージョンあるようだ。
+
+* nRF5 SDK用
+* nRF Connect SDK(v1.9以降)用
+
+中身のことはよくわからないが、nRF Connect対応版は特別なようだ。
+
+![image](08a.png)
+
+nRF5 SDK用は普通のSESダウンロードサイトなのにnRF Connectはファイル名に「Nordic」と入るくらいには特別なのだった。
+
+うーーーん、組み込みの世界から長いこと離れていたので、勘所がさっぱり分からん。  
+もうちょっと簡単中井発ボードでならしていくべきなのかもしれん。

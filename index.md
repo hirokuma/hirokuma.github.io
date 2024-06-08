@@ -2,6 +2,8 @@
 
 * [過去サイト](https://hiro99ma.blogspot.com/)
 * 2024
+  * June
+    * 06/08 [SEGGER Embedded Studio](2024/06/08-ses.md)
   * May
     * 05/26 [nordic: nRF Connect SDKとnRF Connect for Desktopは別物](2024/20240526-sdk.md)
     * 05/26 [segger: J-Link OBという選択肢もあるが難しい](2024/20240526-nrf53dk.md)
