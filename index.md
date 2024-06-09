@@ -3,6 +3,7 @@
 * [過去サイト](https://hiro99ma.blogspot.com/)
 * 2024
   * June
+    * 06/09 [J-Link OBが出てきた](2024/06/09/20240609-jlink.md)
     * 06/08 [SEGGER Embedded Studio](2024/06/20240608-ses.md)
   * May
     * 05/26 [nordic: nRF Connect SDKとnRF Connect for Desktopは別物](2024/05/20240526-sdk.md)
