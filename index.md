@@ -3,6 +3,7 @@
 * [過去サイト](https://hiro99ma.blogspot.com/)
 * 2024
   * June
+    * 06/29 [Linuxで公開鍵認証だけに変更して失敗](2024/06/20240629-pi.md)
     * 06/10 [J-Link OBは自動認識らしい](2024/06/09/20240610-jlink.md)
     * 06/09 [J-Link OBが出てきた](2024/06/09/20240609-jlink.md)
     * 06/08 [SEGGER Embedded Studio](2024/06/20240608-ses.md)
