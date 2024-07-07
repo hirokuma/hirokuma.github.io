@@ -3,6 +3,7 @@
 * [過去サイト](https://hiro99ma.blogspot.com/)
 * 2024
   * July
+    * 07/07 [raspi: Raspberry Pi OSの固定IPアドレス設定はnmtui](2024/07/20240707-raspi.md)
     * 07/06 [ncs: toolchain と SDK](2024/07/20240706-ncs.md)
     * 07/05 [ncs: MCUbootを知らねばならぬようだ](2024/07/20240705-boot.md)
     * 07/04 [ncs: どのNCSバージョンなら動くのか](2024/07/20240704-ncs.md)
