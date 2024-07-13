@@ -2,7 +2,8 @@
 
 * 2024
   * July
-    * 07/11 [ncs: nRF5340DK版はMCUboot未使用か](2024/07/20240712-53dk.md)
+    * 07/13 [ncs: MCUboot (3)](2024/07/20240713-boot.md)
+    * 07/12 [ncs: nRF5340DK版はMCUboot未使用か](2024/07/20240712-53dk.md)
     * 07/11 [ncs: 自分でBoard設定をつくる](2024/07/20240711-dts.md)
     * 07/11 [ncs: MCUboot (2)](2024/07/20240711-boot.md)
     * 07/08 [ncs: MCUboot (1)](2024/07/20240708-boot.md)
