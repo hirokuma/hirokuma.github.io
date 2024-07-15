@@ -2,6 +2,7 @@
 
 * 2024
   * July
+    * 07/15 [ncs: MCUboot (5)](2024/07/20240715-boot.md)
     * 07/14 [ncs: MCUboot (4)](2024/07/20240714-boot.md)
     * 07/13 [ncs: MCUboot (3)](2024/07/20240713-boot.md)
     * 07/12 [ncs: nRF5340DK版はMCUboot未使用か](2024/07/20240712-53dk.md)
