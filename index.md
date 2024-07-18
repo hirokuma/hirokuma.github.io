@@ -2,6 +2,7 @@
 
 * 2024
   * July
+    * 07/16 [ncs: DevAcademy](2024/07/20240718-da.md)
     * 07/16 [ncs: MCUboot (7まとめ)](2024/07/20240716-boot2.md)
     * 07/16 [ncs: MCUboot (6)](2024/07/20240716-boot.md)
     * 07/15 [ncs: MCUboot (5)](2024/07/20240715-boot.md)
