@@ -2,6 +2,7 @@
 
 * 2024
   * July
+    * 07/24 [ncs: DevAcademy "Adding custom board support" (3)](2024/07/20240724-da.md)
     * 07/23 [ncs: DevAcademy "Adding custom board support" (2)](2024/07/20240723-da.md)
     * 07/22 [ncs: DevAcademy "Adding custom board support" (1)](2024/07/20240722-da.md)
     * 07/18 [ncs: DevAcademy](2024/07/20240718-da.md)
