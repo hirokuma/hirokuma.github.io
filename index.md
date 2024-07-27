@@ -2,6 +2,7 @@
 
 * 2024
   * July
+    * 07/27 [ncs: Partition Manager (1)](2024/07/20240727-ncs.md)
     * 07/27 [windows: indows11でOpenSSHを使ったgit](2024/07/20240727-ssh.md)
     * 07/26 [ncs: DevAcademy "Adding custom board support" (5)](2024/07/20240726-da.md)
     * 07/25 [ncs: DevAcademy "Adding custom board support" (4)](2024/07/20240725-da.md)
