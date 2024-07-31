@@ -2,6 +2,7 @@
 
 * 2024
   * July
+    * 07/31 [ncs: Partition Manager (3)](2024/07/20240731-ncs.md)
     * 07/30 [ncs: Partition Manager (2)](2024/07/20240730-ncs.md)
     * 07/28 [windows: Windows11でcmd.exeだけUTF-8にしたい](2024/07/20240728-utf.md)
     * 07/27 [ncs: Partition Manager (1)](2024/07/20240727-ncs.md)
