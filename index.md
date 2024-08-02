@@ -2,6 +2,7 @@
 
 * 2024
   * August
+    * 08/02 [ncs: USBを有効にする](2024/08/20240802-ncs.md)
     * 08/01 [ncs: Partition Manager (4)](2024/08/20240801-ncs.md)
   * July
     * 07/31 [ncs: Partition Manager (3)](2024/07/20240731-ncs.md)
