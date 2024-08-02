@@ -2,6 +2,7 @@
 
 * 2024
   * August
+    * 08/02 [ncs: blinky_pwdサンプル](2024/08/20240802-pwm.md)
     * 08/02 [ncs: USBを有効にする](2024/08/20240802-ncs.md)
     * 08/01 [ncs: Partition Manager (4)](2024/08/20240801-ncs.md)
   * July
