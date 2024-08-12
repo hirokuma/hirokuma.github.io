@@ -14,3 +14,4 @@ plugins:
   - jekyll-sitemap
 description: 
   - "何か技術的なこと"
+url: https://blog.hirokuma.work
