@@ -1,27 +1,30 @@
 --- --- @import "{{ site.theme }}";
 
-.main-content {
-    h1 {
-        border-bottom: 4px solid #159759;
-    }
+$indent-step: 3px;
+$border-color: #159759;
 
+.main-content {
     h2 {
-        border-bottom: 3px solid #159759;
+        border-bottom: 3px solid $border-color;
     }
 
     h3 {
-        border-bottom: 2px solid #159759;
+        border-bottom: 2px solid $border-color;
+        margin-left: $indent-step;
     }
 
     h4 {
-        border-bottom: 1px solid #159759;
+        border-bottom: 1px solid $border-color;
+        margin-left: $indent-step * 2;
     }
 
     h5 {
-        border-bottom: 1px solid #159759;
+        border-bottom: 1px solid $border-color;
+        margin-left: $indent-step * 3;
     }
 
     h6 {
-        border-bottom: 1px solid #159759;
+        border-bottom: 1px solid $border-color;
+        margin-left: $indent-step * 4;
     }
 }
