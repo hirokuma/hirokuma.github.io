@@ -12,6 +12,7 @@ remote_theme: pages-themes/cayman@v0.2.0
 plugins:
   - jekyll-remote-theme
   - jekyll-sitemap
-description: 
-  - "何か技術的なこと"
 url: https://blog.hirokuma.work
+title: [hiro99ma blog]
+description: ["何か技術的なこと"]
+show_downloads: [false]
