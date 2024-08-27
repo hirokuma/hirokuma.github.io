@@ -2,6 +2,7 @@
 
 * 2024
   * August
+    * 08/27 [ncs: DevAcademy bt-fund Lesson 4 Exer 3 が動かない](2024/08/20240827-ncs.md)
     * 08/26 [ncs: nRF Connect for VS Code の Source Control UI](2024/08/20240826-ncs.md)
     * 08/25 [ncs: LOG](2024/08/20240825-ncs.md)
     * 08/23 [ble: BLE基礎 (12)](2024/08/20240822-ble.md)
