@@ -3,31 +3,37 @@
 
 @import "{{ site.theme }}";
 
-$indent-step: 3px;
 $border-color: #159759;
 
 .main-content {
     h2 {
         border-bottom: 3px solid $border-color;
     }
-
     h3 {
         border-bottom: 2px solid $border-color;
-        margin-left: $indent-step;
+    }
+    h3::before {
+        content: "▏";
     }
 
     h4 {
         border-bottom: 1px solid $border-color;
-        margin-left: $indent-step * 2;
+    }
+    h4::before {
+        content: "▍";
     }
 
     h5 {
         border-bottom: 1px solid $border-color;
-        margin-left: $indent-step * 3;
+    }
+    h5::before {
+        content: "▋";
     }
 
     h6 {
         border-bottom: 1px solid $border-color;
-        margin-left: $indent-step * 4;
+    }
+    h6::before {
+        content: "▉";
     }
 }
