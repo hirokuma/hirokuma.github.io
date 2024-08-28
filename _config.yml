@@ -13,5 +13,5 @@ plugins:
   - jekyll-remote-theme
   - jekyll-sitemap
 url: https://blog.hirokuma.work
-title: [hiro99ma blog]
-description: ["何か技術的なこと"]
+title: hiro99ma blog
+description: 何か技術的なこと
