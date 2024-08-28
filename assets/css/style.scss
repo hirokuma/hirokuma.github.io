@@ -10,34 +10,34 @@ $border-color: #159759;
         border-bottom: 3px solid $border-color;
     }
     h2::before {
-        content: "'' ";
+        content: "";
     }
 
     h3 {
         border-bottom: 2px solid $border-color;
     }
     h3::before {
-        content: "''' ";
+        content: "| ";
     }
 
     h4 {
         border-bottom: 1px solid $border-color;
     }
     h4::before {
-        content: "'''' ";
+        content: "|| ";
     }
 
     h5 {
         border-bottom: 1px solid $border-color;
     }
     h5::before {
-        content: "''''' ";
+        content: "||| ";
     }
 
     h6 {
         border-bottom: 1px solid $border-color;
     }
     h6::before {
-        content: "'''''' ";
+        content: "|||| ";
     }
 }
