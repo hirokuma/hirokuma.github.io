@@ -2,6 +2,7 @@
 
 * 2024
   * August
+    * 08/29 [ncs: USB-CDCとUARTの両立 (2)](2024/08/20240829-ncs.md)
     * 08/28 [ncs: USB-CDCとUARTの両立 (1)](2024/08/20240828-ncs.md)
     * 08/28 [GitHub Pages途中経過(2024年8月)](2024/08/20240828-ghp.md)
     * 08/27 [ncs: DevAcademy bt-fund Lesson 4 Exer 3 が動かない](2024/08/20240827-ncs.md)
