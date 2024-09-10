@@ -86,3 +86,7 @@
     * 04/06 [github.ioのカスタムドメイン設定](2024/04/20240406-githubio.md)
     * 04/06 [移行のあいさつ](2024/04/20240406-greeting.md)
   * [過去サイト](https://hiro99ma.blogspot.com/)
+
+----
+
+[Nordic Semiconductors調査](nrf/index.md)
