@@ -1,5 +1,7 @@
 # hiro99ma Blog
 
+## 開発日記
+
 * 2024
   * September
     * 09/10 [ncs: ボード定義の見直し](2024/09/20240910-ncs.md)
@@ -85,8 +87,11 @@
     * 04/07 [windows: WSL2はVHDファイルアクセスが遅いのだろうか](2024/04/20240407-wsl.md)
     * 04/06 [github.ioのカスタムドメイン設定](2024/04/20240406-githubio.md)
     * 04/06 [移行のあいさつ](2024/04/20240406-greeting.md)
-  * [過去サイト](https://hiro99ma.blogspot.com/)
 
-----
+## 過去サイト
 
-[Nordic Semiconductors調査](nrf/index.md)
+* [https://hiro99ma.blogspot.com/](https://hiro99ma.blogspot.com/)
+
+## 調査
+
+* [Nordic Semiconductor調査](nrf/index.md)

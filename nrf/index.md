@@ -1,8 +1,8 @@
-# Nordic Semiconductors調査
+# Nordic Semiconductor調査
 
 <i>最終更新日: 2024/09/10</i>
 
-Nordic Semiconductor社の製品、主に BLE系の調査メモを残すページ
+Nordic Semiconductor社の製品、主に nRF5x 系の調査メモを残すページ
 
 ## よく使うページ
 
@@ -21,7 +21,7 @@ ncs のバージョンによって違うことがあるので、最新でない 
 #### Kconfig
 
 Kconfig の検索はちょっと特殊で、正規表現で記載するのがよい。  
-全部の項目名が決まっている場合は「`^CONFIG_GPIO$`」のように前後に挟み、プレフィクス一致の場合は「`^CONFIG_GPIO_`」のように頭だけ指定すると良いだろう。  
+全部の項目名が決まっている場合は「`^CONFIG_GPIO$`」のように前後に挟み、プレフィクス一致の場合は「`^CONFIG_GPIO`」のように頭だけ指定すると良いだろう。  
 ページの読み込みに時間がかかるのか、そうやって打ち込んでも出てこないことがある。
 
 * [Kconfig search: latest](https://docs.nordicsemi.com/bundle/ncs-latest/page/kconfig/index.html)
