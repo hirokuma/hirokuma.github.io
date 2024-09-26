@@ -29,7 +29,7 @@
     * 08/29 [ncs: USB-CDCとUARTの両立 (2)](2024/08/20240829-ncs.md)
     * 08/28 [ncs: USB-CDCとUARTの両立 (1)](2024/08/20240828-ncs.md)
     * 08/28 [GitHub Pages途中経過(2024年8月)](2024/08/20240828-ghp.md)
-    * 08/27 [ncs: DevAcademy bt-fund Lesson 4 Exer 3 が動かない](2024/08/20240827-ncs.md)
+    * 08/27 [ncs: DevAcademy bt-fund Lesson 4 Exer 3 が動かないのはUSB-CDC関係のようだ](2024/08/20240827-ncs.md)
     * 08/26 [ncs: nRF Connect for VS Code の Source Control UI](2024/08/20240826-ncs.md)
     * 08/25 [ncs: LOG](2024/08/20240825-ncs.md)
     * 08/23 [ble: BLE基礎 (12)](2024/08/20240822-ble.md)
