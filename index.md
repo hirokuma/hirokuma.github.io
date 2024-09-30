@@ -4,6 +4,7 @@
 
 * 2024
   * September
+    * 09/30 [android: LED characteristic を制御しよう (2)](2024/09/20240930-and2.md)
     * 09/30 [android: LED characteristic を制御しよう (1)](2024/09/20240930-and.md)
     * 09/29 [win: ブラウザで表示されるフォント](2024/09/20240929-win.md)
     * 09/29 [ble: BLE基礎 (15)](2024/09/20240928-ble.md)
