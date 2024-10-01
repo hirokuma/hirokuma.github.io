@@ -3,6 +3,8 @@
 ## 開発日記
 
 * 2024
+  * October
+    * 10/01 [最近のAndroid開発](2024/10/20241001-and.md)
   * September
     * 09/30 [android: LED characteristic を制御しよう (2)](2024/09/20240930-and2.md)
     * 09/30 [android: LED characteristic を制御しよう (1)](2024/09/20240930-and.md)
