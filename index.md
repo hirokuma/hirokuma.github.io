@@ -4,6 +4,7 @@
 
 * 2024
   * October
+    * 10/04 [android: Composableのレイアウト](2024/10/20241004-and.md)
     * 10/03 [android: Compose UIのCodelab](2024/10/20241003-and0.md)
     * 10/02 [android: アプリアーキテクチャ (1)](2024/10/20241002-and.md)
     * 10/01 [最近のAndroid開発](2024/10/20241001-and.md)
