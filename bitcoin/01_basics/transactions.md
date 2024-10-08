@@ -28,9 +28,13 @@ segwit(witness)のトランザクションの場合、その位置に`0x00`が�
 それ以外の場合は segwit非対応のトランザクションで、`marker`と`flag`がなく 5byte 目から`txin_count`のデータが入っている。
 
 [Serialization](https://github.com/bitcoin/bips/blob/83a1afd9859848628645c7fa200beb0dc0aea4f5/bip-0144.mediawiki#user-content-Serialization)の表に "Type" 列があるが、これがそれぞれのデータタイプである。  
-`txin[]`, `txouts[]`, `script_witnesses[]` はさらにデータ構造がある。  
-`var_int`は可変長の整数で[こう](https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer)なっている。
+`txins[]`, `txouts[]`, `script_witnesses[]` はさらにデータ構造がある。  
+var_int型は可変長の整数で[こう](https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer)なっている。
 例えば `0xfc` までなら 1バイトでそのまま表現できるが、`0xfd` は `0xfdfd00`(little endian)になる。
+
+下に例としていくつか raw transaction(生のトランザクションバイナリデータ)を分解する。  
+"`<script～>`" となっている項目は、先頭がデータ長(var_int型)でその後ろにデータ長分のデータが続いている。  
+"`<script_witnesses>`" は少し特殊で、全体の数は `<txin_count>`で、それぞれスクリプトの個数とスクリプトが続いている。
 
 #### 例1: 非segwit
 
@@ -57,7 +61,7 @@ segwit(witness)のトランザクションの場合、その位置に`0x00`が�
 <txout_count>
 02
 
-<txouts[0]
+<txouts[0]>
   <value>
   00911c5002000000
   <scriptPubkey>
@@ -114,12 +118,72 @@ segwit(witness)のトランザクションの場合、その位置に`0x00`が�
   16001468a211ede685d089ce170065948aa80790e00f9e
 
 <script_witnesses>
-  <witness_count>
-  02
-  <witness[0]>
-  47304402201b3913c5ee01d6ceff87a861f8554ced9e99e281884530fd7828a50099cedad202204b641d827fcfb7c1cfd5cb7bbc4379b50f75531f063b814f4998b3507eea303301
-  <witness[1]>
-  2103ec5f3495edf84da8d308bb59802a25baebab382a3c1fdccdc3462685ab09b732
+  <txins[0]>
+    <witness_count>
+    02
+    <witness[0]>
+    47304402201b3913c5ee01d6ceff87a861f8554ced9e99e281884530fd7828a50099cedad202204b641d827fcfb7c1cfd5cb7bbc4379b50f75531f063b814f4998b3507eea303301
+    <witness[1]>
+    2103ec5f3495edf84da8d308bb59802a25baebab382a3c1fdccdc3462685ab09b732
+
+<lock_time>
+00000000
+```
+
+#### 例3: segwit
+
+[026a8f0c6e6050cf237f42a7f2ed27efffead6c8750d991f746cef44448f3e2e](https://mempool.space/ja/testnet4/tx/026a8f0c6e6050cf237f42a7f2ed27efffead6c8750d991f746cef44448f3e2e)
+
+```bin
+<全 raw transaction データ>
+010000000001020ae960ef2054fd508f59b52e0ef3c19f7d2e865927f9059ec3779e568d30e9bf0100000000ffffffffb4e0d2298e0413cdb98cce33f22b240affbbd6c6eff7e9ec6eae5e70855e25bf0100000000ffffffff01bbb00100000000002251205779bec9d3f59f7b7bbefa606a81f171b3996659642bdf83a3fee52149d25e7901408893d9c6381da9984762b7bdb89427c154da5906e07678da2f8f15de292b40858fa0065170e7bca5e72cf3ce623c64533a4229527c6565d41cfb1ba411f5c1f70140093c5d8bdfdc06e33cab1f1a76bfaf93f8b5bc0a8e7d8075a7f2443772ebf648d39cac8f7bcd545c0ddfa08e62146f3079dabb284a3d47dd11280509d5cc88da00000000
+--------------------------
+<version>
+01000000
+
+<marker, flag>
+0001
+
+<txin_count>
+02
+
+<txins[0]>
+  <txid:index>
+  0ae960ef2054fd508f59b52e0ef3c19f7d2e865927f9059ec3779e568d30e9bf01000000
+  <scriptSig>
+  00
+  <sequence>
+  ffffffff
+
+<txins[1]>
+  <txid:index>
+  b4e0d2298e0413cdb98cce33f22b240affbbd6c6eff7e9ec6eae5e70855e25bf01000000
+  <scriptSig>
+  00
+  <sequence>
+  ffffffff
+
+<txout_count>
+01
+
+<txouts[0]>
+  <value>
+  bbb0010000000000
+  <scriptPubkey>
+  2251205779bec9d3f59f7b7bbefa606a81f171b3996659642bdf83a3fee52149d25e79
+
+<script_witnesses>
+  <txins[0]>
+    <witness_count>
+    01
+    <witness[0]>
+    408893d9c6381da9984762b7bdb89427c154da5906e07678da2f8f15de292b40858fa0065170e7bca5e72cf3ce623c64533a4229527c6565d41cfb1ba411f5c1f7
+
+  <txins[1]>
+    <witness_count>
+    01
+    <witness[0]>
+    40093c5d8bdfdc06e33cab1f1a76bfaf93f8b5bc0a8e7d8075a7f2443772ebf648d39cac8f7bcd545c0ddfa08e62146f3079dabb284a3d47dd11280509d5cc88da
 
 <lock_time>
 00000000
