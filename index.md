@@ -4,6 +4,7 @@
 
 * 2024
   * October
+    * 10/09 [Android Studio の Inlay Hints](2024/10/20241009-and.md)
     * 10/07 [android: Composableのレイアウト (4)](2024/10/20241008-and.md)
     * 10/07 [android: Composableのレイアウト (3)](2024/10/20241007-and.md)
     * 10/06 [android: Composableのレイアウト (2)](2024/10/20241006-and.md)
