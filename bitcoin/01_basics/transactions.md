@@ -12,15 +12,22 @@ Bitcoinトランザクションには署名の方法などによる違いはあ�
   * [Raw Transaction Format](https://developer.bitcoin.org/reference/transactions.html#raw-transaction-format)
   * [BIP-144 Serialization](https://github.com/bitcoin/bips/blob/83a1afd9859848628645c7fa200beb0dc0aea4f5/bip-0144.mediawiki#user-content-Serialization)
 
-Bitcoinトランザクションはバイナリデータである。
+Bitcoinトランザクションはバイナリデータである。  
+以下はバイナリデータを構成している要素の名前である。
+この名前は解説しているサイトによって多少違う(`version`が`nVersion`だったり`lock_time`が`LockTime`だったり)が、
 
 * `version`
 * `marker`, `flag` (存在しない場合あり)
 * `txin_count`
-* `txins`
+* `txins[]`
+  * `txid:index`(out_point)
+  * `scriptSig`
+  * `sequence`
 * `txout_count`
-* `txouts`
-* `script_witnesses` (存在しない場合あり)
+* `txouts[]`
+  * `value`
+  * `scriptPubKey`
+* `script_witnesses[]` (存在しない場合あり)
 * `lock_time`
 
 先頭から 5byte目のデータで見分ける。  
@@ -29,12 +36,21 @@ segwit(witness)のトランザクションの場合、その位置に`0x00`が�
 
 [Serialization](https://github.com/bitcoin/bips/blob/83a1afd9859848628645c7fa200beb0dc0aea4f5/bip-0144.mediawiki#user-content-Serialization)の表に "Type" 列があるが、これがそれぞれのデータタイプである。  
 `txins[]`, `txouts[]`, `script_witnesses[]` はさらにデータ構造がある。  
-var_int型は可変長の整数で[こう](https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer)なっている。
-例えば `0xfc` までなら 1バイトでそのまま表現できるが、`0xfd` は `0xfdfd00`(little endian)になる。
 
 下に例としていくつか raw transaction(生のトランザクションバイナリデータ)を分解する。  
-"`<script～>`" となっている項目は、先頭がデータ長(var_int型)でその後ろにデータ長分のデータが続いている。  
+"`<script～>`" となっている項目は、先頭がデータ長でその後ろにデータ長分のデータが続いている。  
 "`<script_witnesses>`" は少し特殊で、全体の数は `<txin_count>`で、それぞれスクリプトの個数とスクリプトが続いている。
+
+#### 値の表現
+
+値については 2の補数の little endian。  
+固定長の場合はそのバイト数のデータ型、可変長は Compact Size型が使われている。
+
+[Compact Size型](https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer)はあまり見慣れないと思う。  
+例えば `0xfc` までなら 1バイトでそのまま表現できるが、`0xfd` は `0xfdfd00`(little endian)になる。
+`var_int`, `VarInt` と呼ばれることもあるが[厳密には異なる](https://learnmeabitcoin.com/technical/general/compact-size/#varint)とのこと。  
+
+ちなみにスクリプトの中に数値が使われる場合は命令と組み合わせて使うため別の表現になる([Constants](https://en.bitcoin.it/wiki/Script#Constants))。
 
 #### 例1: 非segwit
 
