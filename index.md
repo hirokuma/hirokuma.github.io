@@ -4,6 +4,7 @@
 
 * 2024
   * October
+    * 10/10 [kotlin の enum](2024/10/20241010-kot.md)
     * 10/10 [最近の Androidアプリ審査(2024年10月)](2024/10/20241010-gpc2.md)
     * 10/10 [Google Play Consoleの個人デベロッパーアカウントでも住所表示されるようだ](2024/10/20241010-gpc.md)
     * 10/09 [Android Studio の inlay hints](2024/10/20241009-and.md)
