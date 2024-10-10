@@ -93,6 +93,7 @@
 
 <details>
 <summary>2024年 1～6月</summary>
+<p>
   * June
     * 06/30 [windows: SecureBootをOFFにしたらWindows11のPIN認証が失敗するようになった](2024/06/20240630-pin.md)
     * 06/29 [linux: Linuxで公開鍵認証だけに変更して失敗](2024/06/20240629-pi.md)
@@ -117,6 +118,7 @@
     * 04/07 [windows: WSL2はVHDファイルアクセスが遅いのだろうか](2024/04/20240407-wsl.md)
     * 04/06 [github.ioのカスタムドメイン設定](2024/04/20240406-githubio.md)
     * 04/06 [移行のあいさつ](2024/04/20240406-greeting.md)
+</p>
 </details>
 
 ## 調査
