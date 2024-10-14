@@ -4,6 +4,7 @@
 
 * 2024
   * October
+    * 10/14 [android: 中央に表示する](2024/10/20241014-and.md)
     * 10/11 [android: 自動テスト](2024/10/20241011-and.md)
     * 10/11 [kotlin: ceil や floor](2024/10/20241011-kot.md)
     * 10/10 [kotlin の enum](2024/10/20241010-kot.md)
