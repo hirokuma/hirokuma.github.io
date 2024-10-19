@@ -4,6 +4,7 @@
 
 * 2024
   * October
+    * 10/19 [android: ViewModel の Codelabs がさっぱりわからない](2024/10/20241019-and.md)
     * 10/18 [android: ViewModel をやらねばならぬ](2024/10/20241018-and2.md)
     * 10/18 [android: onClick が使えるもの](2024/10/20241018-and.md)
     * 10/17 [android: 非同期処理](2024/10/20241017-and.md)
