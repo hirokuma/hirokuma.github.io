@@ -4,7 +4,8 @@
 
 * 2024
   * October
-    * 10/20 [kotlin: delegation をもう少し理解したい](kotlin: delegation をもう少し理解したい)
+    * 10/20 [android: ViewModelの続き](2024/10/20241020-and.md)
+    * 10/20 [kotlin: delegation をもう少し理解したい](2024/10/20241020-kot.md)
     * 10/19 [android: ViewModel の Codelabs がさっぱりわからない](2024/10/20241019-and.md)
     * 10/18 [android: ViewModel をやらねばならぬ](2024/10/20241018-and2.md)
     * 10/18 [android: onClick が使えるもの](2024/10/20241018-and.md)
