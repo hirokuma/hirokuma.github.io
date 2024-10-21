@@ -5,6 +5,7 @@
 * 2024
   * October
     * 10/21 [arm: unsignedはどうなのか](2024/10/20241021-arm.md)
+    * 10/21 [android: ViewModelの続き (2)](2024/10/20241021-and.md)
     * 10/20 [android: ViewModelの続き](2024/10/20241020-and.md)
     * 10/20 [kotlin: delegation をもう少し理解したい](2024/10/20241020-kot.md)
     * 10/19 [android: ViewModel の Codelabs がさっぱりわからない](2024/10/20241019-and.md)
