@@ -4,6 +4,7 @@
 
 * 2024
   * October
+    * 10/23 [win11: 設定「スクリーンショットの境界線」](2024/10/20241023-win.md)
     * 10/22 [android: compose で system service はどこでもらうか](2024/10/20241022-and.md)
     * 10/21 [arm: unsignedはどうなのか](2024/10/20241021-arm.md)
     * 10/21 [android: ViewModelの続き (2)](2024/10/20241021-and.md)
