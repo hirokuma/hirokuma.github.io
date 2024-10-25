@@ -4,6 +4,7 @@
 
 * 2024
   * October
+    * 10/25 [android: リストで無効なアイテムの色](2024/10/20241025-and2.md)
     * 10/25 [android: Hilt対応](2024/10/20241025-and.md)
     * 10/24 [android: DI をもう少し理解したい](2024/10/20241024-di.md)
     * 10/23 [android: compose で system service はどこでもらうか (2)](2024/10/20241023-and.md)
