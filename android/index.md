@@ -48,9 +48,22 @@ Flutter や React Native のような開発環境を使うと両方に向けた�
   * Data sources: データの供給元
     * データベースやインターネットなど
 
+パッケージの指定は特になさそうである。  
+下図は [architecture-templates/base](https://github.com/android/architecture-templates/tree/c52e325d74b42379d41723a692f3b0e21fb86755/app/src/main/java/android/template)を参考にした。  
+
 ![image](android-tree.png)
 
-簡単なアプリで済ませたいなら UI elements に全部書くこともできるし、`ViewModel`まで使うようなこともできる。  
+これを書いている時点で知識が足りないので、理解が進んだら更新する。
+
+* ViewModel は Screen と一対一なのか、あるいは共有することもあるのか？
+  * templates では `mymodel` の中に Screen と ViewModel が入っていた
+  * 表示するデータを ViewModel が持っているのならいくつかの Screen で共有することはあり得そう
+* Data Layer での Data sources をどう配置するか
+  * `local` があるのはオンライン系の Data sources を `remote` 以下に置きたいからか？
+    * パッケージ名よりもクラス名の方に付けたい？([このガイドにおける命名規則 - データレイヤについて](https://developer.android.com/topic/architecture/data-layer?hl=ja#naming-conventions))
+* [architecture-samples](https://github.com/android/architecture-samples/tree/130f5dbebd0c7b5ba195cc08f25802ed9f0237e5/app/src/main/java/com/example/android/architecture/blueprints/todoapp)の構成はまた違うので、自分でルールを作るしかないのか。
+
+この構成はアプリの運用に柔軟性を持たせるためなので、簡単なアプリで済ませたいなら UI elements に全部書くこともできるし、`ViewModel`まで使うようなこともできる。  
 あるいは全然違う構造でも問題はない。
 
 
