@@ -66,9 +66,7 @@ Flutter や React Native のような開発環境を使うと両方に向けた�
 この構成はアプリの運用に柔軟性を持たせるためなので、簡単なアプリで済ませたいなら UI elements に全部書くこともできるし、`ViewModel`まで使うようなこともできる。  
 あるいは全然違う構造でも問題はない。
 
+## 
 
-### 画面遷移
-
-* [Compose で画面間を移動する](https://developer.android.com/codelabs/basic-android-kotlin-compose-navigation?hl=ja#0)
-  * アプリ内の遷移
-  * 別アプリへの遷移(`Intent`)
+* [Composable関数](compose/index.md)
+* BLE操作
