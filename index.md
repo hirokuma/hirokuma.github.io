@@ -1,4 +1,4 @@
-# hiro99ma Blog
+# hiro99ma blog
 
 ## 開発日記
 
