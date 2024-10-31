@@ -4,6 +4,7 @@
 
 * 2024
   * October
+    * 10/31 [ncs: nRF Connect SDK v2.6.2](2024/10/20241031-ncs.md)
     * 10/31 [android: 今月のまとめ](2024/10/20241031-and.md)
     * 10/30 [android: BLE 操作 (2)](2024/10/20241030-and.md)
     * 10/29 [android: BLE 操作](2024/10/20241029-and.md)
