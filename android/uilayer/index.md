@@ -184,4 +184,6 @@ Read Only 版はプロパティとして提供するのが普通なようだ。
 * [UI 状態生成  -  Android Developers](https://developer.android.com/topic/architecture/ui-layer/state-production?hl=ja)
 
 `State`系のインスタンスを UI elements が描画に使っていると、
-インスタンスに更新が行われたときに自動で再composeが行われて描画に反映されるらしい。
+インスタンスに更新が行われたときに自動で再composeが行われて描画に反映されるしくみになっている。
+
+更新は`MutableStateFlow`のインスタンスを `.update{ it.copy(...) }` のように実行する。

@@ -55,7 +55,8 @@ Android では後者に力を入れている。
     * データの供給元
     * データベースやインターネットなど
 
-下図は [architecture-templates/base](https://github.com/android/architecture-templates/tree/c52e325d74b42379d41723a692f3b0e21fb86755/app/src/main/java/android/template)を参考にした。  
+下図は [architecture-templates/base](https://github.com/android/architecture-templates/tree/c52e325d74b42379d41723a692f3b0e21fb86755/app/src/main/java/android/template)を参考にしたが、
+特に決まった構成はないので参考までに。
 
 ![image](android-tree.png)
 
@@ -67,7 +68,7 @@ Android では後者に力を入れている。
 
 * [UI Layer](uilayer/index.md)
 * Data Layer
-* BLE操作
+* [BLE操作](ble/index.md)
 
 ## メモ
 
