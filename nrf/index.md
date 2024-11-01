@@ -4,9 +4,26 @@
 
 Nordic Semiconductor社の製品、主に nRF5x 系の調査メモを残すページ
 
+## はじめ方
+
+* [1. 準備](startup/01_prepare.md)
+* [2. 実機とデバッガ](startup/02_device.md)
+
 ## よく使うページ
 
-
+* Nordic Semiconductors
+  * Products
+    * [Wireless/BLE](https://www.nordicsemi.com/Products/Wireless/Bluetooth-Low-Energy)
+      * [Development Hardware](https://www.nordicsemi.com/Products/Wireless/Bluetooth-Low-Energy/Development-hardware?lang=en#infotabs)
+        * [nRF5340](https://www.nordicsemi.com/Products/nRF5340)
+        * [nRF5340DK](https://www.nordicsemi.com/Products/Development-hardware/nRF5340-DK)
+        * [Thingy:53](https://www.nordicsemi.com/Products/Development-hardware/Nordic-Thingy-53)
+      * [Development Software](https://www.nordicsemi.com/Products/Wireless/Bluetooth-Low-Energy/Development-software?lang=en#infotabs)
+        * [nRF Connect SDK](https://www.nordicsemi.com/Products/Development-software/nRF-Connect-SDK)
+  * [DevAcademy](https://academy.nordicsemi.com/)
+  * [Blogs](https://devzone.nordicsemi.com/nordic/)
+* [SEGGER J-Link](https://www.segger.com/products/debug-probes/j-link/?mtm_campaign=kb&mtm_kwd=debugtraceprobes)
+  * [SEGGER wiki](https://wiki.segger.com/Debug_Probes_-_J-Link_%26_J-Trace)
 
 ### 検索
 
