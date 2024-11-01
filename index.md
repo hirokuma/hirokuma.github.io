@@ -3,6 +3,8 @@
 ## 開発日記
 
 * 2024
+  * November
+    * 11/01 [ncs: nRF Connect SDK のはじめ方](2024/11/20241101-ncs.md)
   * October
     * 10/31 [ncs: nRF Connect SDK v2.6.2](2024/10/20241031-ncs.md)
     * 10/31 [android: 今月のまとめ](2024/10/20241031-and.md)
