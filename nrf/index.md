@@ -1,10 +1,10 @@
-# Nordic Semiconductor調査
+# Nordic Semiconductor 調査
 
-<i>最終更新日: 2024/09/10</i>
+_最終更新日: 2024/11/01_
 
-Nordic Semiconductor社の製品、主に nRF5x 系の調査メモを残すページ
+Nordic Semiconductor 社の製品、主に BLE 向けの nRF5x 系について
 
-## はじめ方
+## BLEプロジェクトのはじめ方
 
 * [1. 準備](startup/01_prepare.md)
 * [2. 実機とデバッガ](startup/02_device.md)
@@ -12,7 +12,7 @@ Nordic Semiconductor社の製品、主に nRF5x 系の調査メモを残すペ�
 
 ## よく使うページ
 
-* Nordic Semiconductors
+* Nordic Semiconductor
   * Products
     * [Wireless/BLE](https://www.nordicsemi.com/Products/Wireless/Bluetooth-Low-Energy)
       * [Development Hardware](https://www.nordicsemi.com/Products/Wireless/Bluetooth-Low-Energy/Development-hardware?lang=en#infotabs)
