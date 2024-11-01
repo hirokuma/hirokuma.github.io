@@ -1,5 +1,7 @@
 # はじめ方 > 1. 準備
 
+nRF Connect SDK は略して "ncs" とも呼ばれます。
+
 ## インストール
 
 nRF Connect SDK をインストールする。  

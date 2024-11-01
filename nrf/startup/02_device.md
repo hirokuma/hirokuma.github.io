@@ -2,18 +2,26 @@
 
 ## サポートするデバイス
 
-nRF Connect SDK がサポートするデバイスはかなり多いように見える。  
-これは ncs v2.6.1 での一覧である。
+### 一覧は Nordic チップが搭載されていないボードもある
 
-* [Supported Boards](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/boards/index.html)
+nRF Connect SDK がサポートするデバイスはかなり多いように見えるが、注意が必要だ。  
+なぜなら Zephyr OS がサポートするボードの一覧がそのまま載っているだけなので、
+Nordic のチップが搭載されているとは限らないからだ。
+
+例えばこれは ncs v2.6.1 での一覧である。
+
+* [Supported Boards - v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/boards/index.html)
 
 ncs のバージョン指定はコンボボックスからできるようになっている。  
 通常は latest になっているので Nordic の技術ドキュメントを読む際には常に注意しておこう(URLにも出てくる)。  
 
 ![image](02-1.png)
 
-**しかし！** これは組み込み OS の Zephyr が対応しているボード一覧だ。  
+**しかし！**  
+繰り返すが、これは組み込み OS の Zephyr が対応しているボード一覧だ。  
 例えばこれは [ST Nucleo F103RB](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/boards/arm/nucleo_f103rb/doc/index.html) だが、これは STM32 が搭載されているだけで Nordic のチップはない。
+
+### Nordic チップが搭載されたボード
 
 まだ開発ボードを購入しておらずに探すのであれば、Zephyr のページから CPU で選ぶとよい。
 
@@ -22,6 +30,8 @@ ncs のバージョン指定はコンボボックスからできるようにな�
 Nordic の DKボードであれば間違いは無いしツールの恩恵を最大限に受けることができるのだが、
 いかんせん技適を通したボードがないので私から勧めることはできない。
 例えば Raytac さんが出している [nRF5340 MDBT53-1M用評価ボード](https://www.switch-science.com/products/8620?_pos=1&_sid=6944ab6c4&_ss=r)であれば技適が通っていて国内でも買いやすいし [Zephyerでもサポート](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/boards/arm/raytac_mdbt53_db_40_nrf5340/doc/index.html)している(私は持っていないが)。
+
+### サポートしていないボードへの対応
 
 もし Nordic のチップが載っていて Zephyr がサポートしていない場合でも、自分でカスタマイズすれば使うことは可能である(製品開発ではそうなるだろう)。  
 ただ、そのためにはカスタマイズする知識が先にないと動作確認もできないため、苦労するかもしれない。  
@@ -56,3 +66,9 @@ Cortex-M 専用だが nRF51822 には問題なく使えていた。
 
 ![image](02-2.png)
 
+J-Link のバージョンは本体裏のシールかツールを使って確認できる。  
+J-Link LITE Cortex-M は基板にプリントされていた。
+
+* [J-Link本体のシリアル番号及びハードウェアバージョンを確認する方法は？](https://www.embitek.co.jp/support/faq/jlink/Q210210/)
+
+ファームウェアのアップデートはできるのだが、メジャーバージョンが変わるようなアップデートはできないのだ。
