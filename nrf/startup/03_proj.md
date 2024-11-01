@@ -108,8 +108,7 @@ MCUboot のディレクトリに置くことになりそうだった。
 
 nRF Connect シリーズの中に [for Desktop](https://www.nordicsemi.com/Products/Development-tools/nrf-connect-for-desktop) というアプリがある。
 
-![image](03-5.png)
+![image](03-6.png)
 
 nRF DKボードを持っている場合、スニファのアプリを書き込んで使えるようになったりする。  
 DKボードを持っていない場合でも Programmer というアプリは HEXファイルを書き込んだり Erase するのに使うことができる。
-
