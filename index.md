@@ -4,6 +4,7 @@
 
 * 2024
   * November
+    * 11/04 [ncs: Service のテンプレート](2024/11/20241104-ncs.md)
     * 11/01 [ncs: nRF Connect SDK のはじめ方](2024/11/20241101-ncs.md)
   * October
     * 10/31 [ncs: nRF Connect SDK v2.6.2](2024/10/20241031-ncs.md)
