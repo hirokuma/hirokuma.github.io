@@ -67,6 +67,7 @@ nRF53 は外部に Flash を持たないと DFU に手間がかかる。
 
 * [Bluetooth](https://docs.nordicsemi.com/bundle/ncs-latest/page/zephyr/connectivity/bluetooth/index.html)
 * [Bluetooth libraries and services](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/nrf/libraries/bluetooth_services/index.html)
+* [GATT Error Codes](gatt_error_codes.md)
 
 ### リポジトリ
 
