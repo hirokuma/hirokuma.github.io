@@ -4,6 +4,7 @@
 
 * 2024
   * November
+    * 11/05 [ncs: BLE DevAcademyの振り返り](2024/11/20241105-ncs.md)
     * 11/05 [web: GitHub Pagesの管理(2024/11月)](2024/11/20241105-web.md)
     * 11/04 [ncs: Service のテンプレート](2024/11/20241104-ncs.md)
     * 11/01 [ncs: nRF Connect SDK のはじめ方](2024/11/20241101-ncs.md)
