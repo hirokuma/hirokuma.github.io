@@ -4,7 +4,17 @@
 {% include head-custom-theme-colors.html %}
 
 <!-- Setup Google Analytics -->
-{% include head-custom-google-analytics.html %}
+<!-- {% include head-custom-google-analytics.html %} -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-552KB5LZK4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-552KB5LZK4');
+</script>
 
 <!-- Google Search Console -->
 <meta name="google-site-verification" content="Zt_L8JZ-Y2vvA2gHMGxvRk-FUzYRJI0MIvzcYiHwN0c" />
