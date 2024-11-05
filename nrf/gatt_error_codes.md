@@ -30,6 +30,7 @@
 ## ncs
 
 * [元データ](https://github.com/nrfconnect/sdk-zephyr/blob/v3.5.99-ncs1-1/include/zephyr/bluetooth/att.h#L27)
+* 戻り値として使うときは`BT_GATT_ERR()`で囲む。これは単にマイナス値にするだけである。
 
 | #define | value | Description |
 |---|---|---|

@@ -26,6 +26,16 @@ Nordic Semiconductor 社の製品、主に BLE 向けの nRF5x 系について
 * [SEGGER J-Link](https://www.segger.com/products/debug-probes/j-link/?mtm_campaign=kb&mtm_kwd=debugtraceprobes)
   * [SEGGER wiki](https://wiki.segger.com/Debug_Probes_-_J-Link_%26_J-Trace)
 
+* Bluetooth SIG
+  * [Core仕様書](https://www.bluetooth.com/specifications/specs/)
+    * [v5.1](https://www.bluetooth.com/specifications/specs/core-specification-amended-5-1/)
+  * [Core仕様書補足(CSS)](https://www.bluetooth.com/specifications/specs/core-specification-supplement/)
+    * [v12](https://www.bluetooth.com/specifications/specs/css-12-html/)
+      * 昔はPDFだったが今はHTMLになったようだ
+  * [Assigned Numbers](https://www.bluetooth.com/specifications/assigned-numbers/)
+    * [AD Type](https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/core/ad_types.yaml)
+    * [URI schemes](https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/core/uri_schemes.yaml)
+
 ### 検索
 
 #### 全文
