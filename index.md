@@ -4,6 +4,7 @@
 
 * 2024
   * November
+    * 11/06 [nfc: 最近のNFCはどういう感じなんだろうか](2024/11/20241106-nfc.md)
     * 11/06 [ncs: BLE DevAcademyの振り返り (2)](2024/11/20241106-ncs.md)
     * 11/05 [ncs: BLE DevAcademyの振り返り](2024/11/20241105-ncs.md)
     * 11/05 [web: GitHub Pagesの管理(2024/11月)](2024/11/20241105-web.md)
