@@ -1,6 +1,6 @@
 # Devicetree
 
-_最終更新日: 2024/11/07_
+_最終更新日: 2024/11/08_
 
 ncs v2.6 (v2.7 はまだ見ていないが[DevAcademyの一部](https://academy.nordicsemi.com/courses/nrf-connect-sdk-fundamentals/lessons/lesson-2-reading-buttons-and-controlling-leds/topic/dissecting-blinky/)で v2.7以降があることから何かしら変更があることがうかがえる)。  
 nRF Connect for VSCode は書いている時点での最新だが、しばしば更新されるのでこれを読んだ時点では画面や挙動が違うかもしれない。
@@ -157,7 +157,7 @@ led1 を例にすると、`LED1_NODE`が nodeID、`gpios`がプロパティ名�
 `struct gpio_dt_spec`さえ取得できれば操作できるので、一時的に使うだけなら DTSファイルを使わなくても変更できそうではある。  
 が、素直に DTSファイルを編集した方が早いだろう。
 
-#### 例：GPIO
+#### 例：GPIO(不明)
 
 Visual Editor に "GPIOs" というブロックがある。  
 そこに P0.0 を "abc-pin" という名前で追加すると以下のようになった。
@@ -170,12 +170,14 @@ Visual Editor に "GPIOs" というブロックがある。
 };
 ```
 
-
+よく使い方が分からない。
 
 #### 例：UART
 
 ボード定義ファイルで `uart0` に設定があったとしてもオーバーレイで変更できる。  
-CTS/RTS の無効化もできる。
+CTS/RTS の無効化もできる。  
+
+ルートノードの位置に `&` で始まるノードがあった場合、それは
 
 **ボード定義ファイル**
 
