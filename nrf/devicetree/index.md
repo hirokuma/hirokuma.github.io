@@ -60,6 +60,8 @@ ncs で使うための知識だけにするので詳細は各ドキュメント�
 
 ![image](overlay.png)
 
+#### Build Context の選択
+
 また、nRF5340 ではブートローダーを使うことができる。  
 NSIB(Nordic Secure Immutable Bootloader:`CONFIG_SECURE_BOOT=y`) というものと [MCUboot](https://docs.mcuboot.com/)(`CONFIG_BOOTLOADER_MCUBOOT=y`) というものが使えるのだが、今のところ MCUboot の方しか知らない。  
 MCUboot のビルドで Devicetree は `$BOARD_ROOT` のファイルを使うが Kconfig については[MCUboot用のディレクトリ](https://github.com/nrfconnect/sdk-mcuboot/tree/v2.0.99-ncs1-1/boot/zephyr/boards)を参照するようである。  
@@ -84,6 +86,89 @@ VScode の Visual Editor は目視確認や設定が分からないときに使�
 `#include`は使えるので共通した内容は別ファイルにすると良いだろう。
 
 #### 例：LED
+
+led0　はボード定義ファイルに既に存在していて、ここでは ON/OFF しかない LED を 2つ(led1, led2)追加している。  
+Devicetree には LED がグループ(compatible "gpio-leds")になっているが、操作としては GPIO を HI/LO するだけである。  
+これは [DK Buttons and LEDs](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/nrf/libraries/others/dk_buttons_and_leds.html) でまとめて扱えるようにグループが作られたのだろうか。  
+また、LED とは別に PWM(compatible "pwm-leds") との接続もある。
+
+![image](led.png)
+
+```dts
+/ {
+	leds {
+		compatible = "gpio-leds";
+		led1: led-1 {
+			gpios = <&gpio1 7 0>;
+			label = "LED 1";
+		};
+
+		led2: led-2 {
+			gpios = <&gpio0 29 0>;
+			label = "LED 2";
+		};
+	};
+
+	aliases {
+		led1 = &led1;
+		led2 = &led2;
+	};
+};
+```
+
+```c
+#define LED0_NODE               DT_ALIAS(led0)
+#define LED1_NODE               DT_ALIAS(led1)
+#define LED2_NODE               DT_ALIAS(led2)
+static const struct gpio_dt_spec dev_led0 = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
+
+void led_init(void)
+{
+  if (!device_is_ready(dev_led0.port)) {
+    return;
+  }
+
+  int ret = gpio_pin_configure_dt(&dev_led0, GPIO_OUTPUT_INACTIVE);
+  if (ret < 0) {
+    return;
+  }
+  struct gpio_dt_spec dev_led1 = GPIO_DT_SPEC_GET(LED1_NODE, gpios);
+  struct gpio_dt_spec dev_led2 = GPIO_DT_SPEC_GET(LED2_NODE, gpios);
+  gpio_pin_configure_dt(&dev_led1, GPIO_OUTPUT_INACTIVE);
+  gpio_pin_configure_dt(&dev_led2, GPIO_OUTPUT_INACTIVE);
+}
+```
+
+[GPIO_DT_SPEC_GET()](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/hardware/peripherals/gpio.html#c.GPIO_DT_SPEC_GET)は第1引数に nodeID、第2引数にプロパティ名を取る。  
+led1 を例にすると、`LED1_NODE`が nodeID、`gpios`がプロパティ名になる。  
+プロパティは DTSファイルのここだろう。
+
+```dts
+/ {
+	leds {
+		compatible = "gpio-leds";
+		led1: led-1 {
+			gpios = <&gpio1 7 0>; // ★ここ
+			label = "LED 1";
+		};
+    ......
+```
+
+`struct gpio_dt_spec`さえ取得できれば操作できるので、一時的に使うだけなら DTSファイルを使わなくても変更できそうではある。  
+が、素直に DTSファイルを編集した方が早いだろう。
+
+#### 例：GPIO
+
+Visual Editor に "GPIOs" というブロックがある。  
+そこに P0.0 を "abc-pin" という名前で追加すると以下のようになった。
+
+```dts
+/ {
+	zephyr,user {
+		abc-pin-gpios = <&gpio0 0 0>;
+	};
+};
+```
 
 
 
