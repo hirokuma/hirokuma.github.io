@@ -10,7 +10,7 @@ nRF Connect for VSCode は書いている時点での最新だが、しばしば
 * Nordic
   * [Devicetree - ncs v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/index.html)
   * [Devicetree - Nordic Developer Academy](https://academy.nordicsemi.com/courses/nrf-connect-sdk-fundamentals/lessons/lesson-2-reading-buttons-and-controlling-leds/topic/devicetree/)
-* [devicetree.org v0.4](https://github.com/devicetree-org/devicetree-specification/releases/tag/v0.4) では
+* [devicetree.org v0.4](https://github.com/devicetree-org/devicetree-specification/releases/tag/v0.4)
 
 Devicetree は ncs というよりも Zephyr に属している。  
 Linux の kernel でも Devicetree 方式は使われているが、[devicetree.org](https://www.devicetree.org/)が本家のようで[Syntax and structure](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/intro-syntax-structure.html)でもそこのリンクが載っていた。
@@ -26,8 +26,8 @@ ncs で使うための知識だけにするので詳細は各ドキュメント�
 /dts-v1/;                       // DTS file version(たぶん省略可)
 / {                             // root node
   a-node {                      // child node `a-node`
-    subnode_label: a-sub-node { // label: child node `a-sub-node` is a child of `a-node`
-      foo = <3>;                // property
+    subnode_label: a-sub-node { // label `subnode_label`: child node `a-sub-node` is a child of `a-node`
+      foo = <3>;                // property `foo`
     };
   };
 };
@@ -35,11 +35,11 @@ ncs で使うための知識だけにするので詳細は各ドキュメント�
 
 ### devicetree.org v0.4
 
-* ノード名
+* ノード名とエイリアス名で有効な文字
 
 ![image](names.png)
 
-* プロパティ名と "status" の値
+* プロパティ名で有効な文字と "status" の値
 
 ![image](props.png)
 
@@ -53,7 +53,8 @@ ncs で使うための知識だけにするので詳細は各ドキュメント�
 開発ボード自体の Devicetreeファイルはそのままにして、プロジェクトで設定をしたいことがある。  
 その場合、プロジェクトの中に`boards/`ディレクトリを作り、その中にボードごとの設定ファイルを置くことでオーバーレイできる。  
 `boards/`には Kconfig のオーバーレイ設定ファイルを置くことも可能なようだ。  
-オーバーレイするファイルは `boards/` でなくプロジェクトのルートディレクトリに置いても読み込んでくれるようだが、見た目がゴチャゴチャするので `boards/` に置くのが良いだろう。  
+オーバーレイするファイルは `boards/` でなくプロジェクトのルートディレクトリに置いても読み込んでくれるようだが、見た目がゴチャゴチャするので `boards/` に置くのが良いだろう。
+
 ただ `boards/` に置いたオーバーレイファイルは Visual Editor で読込はされるものの編集対象になってくれない。  
 以前はこのようにオーバーレイと見なしてくれたような気がするのだが、気をつけよう。
 
