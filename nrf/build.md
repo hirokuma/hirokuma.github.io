@@ -49,3 +49,67 @@ endmenu
 
 これで `prj.conf` に `CONFIG_DEBUG_ENABLED=y` のように書くことができる。  
 確認は Prisitine Build してから `<build>/zephyr/include/generated/autoconf.h` を開いて検索すると良い。
+
+## LOG_LEVEL メニューの作り方
+
+自作の各モジュールごとにログレベルを変更したいことがあるだろう。  
+その場合、Kconfig に独自のログレベル設定を追加し、実装ではそのマクロ値を使うとよい。
+
+[LOG_MODULE_REGISTER()](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/services/logging/index.html#c.LOG_MODULE_REGISTER) で第2引数を設定しなければデフォルトのログレベル(`CONFIG_LOG_DEFAULT_LEVEL`)が使用され、指定すればその値が使用される。  
+
+* ログレベル
+  * 0: ログなし
+  * 1: エラー
+  * 2: 警告
+  * 3: 情報
+  * 4: デバッグ
+
+```c
+#define LOG_LEVEL_NONE 0U
+#define LOG_LEVEL_ERR  1U
+#define LOG_LEVEL_WRN  2U
+#define LOG_LEVEL_INF  3U
+#define LOG_LEVEL_DBG  4U
+```
+
+Kconfig に `LOG_LEVEL_NONE` のようなマクロ名を書いても解決できないためエラーになる。
+そのため値としては `int` になる。
+
+```kconfig
+config USER_DRV_LOGLEVEL
+	int "Driver Log Level"
+	default 3
+	help
+	  - 0 OFF, logging is turned off
+	  - 1 ERROR, maximal level set to LOG_LEVEL_ERR
+	  - 2 WARNING, maximal level set to LOG_LEVEL_WRN
+	  - 3 INFO, maximal level set to LOG_LEVEL_INFO
+	  - 4 DEBUG, maximal level set to LOG_LEVEL_DBG
+```
+
+直接数値を書くだけだと分かりづらい。
+
+```kconfig
+module = DRV
+module-str = DRV
+source "subsys/logging/Kconfig.template.log_config"
+```
+
+![image](kconfig_loglevel.png)
+
+これはラジオボタンなので `bool` 扱いである。  
+例えば上記の設定では `DRV` に 警告レベルを設定するのでこう書く。
+
+```conf
+CONFIG_DRV_LOG_LEVEL_WRN=y
+```
+
+そうすると生成された `autoconf.h` にはこう出力される。
+
+```c
+#define CONFIG_DRV_LOG_LEVEL_WRN 1
+#define CONFIG_DRV_LOG_LEVEL 2
+```
+
+`LOG_MODULE_REGISTER()` のログレベルには `CONFIG_DRV_LOG_LEVEL` を指定すれば良い。  
+`prj.conf` に設定を書かなかった場合はデフォルト値が自動で設定される。
