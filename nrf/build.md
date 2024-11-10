@@ -17,9 +17,10 @@ _最終更新日: 2024/11/08_
 
 gcc の `-Dマクロ` の代わりに `prj.conf` に自分のマクロを書いてもビルドでエラーになる。
 
-* Build Configuration の "Extra CMake arguments"
+* Build Configuration の "Extra CMake arguments" (※できないかも)
   * `-Dマクロ` を列挙する
-  * Build Configuration にしか残らないので、一時的に使いたい場合に向いているだろう
+  * 試してみたがうまくいかなかった。使用できるマクロが限定されているのかも？
+    * [Providing CMake options](https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/app_dev/config_and_build/cmake/index.html#providing_cmake_options)
 * CMakeLists.txt に追加する
   * [add_definitions](https://cmake.org/cmake/help/latest/command/add_definitions.html)に `-Dマクロ` を列挙する
   * [add_compile_definitions](https://cmake.org/cmake/help/latest/command/add_compile_definitions.html#command:add_compile_definitions)に `VAR=value` の形で列挙する
