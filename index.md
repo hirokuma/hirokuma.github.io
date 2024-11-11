@@ -4,6 +4,7 @@
 
 * 2024
   * November
+    * 11/22 [ncs: 致命エラーの取り扱い](2024/11/20241111-ncs.md)
     * 11/11 [android: Google Play Consoleの更新について](2024/11/20241111-and.md)
     * 11/10 [ncs: プロジェクト用 Kconfig](2024/11/20241110-ncs2.md)
     * 11/10 [ncs: CMake Extra arguments には何でも設定できるのか？](2024/11/20241110-ncs.md)
