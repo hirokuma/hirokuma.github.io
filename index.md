@@ -4,6 +4,7 @@
 
 * 2024
   * November
+    * 11/15 [android: BLEコールバック](2024/11/20241115-and.md)
     * 11/14 [android: BLE Central アプリに必要な permission](2024/11/20241114-and.md)
     * 11/13 [android: アーキテクチャに沿ったサンプルアプリの修正](2024/11/20241113-and.md)
     * 11/12 [ncs: アプリでのBLEの比重](2024/11/20241112-ncs.md)
