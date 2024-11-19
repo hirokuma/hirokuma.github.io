@@ -4,6 +4,7 @@
 
 * 2024
   * November
+    * 11/19 [android: テンプレートの BLE Serivceを改造しよう](2024/11/20241119-and.md)
     * 11/18 [android: Data Sources をそれっぽくしたい](2024/11/20241118-and.md)
     * 11/17 [android: ひとまずBLEテンプレートは完了とする](2024/11/20241117-and.md)
     * 11/16 [ncs: GPIOTEってなんだっけ](2024/11/20241116-ncs.md)

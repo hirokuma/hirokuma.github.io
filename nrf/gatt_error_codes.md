@@ -1,6 +1,6 @@
 # GATT Error Codes
 
-#### Core v5.1, Vol.3, Part F "3.4.1.1 Error Response"
+## Core v5.1, Vol.3, Part F "3.4.1.1 Error Response"
 
 | Name | Error Code | Description |
 |---|---|---|
@@ -27,7 +27,7 @@
 | Common Profile and Service Error Codes | 0xE0 – 0xFF | Common profile and service error codes defined in [Core Specification Supplement], Part B. |
 | Reserved for future use | All other values | Reserved for future use. |
 
-## ncs
+## ncs v2.6.1
 
 * [元データ](https://github.com/nrfconnect/sdk-zephyr/blob/v3.5.99-ncs1-1/include/zephyr/bluetooth/att.h#L27)
 * 戻り値として使うときは`BT_GATT_ERR()`で囲む。これは単にマイナス値にするだけである。
@@ -59,7 +59,7 @@
 | BT_ATT_ERR_PROCEDURE_IN_PROGRESS | 0xfe | Procedure Already in   Progress |
 | BT_ATT_ERR_OUT_OF_RANGE | 0xff | Out of Range |
 
-### Android
+## Android
 
 * [元データ](https://android.googlesource.com/platform/external/bluetooth/bluedroid/+/master/stack/include/gatt_api.h)
 
