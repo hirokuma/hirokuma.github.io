@@ -4,6 +4,7 @@
 
 * 2024
   * November
+    * 11/29 [clang: 私のC言語歴と_Noreturn](2024/11/20241129-clang.md)
     * 11/29 [ncs: sysbuild対応 (3)](2024/11/20241129-ncs.md)
     * 11/28 [ncs: sysbuild対応 (2)](2024/11/20241128-ncs.md)
     * 11/28 [wsl2: Firefoxでクリックできない？](2024/11/20241128-wsl.md)
