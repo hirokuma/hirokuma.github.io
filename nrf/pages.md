@@ -27,6 +27,11 @@ _最終更新日: 2024/11/06_
   * [nrfconnect/sdk-mcuboot: NCS downstream of https://github.com/zephyrproject-rtos/mcuboot](https://github.com/nrfconnect/sdk-mcuboot)
 * [DevAcademy](https://github.com/NordicDeveloperAcademy)
 
+#### west で checkout される tags
+
+* [v2.7.0](https://github.com/nrfconnect/sdk-nrf/blob/v2.7.0/west.yml)
+* [v2.8.0](https://github.com/nrfconnect/sdk-nrf/blob/v2.8.0/west.yml)
+
 ### Nordicページ検索
 
 Nordicのページを検索する。  
@@ -34,6 +39,8 @@ ncs のバージョンによって違うことがあるので、最新でない 
 
 * [Introduction: latest](https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/index.html)
   * [Introduction: ncs-v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/nrf/index.html)
+  * [Introduction: ncs-v2.7.0](https://docs.nordicsemi.com/bundle/ncs-2.7.0/page/nrf/index.html)
+  * [Introduction: ncs-v2.8.0](https://docs.nordicsemi.com/bundle/ncs-2.8.0/page/nrf/index.html)
 
 ### Kconfig
 
@@ -46,7 +53,7 @@ Kconfig の検索はちょっと特殊で、正規表現で記載するのがよ
 ### MCUboot
 
 DFU を載せないなら[MCUboot](https://docs.mcuboot.com/)はなくてもよいのかもしれない(調査中)。  
-`CONFIG_BOOTLOADER_MCUBOOT=y`が必要。
+`sysbuild.conf`に `SB_CONFIG_BOOTLOADER_MCUBOOT=y`(sysbuild) か `prj.conf` に `CONFIG_BOOTLOADER_MCUBOOT=y`(multi-image build) が必要。
 
 nRF53 は外部に Flash を持たないと DFU に手間がかかる。
 詳しくは DevAcademy Intermediate [Lesson 8 – Bootloaders and DFU/FOTA](https://academy.nordicsemi.com/courses/nrf-connect-sdk-intermediate/lessons/lesson-8-bootloaders-and-dfu-fota/)を参照。

@@ -3,6 +3,8 @@
 ## 開発日記
 
 * 2024
+  * December
+    * 12/02 [ncs: USBでのDFU (1)](2024/12/20241202-ncs.md)
   * November
     * 11/29 [clang: 私のC言語歴と_Noreturn](2024/11/20241129-clang.md)
     * 11/29 [ncs: sysbuild対応 (3)](2024/11/20241129-ncs.md)
