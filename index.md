@@ -4,6 +4,7 @@
 
 * 2024
   * December
+    * 12/03 [ncs: USBでのDFU (2)](2024/12/20241203-ncs.md)
     * 12/02 [ncs: USBでのDFU (1)](2024/12/20241202-ncs.md)
   * November
     * 11/29 [clang: 私のC言語歴と_Noreturn](2024/11/20241129-clang.md)
