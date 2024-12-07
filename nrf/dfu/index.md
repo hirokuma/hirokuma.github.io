@@ -6,8 +6,9 @@
 * イメージの取得ルート別
   * DFU over UART
     * UART ポート
+  * DFU over USB
     * USB CDC-ACM(Virtual COM port)
-  * DFU over BLE
+  * FOTA over BLE
 * イメージの取得タイミング別
   * MCUboot
   * アプリ
@@ -16,20 +17,29 @@
 
 ## DFU over UART
 
-### to MCUboot
+### from MCUboot
 
 #### via hardware UART (*1)
 
+DFU over UART from MCUboot
+
 #### via virtual COM port (*2)
 
+DFU over USB from MCUboot
 
-### to Application
+### from the application
 
 #### via hardware UART (*3)
 
+DFU over UART from the application
+
 #### via virtual COM port (*4)
 
-#### via BLE (*5)
+DFU over USB from the application
+
+### via BLE (*5)
+
+FOTA over BLE
 
 ## 署名の検証
 
