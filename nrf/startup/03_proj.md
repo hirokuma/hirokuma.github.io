@@ -12,7 +12,7 @@ vscode で C/C++ 設定を変更しておくと良いだろう。
 "C_Cpp.default.configurationProvider": "nordic-semiconductor.nrf-connect"
 ```
 
-![image](03-1.png)
+![image](images/03-1.png)
 
 nRF Connect SDK の開発用に vscode のプロファイルを作っておくとよいかもしれない。
 
@@ -25,7 +25,7 @@ nRF Connect SDK for VScode で新規プロジェクトを作る場合、空の`m
 
 * [sdk-nrf/samples/bluetooth/peripheral_power_profiling at v2.6.1 · nrfconnect/sdk-nrf](https://github.com/nrfconnect/sdk-nrf/tree/v2.6.1/samples/bluetooth/peripheral_power_profiling)
 
-![image](03-2.png)
+![image](images/03-2.png)
 
 サンプルコードではないが、DevAcademy BLE Lesson 4 Exercise 2 は LBS(Nordic LED Button Service) を自分で実装してみる練習なのでわかりやすいかもしれない。
 
@@ -43,12 +43,12 @@ Source Control を開かなければ気付かないし、そもそも見た目�
 このように ncs のディレクトリが出てきて、自分のプロジェクトに差分があるのでは、という気持ちになってしまうかもしれない。  
 ステータス表示も ncs をインストールした west になっている。
 
-![image](03-3.png)
+![image](images/03-3.png)
 
 作成したプロジェクトで `git init` すると、Source Control でもプロジェクトの方が優先で表示されるようになる。  
 ncs の方も表示されるが、折りたたんでおけば気にならない。
 
-![image](03-4.png)
+![image](images/03-4.png)
 
 ## ビルド
 
@@ -65,7 +65,7 @@ ncs の方も表示されるが、折りたたんでおけば気にならない�
 
 nRF5340 は application core と network core を持っていて、さらに application core の方は secure と non-secure があるので複数の設定が出てくる。
 
-![image](03-5.png)
+![image](images/03-5.png)
 
 概要は DevAcademy を読むのがよいだろう。
 
@@ -110,7 +110,7 @@ MCUboot のディレクトリに置くことになりそうだった。
 
 nRF Connect シリーズの中に [for Desktop](https://www.nordicsemi.com/Products/Development-tools/nrf-connect-for-desktop) というアプリがある。
 
-![image](03-6.png)
+![image](images/03-6.png)
 
 nRF DKボードを持っている場合、スニファのアプリを書き込んで使えるようになったりする。  
 DKボードを持っていない場合でも Programmer というアプリは HEXファイルを書き込んだり Erase するのに使うことができる。
