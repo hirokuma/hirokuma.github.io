@@ -16,9 +16,7 @@ nRF5340 しか持っていないので、その構成を念頭に記載する。
 
 ![image](images/pattern.png)
 
-## DFU over UART
-
-### sysbuild
+## sysbuild
 
 ncs v2.8 以降は sysbuild がデフォルトになるので、ここでは sysbuild で書いていく。
 
@@ -44,7 +42,7 @@ ncs v2.8 以降は sysbuild がデフォルトになるので、ここでは sys
   * `/sysbuild/mcuboot/boards/*.conf, *.overlay`
     * 各ボード依存の設定
 
-### mcumgr-cli
+## mcumgr-cli
 
 [MCUmgr](https://docs.nordicsemi.com/bundle/ncs-latest/page/zephyr/services/device_mgmt/mcumgr.html) というしくみを使って DFU を行う。  
 デバイス側がサーバ、イメージをアップロードする方がクライアントとなる。
@@ -58,7 +56,7 @@ Go言語のツールなので事前に `go` のインストールをしておく
 $ go install github.com/apache/mynewt-mcumgr-cli/mcumgr@latest
 ```
 
-#### 設定
+### 使い方
 
 * 通信経路の設定
   * これは "ssci" という設定名で `/dev/ttyUSB0` を登録している
@@ -98,21 +96,23 @@ $ mcumgr -c ssci image upload build/l8_e1/zephyr/zephyr.signed.bin
   * `test` は必須か分からないが推奨される手順である
 
 ```console
-$ mcumgr -c ssciacm image test <ハッシュ値>
+$ mcumgr -c ssci image test <ハッシュ値>
 ```
 
 * リセット
   * アップロードされた状態で行うとイメージの入替(swap-moveか?)が行われる
 
 ```console
-$ mcumgr -c ssciacm reset
+$ mcumgr -c ssci reset
 ```
 
-#### その他のツール
+### その他のツール
 
 [Rustで書かれたツールへのリンク](https://github.com/vouch-opensource/mcumgr-client) があったので Release ページからバイナリをダウンロードして使うことができるのかもしれないが私は試していない。
 
 DFU over USB(CDC-ACM) であれば [nRF Connect for Desktop](https://docs.nordicsemi.com/bundle/nrf-connect-desktop/page/index.html) の [Programmer アプリ](https://docs.nordicsemi.com/bundle/nrf-connect-programmer/page/index.html)が使用できるかもしれない。
+
+## DFU over UART
 
 ### from MCUboot
 
