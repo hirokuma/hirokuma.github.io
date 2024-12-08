@@ -9,6 +9,7 @@ Nordic Semiconductor 社の製品、主に BLE 向けについて
 * [Devicetree](devicetree/index.md)
 * [GATT Error Codes](gatt_error_codes.md)
 * [ビルドについて](build.md)
+* [DFU](dfu/index.md)
 * [Zephyr OS](zephyr/index.md)
 * 私の作業リポジトリ
   * [テンプレートコード生成](https://github.com/hirokuma/js-ncs-service-gen)
