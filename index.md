@@ -4,6 +4,7 @@
 
 * 2024
   * December
+    * 12/09 [android: Google Play Consoleのアカウント期限当日](2024/12/20241209-and.md)
     * 12/08 [web: GitHub Pagesでのアンカーリンク](2024/12/20241208-web.md)
     * 12/08 [ncs: USBでのDFU (8)](2024/12/20241208-ncs.md)
     * 12/07 [ncs: USBでのDFU (7)](2024/12/20241207-ncs.md)
