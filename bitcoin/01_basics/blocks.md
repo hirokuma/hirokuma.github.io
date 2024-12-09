@@ -4,7 +4,7 @@ _最終更新日: 2024/11/30_
 
 ## はじめに
 
-「ブロックチェーン」という名前が示すように、Bitcoin でもブロックというものが重要である。
+「ブロックチェーン」という名前が示すように、Bitcoin はブロックというものが重要である。
 
 ## 概要
 
@@ -97,16 +97,15 @@ Public Blockchain と呼ばれるゆえんである。
 
 | item | size | unit |
 |---|---|---|
-| version | 4 | int32_t |
-| prev | 32 | char[32] |
-| merkle_root | 32 | char[32] |
-| time | 4 | unixtime |
-| nBits | 4 | uint32_t |
-| nonce | 4 | uint32_t |
-| txn_count | m | [compact_size](compact-size.md) |
-| txs | n | tx[txn_count] |
+| version | 4 | `int32_t` |
+| prev | 32 | `char[32]` |
+| merkle_root | 32 | `char[32]` |
+| time | 4 | `unixtime` |
+| nBits | 4 | `uint32_t` |
+| nonce | 4 | `uint32_t` |
+| txn_count | m | [`compact size`](value.md) |
+| txs | | `tx[txn_count]` |
 
 `version`～`nonce` までの 80 byte をブロックヘッダと呼ぶ。
-
 
 ## おわりに
