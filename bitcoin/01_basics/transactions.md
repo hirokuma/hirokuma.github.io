@@ -6,7 +6,7 @@
 
 Bitcoinトランザクションには署名の方法などによる違いはあるが、データの構成は決まっている。
 
-### 構成
+## 構成
 
 * 参照
   * [Raw Transaction Format](https://developer.bitcoin.org/reference/transactions.html#raw-transaction-format)
@@ -16,41 +16,59 @@ Bitcoinトランザクションはバイナリデータである。
 以下はバイナリデータを構成している要素の名前である。
 この名前は解説しているサイトによって多少違う(`version`が`nVersion`だったり`lock_time`が`LockTime`だったり)が、
 
-* `version`
-* `marker`, `flag` (存在しない場合あり)
-* `txin_count`
-* `txins[]`
-  * `txid:index`(out_point)
-  * `scriptSig`
-  * `sequence`
-* `txout_count`
-* `txouts[]`
-  * `value`
-  * `scriptPubKey`
-* `script_witnesses[]` (存在しない場合あり)
-* `lock_time`
+### transaction
+
+| item | size | unit | note |
+|---|---|---|---|
+| version | 4 | `int32_t` |  |
+| marker, flag | 1, 1 | `uint8_t`, `uint8_t` | 存在しない場合あり |
+| txin_count | m | compact size |  |
+| txins[] |  | txin[txin_count] |  |
+| txout_count | p | compact size |  |
+| txouts[] |  | `txout[txout_count]` |  |
+| script_witnesses[] |  | `script_witness[txin_count]` | 存在しない場合あり |
+| lock_time | 4 | `uint32_t` |  |
+
+`script_witnesses` の数は `txin_count` と同じである。
+
+### txin
+
+| item | size | unit |
+|---|---|---|
+| txid | 32 | `char[32]` |
+| index | 4 | `uint32_t` |
+| scriptSig | | script |
+| sequence | 4 | `uint32_t` |
+
+### txout
+
+| item | size | unit |
+|---|---|---|
+| value | 8 | `uint64_t` |
+| scriptPubKey | | script |
+
+### script_witness
+
+| item | size | unit |
+|---|---|---|
+| witness_count | | compact size |
+| scripts | | `script[witness_count]` |
+
+### 説明
 
 先頭から 5byte目のデータで見分ける。  
-segwit(witness)のトランザクションの場合、その位置に`0x00`が入っている。その場合は `maker(0x00)`と`flag(0x01)`が並んでいる。  
+segwit(witness)のトランザクションの場合、その位置に`0x00`が入っている。その場合は `marker(0x00)`と`flag(0x01)`が並んでいる。  
 それ以外の場合は segwit非対応のトランザクションで、`marker`と`flag`がなく 5byte 目から`txin_count`のデータが入っている。
 
-[Serialization](https://github.com/bitcoin/bips/blob/83a1afd9859848628645c7fa200beb0dc0aea4f5/bip-0144.mediawiki#user-content-Serialization)の表に "Type" 列があるが、これがそれぞれのデータタイプである。  
-`txins[]`, `txouts[]`, `script_witnesses[]` はさらにデータ構造がある。  
+[Serialization](https://github.com/bitcoin/bips/blob/83a1afd9859848628645c7fa200beb0dc0aea4f5/bip-0144.mediawiki#user-content-Serialization)の表に "Type" 列があるが、これがそれぞれのデータタイプである。
 
-下に例としていくつか raw transaction(生のトランザクションバイナリデータ)を分解する。  
+スクリプトの中に数値が使われる場合は命令と組み合わせて使うため [Compact Size型](value.md) とは別の表現になる([Constants](https://en.bitcoin.it/wiki/Script#Constants))。
+
+### データ例
+
+例としていくつか raw transaction(生のトランザクションバイナリデータ)を分解する。  
 "`<script～>`" となっている項目は、先頭がデータ長でその後ろにデータ長分のデータが続いている。  
 "`<script_witnesses>`" は少し特殊で、全体の数は `<txin_count>`で、それぞれスクリプトの個数とスクリプトが続いている。
-
-#### 値の表現
-
-値については 2の補数の little endian。  
-固定長の場合はそのバイト数のデータ型、可変長は Compact Size型が使われている。
-
-[Compact Size型](https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer)はあまり見慣れないと思う。  
-例えば `0xfc` までなら 1バイトでそのまま表現できるが、`0xfd` は `0xfdfd00`(little endian)になる。
-`var_int`, `VarInt` と呼ばれることもあるが[厳密には異なる](https://learnmeabitcoin.com/technical/general/compact-size/#varint)とのこと。  
-
-ちなみにスクリプトの中に数値が使われる場合は命令と組み合わせて使うため別の表現になる([Constants](https://en.bitcoin.it/wiki/Script#Constants))。
 
 #### 例1: 非segwit
 
@@ -110,7 +128,7 @@ segwit(witness)のトランザクションの場合、その位置に`0x00`が�
 <txin_count>
 01
 
-<txin[0]>
+<txins[0]>
   <txid:index>
   064c370388c7bb573fb574983e8f5740f697f45dba4dc96a16b2e31ea9034a0701000000
   <scriptSig>
@@ -205,7 +223,7 @@ segwit(witness)のトランザクションの場合、その位置に`0x00`が�
 00000000
 ```
 
-### TXID
+## TXID
 
 個別のトランザクションを指し示すとき、通常は TXID(Transaction ID)を使う。  
 データを SHA256 で 2回計算する。
