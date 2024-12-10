@@ -191,6 +191,8 @@ merkle root hash は ブロックヘッダ以降のトランザクションを�
 WTXID `A` と `B` から `AB = sha256(sha256(A || B))` を得る(`||` はデータの連結)。  
 これを続けて `root` まで計算した後、さらに `sha256(sha256(root || 00...0))` した結果が merkle root hash である。
 
+![image](images/block-4.png)
+
 * [Extensible commitment structure](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki#extensible-commitment-structure)
 
 #### nonce
