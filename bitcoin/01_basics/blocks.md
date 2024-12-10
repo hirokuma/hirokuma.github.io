@@ -111,26 +111,26 @@ Public Blockchain と呼ばれるゆえんである。
 
 `version`～`nonce` までの 80 byte をブロックヘッダと呼ぶ。
 
-### データ例
+## ブロックデータの取得例
 
 ここではデータの取得に mempool.space を使う。  
 `bitcoind` などでもよい。
 
-#### ブロックヘッダデータからハッシュ値を求める
+### ブロックヘッダデータからハッシュ値を求める
 
 ブロックハッシュを指定して取得する。  
 ハッシュ値が分からない場合はブロック高から取得する。
 
-10万ブロック目(`100,000`) を題材にする。
+ここでは10万ブロック目(`100,000`) を題材にする。
 
-##### [GET BlockHeight](https://mempool.space/ja/docs/api/rest#get-block-height)
+#### [GET BlockHeight](https://mempool.space/ja/docs/api/rest#get-block-height)
 
 ```console
 $ curl -sSL "https://mempool.space/api/block-height/100000"
 000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506
 ```
 
-##### [GET Block Header](https://mempool.space/ja/docs/api/rest#get-block-header)
+#### [GET Block Header](https://mempool.space/ja/docs/api/rest#get-block-header)
 
 ```console
 $ curl -sSL "https://mempool.space/api/block/000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506/header"
@@ -166,7 +166,7 @@ $ curl -sSL "https://mempool.space/api/block/000000000003ba27aa200b1cecaad478d2b
 0f2b5710
 ```
 
-##### ハッシュ値
+### ハッシュ値
 
 ブロックヘッダのデータを SHA-256 し、その結果をさらに SHA-256 する。  
 その結果をバイトデータとして逆順にした値がそのブロックのハッシュ値になる。
@@ -178,7 +178,7 @@ $ curl -sSL "https://mempool.space/api/block/000000000003ba27aa200b1cecaad478d2b
 
 結果は `000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506` でブロック高から取得した値と一致している。
 
-#### merkle root hash
+## merkle root hash
 
 merkle root hash は ブロックヘッダ以降のトランザクションをマークルツリー構造に落とし込んだルートの値を使って計算する。  
 マークルツリーの leaf というか node というかに WTXID を使用する(TXID ではなく)。
@@ -195,7 +195,7 @@ WTXID `A` と `B` から `AB = sha256(sha256(A || B))` を得る(`||` はデー�
 
 * [Extensible commitment structure](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki#extensible-commitment-structure)
 
-#### nonce
+## nonce
 
 自分でマイニングするとしよう。
 
@@ -212,8 +212,9 @@ nBits から算出した値より小さくなるブロックヘッダのハッ�
 
 例えばこれを書いている時点では nBits=`386053475` で、計算すると目標値(target という)が `0x2b5630000000000000000000000000000000000000000` になる。  
 けっこう桁数が多いので何とかなりそうな気がするかもしれないが、ハッシュ値なので数値がこれを下回るというよりも、ハッシュ値の頭にゼロが連続でいくつ以上並ぶ値を見つける感じになる。  
-今回だと `00000000000000000002b5630000000000000000000000000000000000000000` のように 0 が 19個以上、ビット数でいえば 78 bit より多くの 0 が続かないといけない。  
-前のブロックヘッダのハッシュがパラメータに含まれているので事前に計算もできない。
+今回だと `00000000000000000002b5630000000000000000000000000000000000000000` のように 0 が 19個以上、ビット数でいえば 78 bit より多くの 0 が続かないといけない。
+前のブロックヘッダのハッシュがパラメータに含まれているので事前に計算もできず、ブロックが承認されてから一斉にマイナーたちは次ブロックの作業をし始める。  
+いやはや大変だ。
 
 なお、実際に[選ばれたブロック](https://mempool.space/ja/block/000000000000000000004b3b1e4ac2f472255a1196e0535e5581704d527a9beb)は `000000000000000000004b3b1e4ac2f472255a1196e0535e5581704d527a9beb` だった。
 並べてみるとちゃんと下回っていることが分かる。
