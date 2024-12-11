@@ -22,7 +22,7 @@ Bitcoinトランザクションはバイナリデータである。
 |---|---|---|---|
 | version | 4 | `int32_t` |  |
 | txin_count | - | compact size | `0`は不可 |
-| txins[] | - | txin[txin_count] |  |
+| txins[] | - | `txin[txin_count]` |  |
 | txout_count | p | compact size | `0`は不可 |
 | txouts[] | - | `txout[txout_count]` |  |
 | lock_time | 4 | `uint32_t` |  |
@@ -36,7 +36,7 @@ segwit 以前はこの構造のみだった。
 | version | 4 | `int32_t` |  |
 | marker, flag | 1, 1 | `uint8_t`, `uint8_t` | `0x00`, `0x01`(BIP-141) |
 | txin_count | - | compact size | `0`は不可 |
-| txins[] | - | txin[txin_count] |  |
+| txins[] | - | `txin[txin_count]` |  |
 | txout_count | - | compact size | `0`は不可 |
 | txouts[] | - | `txout[txout_count]` |  |
 | script_witnesses[] | - | `script_witness[txin_count]` | |
