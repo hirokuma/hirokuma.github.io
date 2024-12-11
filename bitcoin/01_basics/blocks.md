@@ -1,6 +1,6 @@
 # ブロック
 
-_最終更新日: 2024/11/30_
+_最終更新日: 2024/12/11_
 
 ## はじめに
 
@@ -106,8 +106,8 @@ Public Blockchain と呼ばれるゆえんである。
 | time | 4 | `unixtime` |
 | nBits | 4 | `uint32_t` |
 | nonce | 4 | `uint32_t` |
-| txn_count | m | [`compact size`](value.md) |
-| txs | | `tx[txn_count]` |
+| txn_count | - | [`compact size`](value.md) |
+| txs | - | `tx[txn_count]` |
 
 `version`～`nonce` までの 80 byte をブロックヘッダと呼ぶ。
 

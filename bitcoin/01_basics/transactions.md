@@ -1,6 +1,6 @@
 # トランザクション
 
-<i>最終更新日: 2024/10/09</i>
+_最終更新日: 2024/12/11_
 
 ## はじめに
 
@@ -16,17 +16,30 @@ Bitcoinトランザクションはバイナリデータである。
 以下はバイナリデータを構成している要素の名前である。
 この名前は解説しているサイトによって多少違う(`version`が`nVersion`だったり`lock_time`が`LockTime`だったり)が、
 
-### transaction
+### transaction(not witness structure)
 
 | item | size | unit | note |
 |---|---|---|---|
 | version | 4 | `int32_t` |  |
-| marker, flag | 1, 1 | `uint8_t`, `uint8_t` | 存在しない場合あり |
-| txin_count | m | compact size |  |
-| txins[] |  | txin[txin_count] |  |
-| txout_count | p | compact size |  |
-| txouts[] |  | `txout[txout_count]` |  |
-| script_witnesses[] |  | `script_witness[txin_count]` | 存在しない場合あり |
+| txin_count | - | compact size | `0`は不可 |
+| txins[] | - | txin[txin_count] |  |
+| txout_count | p | compact size | `0`は不可 |
+| txouts[] | - | `txout[txout_count]` |  |
+| lock_time | 4 | `uint32_t` |  |
+
+segwit 以前はこの構造のみだった。
+
+### transaction(witness structure)
+
+| item | size | unit | note |
+|---|---|---|---|
+| version | 4 | `int32_t` |  |
+| marker, flag | 1, 1 | `uint8_t`, `uint8_t` | `0x00`, `0x01`(BIP-141) |
+| txin_count | - | compact size | `0`は不可 |
+| txins[] | - | txin[txin_count] |  |
+| txout_count | - | compact size | `0`は不可 |
+| txouts[] | - | `txout[txout_count]` |  |
+| script_witnesses[] | - | `script_witness[txin_count]` | |
 | lock_time | 4 | `uint32_t` |  |
 
 `script_witnesses` の数は `txin_count` と同じである。
@@ -56,7 +69,7 @@ Bitcoinトランザクションはバイナリデータである。
 
 ### 説明
 
-先頭から 5byte目のデータで見分ける。  
+witness 先頭から 5byte目のデータで見分ける。  
 segwit(witness)のトランザクションの場合、その位置に`0x00`が入っている。その場合は `marker(0x00)`と`flag(0x01)`が並んでいる。  
 それ以外の場合は segwit非対応のトランザクションで、`marker`と`flag`がなく 5byte 目から`txin_count`のデータが入っている。
 
@@ -248,6 +261,47 @@ a1d0efa306442b1b7b82535e3531407ab5916f9adb0761afc5b83bfdbbdcda70
 ```
 
 計算結果そのものの並びを "internal byte order"、逆順にした並びを "RPC byte order" と呼ばれている([用語集](https://developer.bitcoin.org/glossary.html))。  
+
+### TXIDとWTXID
+
+segwit(segregated witness) が登場するまで TXID はトランザクションの全データをハッシュ計算に含めていた。  
+segwit 時代になってトランザクション構造が増え、トランザクションを指す ID として WTXID が追加された。  
+
+* [Transaction ID](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki#transaction-id)
+
+TXID は従来の TXID と同じ立ち位置で、segwit 構造のトランザクションではハッシュ値の計算に segwit 部分を除外した部分を計算に使っている。  
+もう 1つは WTXID で、これはトランザクションデータ全体を計算する(以前の TXID と同じ計算方法)。
+
+ブロックで [merkle root hash](https://blog.hirokuma.work/bitcoin/01_basics/blocks.html#merkle-root-hash) を計算するのには WTXID を使い、それ以外では TXID を使うことが多いだろう。
+
+### バージョン
+
+トランザクションバージョン
+
+#### version 1
+
+初回のバージョン。
+
+#### version 2
+
+version 2 以降のトランザクションは BIP-68 に対応していることになる。
+
+* [BIP-68](https://github.com/bitcoin/bips/blob/master/bip-0068.mediawiki#specification)
+* [BIP-112](https://github.com/bitcoin/bips/blob/master/bip-0112.mediawiki)
+
+#### version 3
+
+version 3 はまだドラフトなようだが試作版が Bitcoin Core に実装されているとのこと。
+
+* [Version 3 transaction relay](https://bitcoinops.org/en/topics/version-3-transaction-relay/)
+* [BIP-431](https://github.com/bitcoin/bips/blob/master/bip-0431.mediawiki)
+* [Bitcoin Core 28.0のポリシーを採用するウォレット用ガイド](https://bitcoinops.org/ja/bitcoin-core-28-wallet-integration-guide/)
+
+### 署名
+
+楕円曲線の署名をスクリプトに載せることがある。  
+DER形式なのだが先頭の値が `0x80` 以上になってはいけない([stackexchange](https://bitcoin.stackexchange.com/questions/12554/why-the-signature-is-always-65-13232-bytes-long/12556#12556))。  
+
 
 ## おわりに
 
