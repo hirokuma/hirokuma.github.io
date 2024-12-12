@@ -4,6 +4,7 @@
 
 * 2024
   * December
+    * 12/12 [android: Google Play Consoleで本人確認が必要](2024/12/20241212-and.md)
     * 12/11 [bitcoin: var_int](2024/12/20241211-btc.md)
     * 12/10 [bitcoin: ブロック](2024/12/20241210-btc.md)
     * 12/09 [android: Google Play Consoleのアカウント期限当日](2024/12/20241209-and.md)
