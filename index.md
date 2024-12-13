@@ -4,6 +4,7 @@
 
 * 2024
   * December
+    * 12/13 [bitcoin: ノードを立てる (1)](2024/12/20241213-btc.md)
     * 12/12 [android: Google Play Consoleで本人確認が必要](2024/12/20241212-and.md)
     * 12/11 [bitcoin: var_int](2024/12/20241211-btc.md)
     * 12/10 [bitcoin: ブロック](2024/12/20241210-btc.md)
