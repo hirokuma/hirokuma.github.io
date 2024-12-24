@@ -4,6 +4,7 @@
 
 * 2024
   * December
+    * 12/24 [ncs: GitHub Copilot Chatで何ができるか (3)](2024/12/20241224ncs.md)
     * 12/22 [ncs: GitHub Copilot Chatで何ができるか (2)](2024/12/20241222-ncs.md)
     * 12/20 [ncs: GitHub Copilot Chatで何ができるか](2024/12/20241220-ncs.md)
     * 12/15 [あまり絵を描かない人のペンタブレット](2024/12/20241215-pen.md)
