@@ -4,7 +4,8 @@
 
 * 2024
   * December
-    * 12/26 [clang: make install で /usr/local/lib にインストール](2024/12/20241226-clang.md)
+    * 12/27 [年末clang (2): いろいろ](2024/12/20241227-clang.md)
+    * 12/26 [年末clang (1): make install で /usr/local/lib にインストール](2024/12/20241226-clang.md)
     * 12/26 [ts-node は何者なのか](2024/12/20241226-tsc.md)
     * 12/25 [ドメインは取るのは簡単だが後がめんどくさい](2024/12/20241225-dns.md)
     * 12/24 [ncs: GitHub Copilot Chatで何ができるか (3)](2024/12/20241224ncs.md)
