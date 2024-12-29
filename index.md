@@ -4,6 +4,7 @@
 
 * 2024
   * December
+    * 12/29 [年末clang (4): いろいろ](2024/12/20241229-clang.md)
     * 12/28 [年末clang (3): いろいろ](2024/12/20241228-clang.md)
     * 12/27 [年末clang (2): いろいろ](2024/12/20241227-clang.md)
     * 12/26 [年末clang (1): make install で /usr/local/lib にインストール](2024/12/20241226-clang.md)
