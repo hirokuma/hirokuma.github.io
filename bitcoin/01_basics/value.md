@@ -5,7 +5,10 @@ _最終更新日: 2024/12/11_
 数値は 2の補数の little endian で表す。  
 固定長の場合はそのバイト数のデータ型、可変長は Compact Size型が使われている。
 
-[Compact Size型](https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer)はあまり見慣れないと思う。  
+* [CompactSize Unsigned Integers](https://developer.bitcoin.org/reference/transactions.html#compactsize-unsigned-integers)
+* [Variable length integer](https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer)
+
+Compact Size型はあまり見慣れないと思う。  
 例えば `0xfc` までなら 1バイトでそのまま表現できるが、`0xfd` は `0xfdfd00`(little endian)になる。  
 データ長を表すのに使われることがほとんどだと思う。
 
@@ -51,10 +54,9 @@ uint64_t varint(const uint8_t *p_varint)
 }
 ```
 
-## `VarInt`/`varint` と `var_int`
+## `VarInt`, `varint`, `var_int`
 
-`VarInt` と呼ばれることもあるが、これは DB型の[厳密には異なる](https://learnmeabitcoin.com/technical/general/compact-size/#varint)とのこと。  
-BIP には `VarInt` や `varint` もあれば `var_int` として書かれているところもある。  
+Compact Size型という名称だが、BIP には `VarInt` や `varint` もあれば `var_int` として書かれているところもある。  
 [GitHub の BIP](https://github.com/bitcoin/bips) を検索したところこういう状況だった。  
 あまり区別されていないようなので、Bitcoin 関連でこれらの型が出てきたらだいたい Compact Size型だと思ってよいのではなかろうか。
 
@@ -71,4 +73,5 @@ BIP には `VarInt` や `varint` もあれば `var_int` として書かれてい
   * BIP-180
   * BIP-337
 
-スクリプトの中に数値が使われる場合は命令と組み合わせて使うため Compact Size型とは別の表現になる([Constants](https://en.bitcoin.it/wiki/Script#Constants))。
+スクリプトの中に数値が使われる場合は命令と組み合わせて使うため Compact Size型とは別の表現になる([Constants](https://en.bitcoin.it/wiki/Script#Constants))。  
+LevelDBに[VarInt](https://learnmeabitcoin.com/technical/general/compact-size/#varint)があるが、あれとは関係ない。
