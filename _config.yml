@@ -2,7 +2,6 @@ url: https://blog.hirokuma.work
 source: .
 plugins:
   - jekyll-remote-theme
-  - jekyll-sitemap
   - jekyll-last-modified-at
   - jekyll-redirect-from
 title: hiro99ma blog
