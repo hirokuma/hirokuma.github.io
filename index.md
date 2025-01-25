@@ -5,6 +5,7 @@
 * 2025
   * January
     * 01/25 [web: 謎の Google Search Console sitemap](2025/01/20250125-web.md)
+    * 01/25 [btc: bitcoinjs-lib を使う (4)](2025/01/20250125-btc.md)
     * 01/24 [btc: bitcoinjs-lib を使う (3)](2025/01/20250124-btc.md)
     * 01/23 [btc: bitcoinjs-lib を使う (2)](2025/01/20250123-btc.md)
     * 01/22 [btc: bitcoinjs-lib を使う (1)](2025/01/20250122-btc.md)
