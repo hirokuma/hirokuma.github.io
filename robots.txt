@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://blog.hirokuma.work/my-sitemap.xml
+Sitemap: https://blog.hirokuma.work/sitemap.xml
