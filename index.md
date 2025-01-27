@@ -1,9 +1,8 @@
-# hiro99ma blog
-
 ## 開発日記
 
 * 2025
   * January
+    * 01/27 [btc: libwally-core を使う (2)](2025/01/20250127-btc.md)
     * 01/26 [btc: libwally-core を使う (1)](2025/01/20250126-btc.md)
     * 01/25 [web: 謎の Google Search Console sitemap](2025/01/20250125-web.md)
     * 01/25 [btc: bitcoinjs-lib を使う (4)](2025/01/20250125-btc.md)
