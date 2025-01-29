@@ -2,6 +2,7 @@
 
 * 2025
   * January
+    * 01/29 [btc: libwally-core を使う (4)](2025/01/20250129-btc.md)
     * 01/28 [web: Cloudflareにドメイン管理を移管](2025/01/20250128-web.md)
     * 01/28 [btc: libwally-core を使う (3)](2025/01/20250128-btc.md)
     * 01/27 [btc: libwally-core を使う (2)](2025/01/20250127-btc.md)
