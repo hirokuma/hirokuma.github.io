@@ -2,6 +2,7 @@
 
 * 2025
   * January
+    * 01/31 [btc: MuSig](2025/01/20250131-btc.md)
     * 01/30 [PSA Crypto API](2025/01/20250130-psa.md)
     * 01/30 [ncs: nRF Connect SDK v2.9.0](2025/01/20250130-ncs.md)
     * 01/29 [btc: libwally-core を使う (4)](2025/01/20250129-btc.md)
