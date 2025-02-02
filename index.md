@@ -2,6 +2,7 @@
 
 * 2025
   * February
+    * 02/02 [btc: libsecp256k1 は MuSig 2 だった](2025/02/20250202-btc.md)
     * 02/01 [btc: MuSigは難しい](2025/02/20250201-btc.md)
   * January
     * 01/31 [btc: MuSig](2025/01/20250131-btc.md)
