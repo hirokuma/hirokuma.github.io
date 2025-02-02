@@ -8,8 +8,8 @@ sequenceDiagram
   participant coodinator
   participant Bob
 
-  Alice-->>coodinator: internal pubkey(pubA)
-  Bob-->>coodinator: internal pubkey(pubB)
+  Alice->>coodinator: internal pubkey(pubA)
+  Bob->>coodinator: internal pubkey(pubB)
   Note over coodinator: aggregate pubA and pubB-->aggPub
   coodinator-->>Alice: aggPub
   coodinator-->>Bob: aggPub
