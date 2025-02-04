@@ -2,6 +2,9 @@
 
 ## Generate MultiSig pubkey
 
+libsecp256k1 library returns `secp256k1_musig_keyagg_cache` when calculating public key aggregation. 
+This value is used when calculating partial signatures.
+
 ```mermaid
 sequenceDiagram
   participant Alice
@@ -10,12 +13,17 @@ sequenceDiagram
 
   Alice->>coodinator: internal pubkey(pubA)
   Bob->>coodinator: internal pubkey(pubB)
-  Note over coodinator: aggregate pubA and pubB-->aggPub
-  coodinator-->>Alice: aggPub
-  coodinator-->>Bob: aggPub
+  Note over coodinator: aggregate pubA and pubB
+  coodinator-->>Alice: pubB
+  Note over Alice: aggregate pubA and pubB
+  coodinator-->>Bob: pubA
+  Note over Bob: aggregate pubA and pubB
 ```
 
 ## Sign
+
+In libsecp256k1 library, calling `secp256k1_musig_nonce_process()` returns `secp256k1_musig_session`. 
+This value is used when calculating partial signatures and aggregate signatures.
 
 ```mermaid
 sequenceDiagram
