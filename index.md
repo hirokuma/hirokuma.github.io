@@ -2,6 +2,7 @@
 
 * 2025
   * February
+    * 02/06 [ai: Gemini を vscodeから使う](2025/02/20250206-ai.md)
     * 02/05 [btc: libwally-core で script path (2)](2025/02/20250205-btc.md)
     * 02/04 [btc: libwally-core で script path (1)](2025/02/20250204-btc.md)
     * 02/04 [android: プライベートスペースのロック](2025/02/20250204-and.md)
