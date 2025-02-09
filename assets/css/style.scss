@@ -40,4 +40,11 @@ $border-color: #159759;
     h6::before {
         content: "|||| ";
     }
+    img {
+        box-shadow: 6px 6px #777777;
+        border: solid 1px #777777;
+    }
+    code.highlighter-rouge {
+        color: #ee56cf;
+    }
 }
