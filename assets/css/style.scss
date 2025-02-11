@@ -47,4 +47,13 @@ $border-color: #159759;
     code.highlighter-rouge {
         color: #ee56cf;
     }
+    blockquote {
+        color: #d95353;
+        font-style: italic;
+        border-left: {
+            border-left-width: 3px;
+            border-left-style: dotted;
+            border-left-color: rgb(0, 255, 128);
+        }
+    }
 }
