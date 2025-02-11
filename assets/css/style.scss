@@ -48,12 +48,13 @@ $border-color: #159759;
         color: #ee56cf;
     }
     blockquote {
+        background: #404040;
         color: #d95353;
         font-style: italic;
         border-left: {
-            width: 3px;
-            style: dotted;
-            color: rgb(0, 255, 128);
+            width: 8px;
+            style: solid;
+            color: rgb(80, 80, 80);
         }
     }
 }
