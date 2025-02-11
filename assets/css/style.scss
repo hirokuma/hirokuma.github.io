@@ -51,9 +51,9 @@ $border-color: #159759;
         color: #d95353;
         font-style: italic;
         border-left: {
-            border-left-width: 3px;
-            border-left-style: dotted;
-            border-left-color: rgb(0, 255, 128);
+            width: 3px;
+            style: dotted;
+            color: rgb(0, 255, 128);
         }
     }
 }
