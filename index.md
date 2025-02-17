@@ -2,6 +2,7 @@
 
 * 2025
   * February
+    * 02/17 [rust: Rustがんばろう 7日目](2025/02/20250217-rst.md)
     * 02/17 [clang: Mbed TLSとPSA (2)](2025/02/20250217-c.md)
     * 02/16 [clang: Mbed TLSとPSA](2025/02/20250216-c.md)
     * 02/15 [rust: Rustがんばろう 6日目](2025/02/20250215-rst.md)
