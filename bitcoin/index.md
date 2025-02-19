@@ -31,6 +31,7 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 
 ## 01. Basics
 
+* [Bitcoin Core(bitcoind) を regtest で動かす](/bitcoin/01_basics/bitcoind.html)
 * [値の表現](/bitcoin/01_basics/value.html)
 * [ブロック](/bitcoin/01_basics/blocks.html)
 * [トランザクション](/bitcoin/01_basics/transactions.html)
