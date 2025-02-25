@@ -3,6 +3,7 @@
 * 2025
   * February
     * 02/25 [btc: JSON-RPC では by-name も OK](2025/02/20250225-btc.md)
+    * 02/25 [btc: Output Descriptors (2)](2025/02/20250225-btc2.md)
     * 02/24 [btc: Output Descriptors](2025/02/20250224-btc.md)
     * 02/23 [rust: Rustがんばろう 9日目](2025/02/20250223-rst.md)
     * 02/21 [rust: Rustがんばろう 8日目](2025/02/20250221-rst.md)
