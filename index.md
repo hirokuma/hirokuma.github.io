@@ -2,6 +2,7 @@
 
 * 2025
   * February
+    * 02/28 [btc: 520バイトは1スタックのサイズ上限](2025/02/20250228-btc.md)
     * 02/25 [btc: JSON-RPC では by-name も OK](2025/02/20250225-btc.md)
     * 02/25 [btc: Output Descriptors (2)](2025/02/20250225-btc2.md)
     * 02/24 [btc: Output Descriptors](2025/02/20250224-btc.md)
