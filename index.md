@@ -1,6 +1,8 @@
 ## 開発日記
 
 * 2025
+  * March
+    * 03/01 [btc: Output Descriptors (3)](2025/03/20250301-btc.md)
   * February
     * 02/28 [btc: 520バイトは1スタックのサイズ上限](2025/02/20250228-btc.md)
     * 02/25 [btc: JSON-RPC では by-name も OK](2025/02/20250225-btc.md)
