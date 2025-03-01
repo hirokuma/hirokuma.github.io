@@ -8,15 +8,15 @@ This value is used when calculating partial signatures.
 ```mermaid
 sequenceDiagram
   participant Alice
-  participant coodinator
+  participant coordinator
   participant Bob
 
-  Alice->>coodinator: internal pubkey(pubA)
-  Bob->>coodinator: internal pubkey(pubB)
-  Note over coodinator: aggregate pubA and pubB
-  coodinator-->>Alice: pubB
+  Alice->>coordinator: internal pubkey(pubA)
+  Bob->>coordinator: internal pubkey(pubB)
+  Note over coordinator: aggregate pubA and pubB
+  coordinator-->>Alice: pubB
   Note over Alice: aggregate pubA and pubB
-  coodinator-->>Bob: pubA
+  coordinator-->>Bob: pubA
   Note over Bob: aggregate pubA and pubB
 ```
 
@@ -28,25 +28,25 @@ This value is used when calculating partial signatures and aggregate signatures.
 ```mermaid
 sequenceDiagram
   participant Alice
-  participant coodinator
+  participant coordinator
   participant Bob
 
   Note over Alice,Bob: round 1
   Note over Alice: create secNonceA/pubNonceA
-  Alice->>coodinator: pubNonceA
+  Alice->>coordinator: pubNonceA
   Note over Bob: create secNonceB/pubNonceB
-  Bob->>coodinator: pubNonceB
-  Note over coodinator: aggregate pubNonceA and pubNonceB-->aggNonce
-  coodinator-->>Alice: aggNonce
-  coodinator-->>Bob: aggNonce
+  Bob->>coordinator: pubNonceB
+  Note over coordinator: aggregate pubNonceA and pubNonceB-->aggNonce
+  coordinator-->>Alice: aggNonce
+  coordinator-->>Bob: aggNonce
 
   Note over Alice,Bob: round 2
   Note over Alice: partial sign(sigA)
-  Alice->>coodinator: sigA
-  Note over coodinator: verify SigA
+  Alice->>coordinator: sigA
+  Note over coordinator: verify SigA
   Note over Bob: partial sign(sigB)
-  Bob->>coodinator: sigB
-  Note over coodinator: verify SigB
-  Note over coodinator: aggregate sigA and sigB
-  Note over coodinator: broadcast signed transaction
+  Bob->>coordinator: sigB
+  Note over coordinator: verify SigB
+  Note over coordinator: aggregate sigA and sigB
+  Note over coordinator: broadcast signed transaction
 ```
