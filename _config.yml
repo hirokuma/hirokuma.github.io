@@ -1,4 +1,5 @@
 url: https://blog.hirokuma.work
+lang: ja-JP
 source: .
 plugins:
   - jekyll-remote-theme
