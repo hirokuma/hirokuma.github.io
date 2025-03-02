@@ -5,6 +5,7 @@
 * 2025
   * March
     * 03/02 [web: GitHub Pagesの管理(2025/3月)](2025/03/20250302-web.md)
+    * 03/02 [btc: Output Descriptors (4)](2025/03/20250302-btc.md)
     * 03/01 [btc: Output Descriptors (3)](2025/03/20250301-btc.md)
   * February
     * 02/28 [btc: 520バイトは1スタックのサイズ上限](2025/02/20250228-btc.md)
