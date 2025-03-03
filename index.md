@@ -4,6 +4,7 @@
 
 * 2025
   * March
+    * 03/03 [btc: Output Descriptors (5)](2025/03/20250303-btc.md)
     * 03/02 [web: GitHub Pagesの管理(2025/3月)](2025/03/20250302-web.md)
     * 03/02 [btc: Output Descriptors (4)](2025/03/20250302-btc.md)
     * 03/01 [btc: Output Descriptors (3)](2025/03/20250301-btc.md)
