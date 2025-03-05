@@ -38,4 +38,4 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 
 ## BIP
 
-* [P2TR および BIP-341周辺](bitcoin/02_bip/bip341.md)
+* [P2TR および BIP-341周辺](/bitcoin/02_bip/bip341.html)
