@@ -4,6 +4,7 @@
 
 * 2025
   * March
+    * 03/05 [rust: 途中で改行したい](2025/03/20250305-rst.md)
     * 03/04 [btc: BDK で Rust を扱ってみよう](2025/03/20250304-btc.md)
     * 03/03 [btc: Output Descriptors (5)](2025/03/20250303-btc.md)
     * 03/02 [web: GitHub Pagesの管理(2025/3月)](2025/03/20250302-web.md)
