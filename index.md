@@ -1,4 +1,10 @@
-# hiro99ma
+# hiro99ma blog
+
+## 調査
+
+* [Nordic Semiconductor調査](nrf/index.md)
+* [Bitcoin調査](bitcoin/index.md)
+* [Android開発](android/index.md)
 
 ## 開発日記
 
@@ -72,8 +78,3 @@
 * [2024年](2024/index.md)
 * [それ以前(別サイト)](https://hiro99ma.blogspot.com/)
 
-## 調査
-
-* [Nordic Semiconductor調査](nrf/index.md)
-* [Bitcoin調査](bitcoin/index.md)
-* [Android開発](android/index.md)
