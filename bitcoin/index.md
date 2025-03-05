@@ -29,9 +29,13 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 
 * [Learn Me A Bitcoin (By Greg Walker)](https://learnmeabitcoin.com/)
 
-## 01. Basics
+## Basics
 
 * [Bitcoin Core(bitcoind) を regtest で動かす](/bitcoin/01_basics/bitcoind.html)
 * [値の表現](/bitcoin/01_basics/value.html)
 * [ブロック](/bitcoin/01_basics/blocks.html)
 * [トランザクション](/bitcoin/01_basics/transactions.html)
+
+## BIP
+
+* [P2TR および BIP-341周辺](bitcoin/02_bip/bip341.md)

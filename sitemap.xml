@@ -914,7 +914,7 @@
 </url>
 <url>
 <loc>https://blog.hirokuma.work/2025/02/20250202-btc.html</loc>
-<lastmod>2025-03-01T00:00:00+09:00</lastmod>
+<lastmod>2025-03-05T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/2025/02/20250204-and.html</loc>
@@ -1077,8 +1077,12 @@
 <lastmod>2025-01-06T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>https://blog.hirokuma.work/bitcoin/02_bip/bip341.html</loc>
+<lastmod>2025-03-05T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>https://blog.hirokuma.work/bitcoin/index.html</loc>
-<lastmod>2025-02-19T00:00:00+09:00</lastmod>
+<lastmod>2025-03-05T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/bitcoin/musig/musig2_sequence.html</loc>
