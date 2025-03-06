@@ -57,15 +57,16 @@ $border-color: #159759;
             color: rgb(80, 80, 80);
         }
     }
-}
 
-table {
-    width: none;
-    border-collapse: collapse;
-}
-table th {
-    background: #242424;
-}
-table td {
-    border: solid 1px #6a6a6a;
+    table {
+        width: auto;
+        border-collapse: collapse;
+    }
+    table th {
+        background: #242424;
+        border: solid 1px #6a6a6a;
+    }
+    table td {
+        border: solid 1px #6a6a6a;
+    }
 }
