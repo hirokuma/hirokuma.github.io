@@ -6,7 +6,7 @@ plugins:
   - jekyll-last-modified-at
   - jekyll-redirect-from
 title: hiro99ma blog
-description: 何か技術的なこと
+description: Something technical
 google_analytics: G-552KB5LZK4
 show_downloads: false
 theme: jekyll-theme-hacker
