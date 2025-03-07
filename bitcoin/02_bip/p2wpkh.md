@@ -4,6 +4,11 @@ _最終更新日:2025/03/07_
 
 P2WPKH に関するトランザクションを作るための説明である。  
 
+* [BIP-141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki): witness と P2WPKH, P2WSH
+* [BIP-143](https://github.com/bitcoin/bips/blob/master/bip-0143.mediawiki): P2WPKH, P2WSH の署名検証
+* [BIP-144](https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki): segwit トランザクション
+* [BIP-173](https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki): bech32
+
 ## 概要
 
 * segwit が有効になった最初の方式
@@ -45,7 +50,7 @@ scriptPubKey は witness version の `0x00`、データ長 20バイトの `0x14`
 HRP は mainnet なら `bc`、testnet なら `tb` になる。  
 その次の `1` は Human Readable Part と Data Part の区切りである(bech32 では `1` を使わないので)。  
 余談だが、Lightning Network でも bech32 が使われているが、オリジナルの bech32 エンコードは 90文字までなのにそれより長いデータ長になるのでちょっと面倒だ。
-また、Human Readable Part に数値を載せられるので「左からたどって最初に現れた`1`の次から」ではなく「右からたどって最初に現れた`1`の次から」が Data Part になるのも面倒だ。
+また、Human Readable Part に数値を載せられるので、区切りの探し方は「左からたどって最初に現れた`1`」ではなく「右からたどって最初に現れた`1`」になるのも面倒だ。
 
 ## Witness
 
