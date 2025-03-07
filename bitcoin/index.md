@@ -48,7 +48,7 @@ Bitcoin Core のソースコードでは [`TxoutType`](https://github.com/bitcoi
 | P2PKH | BIP-13 | base58 |
 | P2SH | BIP-16 | base58 |
 | [P2WPKH](02_bip/p2wpkh.md) | BIP-141 | bech32 |
-| P2WSH | BIP-141 | bech32 |
+| [P2WSH](02_bip/p2wsh.md) | BIP-141 | bech32 |
 | [P2TR](02_bip/p2tr.md) | BIP-341 | bech32m |
 
 * BIP-11 の MultiSig は P2PK 時代の情報で書かれているため 3個を上限としているが、P2SH 形式が出てきたので 15個まで許容している([調査](/2025/01/20250131-btc.html))。

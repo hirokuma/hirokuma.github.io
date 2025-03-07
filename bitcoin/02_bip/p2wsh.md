@@ -30,7 +30,7 @@ witness program もデータ長が 32バイトの `0x20` になるだけであ�
 
 ## Witness
 
-[P2WPKH の Witness](p2wpkh.md#Witness)を参照。
+[P2WPKH の Witness](p2wpkh.md#witness)を参照。
 
 scriptSig を使わず witness に配置するところも、スタックごとに分けるのも同じである。  
 P2WPKH は形が決まっていたが、P2WSH はスクリプトを各自で作るためそれぞれ異なる。
