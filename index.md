@@ -2,14 +2,15 @@
 
 ## 調査
 
-* [Nordic Semiconductor調査](nrf/index.md)
 * [Bitcoin調査](bitcoin/index.md)
+* [Nordic Semiconductor調査](nrf/index.md)
 * [Android開発](android/index.md)
 
 ## 開発日記
 
 * 2025
   * March
+    * 03/07 [btc: miniscript](2025/03/20250307-btc.md)
     * 03/05 [rust: 途中で改行したい](2025/03/20250305-rst.md)
     * 03/04 [btc: BDK で Rust を扱ってみよう](2025/03/20250304-btc.md)
     * 03/03 [btc: Output Descriptors (5)](2025/03/20250303-btc.md)
