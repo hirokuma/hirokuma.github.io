@@ -45,7 +45,9 @@ marker が `0x00` で、この位置は従来のトランザクションでは `
 
 ![image](images/p2wpkh-2.png)
 
-scriptPubKey は witness version の `0x00`、データ長 20バイトの `0x14`、最後に公開鍵を HASH160計算した結果を連結する。
+scriptPubKey は witness version の `0x00`、データ長 20バイトの `0x14`、最後に公開鍵を HASH160計算した結果を連結する。  
+このデータは witness program と呼ばれる。
+「scriptPubKey には witness program が使用される」と認識しておくとよい。
 
 HRP は mainnet なら `bc`、testnet なら `tb` になる。  
 その次の `1` は Human Readable Part と Data Part の区切りである(bech32 では `1` を使わないので)。  
