@@ -35,20 +35,4 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 * [値の表現](01_basics/value.md)
 * [ブロック](01_basics/blocks.md)
 * [トランザクション](01_basics/transactions.md)
-
-## 送金の種類
-
-送金の種類と主に関係する BIP。  
-Bitcoin Core のソースコードでは [`TxoutType`](https://github.com/bitcoin/bitcoin/blob/v28.1/src/script/solver.h#L22-L35) と呼ばれている。
-
-| Type | BIP | Address encode |
-| ---- | ---- |
-| P2PK | - | - |
-| MultiSig | BIP-11 | - |
-| P2PKH | BIP-13 | base58 |
-| P2SH | BIP-16 | base58 |
-| [P2WPKH](02_bip/p2wpkh.md) | BIP-141 | bech32 |
-| [P2WSH](02_bip/p2wsh.md) | BIP-141 | bech32 |
-| [P2TR](02_bip/p2tr.md) | BIP-341 | bech32m |
-
-* BIP-11 の MultiSig は P2PK 時代の情報で書かれているため 3個を上限としているが、P2SH 形式が出てきたので 15個まで許容している([調査](/2025/01/20250131-btc.html))。
+* [アドレス](01_basics/address.md)
