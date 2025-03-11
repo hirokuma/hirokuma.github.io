@@ -37,4 +37,4 @@ find . \( -type d -and -name "201*" -and -prune \) -or -type f \( -name "*.md" -
 # print foot
 echo "</urlset>"
 
-cp my-sitemap.xml sitemap.xml
+# cp my-sitemap.xml sitemap.xml
