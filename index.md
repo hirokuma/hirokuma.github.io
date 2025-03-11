@@ -11,6 +11,7 @@
 * 2025
   * March
     * 03/09 [btc: Bitcoin RPC を LAN内で使いたい](2025/03/20250309-btc.md)
+    * 03/09 [btc: miniscript (3)](2025/03/20250309-btc2.md)
     * 03/08 [btc: miniscript (2)](2025/03/20250308-btc.md)
     * 03/07 [btc: miniscript](2025/03/20250307-btc.md)
     * 03/05 [rust: 途中で改行したい](2025/03/20250305-rst.md)
