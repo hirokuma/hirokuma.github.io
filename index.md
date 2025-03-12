@@ -1,5 +1,9 @@
 # hiro99ma blog
 
+<div>
+    <img src="images/banner.png" class="center" style="width:50%;">
+</div>
+
 ## 調査
 
 * [Bitcoin調査](bitcoin/index.md)
