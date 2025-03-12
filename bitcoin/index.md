@@ -37,9 +37,12 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 * [トランザクション](01_basics/transactions.md)
 * [アドレス](01_basics/address.md)
 
+## ライブラリ
+
+* [C/C++](library/clang.md)
+* [JavaScript/TypeScript](library/js.md)
+* [Go](library/go.md)
+
 ## ツール
 
-* ライブラリ
-  * [C/C++](library/clang.md)
-  * [JavaScript/TypeScript](library/js.md)
-  * [Go](library/go.md)
+* [btcdeb](tools/btcdeb.md)

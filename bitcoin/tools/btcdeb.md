@@ -2,6 +2,8 @@
 
 [repository](https://github.com/bitcoin-core/btcdeb)
 
+_2025/03/12_: v0.3.20
+
 ## 用途
 
 btcdeb は Bitcoinスクリプトのデバッガである。
@@ -127,10 +129,59 @@ btcdeb>
 
 ![image](btcdeb-2.png)
 
-以下、このようになる。  
-秘密鍵は伝えていないので `OP_CHECKSIG` でエラーになって終わる。
+#### ステップ実行の様子
+
+ステップ実行はこのようになる。
 
 <video controls>
   <source src="btcdeb-1.mp4" type="video/mp4" />
 </video>
 
+ステップ実行前に単語をダブルクリックして反転させているのは、見る場所を指しているだけで操作としての意味は無い。
+秘密鍵は伝えていないので `OP_CHECKSIG` でエラーになって終わる。  
+なお、"step" を "s" のような省略はできないが、Enter だけ入力すると前回と同じコマンドが実行される。
+
+#### Raw Transaction データを使う
+
+raw transaction がわかる場合は、そのデータを使うのが簡単である。
+
+```console
+$ txin="input transactionのHEXデータ"
+$ tx="transactionのHEXデータ"
+$ btcdeb --txin=$txin --tx=$tx
+```
+
+もし `$tx` のトランザクションに vin が複数ある場合は `-s` でどれなのかを指定する(デフォルトは `0`)。
+
+#### print
+
+表示されている "script" には現在の状況が出力されている。  
+最初からどこまで進んだのか確認したい場合は "print" コマンドを使う。
+
+```console
+btcdeb> print
+    #0000 OP_DUP
+ -> #0001 OP_HASH160
+    #0002 e1b85f2f9d795d7c84871330d1640314264e5f3a
+    #0003 OP_EQUALVERIFY
+    #0004 OP_CHECKSIG
+```
+
+この場合、次に "step" と入力すると `OP_HASH160` が実行される。
+
+### tap
+
+調査中
+
+`tap` は Tapscript で使用することができる。
+`btcdeb` でもできるようだが、まずは `tap` を使うことをお勧めされている。
+
+* [Tapscript example using Tap](https://github.com/bitcoin-core/btcdeb/blob/master/doc/tapscript-example-with-tap.md)
+* [Tapscript example](https://github.com/bitcoin-core/btcdeb/blob/master/doc/tapscript-example.md)
+
+## リンク
+
+* 開発日記
+  * [btc: btcdebを使う - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250119-btc.html)
+  * [btc: btcdebを使う (2) - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250120-btc.html)
+  * [btc: btcdebを使う (3) - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250121-btc.html)
