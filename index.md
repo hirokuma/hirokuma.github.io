@@ -1,7 +1,7 @@
 # hiro99ma blog
 
 <div>
-    <img src="assets/images/banner.png" class="center" style="width:50%;">
+    <img src="assets/images/banner.png" class="center" style="width:50%; box-shadow: 0px 0px; border: unset;">
 </div>
 
 ## 調査
