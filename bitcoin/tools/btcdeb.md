@@ -119,6 +119,8 @@ btcdeb>
 
 最初の `'[]'` で囲んだ 1まとまりが Bitcoinスクリプト、それ以降はスペース区切りごとにスタックに積まれるようだ。
 `''` で囲まなかったり `[]` で囲まなかったりするとエラーになった。
+`''` で囲むのはスペースがあってもひとまとまりにするためである。
+環境変数などを使う場合は `""` で囲むこと。
 
 第2引数以降は順番にスタックに積まれていく。
 [ドキュメント](https://github.com/bitcoin-core/btcdeb/blob/master/doc/btcdeb.md)の最初にあるサンプルを実行するとこうなる。
@@ -178,6 +180,168 @@ btcdeb> print
 
 * [Tapscript example using Tap](https://github.com/bitcoin-core/btcdeb/blob/master/doc/tapscript-example-with-tap.md)
 * [Tapscript example](https://github.com/bitcoin-core/btcdeb/blob/master/doc/tapscript-example.md)
+
+#### [Scenario](https://github.com/bitcoin-core/btcdeb/blob/e2c2e7b9fe2ecc0884129b53813a733f93a6e2c7/doc/tapscript-example-with-tap.md#scenario)
+
+単に Tapscript の説明をしているだけである。  
+最後の方で設定する変数をドキュメントで使っているので、そこだけ目を通せば良いだろう。  
+`$privkey` と `$pubkey` は key path ルート用の internal key である。
+pubkey は 圧縮された 33 byte ではなく x-only の 32 byte HEX文字列である。  
+`$script_alice` に Alice 鍵で送金するスクリプト、`$script_bob` に Bob 鍵で送金スクリプトを設定する。
+どちらもスペースを含んだ文字列なので、引数として使うときは `""` で囲む。
+
+#### [Generating a Taproot commitment](https://github.com/bitcoin-core/btcdeb/blob/e2c2e7b9fe2ecc0884129b53813a733f93a6e2c7/doc/tapscript-example-with-tap.md#generating-a-taproot-commitment)
+
+まず、鍵とスクリプトからアドレスを生成。
+アドレスは regtest 用になっていた。
+`-pbc` などとして HRP の変更は可能である。
+
+```console
+$ tap $pubkey 2 "${script_alice}" "${script_bob}"
+tap 5.0.24 -- type `tap -h` for help
+WARNING: This is experimental software. Do not use this with real bitcoin, or you will most likely lose them all. You have been w a r n e d.
+LOG: sign segwit taproot
+Internal pubkey: f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c
+2 scripts:
+- #0: 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac
+- #1: a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac
+Script #0 leaf hash = TapLeaf<<0xc0 || 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac>>
+ → c81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+Script #1 leaf hash = TapLeaf<<0xc0 || a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac>>
+ → 632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b42
+Branch (#0, #1)
+ → 41646f8c1fe2a96ddad7f5471bc4fee7da98794ef8c45a4f4fc6a559d60c9f6b
+Tweak value = TapTweak(f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c || 41646f8c1fe2a96ddad7f5471bc4fee7da98794ef8c45a4f4fc6a559d60c9f6b) = 620fc4000ba539753ffa0e5893b4243cb1cf0a258cf8a09a9038f5f1352607a9
+Tweaked pubkey = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951 (not even)
+Resulting Bech32m address: bcrt1p5kaqsuted66fldx256lh3en4h9z4uttxuagkwepqlqup6hw639gsm28t6c
+```
+
+いろいろ出力されているが、P2TR script path のアドレスを求める計算過程である。
+Tapscript から merkle tree の leaf になるハッシュ値を求め、
+merkle root を計算し、internal pubkey を含めて tweak pubkey の計算をしてアドレスに変換している。  
+アドレスの始まりは `bcrt1p` とセパレータ `1` の次が `p` なのは P2TR が segwit version 1 だからである(`p` は bech32m で `1`)。
+segwit version 0 の P2WPKH と P2WSH は `bcrt1q` と `q` で、bech32 の `0` である。
+
+最後の方に出力されている「not even」は pubkey が偶数ではない(最下位ビットに 1 が立っている)ことを表している。
+この情報はパリティビット的に使われていて、tweaked private key や control block で使われる。
+
+アドレスができたので、ドキュメントでは `bitcoin-cli sendtoaddress` で送金している。
+`getrawtransaction` で取得した raw transaction を変数 `$txin` に格納しているのはこれから使うためである。  
+`$vout` に `0` を代入しているのは送金先アドレスが `vout#0` 側だったためだ。
+どちらになるかはランダムなので出力を確認すること。  
+(そこまでやるなら TXID も変数に代入すれば良いのにと思った。)  
+送金の準備ができていない場合は[ウォレットの作成](https://blog.hirokuma.work/bitcoin/01_basics/bitcoind.html#%E3%82%A6%E3%82%A9%E3%83%AC%E3%83%83%E3%83%88%E3%81%AE%E4%BD%9C%E6%88%90)を参照のこと。
+
+#### [Taproot spend](https://github.com/bitcoin-core/btcdeb/blob/e2c2e7b9fe2ecc0884129b53813a733f93a6e2c7/doc/tapscript-example-with-tap.md#taproot-spend)
+
+コーディングせずに raw transaction を作る。
+
+`bitcoin-cli testmempoolaccept` を使って送金できるかどうかの確認をする。  
+このコマンドを知らなかったのだが [testmempoolaccept ](https://developer.bitcoin.org/reference/rpc/testmempoolaccept.html) は `sendrawtransaction` の展開しないバージョンと思えばよさそうだ。  
+そうすることで、key path での spend ができることを確認して、同じトランザクションで script path での spend も確認できるというわけである。
+
+また、鍵での spend を taproot send、スクリプトでの spend を tapscript send と呼んでいるようである。
+
+まず、`createrawtransaction` で input に前節の送金先 outpoint(TXID と index)を、output に新しく作ったアドレスを指定する。
+送金額はお釣りが出ないようにほどほどだ。  
+この時点で、scriptSig も witness も空のトランザクションができるので `$tx` に代入しておく。
+ただ、このコマンドラインの書き方だとシングルクォーテーションの中で `$vout` を使っているので変数が展開されないと思う。
+変数の前後で `'` を入れ込んで
+
+```console
+$ txin=前のraw transaction
+$ txid=INPUTのTXID
+$ vout=INPUTのindex
+$ addr=`bitcoin-cli -regtest getnewaddress`
+$ tx=`bitcoin-cli -regtest createrawtransaction '[{"txid":"'$txid'","vout":'$vout'}]' '[{"'$send'":0.0009}]'`
+```
+
+前回実行した `tap` のオプションに `--txin=$txin --tx=$tx` を付けると以下の分が増えていた。
+TXID や vout が異なるのでドキュメントと一致はしない。
+
+```log
+input tx index = 0; tx input vout = 1; value = 100000
+got witness stack of size 1
+34 bytes (v0=P2WSH, v1=taproot/tapscript)
+valid script
+- generating prevout hash from 1 ins
+[+] COutPoint(8c51c8dfcd, 1)
+SignatureHashSchnorr(in_pos=0, hash_type=00)
+- taproot sighash
+sighash (little endian) = a64c91394cfed6ed9a7497af13793d818a351dea3c4a584c867a7b907d759862
+NOTE: there is a placeholder signature at the end of the witness data for the resulting transaction below; this must be replaced with a 64 byte signature for the sighash given above
+Resulting transaction: 02000000000101bc2165a4797d59358f31a0a20b2c94534bff89a38d958a2768ed66cddfc8518c0100000000fdffffff01905f0100000000001600145368d413b9816b53d18d79ba898c70765e9f113d0140000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f00000000
+```
+
+最後の Resulting transaction は witness に 64 byte のスタックが 1つだけ載っていたが、
+これはダミーの値が入っているだけで、この場所に署名した値を入れてくれという意味である。  
+sighash も出力されているので、おそらくそれをデジタル署名すれば良いのだろう。
+
+ここで `tap` に `--privkey=$privkey` を追加すると署名をしてくれるようだが、
+もし btcdeb を署名できるようにしていないならエラーになる。
+
+```
+this feature requires that you compile with --enable-dangerous set; either provide a signature yourself, or recompile tap
+```
+
+`tf` が提案されているが、これもビルドオプションを付けていないので使えない。
+
+```txt
+btcdeb> tf -h
+addr-to-scriptpubkey [address] convert a base58 encoded address into its corresponding scriptPubKey
+add              [value1] [value2] add two values together
+bech32-decode    [string]  decode [string] into a pubkey using bech32 encoding
+bech32-encode    [pubkey]  encode [pubkey] using bech32 encoding
+bech32m-encode   [pubkey]  encode [pubkey] using bech32m encoding
+base58chk-decode [string]  decode [string] into a pubkey using base58 encoding (with checksum)
+base58chk-encode [pubkey]  encode [pubkey] using base58 encoding (with checksum)
+combine-pubkeys  [pubkey1] [pubkey2] combine the two pubkeys into one pubkey
+echo             [*]       show as-is serialized value
+hash160          [message] perform HASH160 (RIPEMD160(SHA256(message))
+hash256          [message] perform HASH256 (SHA256(SHA256(message))
+hex              [*]       convert into a hex string
+int              [arg]     convert into an integer
+len              [*]       show length of expression in bytes
+jacobi-symbol    [n] ([k]) calculate the Jacobi symbol for n modulo k, where k defaults to the secp256k1 field size
+prefix-compact-size [value] prefix [value] with its compact size encoded byte length
+pubkey-to-xpubkey [pubkey] convert the given pubkey into an x-only pubkey, as those used in taproot/tapscript
+reverse          [arg]     reverse the value according to the type
+ripemd160        [message] perform RIPEMD160
+sha256           [message] perform SHA256
+scriptpubkey-to-addr [script]  convert a scriptPubKey into its corresponding base58 encoded address
+sub              [value1] [value2] subtract value2 from value1
+tagged-hash      [tag] [message] generate the [tag]ged hash of [message]
+taproot-tweak-pubkey [pubkey] [tweak] tweak the pubkey with the tweak
+tweak-pubkey     [value] [pubkey] multiply the pubkey with the given 32 byte value
+verify-sig       [sighash] [pubkey] [signature] verify the given signature for the given sighash and pubkey (der)
+verify-sig-compact [sighash] [pubkey] [signature] verify the given signature for the given sighash and pubkey (compact)
+
+The inline operators have slightly different names; they are called: addr_to_spk add b32d b32e b32me b58cd b58ce combine_pubkeys echo hash160 hash256 hex int len jacobi_sym prefix_compact_size pubkey_to_xpubkey reverse ripemd160 sha256 spk_to_addr sub tagged_hash taproot_tweak_pubkey tweak_pubkey verify_sig verify_sig_compact
+```
+
+`configure --enable-dangerous` を追加してビルドした実行ファイルを使うと以下が増えていた。
+
+```txt
+combine-privkeys [privkey1] [privkey2] combine the two private keys into one private key
+decode-wif       [string]  decode [string] into a private key using the Wallet Import Format
+encode-wif       [privkey] encode [privkey] using the Wallet Import Format
+get-pubkey       [privkey] get the public key corresponding to the given private key
+get-xpubkey      [privkey] get the x-only public key corresponding to the given private key
+multiply-privkeys [privkey1] [privkey2] multiply a privkey with another
+sign             [sighash] [privkey] generate an ECDSA signature for the given message (sighash) using the given private key (der)
+sign-compact     [sighash] [privkey] generate an ECSDA signature for the given message (sighash) using the given private key (compact)
+sign_schnorr     [sighash] [privkey] generate a Schnorr signature for the given message (sighash) using the given private key (der)
+taproot-tweak-seckey [privkey] [tweak] tweak the given private key with the tweak
+```
+
+結局署名できるようにビルドしないとダメだったので、`tap --privkey=$privkey` で試した。  
+今度は最後に署名入りのトランザクションが出力され、`testmempoolaccept` も "allowed: true" になった。  
+`btcdeb --txin=$txin --tx=$tx` で両方の raw transaction を指定してステップ実行すると成功で終わった。  
+(`tap` ではできなかった。)
+
+#### [Tapscript spend](https://github.com/bitcoin-core/btcdeb/blob/e2c2e7b9fe2ecc0884129b53813a733f93a6e2c7/doc/tapscript-example-with-tap.md#tapscript-spend)
+
+(未調査)
 
 ## リンク
 
