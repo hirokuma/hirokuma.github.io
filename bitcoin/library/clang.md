@@ -44,7 +44,7 @@ $ make && make install
 
 ### 備考
 
-* v1.3.1 は descriptors の `tr()` に対応していなかった。v1.4.0 は未確認だが対応しているはず([確認](https://blog.hirokuma.work/2025/03/20250301-btc.html))。
+* v1.3.1 は descriptors の `tr()` に対応していなかった。v1.4.0 は対応済み([sample code](https://github.com/hirokuma/cpp-descriptor/tree/733869bbddcbeccdbc25bdf44f9a8fd42df8c648))。
 * `--prefix` で `$HOME` の中に置くようにした。
   * install に `sudo` はいらない
   * include path や library の置き場所が標準ではないので使用時には気をつけること
