@@ -113,6 +113,26 @@ $ curl --user user2:pass2 --data-binary '{"jsonrpc": "2.0", "id": "curltest", "m
 
 `rpcauth` でやったときは最初失敗していたのだが、気のせいだったのか？
 
+## ウォレットの作成
+
+デフォルトでは `bitcoind` を立ち上げてもウォレットが存在しない。  
+regtest の場合はブロック生成した報酬を使ってテストをするので、ウォレットを作るのが楽である。
+
+```console
+$ bitcoin-cli createwallet ""
+{
+  "name": ""
+}
+```
+
+ウォレットに受け取り用アドレスを作ってブロック生成する。
+
+```console
+$ addr=`bitcoin-cli -regtest getnewaddress`
+$ bitcoin-cli -regtest generatetoaddress 150 $addr
+$ bitcoin-cli -regtest getbalance
+```
+
 ## おわりに
 
 regtest で `bitcoind` を立ち上げる手順を説明した。
