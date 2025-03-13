@@ -30,7 +30,7 @@ $ sudo make install
 
 [repository](https://github.com/ElementsProject/libwally-core)
 
-_2025/03/11_: v1.3.1? v1.4.0?
+_2025/03/13_: v1.4.0
 
 ```console
 $ git clone https://github.com/ElementsProject/libwally-core.git
