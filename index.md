@@ -12,6 +12,7 @@
 
 * 2025
   * March
+    * 03/13 [btc: libwally-core v1.4.0](2025/03/20250313-btc.md)
     * 03/11 [btc: miniscript (3)](2025/03/20250311-btc.md)
     * 03/09 [btc: Bitcoin RPC を LAN内で使いたい](2025/03/20250309-btc.md)
     * 03/08 [btc: miniscript (2)](2025/03/20250308-btc.md)
