@@ -15,7 +15,7 @@ $ sudo apt-get install libtool libssl-dev autoconf pkg-config
 $ git clone https://github.com/bitcoin-core/btcdeb.git
 $ cd btcdeb
 $ ./autogen.sh
-$ ./configure --prefix $HOME/.local
+$ ./configure --prefix $HOME/.local --enable-dangerous
 $ make
 $ make install
 ```
@@ -24,6 +24,7 @@ $ make install
   * 最後の commit は [2024年4月](https://github.com/bitcoin-core/btcdeb/commit/e2c2e7b9fe2ecc0884129b53813a733f93a6e2c7)である
 * configure で `--prefix` でインストール先に `$HOME/.local` を指定している
 * インストールされる実行ファイルは `btcc`, `btcdeb`, `tap`, `test-btcdeb`
+* configure で `--enable-dangerous` を付けると署名関係の機能が有効になる
 
 ## コマンド
 
@@ -339,7 +340,17 @@ taproot-tweak-seckey [privkey] [tweak] tweak the given private key with the twea
 `btcdeb --txin=$txin --tx=$tx` で両方の raw transaction を指定してステップ実行すると成功で終わった。  
 (`tap` ではできなかった。)
 
+自分が勘違いしていたことに気付いた。  
+key でも tapscript でも解くことができる場合、internal pubkey から tweaked pubkey を作るのに merkle root の結果を使うので署名するときは internal privkey で行うのかと思っていたのだ。  
+実際は、internal key から tweaked privkey を作るときと同じく merkle root を使った tweak 値を使った tweaked privkey で署名するのだった。
+
 #### [Tapscript spend](https://github.com/bitcoin-core/btcdeb/blob/e2c2e7b9fe2ecc0884129b53813a733f93a6e2c7/doc/tapscript-example-with-tap.md#tapscript-spend)
+
+動作確認用に bitcoinjs-lib で評価アプリを作成した。
+
+* [btcdeb-test](https://github.com/hirokuma/js-scriptpath/tree/e6ae1e2968e939743dbd63dcd4d26b80fb06a5bd)
+  * アドレス作成して送金、1ブロック生成、keypath, Bob, Alice(1回目), 143ブロック生成、Alice(2回目)の順
+
 
 (未調査)
 
