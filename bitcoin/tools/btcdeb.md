@@ -235,7 +235,8 @@ segwit version 0 の P2WPKH と P2WSH は `bcrt1q` と `q` で、bech32 の `0` 
 
 #### [Taproot spend](https://github.com/bitcoin-core/btcdeb/blob/e2c2e7b9fe2ecc0884129b53813a733f93a6e2c7/doc/tapscript-example-with-tap.md#taproot-spend)
 
-コーディングせずに raw transaction を作る。
+作成したアドレスへ送金されたトランザクションを単独鍵で送金する(key path spend)。  
+コーディングせずに `tap` で署名された raw transaction を作る。
 
 `bitcoin-cli testmempoolaccept` を使って送金できるかどうかの確認をする。  
 このコマンドを知らなかったのだが [testmempoolaccept ](https://developer.bitcoin.org/reference/rpc/testmempoolaccept.html) は `sendrawtransaction` の展開しないバージョンと思えばよさそうだ。  
@@ -253,7 +254,7 @@ segwit version 0 の P2WPKH と P2WSH は `bcrt1q` と `q` で、bech32 の `0` 
 $ txin=前のraw transaction
 $ txid=INPUTのTXID
 $ vout=INPUTのindex
-$ addr=`bitcoin-cli -regtest getnewaddress`
+$ send=`bitcoin-cli -regtest getnewaddress`
 $ tx=`bitcoin-cli -regtest createrawtransaction '[{"txid":"'$txid'","vout":'$vout'}]' '[{"'$send'":0.0009}]'`
 ```
 
@@ -346,7 +347,245 @@ key でも tapscript でも解くことができる場合、internal pubkey か�
 
 #### [Tapscript spend](https://github.com/bitcoin-core/btcdeb/blob/e2c2e7b9fe2ecc0884129b53813a733f93a6e2c7/doc/tapscript-example-with-tap.md#tapscript-spend)
 
-動作確認用に bitcoinjs-lib で評価アプリを作成した。
+作成したアドレスへ送金されたトランザクションをスクリプトを解いて送金する(script path spend)。  
+コーディングせずに `tap` で署名された raw transaction を作る。  
+このスクリプトは Alice ルートと Bob ルートの 2つがあるのだが、
+Alice ルートは INPUT トランザクションが 144 confirm 以上経過するという条件があるという理由で Bob ルートだけになっている
+(regtest なので `generatetoaddress` するだけだと思うのだが)。
+
+Bobルートのスクリプトは以下で、SHA256 の preimage と Bob 鍵での署名で解く。
+
+```bitcoin
+OP_SHA256
+<SHA256(preimage)>
+OP_EQUALVERIFY
+<Bob pubkey>
+OP_CHECKSIG
+```
+
+![image](btcdeb-3.png)
+
+witness は 4つ使う。  
+`[0]`, `[1]` がスクリプトを解くためのデータ、`[2]` がスクリプト、`[3]` が control block である。
+なぜかここでは "control object" という名前になっている(BIP-341 では "control block")。  
+バージョンとパリティ、internal pubkey と witness に載せたスクリプトから merkle root を求めるためのデータを置く場所である。
+もしスクリプトが 1つしかないのであれば、そのまま merkle root になるので最後のデータは載せない。  
+その辺りの詳細は [BIP-341](https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki) などを読むとよい。
+
+key path spend のときの環境変数をそのまま使う。
+
+```console
+$ txin=前のraw transaction
+$ txid=INPUTのTXID
+$ vout=INPUTのindex
+$ send=`bitcoin-cli -regtest getnewaddress`
+$ tx=`bitcoin-cli -regtest createrawtransaction '[{"txid":"'$txid'","vout":'$vout'}]' '[{"'$send'":0.0009}]'`
+```
+
+そして同じく `tap` コマンドを使用するが、スクリプトを並べた最後にどのスクリプトで解くかを番号で指定する。
+引数に並べた順でゼロオリジン(ゼロ始まり)で、Bob の方だから `1` である。
+
+```console
+$ tap --tx=$tx --txin=$txin $pubkey 2 "${script_alice}" "${script_bob}" 1
+tap 5.0.24 -- type `tap -h` for help
+WARNING: This is experimental software. Do not use this with real bitcoin, or you will most likely lose them all. You have been w a r n e d.
+LOG: sign segwit taproot
+targeting transaction vin at index #0
+Internal pubkey: f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c
+1 spending argument present
+- 1+ spend arguments; TAPSCRIPT mode
+2 scripts:
+- #0: 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac
+- #1: a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac
+Script #0 leaf hash = TapLeaf<<0xc0 || 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac>>
+ → c81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+Script #1 leaf hash = TapLeaf<<0xc0 || a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac>>
+ → 632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b42
+Branch (#0, #1)
+ → 41646f8c1fe2a96ddad7f5471bc4fee7da98794ef8c45a4f4fc6a559d60c9f6b
+Control object = (leaf), (internal pubkey = f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c), ...
+... with proof -> f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+Tweak value = TapTweak(f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c || 41646f8c1fe2a96ddad7f5471bc4fee7da98794ef8c45a4f4fc6a559d60c9f6b) = 620fc4000ba539753ffa0e5893b4243cb1cf0a258cf8a09a9038f5f1352607a9
+Tweaked pubkey = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951 (not even)
+Pubkey matches the scriptPubKey of the input transaction's output #1
+Resulting Bech32m address: bcrt1p5kaqsuted66fldx256lh3en4h9z4uttxuagkwepqlqup6hw639gsm28t6c
+Final control object = c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+Adding selected script to taproot inputs: a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac
+ → 45a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac
+appending control object to taproot input stack: c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+Tapscript spending witness: [
+ "000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f",
+ "a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac",
+ "c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9",
+]
+input tx index = 0; tx input vout = 1; value = 100000
+got witness stack of size 3
+34 bytes (v0=P2WSH, v1=taproot/tapscript)
+Taproot commitment:
+- control  = c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+- program  = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951
+- script   = a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac
+- path len = 1
+- p        = f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c
+- q        = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951
+- k        = 423b94cec6e38364eda58e7825e582cb8ef75c13236e4191629cf2b432862c63          (tap leaf hash)
+  (TapLeaf(0xc0 || a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac))
+valid script
+- generating prevout hash from 1 ins
+[+] COutPoint(8c51c8dfcd, 1)
+SignatureHashSchnorr(in_pos=0, hash_type=00)
+- tapscript sighash
+sighash (little endian) = 0a416d90a014762701f2985f9c06faf273256d94f3ebacd64e1eabc35bc8bdd5
+NOTE: there is a placeholder signature at the end of the witness data for the resulting transaction below; this must be replaced with a 64 byte signature for the sighash given above
+Resulting transaction: 02000000000101bc2165a4797d59358f31a0a20b2c94534bff89a38d958a2768ed66cddfc8518c0100000000fdffffff01905f010000000000160014c74a6770432fa9fbea938b8db2bb444f03f954990340000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f45a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac41c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c900000000
+```
+
+control block(control object) は分解するとこういうデータである。
+tweaked pubkey の Y座標が奇数なので parity bit が立っている。  
+merkle leaf はスクリプトが Bob のものなので、反対側の leaf は Alice のスクリプトを "TapLeaf" で tagged hash 計算した値になっている。
+この値からでは Alice のスクリプトが想像できないので、スクリプトを全部のセルよりは情報が隠されていてよい、というところである。
+
+```
+# version + parity bit
+c1
+
+# internal pubkey
+f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c
+
+# merkle leaf[0]
+c81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+```
+
+`Tapscript spending witness` には仮の witness として `0001...0e0f` が差し込んである。  
+解くためのデータはこちらでしていしないとわからないためである。
+
+"Script #0" と "Script #1" はそれぞれ Alice スクリプトと Bob スクリプトである。  
+merkle tree を作るときの leaf hash は Alice が `c814...`、Bob が `632c...` である。  
+Tapscript の merkle tree は leaf が 2つあってそれをまとめた leaf を作る場合、左側の方が小さい値になるように並べ替える。
+なので計算上は Bob, Alice の順で連結する。
+
+まずは最後に出力された "Resulting transaction" の raw transaction を `btcdeb` で解こうとしている。  
+もちろん仮の witness なのですぐに failure になるのだが、それより前にチェックしている内容の説明を行っている。
+
+```
+8 op script loaded. type `help` for usage information
+script                                                             |                                                             stack
+-------------------------------------------------------------------+-------------------------------------------------------------------
+<<< taproot commitment >>>                                         |                                                               i: 0
+Branch: c81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205f... | k: 632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce94...
+Tweak: f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5... |
+CheckTapTweak                                                      |
+<<< committed script >>>                                           |
+OP_SHA256                                                          |
+6c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd5333   |
+OP_EQUALVERIFY                                                     |
+4edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10   |
+OP_CHECKSIG                                                        |
+#0000 Branch: c81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+```
+
+script の列を見ると、まず "taproot commitment" でそもそもスクリプトを評価するに値するものなのかチェックする。  
+チェックが通ったら "committed script" でスクリプトの評価を行う。
+
+stack の列に `i` と `k` が載っている。
+`i` は index、`k` は taproot commitment の値だそうな。  
+この `632c...` は Bob スクリプトの leaf hash 値である。
+次に実行されるのは "#0000" で `c814...` を `k` の leaf hash の相方として使って branch hash を求める処理である。  
+`c814...` は witness の最後にある control block から取得しているはずだ。
+step 実行するとこうなる。
+
+```
+btcdeb> step
+- looping over path (0..0)
+  - 0: node = c8...; taproot control node match -> k first
+  (TapBranch(TapLeaf(0xc0 || a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac) || Span<33,32>=c81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9))
+  - 0: k -> 6b9f0cd659a5c64f4f5ac4f84e7998dae7fec41b47f5d7da6da9e21f8c6f6441
+script                                                             |                                                             stack
+-------------------------------------------------------------------+-------------------------------------------------------------------
+<<< taproot commitment >>>                                         |                                                               i: 1
+Branch: c81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205f... | k: 41646f8c1fe2a96ddad7f5471bc4fee7da98794ef8c45a4f4fc6a559d60c...
+Tweak: f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5... |
+CheckTapTweak                                                      |
+<<< committed script >>>                                           |
+OP_SHA256                                                          |
+6c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd5333   |
+OP_EQUALVERIFY                                                     |
+4edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10   |
+OP_CHECKSIG                                                        |
+#0001 Tweak: f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c
+```
+
+`i` が次に進んで `1` になり、`k` が `4164...` になっている。
+`tap` を実行した結果にある "Branch (#0, #1)" の値と同じである。  
+しかしトランザクションには merkle root の値は載っていないのでこれだけでは検証できない。
+
+merkle root の値と internal pubkey の値を使って tweaked pubkey の計算をする。  
+internal pubkey は control block に載っている。  
+tweaked pubkey は P2TR の場合 witness program の後半 32バイトと同じなので
+input のトランザクションから取得できる。  
+つまり次に実行する "#0001" は以下を比較するものである。
+
+* 計算した tweaked pubkey
+  * control block から得た internal pubkey
+  * 先ほど計算した merkle root
+* input トランザクションから得た tweaked pubkey
+
+step 実行するとこうなった。
+
+```
+btcdeb> step
+- looping over path (0..0)
+- q.CheckTapTweak(p, k, 1) == success
+script                                                             |                                                             stack
+-------------------------------------------------------------------+-------------------------------------------------------------------
+OP_SHA256                                                          | 000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0...
+6c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd5333   |
+OP_EQUALVERIFY                                                     |
+4edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10   |
+OP_CHECKSIG                                                        |
+#0002 CheckTapTweak
+```
+
+`q.CheckTapTweak()` をして成功になっているのは良いが、"#0002" として "CheckTapTweak" を実行することになっている？  
+ということは、一番下に出力されるのは実行をした命令ということだろうか？  
+しかしその理屈だと [Script debugger](https://github.com/bitcoin-core/btcdeb/blob/e2c2e7b9fe2ecc0884129b53813a733f93a6e2c7/doc/btcdeb.md#script-debugger) は `OP_DUP` なのでスタックには複製されたデータが載っていないといけないはずだがそうなっていない。
+この段階で stack には `witness[0]` のデータが載っているので、実際はステップが 1つ進んでいると思っておくのがよさそうだ。  
+つまりここでは "#0002 CheckTapTweak" は既に実行された命令が表示されていて、次に step 実行すると "OP_SHA256" が処理されるのだ。
+
+```
+btcdeb> step
+                <> POP  stack
+                <> PUSH stack 1c4672a4c6713bcb9495abba712be251bbeff723d79f001f81e5170b1d1627a5
+script                                                             |                                                             stack
+-------------------------------------------------------------------+-------------------------------------------------------------------
+6c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd5333   |   1c4672a4c6713bcb9495abba712be251bbeff723d79f001f81e5170b1d1627a5
+OP_EQUALVERIFY                                                     |
+4edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10   |
+OP_CHECKSIG                                                        |
+#0003 OP_SHA256
+```
+
+次に step 実行すると hash 値がスタックに積まれ、さらに step 実行すると `OP_EQUALVERIFY` が処理され、不一致なので失敗する。
+
+```
+btcdeb> step
+                <> PUSH stack 6c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd5333
+script                                                             |                                                             stack
+-------------------------------------------------------------------+-------------------------------------------------------------------
+OP_EQUALVERIFY                                                     |   6c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd5333
+4edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10   |   1c4672a4c6713bcb9495abba712be251bbeff723d79f001f81e5170b1d1627a5
+OP_CHECKSIG                                                        |
+#0004 6c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd5333
+btcdeb> step
+                <> POP  stack
+                <> POP  stack
+                <> PUSH stack
+error: Script failed an OP_EQUALVERIFY operation
+```
+
+
+
+自分での動作確認用に bitcoinjs-lib で評価アプリを作成した。
 
 * [btcdeb-test](https://github.com/hirokuma/js-scriptpath/tree/e6ae1e2968e939743dbd63dcd4d26b80fb06a5bd)
   * アドレス作成して送金、1ブロック生成、keypath, Bob, Alice(1回目), 143ブロック生成、Alice(2回目)の順
