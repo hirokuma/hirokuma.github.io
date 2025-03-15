@@ -33,11 +33,28 @@ $ make install
 OPコードをスクリプトの HEX文字列にコンパイルする。
 
 ```console
+$ btcc
+syntax: btcc <program>
+e.g. btcc OP_DUP OP_HASH160 '[62e907b15cbf27d5425399ebf6f0fb50ebb88f18]' OP_EQUALVERIFY OP_CHECKSIG
+```
+
+ただ、このヘルプの通りに実行すると `62e9...` の 20バイトデータを push する `0x14` を付与したデータを push する `0x15` を付与している。
+
+```console
 $ btcc OP_DUP OP_HASH160 '[62e907b15cbf27d5425399ebf6f0fb50ebb88f18]' OP_EQUALVERIFY OP_CHECKSIG
 76a9151462e907b15cbf27d5425399ebf6f0fb50ebb88f1888ac
 ```
 
-クォーテーションで囲む場所を間違えると OPコードではなく文字列を ASCIIコードとして HEX文字列にされてしまう。
+`[]` で囲まなければ良い。
+シングルクォーテーションは Linux のコマンドラインで処理されるので、あってもなくてもよい。
+
+```console
+$ OP_DUP OP_HASH160 897c81ac37ae36f7bc5b91356cfb0138bfacb3c1 OP_EQUALVERIFY OP_CHECKSIG
+76a9151462e907b15cbf27d5425399ebf6f0fb50ebb88f1888ac
+```
+
+クォーテーションで囲む場所を間違えると OPコードを文字列を ASCIIコードとして HEX文字列にされてしまう。
+スクリプトに文字列を使うことはほとんどないと思うので、クォーテーションで囲んだりしなくても良いだろう。
 
 ```console
 $ btcc 'OP_DUP OP_HASH160 [62e907b15cbf27d5425399ebf6f0fb50ebb88f18] OP_EQUALVERIFY OP_CHECKSIG'
@@ -46,7 +63,7 @@ warning: opcode-like string was not an opcode: DUP OP_HASH160 [62e907b15cbf27d54
 ```
 
 数値は、10進数になりそうなら10進数、16進数になりそうなら16進数で扱っているようだ。  
-`[]` で囲んでいてもそのルールのようであった。
+`[]` で囲んでいてもそのルールのようであったが、今ひとつ `[]` の使い方が分からない。
 
 ```console
 $ btcc 144
@@ -72,17 +89,19 @@ $ btcc '[a0]'
 桁数が多いと HEXとして扱うようなので HASH値は大丈夫だろう。
 
 ```console
-$ btcc OP_DUP OP_HASH160 '[112233445566778899]' OP_EQUALVERIFY OP_CHECKSIG
+# decimal
+$ btcc OP_DUP OP_HASH160 112233445566778899 OP_EQUALVERIFY OP_CHECKSIG
 warning: ambiguous input 112233445566778899 is interpreted as a numeric value; use 0x112233445566778899 to force into hexadecimal interpretation
-76a90908130eed5eb9bb8e0188ac
+76a908130eed5eb9bb8e0188ac
 
-$ btcc OP_DUP OP_HASH160 '[00112233445566778899]' OP_EQUALVERIFY OP_CHECKSIG
-76a90b0a0011223344556677889988ac
+# hex
+$ btcc OP_DUP OP_HASH160 00112233445566778899 OP_EQUALVERIFY OP_CHECKSIG
+76a90a0011223344556677889988ac
 ```
 
 ### btcdeb
 
-デバッガである。  
+スクリプトデバッガである。  
 基本的な使い方は、引数に Bitcoinスクリプトなどの情報を与え、ステップ実行していくことになる。  
 終了コマンドはないので Ctrl+C で終わらせる。
 
@@ -583,15 +602,87 @@ btcdeb> step
 error: Script failed an OP_EQUALVERIFY operation
 ```
 
+次にドキュメントでは、`-k<Bob privkey>` オプションと引数の最後に SHA256 の preimage を追加して実行している。
+これによって "Tapscript spending witness" では preimage が先頭に追加されている。  
+また、それ以降で Bob privkey での署名まで行われ、"Resulting transaction" 
 
+TODO ここから下は別PCで作業したのでtxinなどがこれより前と変わっている。差し替えよう。
+
+```console
+$ tap -k${bob_key} --tx=$tx --txin=$txin  $pubkey 2 "${script_alice}" "${script_bob}" 1 107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f
+tap 5.0.24 -- type `tap -h` for help
+WARNING: This is experimental software. Do not use this with real bitcoin, or you will most likely lose them all. You have been w a r n e d.
+LOG: sign segwit taproot
+targeting transaction vin at index #0
+Internal pubkey: f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c
+2 spending arguments present
+- 1+ spend arguments; TAPSCRIPT mode
+  #0: 107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f
+2 scripts:
+- #0: 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac
+- #1: a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac
+Script #0 leaf hash = TapLeaf<<0xc0 || 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac>>
+ → c81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+Script #1 leaf hash = TapLeaf<<0xc0 || a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac>>
+ → 632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b42
+Branch (#0, #1)
+ → 41646f8c1fe2a96ddad7f5471bc4fee7da98794ef8c45a4f4fc6a559d60c9f6b
+Control object = (leaf), (internal pubkey = f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c), ...
+... with proof -> f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+Tweak value = TapTweak(f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c || 41646f8c1fe2a96ddad7f5471bc4fee7da98794ef8c45a4f4fc6a559d60c9f6b) = 620fc4000ba539753ffa0e5893b4243cb1cf0a258cf8a09a9038f5f1352607a9
+Tweaked pubkey = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951 (not even)
+Pubkey matches the scriptPubKey of the input transaction's output #0
+Resulting Bech32m address: bcrt1p5kaqsuted66fldx256lh3en4h9z4uttxuagkwepqlqup6hw639gsm28t6c
+Final control object = c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+Adding selected script to taproot inputs: a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac
+ → 20107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f45a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac
+appending control object to taproot input stack: c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+Tapscript spending witness: [
+ "107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f",
+ "a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac",
+ "c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9",
+]
+input tx index = 0; tx input vout = 0; value = 100000
+got witness stack of size 3
+34 bytes (v0=P2WSH, v1=taproot/tapscript)
+Taproot commitment:
+- control  = c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+- program  = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951
+- script   = a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac
+- path len = 1
+- p        = f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c
+- q        = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951
+- k        = 423b94cec6e38364eda58e7825e582cb8ef75c13236e4191629cf2b432862c63          (tap leaf hash)
+  (TapLeaf(0xc0 || a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac))
+valid script
+- generating prevout hash from 1 ins
+[+] COutPoint(995cb675b0, 0)
+SignatureHashSchnorr(in_pos=0, hash_type=00)
+- tapscript sighash
+sighash (little endian) = 1f75690d8bb08444c82d7a7505a4883aa6e9c8c2eefed09af0af70e05d5e189e
+sighash: 1f75690d8bb08444c82d7a7505a4883aa6e9c8c2eefed09af0af70e05d5e189e
+privkey: 81b637d8fcd2c6da6359e6963113a1170de795e4b725b84d1e0b4cfd9ec58ce9
+pubkey: 4edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10
+signature: 35525034910703747ed7a2168e0e470d9dd531337566b4c9b12f91564bf6249945975f94aefc9c7320d07b8b4877c8aecc2b2af1d026850445a7992b0eea4c76
+Resulting transaction: 02000000000101d59747466b9387657494e9e17baa11e2d0a058b1e5b41584431766b075b65c990000000000fdffffff01905f01000000000022512062e3921768df6edf10a5628ec74eff68d79f151c8efbdae0264c6f49928fc029044035525034910703747ed7a2168e0e470d9dd531337566b4c9b12f91564bf6249945975f94aefc9c7320d07b8b4877c8aecc2b2af1d026850445a7992b0eea4c7620107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f45a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac41c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c900000000
+```
+
+"Resulting transaction" のデータを `bitcoin-cli decoderawtransaction` すると witness はこうなっていた。  
+preimage である `1076...` の前に "signature" である `3552...` が追加されている。
+
+```
+      "txinwitness": [
+        "35525034910703747ed7a2168e0e470d9dd531337566b4c9b12f91564bf6249945975f94aefc9c7320d07b8b4877c8aecc2b2af1d026850445a7992b0eea4c76",
+        "107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f",
+        "a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac",
+        "c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9"
+      ],
+```
 
 自分での動作確認用に bitcoinjs-lib で評価アプリを作成した。
 
 * [btcdeb-test](https://github.com/hirokuma/js-scriptpath/tree/e6ae1e2968e939743dbd63dcd4d26b80fb06a5bd)
   * アドレス作成して送金、1ブロック生成、keypath, Bob, Alice(1回目), 143ブロック生成、Alice(2回目)の順
-
-
-(未調査)
 
 ## リンク
 
