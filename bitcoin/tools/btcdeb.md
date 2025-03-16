@@ -864,7 +864,107 @@ error: Locktime requirement not satisfied
 
 しかし、sequence は witness ではなく txin にあるため値を変更すると署名も変わる。
 なので `tap` のオプションで指定できるとよいのだが見つからない。
-"sequence" で検索してもそれらしい記述を見つけられないのだが、どうしたらよいのだろうか？
+"sequence" で検索してもそれらしい記述を見つけられないのだが、どうしたらよいのだろうか？  
+自分で書き換えるしかあるまい。
+
+![image](btcdeb-4.png)
+
+署名が変わるといっても privkey は知っているので sighash があればよい。
+btcdeb には sighash だけを計算する `tf` はなさそうだが、`OP_CHECKSIG` のときに sighash を出力するのでそれを使って `tf sign_schnorr <sighash> <privkey>` で求められる。  
+署名の書き換えも手動でやらねばなるまい。`witness[0]` が `3784...` で始まる 128文字の HEXデータなので置き換える。
+
+まず、手動で raw transaction を書き換えて `btcdeb` でデバッグする。  
+前回失敗する手前の "#0002 CheckTapTweak" の次から step 実行していくと、`OP_CSV` のところも実行できて最後の `OP_CHECKSIG` でエラーになった。  
+期待通り "schnorr sighash" も出力されている。
+
+```
+btcdeb> step
+                <> PUSH stack 9000
+script                                                             |                                                             stack
+-------------------------------------------------------------------+-------------------------------------------------------------------
+OP_CHECKSEQUENCEVERIFY                                             |                                                               9000
+OP_DROP                                                            | 378405e48058a323a3bed54f8b9018556d9effb74df5ed038697539ece8937a...
+9997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803be   |
+OP_CHECKSIG                                                        |
+#0003 9000
+btcdeb> step
+script                                                             |                                                             stack
+-------------------------------------------------------------------+-------------------------------------------------------------------
+OP_DROP                                                            |                                                               9000
+9997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803be   | 378405e48058a323a3bed54f8b9018556d9effb74df5ed038697539ece8937a...
+OP_CHECKSIG                                                        |
+#0004 OP_CHECKSEQUENCEVERIFY
+btcdeb> step
+                <> POP  stack
+script                                                             |                                                             stack
+-------------------------------------------------------------------+-------------------------------------------------------------------
+9997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803be   | 378405e48058a323a3bed54f8b9018556d9effb74df5ed038697539ece8937a...
+OP_CHECKSIG                                                        |
+#0005 OP_DROP
+btcdeb> step
+                <> PUSH stack 9997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803be
+script                                                             |                                                             stack
+-------------------------------------------------------------------+-------------------------------------------------------------------
+OP_CHECKSIG                                                        |   9997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803be
+                                                                   | 378405e48058a323a3bed54f8b9018556d9effb74df5ed038697539ece8937a...
+#0006 9997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803be
+btcdeb> step
+EvalChecksig() sigversion=3
+Eval Checksig Tapscript
+- sig must not be empty: ok
+- validation weight - 50 -> 172
+- 32 byte pubkey (new type); schnorr sig check
+GenericTransactionSignatureChecker::CheckSchnorrSignature(64 len sig, 32 len pubkey, sigversion=3)
+  sig         = 378405e48058a323a3bed54f8b9018556d9effb74df5ed038697539ece8937abc6f6870122811752fc525497b77081eaa15231a8751adfa291145e2f1ee6cdd2
+  pub key     = 9997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803be
+SignatureHashSchnorr(in_pos=0, hash_type=00)
+- tapscript sighash
+- schnorr sighash = 4b9c6931bef8c6ffdc59879a041a1fe0f0e7dfbe370f782f386e7a68ef7350e4
+  pubkey.VerifySchnorrSignature(sig=378405e48058a323a3bed54f8b9018556d9effb74df5ed038697539ece8937abc6f6870122811752fc525497b77081eaa15231a8751adfa291145e2f1ee6cdd2, sighash=4b9c6931bef8c6ffdc59879a041a1fe0f0e7dfbe370f782f386e7a68ef7350e4):
+  result: FAILURE
+- schnorr signature verification ***FAILED***
+- schnorr sig check failed
+error: Invalid Schnorr signature
+```
+
+`tf sign_schnorr` で署名を作ってもらう。  
+このとき `tap` が出力した sighash を使うならば `reverse(<sighash>)` にすること。
+(ドキュメントには「出力されているのは big endian なので逆にする必要がある」と書いてあるのだが、ハッシュ値にエンディアンなんてあるんだっけ？)
+
+```
+btcdeb> tf sign_schnorr reverse(4b9c6931bef8c6ffdc59879a041a1fe0f0e7dfbe370f782f386e7a68ef7350e4) 2bd806c97f0e00af1a1fc3328fa763a9269723c8db8fac4f93af71db186d6e90
+8ae41eda15737a6646d11d68ee7c1959cb2c55118182b6bd7a35ed26db852b8310c1cdb85bd439a6b07089aa9d055899a7dc656ed04e2ebec7bdc540f7eb351a
+```
+
+手動で sequence を変更した raw transaction から前回の `witness[0]` である `3784...` を探して `8ae4...` で置き換える。
+
+![image](btcdeb-5.png)
+
+これで再度 `btcdeb` でデバッグして・・・成功！
+
+```
+btcdeb> step
+EvalChecksig() sigversion=3
+Eval Checksig Tapscript
+- sig must not be empty: ok
+- validation weight - 50 -> 172
+- 32 byte pubkey (new type); schnorr sig check
+GenericTransactionSignatureChecker::CheckSchnorrSignature(64 len sig, 32 len pubkey, sigversion=3)
+  sig         = 8ae41eda15737a6646d11d68ee7c1959cb2c55118182b6bd7a35ed26db852b8310c1cdb85bd439a6b07089aa9d055899a7dc656ed04e2ebec7bdc540f7eb351a
+  pub key     = 9997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803be
+SignatureHashSchnorr(in_pos=0, hash_type=00)
+- tapscript sighash
+- schnorr sighash = 4b9c6931bef8c6ffdc59879a041a1fe0f0e7dfbe370f782f386e7a68ef7350e4
+  pubkey.VerifySchnorrSignature(sig=8ae41eda15737a6646d11d68ee7c1959cb2c55118182b6bd7a35ed26db852b8310c1cdb85bd439a6b07089aa9d055899a7dc656ed04e2ebec7bdc540f7eb351a, sighash=4b9c6931bef8c6ffdc59879a041a1fe0f0e7dfbe370f782f386e7a68ef7350e4):
+  result: success
+                <> POP  stack
+                <> POP  stack
+                <> PUSH stack 01
+script                                                             |                                                             stack
+-------------------------------------------------------------------+-------------------------------------------------------------------
+                                                                   |                                                                 01
+#0007 OP_CHECKSIG
+```
 
 ##### bitcoinjs で作るとこう
 
