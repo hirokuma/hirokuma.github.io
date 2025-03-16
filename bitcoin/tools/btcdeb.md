@@ -862,7 +862,7 @@ error: Locktime requirement not satisfied
 `4294967293` は 16進数で `0xFFFF_FFFD` と RBF できる値にしてあるだけで `OP_CSV` のことを考慮していない。
 `OP_CSV` は [sequenceをチェックする](https://github.com/bitcoin/bips/blob/master/bip-0068.mediawiki) のだ。
 
-しかし、sequence は witness ではなく txin にあるため値を変更すると書名も変わる。
+しかし、sequence は witness ではなく txin にあるため値を変更すると署名も変わる。
 なので `tap` のオプションで指定できるとよいのだが見つからない。
 "sequence" で検索してもそれらしい記述を見つけられないのだが、どうしたらよいのだろうか？
 
