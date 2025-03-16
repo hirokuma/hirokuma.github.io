@@ -372,7 +372,9 @@ key でも tapscript でも解くことができる場合、internal pubkey か�
 Alice ルートは INPUT トランザクションが 144 confirm 以上経過するという条件があるという理由で Bob ルートだけになっている
 (regtest なので `generatetoaddress` するだけだと思うのだが)。
 
-Bobルートのスクリプトは以下で、SHA256 の preimage と Bob 鍵での署名で解く。
+##### Bob ルート
+
+Bob ルートのスクリプトは以下で、SHA256 の preimage と Bob 鍵での署名で解く。
 
 ```bitcoin
 OP_SHA256
@@ -485,8 +487,11 @@ Tapscript の merkle tree は leaf が 2つあってそれをまとめた leaf �
 
 まずは最後に出力された "Resulting transaction" の raw transaction を `btcdeb` で解こうとしている。  
 もちろん仮の witness なのですぐに failure になるのだが、それより前にチェックしている内容の説明を行っている。
+ここでは変数 `tx_bob に得られた "Resulting transaction" を代入している。
 
-```
+```console
+$ btcdeb --txin=$txin --tx=$tx_bob
+......
 8 op script loaded. type `help` for usage information
 script                                                             |                                                             stack
 -------------------------------------------------------------------+-------------------------------------------------------------------
@@ -606,8 +611,6 @@ error: Script failed an OP_EQUALVERIFY operation
 これによって "Tapscript spending witness" では preimage が先頭に追加されている。  
 また、それ以降で Bob privkey での署名まで行われ、"Resulting transaction" 
 
-TODO ここから下は別PCで作業したのでtxinなどがこれより前と変わっている。差し替えよう。
-
 ```console
 $ tap -k${bob_key} --tx=$tx --txin=$txin  $pubkey 2 "${script_alice}" "${script_bob}" 1 107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f
 tap 5.0.24 -- type `tap -h` for help
@@ -631,7 +634,7 @@ Control object = (leaf), (internal pubkey = f30544d6009c8d8d94f5d030b2e844b1a3ca
 ... with proof -> f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
 Tweak value = TapTweak(f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c || 41646f8c1fe2a96ddad7f5471bc4fee7da98794ef8c45a4f4fc6a559d60c9f6b) = 620fc4000ba539753ffa0e5893b4243cb1cf0a258cf8a09a9038f5f1352607a9
 Tweaked pubkey = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951 (not even)
-Pubkey matches the scriptPubKey of the input transaction's output #0
+Pubkey matches the scriptPubKey of the input transaction's output #1
 Resulting Bech32m address: bcrt1p5kaqsuted66fldx256lh3en4h9z4uttxuagkwepqlqup6hw639gsm28t6c
 Final control object = c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
 Adding selected script to taproot inputs: a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac
@@ -642,7 +645,7 @@ Tapscript spending witness: [
  "a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac",
  "c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9",
 ]
-input tx index = 0; tx input vout = 0; value = 100000
+input tx index = 0; tx input vout = 1; value = 100000
 got witness stack of size 3
 34 bytes (v0=P2WSH, v1=taproot/tapscript)
 Taproot commitment:
@@ -656,33 +659,221 @@ Taproot commitment:
   (TapLeaf(0xc0 || a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac))
 valid script
 - generating prevout hash from 1 ins
-[+] COutPoint(995cb675b0, 0)
+[+] COutPoint(8c51c8dfcd, 1)
 SignatureHashSchnorr(in_pos=0, hash_type=00)
 - tapscript sighash
-sighash (little endian) = 1f75690d8bb08444c82d7a7505a4883aa6e9c8c2eefed09af0af70e05d5e189e
-sighash: 1f75690d8bb08444c82d7a7505a4883aa6e9c8c2eefed09af0af70e05d5e189e
+sighash (little endian) = 683969510c01013c294eceb1971588ccba7af9be073879db1b5243845d1c0205
+sighash: 683969510c01013c294eceb1971588ccba7af9be073879db1b5243845d1c0205
 privkey: 81b637d8fcd2c6da6359e6963113a1170de795e4b725b84d1e0b4cfd9ec58ce9
 pubkey: 4edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10
-signature: 35525034910703747ed7a2168e0e470d9dd531337566b4c9b12f91564bf6249945975f94aefc9c7320d07b8b4877c8aecc2b2af1d026850445a7992b0eea4c76
-Resulting transaction: 02000000000101d59747466b9387657494e9e17baa11e2d0a058b1e5b41584431766b075b65c990000000000fdffffff01905f01000000000022512062e3921768df6edf10a5628ec74eff68d79f151c8efbdae0264c6f49928fc029044035525034910703747ed7a2168e0e470d9dd531337566b4c9b12f91564bf6249945975f94aefc9c7320d07b8b4877c8aecc2b2af1d026850445a7992b0eea4c7620107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f45a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac41c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c900000000
+signature: 95e8e7ffa3f8d9ad976d1ed62c2214813fe08d5d65e6becf0584e02c8bca65320145ada870ed3f538b96fad0db98f88732570ec323ac614e88ed0d8e73badd3c
+Resulting transaction: 02000000000101bc2165a4797d59358f31a0a20b2c94534bff89a38d958a2768ed66cddfc8518c0100000000fdffffff01905f010000000000160014749b0061e363d888a7bf9453a518735aca75415a044095e8e7ffa3f8d9ad976d1ed62c2214813fe08d5d65e6becf0584e02c8bca65320145ada870ed3f538b96fad0db98f88732570ec323ac614e88ed0d8e73badd3c20107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f45a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac41c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c900000000
 ```
 
 "Resulting transaction" のデータを `bitcoin-cli decoderawtransaction` すると witness はこうなっていた。  
-preimage である `1076...` の前に "signature" である `3552...` が追加されている。
+preimage である `1076...` の前に "signature" に `95e8...` が追加されている。
 
 ```
       "txinwitness": [
-        "35525034910703747ed7a2168e0e470d9dd531337566b4c9b12f91564bf6249945975f94aefc9c7320d07b8b4877c8aecc2b2af1d026850445a7992b0eea4c76",
+        "95e8e7ffa3f8d9ad976d1ed62c2214813fe08d5d65e6becf0584e02c8bca65320145ada870ed3f538b96fad0db98f88732570ec323ac614e88ed0d8e73badd3c",
         "107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f",
         "a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac",
         "c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9"
       ],
+      "sequence": 4294967293
 ```
+
+`bitcoin-cli testmempoolaccept` も成功するので大丈夫だろう。
+
+```console
+$ bitcoin-cli testmempoolaccept '["02000000000101bc2165a4797d59358f31a0a20b2c94534bff89a38d958a2768ed66cddfc8518c0100000000fdffffff01905f010000000000160014749b0061e363d888a7bf9453a518735aca75415a044095e8e7ffa3f8d9ad976d1ed62c2214813fe08d5d65e6becf0584e02c8bca65320145ada870ed3f538b96fad0db98f88732570ec323ac614e88ed0d8e73badd3c20107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f45a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac41c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1cc81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c900000000"]'
+[
+  {
+    "txid": "6a96f9144c6de9136efd6e8ffe6f72430536dfa1f2832a8de2b3da1d6323c44a",
+    "wtxid": "64f291bea1583ecbdc15e8d9c2cb137606f0fb7c47884aacace489e7ac14f0de",
+    "allowed": true,
+    "vsize": 142,
+    "fees": {
+      "base": 0.00010000,
+      "effective-feerate": 0.00070422,
+      "effective-includes": [
+        "64f291bea1583ecbdc15e8d9c2cb137606f0fb7c47884aacace489e7ac14f0de"
+      ]
+    }
+  }
+]
+```
+
+##### Alice ルート
+
+Alice ルートはドキュメントにないので自分でやってみよう。
+
+スクリプトは `OP_CHECKSEQUENCEVERIFY`(以下 `OP_CSV`) で confirm が満たしているかどうかチェックした後、
+`OP_CSV` が残したスタックを `OP_DROP` で削除した後 Alice 鍵で署名のチェックをする。  
+HTLC でよくあるパターンだ。
+
+```bitcoin
+144 OP_CHECKSEQUENCEVERIFY OP_DROP
+9997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803be
+OP_CHECKSIG
+```
+
+witness に置くのは Alice 鍵での署名だけで、それ以外は Bitcoin ノードが自分で判断する。  
+するのだが、`btcdeb` はオフラインのツールなのでブロックチェーンを参照できない。
+OP_CSV や OP_CLTV のような OPコードはどう扱うのだろうか。
+
+実際にやってみる。  
+`tap` では Alice のスクリプトを使うことと `-k` で Alice の鍵を指定するだけである。
+
+```console
+$ tap -k${alice_key} --tx=$tx --txin=$txin  $pubkey 2 "${script_alice}" "${script_bob}" 0
+tap 5.0.24 -- type `tap -h` for help
+WARNING: This is experimental software. Do not use this with real bitcoin, or you will most likely lose them all. You have been w a r n e d.
+LOG: sign segwit taproot
+targeting transaction vin at index #0
+Internal pubkey: f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c
+1 spending argument present
+- 1+ spend arguments; TAPSCRIPT mode
+2 scripts:
+- #0: 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac
+- #1: a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac
+Script #0 leaf hash = TapLeaf<<0xc0 || 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac>>
+ → c81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
+Script #1 leaf hash = TapLeaf<<0xc0 || a8206c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd533388204edfcf9dfe6c0b5c83d1ab3f78d1b39a46ebac6798e08e19761f5ed89ec83c10ac>>
+ → 632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b42
+Branch (#0, #1)
+ → 41646f8c1fe2a96ddad7f5471bc4fee7da98794ef8c45a4f4fc6a559d60c9f6b
+Control object = (leaf), (internal pubkey = f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c), ...
+... with proof -> f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b42
+Tweak value = TapTweak(f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c || 41646f8c1fe2a96ddad7f5471bc4fee7da98794ef8c45a4f4fc6a559d60c9f6b) = 620fc4000ba539753ffa0e5893b4243cb1cf0a258cf8a09a9038f5f1352607a9
+Tweaked pubkey = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951 (not even)
+Pubkey matches the scriptPubKey of the input transaction's output #1
+Resulting Bech32m address: bcrt1p5kaqsuted66fldx256lh3en4h9z4uttxuagkwepqlqup6hw639gsm28t6c
+Final control object = c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b42
+Adding selected script to taproot inputs: 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac
+ → 27029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac
+appending control object to taproot input stack: c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b42
+Tapscript spending witness: [
+ "029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac",
+ "c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b42",
+]
+input tx index = 0; tx input vout = 1; value = 100000
+got witness stack of size 2
+34 bytes (v0=P2WSH, v1=taproot/tapscript)
+Taproot commitment:
+- control  = c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b42
+- program  = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951
+- script   = 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac
+- path len = 1
+- p        = f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c
+- q        = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951
+- k        = c9178b65ff0522700a2ad26523533c53fbcd841fba4bfdb6d4ebd94b875114c8          (tap leaf hash)
+  (TapLeaf(0xc0 || 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac))
+valid script
+- generating prevout hash from 1 ins
+[+] COutPoint(8c51c8dfcd, 1)
+SignatureHashSchnorr(in_pos=0, hash_type=00)
+- tapscript sighash
+sighash (little endian) = 7b704722384b75aac51ee3951d6473b8dfddb69c96003f6366bb38e0a86ec4d0
+sighash: 7b704722384b75aac51ee3951d6473b8dfddb69c96003f6366bb38e0a86ec4d0
+privkey: 2bd806c97f0e00af1a1fc3328fa763a9269723c8db8fac4f93af71db186d6e90
+pubkey: 9997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803be
+signature: 378405e48058a323a3bed54f8b9018556d9effb74df5ed038697539ece8937abc6f6870122811752fc525497b77081eaa15231a8751adfa291145e2f1ee6cdd2
+Resulting transaction: 02000000000101bc2165a4797d59358f31a0a20b2c94534bff89a38d958a2768ed66cddfc8518c0100000000fdffffff01905f010000000000160014749b0061e363d888a7bf9453a518735aca75415a0340378405e48058a323a3bed54f8b9018556d9effb74df5ed038697539ece8937abc6f6870122811752fc525497b77081eaa15231a8751adfa291145e2f1ee6cdd227029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac41c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b4200000000
+```
+
+`bitcoin-cli decoderawtransaction` した witness はこうなって署名が積まれていた。
+
+```
+      "txinwitness": [
+        "378405e48058a323a3bed54f8b9018556d9effb74df5ed038697539ece8937abc6f6870122811752fc525497b77081eaa15231a8751adfa291145e2f1ee6cdd2",
+        "029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac",
+        "c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b42"
+      ],
+      "sequence": 4294967293
+```
+
+なるほど、`tap` はデバッガではないので `OP_CSV` は気にしなくてよいのだった。  
+では `btcdeb` でデバッグするとどうなるのだろう。
+"Resulting transaction" を tx_alice という変数に入れておく。
+
+```console
+$ btcdeb --txin=$txin --tx=$tx_alice
+btcdeb 5.0.24 -- type `btcdeb -h` for start up options
+LOG: signing segwit taproot
+notice: btcdeb has gotten quieter; use --verbose if necessary (this message is temporary)
+input tx index = 0; tx input vout = 1; value = 100000
+got witness stack of size 3
+34 bytes (v0=P2WSH, v1=taproot/tapscript)
+Taproot commitment:
+- control  = c1f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b42
+- program  = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951
+- script   = 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac
+- path len = 1
+- p        = f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c
+- q        = a5ba0871796eb49fb4caa6bf78e675b9455e2d66e751676420f8381d5dda8951
+- k        = c9178b65ff0522700a2ad26523533c53fbcd841fba4bfdb6d4ebd94b875114c8          (tap leaf hash)
+  (TapLeaf(0xc0 || 029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac))
+valid script
+- generating prevout hash from 1 ins
+[+] COutPoint(8c51c8dfcd, 1)
+8 op script loaded. type `help` for usage information
+script                                                             |                                                             stack
+-------------------------------------------------------------------+-------------------------------------------------------------------
+<<< taproot commitment >>>                                         |                                                               i: 0
+Branch: 632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c... | k: c81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b...
+Tweak: f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5... |
+CheckTapTweak                                                      |
+<<< committed script >>>                                           |
+9000                                                               |
+OP_CHECKSEQUENCEVERIFY                                             |
+OP_DROP                                                            |
+9997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803be   |
+OP_CHECKSIG                                                        |
+#0000 Branch: 632c8632b4f29c6291416e23135cf78ecb82e525788ea5ed6483e3c6ce943b42
+btcdeb>
+```
+
+"taproot commitment" のあとに "commited script" が続くのは同じである。
+Branch, Tweak, CheckTapTweak が成功するのも同じなので省略する。  
+次に step 実行すると `OP_CSV` で確認する値がスタックに積まれる。
+
+```
+btcdeb> step
+                <> PUSH stack 9000
+script                                                             |                                                             stack
+-------------------------------------------------------------------+-------------------------------------------------------------------
+OP_CHECKSEQUENCEVERIFY                                             |                                                               9000
+OP_DROP                                                            | 378405e48058a323a3bed54f8b9018556d9effb74df5ed038697539ece8937a...
+9997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803be   |
+OP_CHECKSIG                                                        |
+#0003 9000
+```
+
+そして step 実行すると・・・エラーになった。
+
+```
+btcdeb> step
+error: Locktime requirement not satisfied
+```
+
+やはり時間について何かする必要があるのだろうか？  
+その前にここで思い出してほしいのは、`decoderawtransaction` したときの witness と一緒に載せた sequence だ。
+`4294967293` は 16進数で `0xFFFF_FFFD` と RBF できる値にしてあるだけで `OP_CSV` のことを考慮していない。
+`OP_CSV` は [sequenceをチェックする](https://github.com/bitcoin/bips/blob/master/bip-0068.mediawiki) のだ。
+
+しかし、sequence は witness ではなく txin にあるため値を変更すると書名も変わる。
+なので `tap` のオプションで指定できるとよいのだが見つからない。
+"sequence" で検索してもそれらしい記述を見つけられないのだが、どうしたらよいのだろうか？
+
+##### bitcoinjs で作るとこう
 
 自分での動作確認用に bitcoinjs-lib で評価アプリを作成した。
 
 * [btcdeb-test](https://github.com/hirokuma/js-scriptpath/tree/e6ae1e2968e939743dbd63dcd4d26b80fb06a5bd)
   * アドレス作成して送金、1ブロック生成、keypath, Bob, Alice(1回目), 143ブロック生成、Alice(2回目)の順
+
+
 
 ## リンク
 
