@@ -834,7 +834,7 @@ OP_CHECKSIG                                                        |
 btcdeb>
 ```
 
-"taproot commitment" のあとに "commited script" が続くのは同じである。
+"taproot commitment" のあとに "committed script" が続くのは同じである。
 Branch, Tweak, CheckTapTweak が成功するのも同じなので省略する。  
 次に step 実行すると `OP_CSV` で確認する値がスタックに積まれる。
 
@@ -871,7 +871,7 @@ error: Locktime requirement not satisfied
 自分での動作確認用に bitcoinjs-lib で評価アプリを作成した。
 
 * [btcdeb-test](https://github.com/hirokuma/js-scriptpath/tree/e6ae1e2968e939743dbd63dcd4d26b80fb06a5bd)
-  * アドレス作成して送金、1ブロック生成、keypath, Bob, Alice(1回目), 143ブロック生成、Alice(2回目)の順
+  * アドレス作成して送金、1ブロック生成、key path, Bob, Alice(1回目), 143ブロック生成、Alice(2回目)の順
 
 
 
