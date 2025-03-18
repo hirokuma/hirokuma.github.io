@@ -12,6 +12,7 @@
 
 * 2025
   * March
+    * 03/18 [btc: ハードウェアウォレット](2025/03/20250318-btc.md)
     * 03/17 [btc: ElectrumX API](2025/03/20250317-btc.md)
     * 03/16 [btc: btcdebを使う (4)](2025/03/20250316-btc.md)
     * 03/14 [js: JSON の import は assert から with になった](2025/03/20250314-js.md)
