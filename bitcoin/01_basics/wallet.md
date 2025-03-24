@@ -5,6 +5,9 @@ _最終更新日: 2025/03/24_
 ## HDウォレット
 
 * [BIP-32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki)
+* [BIP-44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki)
+
+(ここに階層の図を入れる)
 
 ### seed
 
@@ -35,4 +38,22 @@ Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし�
 * P2WPKH: `zprv`, `zpub` ([BIP-84](https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki#extended-key-version))
 * P2TR(single key): `xprv`, `xpub` ([BIP-86](https://github.com/bitcoin/bips/blob/master/bip-0086.mediawiki#test-vectors))
 
+### 参考
+
+* 開発日記
+  * [btc: ニモニック](https://blog.hirokuma.work/2025/03/20250324-btc.html)
+
 ## Output Descriptors
+
+under construction...
+
+* [BIP-380](https://github.com/bitcoin/bips/blob/master/bip-0380.mediawiki)
+
+### 参考
+
+* 開発日記
+  * [btc: Output Descriptors](https://blog.hirokuma.work/2025/02/20250224-btc.html)
+  * [btc: Output Descriptors (2)](https://blog.hirokuma.work/2025/02/20250225-btc2.html)
+  * [btc: Output Descriptors (3)](https://blog.hirokuma.work/2025/03/20250301-btc.html)
+  * [btc: Output Descriptors (4)](https://blog.hirokuma.work/2025/03/20250302-btc.html)
+  * [btc: Output Descriptors (5)](https://blog.hirokuma.work/2025/03/20250303-btc.html)
