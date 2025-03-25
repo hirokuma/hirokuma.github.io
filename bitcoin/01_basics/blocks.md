@@ -1,6 +1,6 @@
 # ブロック
 
-_最終更新日: 2024/12/11_
+_最終更新日: 2025/03/25_
 
 ## はじめに
 
@@ -178,9 +178,17 @@ $ curl -sSL "https://mempool.space/api/block/000000000003ba27aa200b1cecaad478d2b
 
 結果は `000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506` でブロック高から取得した値と一致している。
 
-## merkle root hash
+## merkle tree
 
-merkle root hash は ブロックヘッダ以降のトランザクションをマークルツリー構造に落とし込んだルートの値を使って計算する。  
+merkle tree は 2回出てくる。
+
+* ブロックヘッダの merkle root hash 
+* coinbase トランザクションの commitment hash
+
+順番としては、まず coinbase トランザクションを作ることになるため commitment hash が先である。
+
+### commitment hash
+
 マークルツリーの leaf というか node というかに WTXID を使用する(TXID ではなく)。
 バイト並びを逆転させていない値を使用する。  
 ブロックヘッダに続くトランザクションデータは先頭が coinbase トランザクション(報酬などが載っている特殊なトランザクション)になるが、そこは代わりにオールゼロのデータを`WTXID`として使用する。  
@@ -189,11 +197,18 @@ merkle root hash は ブロックヘッダ以降のトランザクションを�
 ![image](images/block-3.png)
 
 WTXID `A` と `B` から `AB = sha256(sha256(A || B))` を得る(`||` はデータの連結)。  
-これを続けて `root` まで計算した後、さらに `sha256(sha256(root || 00...0))` した結果が merkle root hash である。
+これを続けて `root` まで計算した後、さらに `sha256(sha256(root || 00...0))` した結果が commitment hash である。
 
 ![image](images/block-4.png)
 
 * [Extensible commitment structure](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki#extensible-commitment-structure)
+
+これで coinbase トランザクションが確定したので merkle root hash を求めることができる。
+
+### ブロックヘッダの merkle root hash
+
+merkle root hash は ブロックヘッダ以降のトランザクションをマークルツリー構造に落とし込んだルートの値を使って計算する。
+こちらは WTXID ではなく TXID を使う。
 
 ## nonce
 
