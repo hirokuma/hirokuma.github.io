@@ -12,6 +12,7 @@
 
 * 2025
   * April
+    * 04/04 [ble: gattlib (2)](2025/04/20250404-ble.md)
     * 04/02 [btc: bitcoindのblocksを別ディレクトリにしたい](2025/04/20250402-btc.md)
   * March
     * 03/31 [ble: gattlib](2025/03/20250331-ble.md)
