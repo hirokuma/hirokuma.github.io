@@ -12,6 +12,7 @@
 
 * 2025
   * April
+    * 04/05 [ble: gattlib (3)](2025/04/20250405-ble.md)
     * 04/05 [web: GitHub Pagesの管理(2025/4月)](2025/04/20250405-web.md)
     * 04/04 [ble: gattlib (2)](2025/04/20250404-ble.md)
     * 04/02 [btc: bitcoindのblocksを別ディレクトリにしたい](2025/04/20250402-btc.md)
