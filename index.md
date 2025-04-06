@@ -1,7 +1,3 @@
-<div>
-    <img src="assets/images/banner.png" class="center" style="box-shadow: 0px 0px; border: unset;">
-</div>
-
 ## 調査
 
 * [Bitcoin調査](bitcoin/index.md)
