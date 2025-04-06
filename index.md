@@ -12,6 +12,7 @@
 
 * 2025
   * April
+    * 04/06 [ble: gattlib (4)](2025/04/20250406-ble.md)
     * 04/06 [linux: rsyslog](2025/04/20250406-sys.md)
     * 04/05 [ble: gattlib (3)](2025/04/20250405-ble.md)
     * 04/05 [web: GitHub Pagesの管理(2025/4月)](2025/04/20250405-web.md)
