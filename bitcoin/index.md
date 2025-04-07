@@ -47,4 +47,4 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 ## ツール
 
 * [btcdeb](tools/btcdeb.md)
-* [electrs](tools/electrs.md)
+* [romanz/electrs](tools/electrs.md)

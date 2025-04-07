@@ -6,7 +6,7 @@ _2025/04/07_: v0.10.9
 
 ## 用途
 
-Electrum Server の Rust 実装。  
+Electrum Server の Rust 実装の 1つ。  
 [Electrum Protocol](https://electrumx.readthedocs.io/en/latest/protocol.html) v1.4 をサポートしている。
 
 派生に [Blockstream/electrs](https://github.com/Blockstream/electrs) や Blockstream版からの派生と思われる [mempool/electrs](https://github.com/mempool/electrs) などがある。  
