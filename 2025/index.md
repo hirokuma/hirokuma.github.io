@@ -1,6 +1,28 @@
 # 開発日記 2025年
 
 * 2025年
+  * March
+    * 03/31 [ble: gattlib](2025/03/20250331-ble.html)
+    * 03/30 [ble: Role の関係](2025/03/20250330-ble.html)
+    * 03/29 [win: クリップボードに格納するとIME入力がおかしくなる(未解決→対処)](2025/03/20250329-win.html)
+    * 03/26 [btc: bitcoind だけで知らないアドレスの残高を得たい](2025/03/20250326-btc.html)
+    * 03/25 [btc: coinbaseトランザクション](2025/03/20250325-btc.html)
+    * 03/24 [btc: ニモニック](2025/03/20250324-btc.html)
+    * 03/18 [btc: ハードウェアウォレット](2025/03/20250318-btc.html)
+    * 03/17 [btc: ElectrumX API](2025/03/20250317-btc.html)
+    * 03/16 [btc: btcdebを使う (4)](2025/03/20250316-btc.html)
+    * 03/14 [js: JSON の import は assert から with になった](2025/03/20250314-js.html)
+    * 03/13 [btc: libwally-core v1.4.0](2025/03/20250313-btc.html)
+    * 03/11 [btc: miniscript (3)](2025/03/20250311-btc.html)
+    * 03/09 [btc: Bitcoin RPC を LAN内で使いたい](2025/03/20250309-btc.html)
+    * 03/08 [btc: miniscript (2)](2025/03/20250308-btc.html)
+    * 03/07 [btc: miniscript](2025/03/20250307-btc.html)
+    * 03/05 [rust: 途中で改行したい](2025/03/20250305-rst.html)
+    * 03/04 [btc: BDK で Rust を扱ってみよう](2025/03/20250304-btc.html)
+    * 03/03 [btc: Output Descriptors (5)](2025/03/20250303-btc.html)
+    * 03/02 [web: GitHub Pagesの管理(2025/3月)](2025/03/20250302-web.html)
+    * 03/02 [btc: Output Descriptors (4)](2025/03/20250302-btc.html)
+    * 03/01 [btc: Output Descriptors (3)](2025/03/20250301-btc.html)
   * February
     * 02/28 [btc: 520バイトは1スタックのサイズ上限](/2025/02/20250228-btc.html)
     * 02/25 [btc: JSON-RPC では by-name も OK](/2025/02/20250225-btc.html)

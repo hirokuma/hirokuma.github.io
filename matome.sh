@@ -1,4 +1,8 @@
 #!/bin/bash -u
 
-sed -i -e "s|(2025/|(/2025/|g" -e "s/\.md/\.html/g" $1
+if [ ! -f $1/index.md ]; then
+    echo \"$1/index.md\" not found
+    return
+fi
 
+sed -i -e "s|($1/|(/$1/|g" -e "s/\.md/\.html/g" $1/index.md
