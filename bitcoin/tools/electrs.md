@@ -35,6 +35,37 @@ electrs の設定は `config.toml` という名前である。
 [テンプレート](https://github.com/romanz/electrs/blob/v0.10.9/doc/config_example.toml) を参考にすると良い。  
 `cookie_file` と `db_dir` は変更するのではないかな。
 
+おそらくだがこれらの設定ができると思われる。
+
+* [Config](https://github.com/romanz/electrs/blob/v0.10.9/src/config.rs#L125-L148)
+
+```rust
+pub struct Config {
+    // See below for the documentation of each field:
+    pub network: Network,
+    pub db_path: PathBuf,
+    pub db_log_dir: Option<PathBuf>,
+    pub db_parallelism: u8,
+    pub daemon_auth: SensitiveAuth,
+    pub daemon_rpc_addr: SocketAddr,
+    pub daemon_p2p_addr: SocketAddr,
+    pub electrum_rpc_addr: SocketAddr,
+    pub monitoring_addr: SocketAddr,
+    pub wait_duration: Duration,
+    pub jsonrpc_timeout: Duration,
+    pub index_batch_size: usize,
+    pub index_lookup_limit: Option<usize>,
+    pub reindex_last_blocks: usize,
+    pub auto_reindex: bool,
+    pub ignore_mempool: bool,
+    pub sync_once: bool,
+    pub skip_block_download_wait: bool,
+    pub disable_electrum_rpc: bool,
+    pub server_banner: String,
+    pub signet_magic: Magic,
+}
+```
+
 ### bitcoind
 
 `rpcauth` を設定して cookie ファイルが作られるようにしておく。  
@@ -51,6 +82,5 @@ export RUST_LOG=${RUST_LOG-electrs=INFO}
 ```
 
 実行すると bitcoind との同期が始まる。  
-500 GB 超のストレージが必要になる。
 
 (同期中。。。)

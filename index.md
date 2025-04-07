@@ -8,7 +8,7 @@
 
 * 2025
   * April
-    * 04/07 [btc: electrsのストレージは500GB超](2025/04/20250407-btc.md)
+    * 04/07 [btc: electrsのストレージは500GB超→ではない？](2025/04/20250407-btc.md)
     * 04/06 [ble: gattlib (4)](2025/04/20250406-ble.md)
     * 04/06 [linux: rsyslog](2025/04/20250406-sys.md)
     * 04/05 [ble: gattlib (3)](2025/04/20250405-ble.md)
