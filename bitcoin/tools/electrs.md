@@ -35,8 +35,9 @@ electrs の設定は `config.toml` という名前である。
 [テンプレート](https://github.com/romanz/electrs/blob/v0.10.9/doc/config_example.toml) を参考にすると良い。  
 `cookie_file` と `db_dir` は変更するのではないかな。
 
-おそらくだがこれらの設定ができると思われる。
+`config_specification.toml` が設定できるパラメータ名で `Config` が最終的に使われる設定値なのかな。
 
+* [internal/config_specification.toml](https://github.com/romanz/electrs/blob/v0.10.9/internal/config_specification.toml)
 * [Config](https://github.com/romanz/electrs/blob/v0.10.9/src/config.rs#L125-L148)
 
 ```rust
@@ -66,6 +67,22 @@ pub struct Config {
 }
 ```
 
+私の環境だとおおよそこんな感じである。
+
+```conf
+cookie_file = "/home/xxx/usbdisk/bitcoin/data/.cookie"
+daemon_rpc_addr = "127.0.0.1:8332"
+daemon_p2p_addr = "127.0.0.1:8333"
+daemon_dir = "/home/xxx/usbdisk/bitcoin/data"
+db_dir = "/home/xxx/hdddisk/electrs/db"
+network = "bitcoin"
+electrum_rpc_addr = "0.0.0.0:50001"
+log_filters = "INFO"
+```
+
+`electrum_rpc_addr` の程よい設定値がまだ分かっていない。  
+LAN 内で
+
 ### bitcoind
 
 `rpcauth` を設定して cookie ファイルが作られるようにしておく。  
@@ -81,16 +98,52 @@ export RUST_LOG=${RUST_LOG-electrs=INFO}
 ./electrs --daemon-dir $HOME/.bitcoin
 ```
 
-systemd に登録する場合はこちらを参考にすると良い。
+systemd に登録する場合はこちらを参考にすると良い。  
+`WorkingDirectory` を `config.toml` があるのと同じディレクトリにしたのだが、どうも読み取られないように見える。  
+`--conf` で指定するのが安全そうだ。
 
 * [Sample Systemd Unit File](https://github.com/romanz/electrs/blob/v0.10.9/doc/config.md#sample-systemd-unit-file)
 
+```ini
+.........
+WorkingDirectory=/home/xxx/hdddisk/electrs
+ExecStart=/home/xxx/hdddisk/electrs/electrs --conf="/home/xxx/hdddisk/electrs/config.toml"
+.........
+```
+
 実行すると bitcoind との同期が始まる。  
-同期にかかった時間は計測していないが、`bitcoin-cl igetblockchaininfo` の `"size_on_disk"` が `740028923219`(690GBくらい) で 50 GB 程度になった。
+同期にかかった時間は計測していないが、`bitcoin-cli getblockchaininfo` の `"size_on_disk"` が `740028923219`(690GBくらい) で 50 GB 程度になった。
 
 ```console
 $ du -h
 50G     ./db/bitcoin
 50G     ./db
 50G     .
+```
+
+ポートの LISTEN は最初から行われているようだ。  
+いつから API にアクセスできるのかは未確認。
+
+```console
+$ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "id": 0}' | netcat 192.168.0.30 50001
+{"id":0,"jsonrpc":"2.0","result":["electrs/0.10.9","1.4"]}
+^C
+```
+
+ブロックチェーンのデータにアクセスできることも見ておく。  
+[blockchain.block.header](https://electrumx.readthedocs.io/en/latest/protocol-methods.html#blockchain-block-header) はこう。  
+`cp_height` を付けるとエラーになるが[electrumがそうだから](https://github.com/romanz/electrs/issues/1080)だそうだ。
+
+```console
+ $ echo '{"jsonrpc": "2.0", "method": "blockchain.block.header", "params": [5], "id": 0}' | netcat 192.168.0.30 50001
+{"id":0,"jsonrpc":"2.0","result":"0100000085144a84488ea88d221c8bd6c059da090e88f8a2c99690ee55dbba4e00000000e11c48fecdd9e72510ca84f023370c9a38bf91ac5cae88019bee94d24528526344c36649ffff001d1d03e477"}
+```
+
+`bitcoin-cli` で確認するとデータは一致している。
+
+```console
+$ bitcoin-cli getblockhash 5
+000000009b7262315dbf071787ad3656097b892abffd1f95a1a022f896f533fc
+$ bitcoin-cli getblockheader 000000009b7262315dbf071787ad3656097b892abffd1f95a1a022f896f533fc false
+0100000085144a84488ea88d221c8bd6c059da090e88f8a2c99690ee55dbba4e00000000e11c48fecdd9e72510ca84f023370c9a38bf91ac5cae88019bee94d24528526344c36649ffff001d1d03e477
 ```
