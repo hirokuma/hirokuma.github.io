@@ -81,6 +81,16 @@ export RUST_LOG=${RUST_LOG-electrs=INFO}
 ./electrs --daemon-dir $HOME/.bitcoin
 ```
 
-実行すると bitcoind との同期が始まる。  
+systemd に登録する場合はこちらを参考にすると良い。
 
-(同期中。。。)
+* [Sample Systemd Unit File](https://github.com/romanz/electrs/blob/v0.10.9/doc/config.md#sample-systemd-unit-file)
+
+実行すると bitcoind との同期が始まる。  
+同期にかかった時間は計測していないが、`bitcoin-cl igetblockchaininfo` の `"size_on_disk"` が `740028923219`(690GBくらい) で 50 GB 程度になった。
+
+```console
+$ du -h
+50G     ./db/bitcoin
+50G     ./db
+50G     .
+```
