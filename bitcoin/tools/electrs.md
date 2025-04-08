@@ -67,7 +67,8 @@ pub struct Config {
 }
 ```
 
-私の環境だとおおよそこんな感じである。
+私の環境だとおおよそこんな感じである。  
+Raspberry Pi 4 の IP アドレスが 192.168.0.30 なので `electrum_rpc_addr` で設定することで少なくとも LAN の中では公開という形にしている(よね？)。
 
 ```conf
 cookie_file = "/home/xxx/usbdisk/bitcoin/data/.cookie"
@@ -76,12 +77,9 @@ daemon_p2p_addr = "127.0.0.1:8333"
 daemon_dir = "/home/xxx/usbdisk/bitcoin/data"
 db_dir = "/home/xxx/hdddisk/electrs/db"
 network = "bitcoin"
-electrum_rpc_addr = "0.0.0.0:50001"
+electrum_rpc_addr = "192.168.0.30:50001"
 log_filters = "INFO"
 ```
-
-`electrum_rpc_addr` の程よい設定値がまだ分かっていない。  
-LAN 内で
 
 ### bitcoind
 
