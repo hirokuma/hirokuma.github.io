@@ -62,10 +62,24 @@ segwit 以前はこの構造のみだった。
 
 ### script_witness
 
+`script_witness` は各 vin ごとに存在する。
+
+* [Witness - Unlocking Code for Segwit Inputs](https://learnmeabitcoin.com/technical/transaction/witness/#structure)
+
 | item | size | unit |
 |---|---|---|
 | witness_count | | compact size |
-| scripts | | `script[witness_count]` |
+| scripts | | `stack[witness_count]` |
+
+#### stack
+
+`scriptSig` と違い、全体のデータ長 を compact size 型で示した後、そのサイズ分のデータが載る。  
+例えば P2TR key path では 64 バイトの署名データだけなので、先頭に `0x40`、それに 64 バイトのデータが続く。
+
+| item | size | unit |
+|---|---|---|
+| size | | compact size |
+| script | size | `char[size]` |
 
 ### 説明
 
