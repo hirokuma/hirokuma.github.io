@@ -1169,6 +1169,10 @@
 <lastmod>2025-04-14T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>https://blog.hirokuma.work/2025/04/20250415-rst.html</loc>
+<lastmod>2025-04-15T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>https://blog.hirokuma.work/2025/index.html</loc>
 <lastmod>2025-04-07T00:00:00+09:00</lastmod>
 </url>
@@ -1205,8 +1209,12 @@
 <lastmod>2025-04-12T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>https://blog.hirokuma.work/bitcoin/01_basics/script.html</loc>
+<lastmod>2025-04-15T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>https://blog.hirokuma.work/bitcoin/01_basics/transactions.html</loc>
-<lastmod>2024-12-13T00:00:00+09:00</lastmod>
+<lastmod>2025-04-15T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/bitcoin/01_basics/value.html</loc>
@@ -1230,7 +1238,7 @@
 </url>
 <url>
 <loc>https://blog.hirokuma.work/bitcoin/index.html</loc>
-<lastmod>2025-04-12T00:00:00+09:00</lastmod>
+<lastmod>2025-04-15T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/bitcoin/library/clang.html</loc>
@@ -1262,7 +1270,7 @@
 </url>
 <url>
 <loc>https://blog.hirokuma.work/index.html</loc>
-<lastmod>2025-04-14T00:00:00+09:00</lastmod>
+<lastmod>2025-04-15T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/nrf/build.html</loc>
