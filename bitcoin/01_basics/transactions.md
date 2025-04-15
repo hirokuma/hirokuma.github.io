@@ -1,6 +1,6 @@
 # トランザクション
 
-_最終更新日: 2024/12/11_
+_最終更新日: 2025/04/15_
 
 ## はじめに
 
@@ -74,7 +74,9 @@ segwit 以前はこの構造のみだった。
 #### stack
 
 `scriptSig` と違い、全体のデータ長 を compact size 型で示した後、そのサイズ分のデータが載る。  
-例えば P2TR key path では 64 バイトの署名データだけなので、先頭に `0x40`、それに 64 バイトのデータが続く。
+例えば P2TR key path では 64 バイトの署名データだけなので、先頭に `0x40`、それに 64 バイトのデータが続く。  
+わかりにくい違いであるが、たとえば 1 ～ 16 だけのデータをスタックに載せる場合は `OP_1` ～ `OP_16` ではなく `0x0101` ～ `0x0110` になる。  
+null 値に相当するデータはデータ長 0 の `0x00` だけを使う(scriptSig と同じ)。
 
 | item | size | unit |
 |---|---|---|
@@ -191,7 +193,7 @@ segwit(witness)のトランザクションの場合、その位置に`0x00`が�
 00000000
 ```
 
-#### 例3: segwit
+#### 例3: segwit(P2TR key path)
 
 [026a8f0c6e6050cf237f42a7f2ed27efffead6c8750d991f746cef44448f3e2e](https://mempool.space/ja/testnet4/tx/026a8f0c6e6050cf237f42a7f2ed27efffead6c8750d991f746cef44448f3e2e)
 
@@ -249,6 +251,56 @@ segwit(witness)のトランザクションの場合、その位置に`0x00`が�
 <lock_time>
 00000000
 ```
+
+#### 例4: Segwit(P2TR script path)
+
+[cd399d2312218711c6a4a80863e7b101a40e310118bc094f601c170965133eda](https://mempool.space/ja/testnet4/tx/cd399d2312218711c6a4a80863e7b101a40e310118bc094f601c170965133eda)
+
+```bin
+<全 raw transaction データ>
+02000000000101079eca858d65c783a6f4e47ee4fbe0aaa7fa28023c263a962e70888d2d1a2ad00000000000fdffffff012202000000000000225120d1c1c55764e7795ba8e627a80a78c5a140611f3dbef0464c7a0c85ca34d56a3303401b52cc0ce1a7fcfb0518dc4b9f94d31d9589c1a15dd833ad456b66dd384500dcfc47716b4c48bd7d4e4cc93759279043eaeae484202c109a665f363fcce86ce4c720585fb99f72a8daecb1beb80cd7a06deb470fc71153ef3da5043e3a47cd376c13ad0200000063406c012bb4be7567f316165c1ba71e99620638d2b78b40d5e0a0ceb629ecf4fd9678dec2fa3382247ca8d40b65025ff9e881ae5f777748b156e3826aa808d6457a2103015a7c4d2cc1c771198686e2ebef6fe7004f4136d61f6225b061d1bb9b821b9b310032697a89a1631d0ff34bfafaa20fe0af9e7de6919eae68126b3a6814c7e79a4601ab0d0000000000e8ae0d00000000006808945f0000000000007721c0585fb99f72a8daecb1beb80cd7a06deb470fc71153ef3da5043e3a47cd376c1300000000
+--------------------------
+<version>
+02000000
+
+<marker, flag>
+0001
+
+<txin_count>
+01
+
+<txins[0]>
+  <txid:index>
+  079eca858d65c783a6f4e47ee4fbe0aaa7fa28023c263a962e70888d2d1a2ad000000000
+  <scriptSig>
+  00
+  <sequence>
+  fdffffff
+
+<txout_count>
+01
+
+<txouts[0]>
+  <value>
+  2202000000000000
+  <scriptPubkey>
+  225120d1c1c55764e7795ba8e627a80a78c5a140611f3dbef0464c7a0c85ca34d56a33
+
+<script_witnesses>
+  <txins[0]>
+    <witness_count>
+    03
+    <witness[0]>
+    401b52cc0ce1a7fcfb0518dc4b9f94d31d9589c1a15dd833ad456b66dd384500dcfc47716b4c48bd7d4e4cc93759279043eaeae484202c109a665f363fcce86ce4
+    <witness[1]>
+    c720585fb99f72a8daecb1beb80cd7a06deb470fc71153ef3da5043e3a47cd376c13ad0200000063406c012bb4be7567f316165c1ba71e99620638d2b78b40d5e0a0ceb629ecf4fd9678dec2fa3382247ca8d40b65025ff9e881ae5f777748b156e3826aa808d6457a2103015a7c4d2cc1c771198686e2ebef6fe7004f4136d61f6225b061d1bb9b821b9b310032697a89a1631d0ff34bfafaa20fe0af9e7de6919eae68126b3a6814c7e79a4601ab0d0000000000e8ae0d00000000006808945f00000000000077
+    <witness[2]>
+    21c0585fb99f72a8daecb1beb80cd7a06deb470fc71153ef3da5043e3a47cd376c13
+
+<lock_time>
+00000000
+```
+
 
 ## TXID
 

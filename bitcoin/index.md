@@ -15,20 +15,6 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 実際にコーディングする場合は信用できるライブラリだけを使うようにしよう。  
 まったくライブラリを使わずにコーディングするのはもはや無理な世界だと思う。
 
-## よく使うページ
-
-### Source codes
-
-* [GitHub: bitcoin/bitcoin](https://github.com/bitcoin/bitcoin)
-* [GitHub: bitcoin/bips](https://github.com/bitcoin/bips)
-
-### 解説
-
-* [Developer Guides — Bitcoin](https://developer.bitcoin.org/devguide/)
-  * [Reference — Bitcoin](https://developer.bitcoin.org/reference/)
-
-* [Learn Me A Bitcoin (By Greg Walker)](https://learnmeabitcoin.com/)
-
 ## 基本
 
 * [インストール](01_basics/install.md)
@@ -49,3 +35,17 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 
 * [btcdeb](tools/btcdeb.md)
 * [romanz/electrs](tools/electrs.md)
+
+## リンク集
+
+### Source codes
+
+* [GitHub: bitcoin/bitcoin](https://github.com/bitcoin/bitcoin)
+* [GitHub: bitcoin/bips](https://github.com/bitcoin/bips)
+
+### 解説
+
+* [Developer Guides — Bitcoin](https://developer.bitcoin.org/devguide/)
+  * [Reference — Bitcoin](https://developer.bitcoin.org/reference/)
+
+* [Learn Me A Bitcoin (By Greg Walker)](https://learnmeabitcoin.com/)
