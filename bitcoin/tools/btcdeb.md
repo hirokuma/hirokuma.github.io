@@ -163,6 +163,10 @@ btcdeb>
 秘密鍵は伝えていないので `OP_CHECKSIG` でエラーになって終わる。  
 なお、"step" を "s" のような省略はできないが、Enter だけ入力すると前回と同じコマンドが実行される。
 
+Tapscript を通すと `OP_CHECKSIG` で "Non-canonical DER signature" というエラーになった。  
+これは署名の検証ができなければ未設定なので出力しているだけのような感じがしている。  
+下の方でトランザクションデータありで Tapscript のデバッグをしているが、そこではちゃんと評価している。
+
 #### Raw Transaction データを使う
 
 raw transaction がわかる場合は、そのデータを使うのが簡単である。
