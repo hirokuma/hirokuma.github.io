@@ -12,11 +12,21 @@ Bitcoin スクリプトは高級プログラミング言語というよりもア
 また、スクリプトを作り間違えて解けないスクリプトに支払ってしまうと、その Bitcoin はどうやっても取り戻すことができなくなる。  
 十分に注意が必要である。
 
-### ドキュメント
+## ドキュメント
 
 * [Script - Bitcoin Wiki](https://en.bitcoin.it/wiki/Script)
 * [Bitcoin Script - A Mini Programming Language](https://learnmeabitcoin.com/technical/script/)
 
-### デバッグツール
+## デバッグツール
 
 * [btcdeb](../tools/btcdeb.md)
+
+## 正常終了の条件
+
+* scriptPubKey と redeemScript の対応が取れている(スクリプトを実行する条件)
+* スクリプトが途中で Fail にならず最後まで終わっている
+* スタックの一番上に非ゼロのデータが載っている
+* スタックにデータが 1つだけ載っている(segwit以降)
+
+スタックが 1つだけになっているという条件は segwit が有効になったときに加わったものだそうだ。  
+`SCRIPT_VERIFY_CLEANSTACK` というフラグがあるそうだが、これは Bitcoin Core の実装で使っているフラグのようだから外からは分からないように思う(ChatGPTに聞いた)。
