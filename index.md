@@ -8,6 +8,7 @@
 
 * 2025
   * April
+    * 04/26 [ncs: nRF Connect SDK 3.0.0](2025/04/20250426-ncs.md)
     * 04/22 [btc: 秘密鍵の最小値](2025/04/20250422-btc.md)
     * 04/18 [btc: scantxoutset](2025/04/20250418-btc.md)
     * 04/07 [btc: electrsのストレージは500GB超→ではない！](2025/04/20250407-btc.md)
