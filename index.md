@@ -1,4 +1,4 @@
-# 
+# Research and Blog
 
 ## 調査
 
