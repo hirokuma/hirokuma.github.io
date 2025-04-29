@@ -18,6 +18,10 @@ Bitcoinトランザクションはバイナリデータである。
 
 ### transaction(not witness structure)
 
+witness structure と比較すると `marker` と `flag` がない。  
+`marker = 0x00` なので、そのデータをこの not witness structure に当てはめると `txin_count` がゼロになって不可になってしまう。  
+つまり、`version` の次の 1 バイトが `0x00` なら witness structure、そうでないなら not witness structure という見分け方をする。
+
 | item | size | unit | note |
 |---|---|---|---|
 | version | 4 | `int32_t` |  |
@@ -83,7 +87,7 @@ null 値に相当するデータはデータ長 0 の `0x00` だけを使う(scr
 | size | | compact size |
 | script | size | `char[size]` |
 
-### 説明
+## 説明
 
 witness 先頭から 5byte目のデータで見分ける。  
 segwit(witness)のトランザクションの場合、その位置に`0x00`が入っている。その場合は `marker(0x00)`と`flag(0x01)`が並んでいる。  
@@ -93,7 +97,7 @@ segwit(witness)のトランザクションの場合、その位置に`0x00`が�
 
 スクリプトの中に数値が使われる場合は命令と組み合わせて使うため [Compact Size型](value.md) とは別の表現になる([Constants](https://en.bitcoin.it/wiki/Script#Constants))。
 
-### データ例
+## データ例
 
 例としていくつか raw transaction(生のトランザクションバイナリデータ)を分解する。  
 "`<script～>`" となっている項目は、先頭がデータ長でその後ろにデータ長分のデータが続いている。  
