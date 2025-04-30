@@ -1,3 +1,5 @@
+# Research and Blog
+
 ## 調査
 
 * [Bitcoin調査](bitcoin/index.md)
