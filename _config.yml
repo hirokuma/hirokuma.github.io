@@ -5,7 +5,6 @@ plugins:
   - jekyll-remote-theme
   - jekyll-sitemap
 title: hiro99ma blog
-description: Something technical
 google_analytics: G-552KB5LZK4
 show_downloads: false
 theme: jekyll-theme-hacker
