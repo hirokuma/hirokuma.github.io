@@ -9,6 +9,8 @@
 ### 開発日記
 
 * 2025
+  * March
+    * 05/01 [clang: ccan/tal (2)](2025/05/20250501-clang.md)
   * April
     * 04/30 [clang: ccan/tal (1)](2025/04/20250430-clang.md)
     * 04/29 [ncs: nRF Connect SDK 3.0.0 (2)](2025/04/20250429-ncs.md)
