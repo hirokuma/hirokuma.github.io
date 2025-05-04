@@ -2,6 +2,24 @@
 
 * 2025年
   * March
+    * 05/04 [web: GitHub Pagesの管理(2025/5月)](2025/05/20250504-web.md)
+    * 05/01 [clang: ccan/tal (2)](2025/05/20250501-clang.md)
+  * April
+    * 04/30 [clang: ccan/tal (1)](2025/04/20250430-clang.md)
+    * 04/29 [ncs: nRF Connect SDK 3.0.0 (2)](2025/04/20250429-ncs.md)
+    * 04/28 [btc: シュノア署名のトリック](2025/04/20250428-btc.md)
+    * 04/27 [linux: 共有ライブラリの検索](2025/04/20250427-linux.md)
+    * 04/26 [ncs: nRF Connect SDK 3.0.0](2025/04/20250426-ncs.md)
+    * 04/22 [btc: 秘密鍵の最小値](2025/04/20250422-btc.md)
+    * 04/18 [btc: scantxoutset](2025/04/20250418-btc.md)
+    * 04/07 [btc: electrsのストレージは500GB超→ではない！](2025/04/20250407-btc.md)
+    * 04/06 [ble: gattlib (4)](2025/04/20250406-ble.md)
+    * 04/06 [linux: rsyslog](2025/04/20250406-sys.md)
+    * 04/05 [ble: gattlib (3)](2025/04/20250405-ble.md)
+    * 04/05 [web: GitHub Pagesの管理(2025/4月)](2025/04/20250405-web.md)
+    * 04/04 [ble: gattlib (2)](2025/04/20250404-ble.md)
+    * 04/02 [btc: bitcoindのblocksを別ディレクトリにしたい](2025/04/20250402-btc.md)
+  * March
     * 03/31 [ble: gattlib](2025/03/20250331-ble.html)
     * 03/30 [ble: Role の関係](2025/03/20250330-ble.html)
     * 03/29 [win: クリップボードに格納するとIME入力がおかしくなる(未解決→対処)](2025/03/20250329-win.html)
