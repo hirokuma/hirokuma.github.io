@@ -2,7 +2,7 @@
 
 * 2025年
   * March
-    * 05/04 [web: GitHub Pagesの管理(/2025/5月)](/2025/05/20250504-web.html)
+    * 05/04 [web: GitHub Pagesの管理(/2025/5月)](2025/05/20250504-web.md)
     * 05/01 [clang: ccan/tal (2)](/2025/05/20250501-clang.html)
   * April
     * 04/30 [clang: ccan/tal (1)](/2025/04/20250430-clang.html)
