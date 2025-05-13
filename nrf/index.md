@@ -1,25 +1,27 @@
 # Nordic Semiconductor 調査
 
-_最終更新日: 2024/12/08_
+_最終更新日: 2025/05/13_
 
 Nordic Semiconductor 社の製品、主に BLE 向けについて
 
 ## 近況
 
-_2024/12/01_
+_2025/05/13_
 
-2024年11月だったと思うが ncs v2.8.0 がリリースされた。
+2025年4月に ncs v3.0.0 がリリースされた。v3.0.1 もリリースされている。
 
-* [nRF Connect SDK v2.8.0 Release Notes](https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/releases_and_maturity/releases/release-notes-2.8.0.html)
+* [nRF Connect SDK v3.0.0 Release Notes](https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/releases_and_maturity/releases/release-notes-3.0.0.html)
+* [nRF Connect SDK v3.0.1 Release Notes](https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/releases_and_maturity/releases/release-notes-3.0.1.html)
 
-Zephyr OS が更新されたようで、ビルド方法が sysbuild というものがデフォルトになった。  
-`child_image/` での multi-image build はそのうち使えなくなると思うので ncs のバージョンを上げていくプロジェクトは対応しておくとよいだろう。
+Zephyr OS v4.0.0 に更新され、[Bluetooth のアプリに変更](https://docs.nordicsemi.com/bundle/ncs-latest/page/zephyr/releases/migration-guide-4.0.html#bluetooth) が必要になるかもしれない。
+わかりやすいところでは、BLE 接続を切断したときに自動で Advertising を再開する機能が deprecated になる。
 
-ボード定義ファイルなども変更されたため、v2.6 以前はもとより Devicetree v2 に対応した v2.7 であっても変更が発生した。  
-開発ボードが自作の場合はそちらの改造も発生する。  
-私が使用している [nRF5340 MDBT53-1Mモジュールピッチ変換基板](https://www.switch-science.com/products/8658?_pos=3&_sid=0c8c07a88&_ss=r) 用に作っているリポジトリも対応中である。
+* [ncs: nRF Connect SDK 3.0.0 - hiro99ma blog](https://blog.hirokuma.work/2025/04/20250426-ncs.html)
+* [ncs: nRF Connect SDK 3.0.0 (2) - hiro99ma blog](https://blog.hirokuma.work/2025/04/20250429-ncs.html)
 
-* [commit - v2.8](https://github.com/hirokuma/ncs-custom-board/commits/raytac-base-v2_8/)
+ボード定義については v2.9 から変更しなくても済んだ。
+
+* [commit - v2.9](https://github.com/hirokuma/ncs-custom-board/tree/raytac-base-v2_9)
 
 ## 調査
 
