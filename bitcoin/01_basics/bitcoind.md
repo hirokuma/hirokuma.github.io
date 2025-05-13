@@ -115,6 +115,9 @@ $ curl --user user2:pass2 --data-binary '{"jsonrpc": "2.0", "id": "curltest", "m
 
 ### ポート番号
 
+bitcoind がデフォルトで使用するポート番号を以下に示す。  
+ZMQ はポート番号指定が必要なので記載していない。
+
 | network | P2P | RPC |
 | -- | -- | -- |
 | mainnet | 8333 | 8332 |
