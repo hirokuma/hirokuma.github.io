@@ -8,6 +8,7 @@
 
 ## 開発日記
 
-* [**2025年(更新中)**](devwork2025.md)
-* [2024年](devwork2024.md)
-* [それ以前(過去サイト)](https://hiro99ma.blogspot.com/)
+* [2025年(更新中)](devwork2025.md)
+* 過去
+  * [2024年](devwork2024.md)
+  * [それ以前(別サイト)](https://hiro99ma.blogspot.com/)
