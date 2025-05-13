@@ -79,6 +79,7 @@ regtest でしか使わないならこんな感じでよいだろう。
 server=1
 txindex=1
 regtest=1
+rpcbind=
 rpcuser=ほげほげ
 rpcpassword=ふがふが
 fallbackfee=0.00001000
@@ -86,6 +87,7 @@ fallbackfee=0.00001000
 
 `rpcuser` と `rpcpassword` は JSON-RPC で通信したい場合に設定する。
 代わりに [rpcauth](https://github.com/bitcoin/bitcoin/tree/v28.1/share/rpcauth) を使うこともできる。
+`rpcauth` は複数設定することができる。
 
 ```console
 $ ./share/rpcauth/rpcauth.py user pass
@@ -111,7 +113,17 @@ $ curl --user user2:pass2 --data-binary '{"jsonrpc": "2.0", "id": "curltest", "m
 {"jsonrpc":"2.0","result":0,"id":"curltest"}
 ```
 
-`rpcauth` でやったときは最初失敗していたのだが、気のせいだったのか？
+### ポート番号
+
+| network | P2P | RPC |
+| -- | -- | -- |
+| mainnet | 8333 | 8332 |
+| testnet3 | 18333 | 18332 |
+| testnet4 | 48333 | 48332 |
+| signet | 38333 | 38332 |
+| regtest | 18444 | 18443 |
+
+ZMQ はデフォルトのポート番号はない。
 
 ## ウォレットの作成
 
