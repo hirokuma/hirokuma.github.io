@@ -118,13 +118,13 @@ $ curl --user user2:pass2 --data-binary '{"jsonrpc": "2.0", "id": "curltest", "m
 bitcoind がデフォルトで使用するポート番号を以下に示す。  
 ZMQ はポート番号指定が必要なので記載していない。
 
-| network | P2P | RPC |
-| -- | -- | -- |
-| mainnet | 8333 | 8332 |
-| testnet3 | 18333 | 18332 |
-| testnet4 | 48333 | 48332 |
-| signet | 38333 | 38332 |
-| regtest | 18444 | 18443 |
+| network | P2P | P2P(onion) | RPC |
+| -- | -- | -- | -- |
+| mainnet | 8333 | 8334 | 8332 |
+| testnet3 | 18333 | 18334 | 18332 |
+| testnet4 | 48333 | 48334 | 48332 |
+| signet | 38333 | 38334 | 38332 |
+| regtest | 18444 | 18445 | 18443 |
 
 ZMQ はデフォルトのポート番号はない。
 
