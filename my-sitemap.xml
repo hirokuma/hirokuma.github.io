@@ -1222,7 +1222,7 @@
 </url>
 <url>
 <loc>https://blog.hirokuma.work/2025/05/20250511-book.html</loc>
-<lastmod>2025-05-13T00:00:00+09:00</lastmod>
+<lastmod>2025-05-15T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/2025/05/20250512-web.html</loc>
@@ -1235,6 +1235,14 @@
 <url>
 <loc>https://blog.hirokuma.work/2025/05/20250513-dp.html</loc>
 <lastmod>2025-05-13T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>https://blog.hirokuma.work/2025/05/20250514-math.html</loc>
+<lastmod>2025-05-15T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>https://blog.hirokuma.work/2025/05/20250515-math.html</loc>
+<lastmod>2025-05-15T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/android/ble/index.html</loc>
@@ -1258,7 +1266,7 @@
 </url>
 <url>
 <loc>https://blog.hirokuma.work/bitcoin/01_basics/bitcoind.html</loc>
-<lastmod>2025-05-13T00:00:00+09:00</lastmod>
+<lastmod>2025-05-15T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/bitcoin/01_basics/blocks.html</loc>
@@ -1334,11 +1342,11 @@
 </url>
 <url>
 <loc>https://blog.hirokuma.work/devwork2025.html</loc>
-<lastmod>2025-05-13T00:00:00+09:00</lastmod>
+<lastmod>2025-05-15T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/index.html</loc>
-<lastmod>2025-05-13T00:00:00+09:00</lastmod>
+<lastmod>2025-05-15T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/nrf/build.html</loc>
