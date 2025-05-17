@@ -29,7 +29,6 @@
         <!-- 検索窓: DuckDuckGo -->
         <form id="search-form" method="get" target="_blank">
           <input type="text" id="search-box" name="q" placeholder="サイト内検索">
-          <input type="hidden" id="search-engine" value="">
           <div>
             <button type="button" onclick="submitSearch('duckduckgo')">DuckDuckGo検索</button>
             <button type="button" onclick="submitSearch('bing')">Bing検索</button>
@@ -41,33 +40,37 @@
           function submitSearch(engine) {
             const form = document.getElementById('search-form');
             const input = document.getElementById('search-box');
-            const query = input.value;
+            const originalQuery = input.value;
             const site = 'blog.hirokuma.work';
 
-            let url = '';
-            let fullQuery = `${query}  site:${site}`;
+            if (!originalQuery.trim()) return; // 空白検索防止
+
+            let fullQuery = `${originalQuery} site:${site}`;
 
             switch(engine) {
               case 'duckduckgo':
                 form.action = 'https://duckduckgo.com/';
-                input.name = 'q';
-                input.value = fullQuery;
                 break;
               case 'bing':
                 form.action = 'https://www.bing.com/search';
-                input.name = 'q';
-                input.value = fullQuery;
                 break;
               case 'google':
                 form.action = 'https://www.google.com/search';
-                input.name = 'q';
-                input.value = fullQuery;
                 break;
             }
 
+            input.name = 'q';
+            input.value = fullQuery;
+
             form.submit();
+
+            // 検索後すぐにテキストボックスをクリア（非同期で実行）
+            setTimeout(() => {
+              input.value = '';
+            }, 100);
           }
         </script>
+        <!-- 検索窓: DuckDuckGo -->
 
       </div>
     </header>
