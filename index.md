@@ -8,7 +8,7 @@
 <script>
   function addSiteToQuery() {
     const input = document.getElementById('search-box');
-    const site = 'example.com';  // ← あなたのドメインに置き換えてください
+    const site = 'blog.hirokuma.work';
     input.value = `site:${site} ${input.value}`;
   }
 </script>
