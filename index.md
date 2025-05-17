@@ -1,5 +1,18 @@
 # top
 
+<form id="ddg-search" action="https://duckduckgo.com/" method="get" target="_blank" onsubmit="addSiteToQuery()">
+  <input type="text" id="search-box" name="q" placeholder="サイト内検索">
+  <input type="submit" value="検索">
+</form>
+
+<script>
+  function addSiteToQuery() {
+    const input = document.getElementById('search-box');
+    const site = 'example.com';  // ← あなたのドメインに置き換えてください
+    input.value = `site:${site} ${input.value}`;
+  }
+</script>
+
 ## 調査
 
 * [Bitcoin調査](bitcoin/index.md)
