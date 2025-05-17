@@ -26,10 +26,36 @@
           {% endif %}
         </section>
 
-        <!-- 検索窓 -->
+        <!-- 検索窓: DuckDuckGo -->
         <form id="ddg-search" action="https://duckduckgo.com/" method="get" target="_blank" onsubmit="addSiteToQuery()">
-          <input type="text" id="search-box" name="q" placeholder="サイト内検索">
+          <input type="text" id="search-box" name="q" placeholder="DuckDuckGo サイト内検索">
           <input type="submit" value="DuckDuckGo検索">
+        </form>
+        <script>
+          function addSiteToQuery() {
+            const input = document.getElementById('search-box');
+            const site = 'blog.hirokuma.work';
+            input.value = `site:${site} ${input.value}`;
+          }
+        </script>
+
+        <!-- 検索窓: Bing -->
+        <form id="bing-search" action="https://www.bing.com/search" method="get" target="_blank" onsubmit="addSiteToQuery()">
+          <input type="text" id="search-box" name="q" placeholder="Bing サイト内検索">
+          <input type="submit" value="Bing検索">
+        </form>
+        <script>
+          function addSiteToQuery() {
+            const input = document.getElementById('search-box');
+            const site = 'blog.hirokuma.work';
+            input.value = `site:${site} ${input.value}`;
+          }
+        </script>
+
+        <!-- 検索窓: Google -->
+        <form id="google-search" action="https://www.google.com/search" method="get" target="_blank" onsubmit="addSiteToQuery()">
+          <input type="text" id="search-box" name="q" placeholder="Google サイト内検索">
+          <input type="submit" value="Google検索">
         </form>
         <script>
           function addSiteToQuery() {
