@@ -42,10 +42,10 @@
             const form = document.getElementById('search-form');
             const input = document.getElementById('search-box');
             const query = input.value;
-            const site = 'example.com';  // ← 自分のサイトのドメインに置き換えてください
+            const site = 'blog.hirokuma.work';
 
             let url = '';
-            let fullQuery = `site:${site} ${query}`;
+            let fullQuery = `${query}  site:${site}`;
 
             switch(engine) {
               case 'duckduckgo':
