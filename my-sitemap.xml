@@ -1173,10 +1173,6 @@
 <lastmod>2025-04-17T00:00:00+09:00</lastmod>
 </url>
 <url>
-<loc>https://blog.hirokuma.work/2025/04/20250417-rst.html</loc>
-<lastmod>2025-04-26T00:00:00+09:00</lastmod>
-</url>
-<url>
 <loc>https://blog.hirokuma.work/2025/04/20250418-btc.html</loc>
 <lastmod>2025-04-26T00:00:00+09:00</lastmod>
 </url>
@@ -1278,7 +1274,7 @@
 </url>
 <url>
 <loc>https://blog.hirokuma.work/2025/05/20250522a-m5.html</loc>
-<lastmod>2025-05-23T00:00:00+09:00</lastmod>
+<lastmod>2025-05-27T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/2025/05/20250523-m5.html</loc>
@@ -1286,11 +1282,15 @@
 </url>
 <url>
 <loc>https://blog.hirokuma.work/2025/05/20250524-m5.html</loc>
-<lastmod>2025-05-25T00:00:00+09:00</lastmod>
+<lastmod>2025-05-27T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/2025/05/20250524-pc.html</loc>
 <lastmod>2025-05-25T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>https://blog.hirokuma.work/2025/05/20250525-rst.html</loc>
+<lastmod>2025-05-27T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/2025/05/20250525-sa.html</loc>
@@ -1358,7 +1358,7 @@
 </url>
 <url>
 <loc>https://blog.hirokuma.work/bitcoin/index.html</loc>
-<lastmod>2025-04-29T00:00:00+09:00</lastmod>
+<lastmod>2025-05-27T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/bitcoin/library/clang.html</loc>
@@ -1398,7 +1398,7 @@
 </url>
 <url>
 <loc>https://blog.hirokuma.work/devwork2025.html</loc>
-<lastmod>2025-05-25T00:00:00+09:00</lastmod>
+<lastmod>2025-05-27T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>https://blog.hirokuma.work/index.html</loc>
