@@ -151,3 +151,12 @@ $ bitcoin-cli -regtest getbalance
 ## おわりに
 
 regtest で `bitcoind` を立ち上げる手順を説明した。
+
+## 関連ページ
+
+* [インストール](./install.md)
+* [ウォレット](./wallet.md)
+* [ブロック](/.blocks.md)
+* [トランザクション](./transactions.md)
+* [アドレス](./address.md)
+* [スクリプト](./script.md)

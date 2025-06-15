@@ -30,3 +30,10 @@ Bitcoin スクリプトは高級プログラミング言語というよりもア
 
 スタックが 1つだけになっているという条件は segwit が有効になったときに加わったものだそうだ。  
 `SCRIPT_VERIFY_CLEANSTACK` というフラグがあるそうだが、これは Bitcoin Core の実装で使っているフラグのようだから外からは分からないように思う(ChatGPTに聞いた)。
+
+## 関連ページ
+
+* [value](./value.md)
+* [ブロック](/.blocks.md)
+* [トランザクション](./transactions.md)
+* [アドレス](./address.md)

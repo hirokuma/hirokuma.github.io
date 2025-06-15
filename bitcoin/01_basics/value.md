@@ -75,3 +75,8 @@ Compact Size型という名称だが、BIP には `VarInt` や `varint` もあ�
 
 スクリプトの中に数値が使われる場合は命令と組み合わせて使うため Compact Size型とは別の表現になる([Constants](https://en.bitcoin.it/wiki/Script#Constants))。  
 LevelDBに[VarInt](https://learnmeabitcoin.com/technical/general/compact-size/#varint)があるが、あれとは関係ない。
+
+## 関連ページ
+
+* [トランザクション](./transactions.md)
+* [スクリプト](./script.md)

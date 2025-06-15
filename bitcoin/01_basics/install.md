@@ -185,3 +185,12 @@ gpg: Signature made Wed Jan  8 23:17:43 2025 JST
 gpg:                using RSA key 0CCBAAFD76A2ECE2CCD3141DE2FFD5B1D88CA97D
 gpg: Can't check signature: No public key
 ```
+
+## 関連ページ
+
+* [bitcoind](./bitcoind.md)
+* [ウォレット](./wallet.md)
+* [ブロック](/.blocks.md)
+* [トランザクション](./transactions.md)
+* [アドレス](./address.md)
+* [スクリプト](./script.md)

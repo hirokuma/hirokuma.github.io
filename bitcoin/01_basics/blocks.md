@@ -250,3 +250,9 @@ conf:   000000000000000000004b3b1e4ac2f472255a1196e0535e5581704d527a9beb
 
 nBits からは difficulty という別の指標を得ることもできる。  
 Bitcoin の用語としてはそちらの方がメジャーだろう。
+
+## 関連ページ
+
+* [トランザクション](./transactions.md)
+* [スクリプト](./script.md)
+* [アドレス](./address.md)

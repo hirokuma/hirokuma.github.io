@@ -57,3 +57,11 @@ under construction...
   * [btc: Output Descriptors (3)](https://blog.hirokuma.work/2025/03/20250301-btc.html)
   * [btc: Output Descriptors (4)](https://blog.hirokuma.work/2025/03/20250302-btc.html)
   * [btc: Output Descriptors (5)](https://blog.hirokuma.work/2025/03/20250303-btc.html)
+
+## 関連ページ
+
+* [bitcoind](./bitcoind.md)
+* [ブロック](/.blocks.md)
+* [トランザクション](./transactions.md)
+* [アドレス](./address.md)
+* [スクリプト](./script.md)

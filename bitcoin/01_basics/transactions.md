@@ -376,3 +376,10 @@ DER形式なのだが先頭の値が `0x80` 以上になってはいけない([s
 ## おわりに
 
 [Decode Rwa Bitcoin Hexadecimal Transaction](https://live.blockcypher.com/btc/decodetx/)のようなサイトやライブラリ、`bitcoin-cli decoderawtransaction`コマンドなどを使うとトランザクション構造を知らなくても何とかなるのだが、自分でトランザクションデータを作ってブロックチェーンに展開するのであれば知っておいた方がよいと思う。
+
+## 関連ページ
+
+* [value](./value.md)
+* [スクリプト](./script.md)
+* [アドレス](./address.md)
+* [ブロック](/.blocks.md)
