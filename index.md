@@ -16,3 +16,7 @@
   * [2025年(更新中)](devwork2025.md)
   * [2024年](devwork2024.md)
   * [それ以前(別サイト)](https://hiro99ma.blogspot.com/)
+
+## その他
+
+* [about](aboutme.md)
