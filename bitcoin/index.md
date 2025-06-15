@@ -43,6 +43,11 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 * [btcdeb](tools/btcdeb.md)
 * [romanz/electrs](tools/electrs.md)
 
+### 自作
+
+* [hirokuma/bitcoin-flow-dot](https://github.com/hirokuma/bitcoin-flow-dot/tree/f7665b37d6811d780e439a67ad7b2735a36d560e)
+  * 2025/06/15 [btc: トランザクションのつながり図](2025/06/20250615-btc.md)
+
 ## リンク集
 
 ### Source codes
