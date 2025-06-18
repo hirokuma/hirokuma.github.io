@@ -1,12 +1,12 @@
 # カテゴリー別
 
-* [Bitcoin開発](#Bitcoin開発)
-* [BLE開発](#BLE開発)
+* [Bitcoin開発](#bitcoin開発)
+* [BLE開発](#ble開発)
 * [組み込みソフトウェア](#組み込みソフトウェア)
-* [Linux(Raspberry Pi/WSL2含む)](#Linux(Raspberry Pi/WSL2含む))
-* [Windows](#Windows)
-* [Android](#Android)
-* [Blogサイト運営](#Blogサイト運営)
+* [Linux(Raspberry Pi/WSL2含む)](#linuxraspberry-piwsl2含む))
+* [Windows](#windows)
+* [Android](#android)
+* [Blogサイト運営](#blogサイト運営)
 * [その他](#その他)
 
 ## Bitcoin開発
