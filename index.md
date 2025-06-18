@@ -19,4 +19,7 @@
 
 ## その他
 
-* [about](aboutme.md)
+* [GitHub](https://github.com/hirokuma)
+* [X/Twitter](https://x.com/hiro99ma)
+* [お仕事ページ](https://hirokuma.work)
+* [About me](aboutme.md)
