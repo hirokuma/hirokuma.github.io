@@ -241,8 +241,8 @@ Resulting Bech32m address: bcrt1p5kaqsuted66fldx256lh3en4h9z4uttxuagkwepqlqup6hw
 ```
 
 いろいろ出力されているが、P2TR script path のアドレスを求める計算過程である。
-Tapscript から merkle tree の leaf になるハッシュ値を求め、
-merkle root を計算し、internal pubkey を含めて tweak pubkey の計算をしてアドレスに変換している。  
+Tapscript から Merkle tree の leaf になるハッシュ値を求め、
+Merkle root を計算し、internal pubkey を含めて tweak pubkey の計算をしてアドレスに変換している。  
 アドレスの始まりは `bcrt1p` とセパレータ `1` の次が `p` なのは P2TR が segwit version 1 だからである(`p` は bech32m で `1`)。
 segwit version 0 の P2WPKH と P2WSH は `bcrt1q` と `q` で、bech32 の `0` である。
 
@@ -365,8 +365,8 @@ taproot-tweak-seckey [privkey] [tweak] tweak the given private key with the twea
 (`tap` ではできなかった。)
 
 自分が勘違いしていたことに気付いた。  
-key でも tapscript でも解くことができる場合、internal pubkey から tweaked pubkey を作るのに merkle root の結果を使うので署名するときは internal privkey で行うのかと思っていたのだ。  
-実際は、internal key から tweaked privkey を作るときと同じく merkle root を使った tweak 値を使った tweaked privkey で署名するのだった。
+key でも tapscript でも解くことができる場合、internal pubkey から tweaked pubkey を作るのに Merkle root の結果を使うので署名するときは internal privkey で行うのかと思っていたのだ。  
+実際は、internal key から tweaked privkey を作るときと同じく Merkle root を使った tweak 値を使った tweaked privkey で署名するのだった。
 
 #### [Tapscript spend](https://github.com/bitcoin-core/btcdeb/blob/e2c2e7b9fe2ecc0884129b53813a733f93a6e2c7/doc/tapscript-example-with-tap.md#tapscript-spend)
 
@@ -393,8 +393,8 @@ OP_CHECKSIG
 witness は 4つ使う。  
 `[0]`, `[1]` がスクリプトを解くためのデータ、`[2]` がスクリプト、`[3]` が control block である。
 なぜかここでは "control object" という名前になっている(BIP-341 では "control block")。  
-バージョンとパリティ、internal pubkey と witness に載せたスクリプトから merkle root を求めるためのデータを置く場所である。
-もしスクリプトが 1つしかないのであれば、そのまま merkle root になるので最後のデータは載せない。  
+バージョンとパリティ、internal pubkey と witness に載せたスクリプトから Merkle root を求めるためのデータを置く場所である。
+もしスクリプトが 1つしかないのであれば、そのまま Merkle root になるので最後のデータは載せない。  
 その辺りの詳細は [BIP-341](https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki) などを読むとよい。
 
 key path spend のときの環境変数をそのまま使う。
@@ -467,7 +467,7 @@ Resulting transaction: 02000000000101bc2165a4797d59358f31a0a20b2c94534bff89a38d9
 
 control block(control object) は分解するとこういうデータである。
 tweaked pubkey の Y座標が奇数なので parity bit が立っている。  
-merkle leaf はスクリプトが Bob のものなので、反対側の leaf は Alice のスクリプトを "TapLeaf" で tagged hash 計算した値になっている。
+Merkle leaf はスクリプトが Bob のものなので、反対側の leaf は Alice のスクリプトを "TapLeaf" で tagged hash 計算した値になっている。
 この値からでは Alice のスクリプトが想像できないので、スクリプトを全部のセルよりは情報が隠されていてよい、というところである。
 
 ```
@@ -477,7 +477,7 @@ c1
 # internal pubkey
 f30544d6009c8d8d94f5d030b2e844b1a3ca036255161c479db1cca5b374dd1c
 
-# merkle leaf[0]
+# Merkle leaf[0]
 c81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
 ```
 
@@ -485,8 +485,8 @@ c81451874bd9ebd4b6fd4bba1f84cdfb533c532365d22a0a702205ff658b17c9
 解くためのデータはこちらでしていしないとわからないためである。
 
 "Script #0" と "Script #1" はそれぞれ Alice スクリプトと Bob スクリプトである。  
-merkle tree を作るときの leaf hash は Alice が `c814...`、Bob が `632c...` である。  
-Tapscript の merkle tree は leaf が 2つあってそれをまとめた leaf を作る場合、左側の方が小さい値になるように並べ替える。
+Merkle tree を作るときの leaf hash は Alice が `c814...`、Bob が `632c...` である。  
+Tapscript の Merkle tree は leaf が 2つあってそれをまとめた leaf を作る場合、左側の方が小さい値になるように並べ替える。
 なので計算上は Bob, Alice の順で連結する。
 
 まずは最後に出力された "Resulting transaction" の raw transaction を `btcdeb` で解こうとしている。  
@@ -545,9 +545,9 @@ OP_CHECKSIG                                                        |
 
 `i` が次に進んで `1` になり、`k` が `4164...` になっている。
 `tap` を実行した結果にある "Branch (#0, #1)" の値と同じである。  
-しかしトランザクションには merkle root の値は載っていないのでこれだけでは検証できない。
+しかしトランザクションには Merkle root の値は載っていないのでこれだけでは検証できない。
 
-merkle root の値と internal pubkey の値を使って tweaked pubkey の計算をする。  
+Merkle root の値と internal pubkey の値を使って tweaked pubkey の計算をする。  
 internal pubkey は control block に載っている。  
 tweaked pubkey は P2TR の場合 witness program の後半 32バイトと同じなので
 input のトランザクションから取得できる。  
@@ -555,7 +555,7 @@ input のトランザクションから取得できる。
 
 * 計算した tweaked pubkey
   * control block から得た internal pubkey
-  * 先ほど計算した merkle root
+  * 先ほど計算した Merkle root
 * input トランザクションから得た tweaked pubkey
 
 step 実行するとこうなった。

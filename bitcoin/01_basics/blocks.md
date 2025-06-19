@@ -111,7 +111,7 @@ coinbaseトランザクションにはいくつか自由に使ってよい領域
 |---|---|---|
 | version | 4 | `int32_t` |
 | previous block header hash | 32 | `char[32]` |
-| merkle root hash | 32 | `char[32]` |
+| Merkle root hash | 32 | `char[32]` |
 | time | 4 | `unixtime` |
 | nBits | 4 | `uint32_t` |
 | nonce | 4 | `uint32_t` |
@@ -162,7 +162,7 @@ $ curl -sSL "https://mempool.space/api/block/000000000003ba27aa200b1cecaad478d2b
 <previous block header hash>
 50120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd0020000000000
 
-<merkle root hash>
+<Merkle root hash>
 6657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f3
 
 <time>
@@ -187,11 +187,11 @@ $ curl -sSL "https://mempool.space/api/block/000000000003ba27aa200b1cecaad478d2b
 
 結果は `000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506` でブロック高から取得した値と一致している。
 
-## merkle tree
+## Merkle tree
 
-merkle tree は 2回出てくる。
+Merkle tree は 2回出てくる。
 
-* ブロックヘッダの merkle root hash 
+* ブロックヘッダの Merkle root hash 
 * coinbase トランザクションの commitment hash
 
 順番としては、まず coinbase トランザクションを作ることになるため commitment hash が先である。
@@ -212,11 +212,11 @@ WTXID `A` と `B` から `AB = sha256(sha256(A || B))` を得る(`||` はデー�
 
 * [Extensible commitment structure](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki#extensible-commitment-structure)
 
-これで coinbase トランザクションが確定したので merkle root hash を求めることができる。
+これで coinbase トランザクションが確定したので Merkle root hash を求めることができる。
 
-### ブロックヘッダの merkle root hash
+### ブロックヘッダの Merkle root hash
 
-merkle root hash は ブロックヘッダ以降のトランザクションをマークルツリー構造に落とし込んだルートの値を使って計算する。
+Merkle root hash は ブロックヘッダ以降のトランザクションをマークルツリー構造に落とし込んだルートの値を使って計算する。
 こちらは WTXID ではなく TXID を使う。
 
 ## nonce
@@ -225,7 +225,7 @@ merkle root hash は ブロックヘッダ以降のトランザクションを�
 
 次のブロックのヘッダとトランザクションを決めなくてはならない。  
 ヘッダのサイズが決まっていて、ブロックのサイズも決まっているので、報酬を重視するならトランザクションの中でも手数料が高いものから順にブロックサイズいっぱいになるまで詰め込むだろう。  
-トランザクションが決まったら merkle root hash の計算ができる。  
+トランザクションが決まったら Merkle root hash の計算ができる。  
 前のブロックは分かるので previous block header hash は決まるし、nBits は Bitcoinプロトコルで取得する。  
 あとは nonce である。
 

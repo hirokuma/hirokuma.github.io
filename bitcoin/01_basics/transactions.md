@@ -342,7 +342,7 @@ segwit 時代になってトランザクション構造が増え、トランザ�
 TXID は従来の TXID と同じ立ち位置で、segwit 構造のトランザクションではハッシュ値の計算に segwit 部分を除外した部分を計算に使っている。  
 もう 1つは WTXID で、これはトランザクションデータ全体を計算する(以前の TXID と同じ計算方法)。
 
-ブロックで [merkle root hash](https://blog.hirokuma.work/bitcoin/01_basics/blocks.html#merkle-root-hash) を計算するのには WTXID を使い、それ以外では TXID を使うことが多いだろう。
+ブロックで [Merkle root hash](https://blog.hirokuma.work/bitcoin/01_basics/blocks.html#merkle-root-hash) を計算するのには WTXID を使い、それ以外では TXID を使うことが多いだろう。
 
 ### バージョン
 
