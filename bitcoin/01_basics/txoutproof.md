@@ -3,7 +3,7 @@
 _最終更新日: 2025/06/19_
 
 `bitcoin-cli` のコマンドに `gettxoutproof` と `verifytxoutproof` がある。  
-指定した TXID(s) がこのブロックに取り込まれいますよ、という証明の出力と、それを検証するコマンドである。
+指定した TXID(s) がこのブロックに取り込まれていますよ、という証明の出力と、それを検証するコマンドである。
 
 * [gettxoutproof(v29.0.0)](https://bitcoincore.org/en/doc/29.0.0/rpc/blockchain/gettxoutproof/)
 * [verifytxoutproof(v29.0.0)](https://bitcoincore.org/en/doc/29.0.0/rpc/blockchain/verifytxoutproof/)
