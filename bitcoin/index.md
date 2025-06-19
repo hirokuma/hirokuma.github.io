@@ -25,12 +25,13 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 ## 基本
 
 * [インストール](01_basics/install.md)
-* [Bitcoin Core(bitcoind) を regtest で動かす](/01_basics/bitcoind.md)
+* [Bitcoin Core(bitcoind) を regtest で動かす](01_basics/bitcoind.md)
 * [値の表現](01_basics/value.md)
 * [ブロック](01_basics/blocks.md)
 * [トランザクション](01_basics/transactions.md)
 * [アドレス](01_basics/address.md)
 * [ウォレット](01_basics/wallet.md)
+* [txout proof](01_basics/txoutproof.md)
 
 ## ライブラリ
 
