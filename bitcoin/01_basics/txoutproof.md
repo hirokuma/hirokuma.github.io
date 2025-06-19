@@ -9,7 +9,7 @@ _最終更新日: 2025/06/19_
 * [verifytxoutproof(v29.0.0)](https://bitcoincore.org/en/doc/29.0.0/rpc/blockchain/verifytxoutproof/)
 
 ```console
-$ bitcoin-cli gettxoutproof '[\"<TXID>\", ...]' [blockhash]
+$ bitcoin-cli gettxoutproof "[\"<TXID>\", ...]" [blockhash]
 
 $ bitcoin-cli verifytxoutproof <proof string>
 ```
@@ -29,19 +29,8 @@ $ bitcoin-cli verifytxoutproof 0000cc20e74e69db30fe908461c810b9eba24151cef87e792
 ]
 ```
 
-ChatGPT に訊くと、txoutproof のデータは Bitcoin Core の [class CMerkleBlock](https://github.com/bitcoin/bitcoin/blob/v29.0/src/merkleblock.h#L125-L157) 相当だそうだ。
-
-```
-CMerkleBlock
- ├── CBlockHeader（80バイト）
- ├── varint: txn count
- ├── varint: number of hashes
- │    └── 32バイトのtxidハッシュ × N個
- ├── varint: flags bitvectorのバイト長
- │    └── flags（bool値をビットで表した配列）
-```
-
-確認しよう。
+txoutproof のデータは Bitcoin Core の [class CMerkleBlock](https://github.com/bitcoin/bitcoin/blob/v29.0/src/merkleblock.h#L125-L157) 相当だが
+詳細が書かれていないので確認する。
 
 ## gettxoutproof 関数
 
@@ -114,9 +103,10 @@ TapScript の Control Block だとハッシュ値をソートして Merkle Root 
 
 `03` なので、次のデータが 3byteあるということ。
 
-#### flag bits, packed per 8 in a byte, least significant bit first (<= 2*N-1 bits)
+#### flag bits: packed per 8 in a byte, least significant bit first (<= 2*N-1 bits)
 
-`vBits` というものらしい。
+この flag bits は `vBits` と呼ばれる。  
+部分 Merkle Tree のたどり方に対する指示になる。
 
 * [ビットコインにおけるブルームフィルターとマークルツリーパス - Pebble Coding](https://pebble8888.hatenablog.com/entry/2018/02/12/172819)
 
