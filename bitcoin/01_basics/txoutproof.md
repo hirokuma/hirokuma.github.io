@@ -79,6 +79,8 @@ Partial Merkle Treeの場合、ツリーの一番下はターゲットの TXID �
 なので `vBits[m]` が `0` なら `hashes[n]` を割り当てるのは同じだが、もし `1` でも `hashes[n]` を割り当てて `n` をインクリメントする。  
 この `1` なのに割り当てた `hashes[n]` がターゲットの TXID である、というルールになっている。
 
+![image](images/txoutproof5.png)
+
 もし `hash_count` が `1` なら `vBits[0]` は `0` で `hashes[0]` がそのまま Merkle root になる。
 
 ### 呼び名
