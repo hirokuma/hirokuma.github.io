@@ -83,6 +83,14 @@ Partial Merkle Treeの場合、ツリーの一番下はターゲットの TXID �
 
 もし `hash_count` が `1` なら `vBits[0]` は `0` で `hashes[0]` がそのまま Merkle root になる。
 
+### ツール
+
+gettxoutproof で得られた文字列を与えると Merkle branch 図にするツールを作った。
+
+* [bitcoin-txoutproof-dot](https://github.com/hirokuma/bitcoin-txoutproof-dot)
+
+![image](images/txoutproof6.png)
+
 ### 呼び名
 
 Partial Merkle tree か Merkle proof か Merkle branch か。  
