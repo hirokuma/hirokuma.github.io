@@ -1,0 +1,20 @@
+---
+layout: default
+---
+
+<h1>{{ page.title }}</h1>
+
+<p>
+  <em>{{ page.date | date: "%Y/%m/%d" }}</em>
+</p>
+
+{{content}}
+
+<p class="view">
+  <small>written by {{ page.author | default: site.author }}</small><br/>
+{% if page.tags %}
+  <div class="tags" style="color: #808080;">
+    <small>tags: <em>{{ page.tags | join: "</em> - <em>" }}</em></small>
+  </div>
+{% endif %}
+</p>

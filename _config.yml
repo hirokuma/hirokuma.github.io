@@ -8,3 +8,16 @@ title: hiro99ma blog
 google_analytics: G-552KB5LZK4
 show_downloads: false
 theme: jekyll-theme-hacker
+author: hiro99ma
+collections:
+  tags:
+    output: true
+    order:
+      - bitcoin.md
+      - ble.md
+      - embedded.md
+      - linux.md
+      - windows.md
+      - android.md
+      - web.md
+      - other.md
