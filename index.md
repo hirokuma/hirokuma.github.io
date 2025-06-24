@@ -1,3 +1,8 @@
+---
+layout: default
+recentlies: 3
+---
+
 # ![image](favicon.ico)
 
 ## 調査
@@ -8,10 +13,16 @@
 
 ## 開発日記
 
-* 最近の記事
-  * 06/21 [btc: txoutproof の Merkle branch](2025/06/20250621-btc.md)
-  * 06/15 [btc: トランザクションのつながり図](2025/06/20250615-btc.md)
-  * 06/12 [wsl: コンソールログを取りたい](2025/06/20250612-wsl.md)
+<ul>
+  <li>最近の記事
+    <ul>
+{% assign posts = site.pages | sort: "date" | reverse %}
+{% for post in posts limit:page.recentlies %}
+      <li>{{ post.date }} <a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+{% endfor %}
+    </ul>
+  </li>
+</ul>
 * アーカイブ
   * [カテゴリー別](tags.md)
   * [2025年(更新中)](devwork2025.md)
