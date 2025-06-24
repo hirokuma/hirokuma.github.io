@@ -12,12 +12,3 @@ author: hiro99ma
 collections:
   tags:
     output: true
-    order:
-      - bitcoin.md
-      - ble.md
-      - embedded.md
-      - linux.md
-      - windows.md
-      - android.md
-      - web.md
-      - other.md
