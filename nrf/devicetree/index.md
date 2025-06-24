@@ -8,7 +8,7 @@ nRF Connect for VSCode は書いている時点での最新だが、しばしば
 ## はじめに
 
 * Nordic
-  * [Devicetree - ncs v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/index.html)
+  * [Devicetree - nordic v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/index.html)
   * [Devicetree - Nordic Developer Academy](https://academy.nordicsemi.com/courses/nrf-connect-sdk-fundamentals/lessons/lesson-2-reading-buttons-and-controlling-leds/topic/devicetree/)
 * [devicetree.org v0.4](https://github.com/devicetree-org/devicetree-specification/releases/tag/v0.4)
 
@@ -20,7 +20,7 @@ ncs で使うための知識だけにするので詳細は各ドキュメント�
 
 ## DTSファイルの構造(Version 1)
 
-* [Syntax and structure - ncs v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/intro-syntax-structure.html)
+* [Syntax and structure - nordic v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/intro-syntax-structure.html)
 
 ```dts
 /dts-v1/;                       // DTS file version(たぶん省略可)
@@ -232,7 +232,7 @@ CTS/RTS の無効化もできる。
 
 ### Cソースから扱うとき
 
-* [Devicetree access from C/C++ - ncs v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/api-usage.html)
+* [Devicetree access from C/C++ - nordic v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/api-usage.html)
 * [GPIO Generic API - Nordic Developer Academy](https://academy.nordicsemi.com/courses/nrf-connect-sdk-fundamentals/lessons/lesson-2-reading-buttons-and-controlling-leds/topic/gpio-generic-api/)
 
 デバイスの設定、たとえば GPIO の IN/OUT 設定などは Devicetree で設定せずにコードで設定する。  
@@ -245,7 +245,7 @@ nodeID を取得するマクロはいくつか種類があるが、個人的に�
 Devicetree ではノード名、ラベル名、エイリアス名で同じ文字列が使えるが、エイリアスは Devicetree のノード記述に名前を付けているだけなので依存が少ないからだ。  
 その代わり`aliases`への追加が必要になるという手間がかかる。
 
-* [Aliases and chosen nodes - ncs v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/intro-syntax-structure.html#aliases-and-chosen-nodes)
+* [Aliases and chosen nodes - nordic v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/intro-syntax-structure.html#aliases-and-chosen-nodes)
 
 #### 同名
 
@@ -285,7 +285,7 @@ Devicetree ではノード名、ラベル名、エイリアス名で同じ文字
 
 ### DTSファイルの読み込まれ方
 
-* [Input and output files - ncs v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/intro-input-output.html)
+* [Input and output files - nordic v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/intro-input-output.html)
 
 拡張子は `.dts`。  
 外部ファイルをインポートすることも可能で、インポートされる方は `.dtsi` とすることが多いが、

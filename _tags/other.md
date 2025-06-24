@@ -1,5 +1,5 @@
 ---
-sortorder: "800"
+sortorder: "zzzzz"
 layout: tag
 tag: other
 name: "その他"
