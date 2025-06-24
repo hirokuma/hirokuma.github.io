@@ -1,4 +1,4 @@
-### tags
+### Tags
 
 <ul>
 {% assign tags = site.tags | sort: "sortorder" %}
