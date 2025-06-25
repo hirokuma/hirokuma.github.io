@@ -25,8 +25,8 @@ recentlies: 3
 </ul>
 * アーカイブ
   * [カテゴリー別](tags.md)
-  * [2025年(更新中)](devwork2025.md)
-  * [2024年](devwork2024.md)
+  * [2025年](2025/index.md)
+  * [2024年](2024/index.md)
   * [それ以前(別サイト)](https://hiro99ma.blogspot.com/)
 
 ## その他
