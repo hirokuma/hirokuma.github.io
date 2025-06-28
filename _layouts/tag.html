@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<h2>tag: {{ page.tag }}</h2>
+<h2>tag: {{ page.name }}</h2>
 
 <div class="blogs">
   {% assign tag_pages = site.pages | where: "tags", page.tag | sort: "date" | reverse %}

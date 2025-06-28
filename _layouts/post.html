@@ -14,7 +14,16 @@ layout: default
   <small><em>written by {{ page.author | default: site.author }}</em></small><br/>
 {% if page.tags %}
   <div class="tags" style="color: #808080;">
-    <small>tags: <em>{{ page.tags | join: "</em> - <em>" }}</em></small>
+    <small>tags: <em>
+  {% for tag in page.tags %}
+    {% for taglist in site.tags %}
+      {% if taglist.tag == tag %}
+        <a href="{{ taglist.url | relative_url }}">{{ taglist.name }}</a>
+      {% endif %}
+    {% endfor %}
+    &nbsp;&nbsp;
+  {% endfor %}
+    </em></small>
   </div>
 {% endif %}
 </p>
