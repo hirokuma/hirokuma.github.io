@@ -11,7 +11,7 @@ layout: default
 {{content}}
 
 <p class="view">
-  <small>written by {{ page.author | default: site.author }}</small><br/>
+  <small><em>written by {{ page.author | default: site.author }}</em></small><br/>
 {% if page.tags %}
   <div class="tags" style="color: #808080;">
     <small>tags: <em>{{ page.tags | join: "</em> - <em>" }}</em></small>
