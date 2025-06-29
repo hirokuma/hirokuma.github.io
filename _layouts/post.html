@@ -11,7 +11,9 @@ layout: default
 {{content}}
 
 <p class="view">
-  <small><em>written by {{ page.author | default: site.author }}</em></small><br/>
+  <div class="writer" style="color: #808080;">
+    <small>writer: <em>{{ page.author | default: site.author }}</em></small>
+  </div>
 {% if page.tags %}
   <div class="tags" style="color: #808080;">
     <small>tags: <em>
