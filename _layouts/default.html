@@ -27,7 +27,7 @@
         </section>
 
         <!-- 検索窓: DuckDuckGo -->
-        <form id="search-form" method="get" target="_blank">
+        <form id="search-form" method="get" target="_blank" onsubmit="submitSearch('duckduckgo');">
           <input type="text" id="search-box" name="q" placeholder="サイト内検索">
           <div>
             <button type="button" onclick="submitSearch('duckduckgo')">DuckDuckGo検索</button>
@@ -48,15 +48,14 @@
             let fullQuery = `${originalQuery} site:${site}`;
 
             switch(engine) {
+              case 'duckduckgo':
+                form.action = 'https://duckduckgo.com/';
+                break;
               case 'bing':
                 form.action = 'https://www.bing.com/search';
                 break;
               case 'google':
                 form.action = 'https://www.google.com/search';
-                break;
-              case 'duckduckgo':
-              default:
-                form.action = 'https://duckduckgo.com/';
                 break;
             }
 
