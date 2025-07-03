@@ -48,14 +48,15 @@
             let fullQuery = `${originalQuery} site:${site}`;
 
             switch(engine) {
-              case 'duckduckgo':
-                form.action = 'https://duckduckgo.com/';
-                break;
               case 'bing':
                 form.action = 'https://www.bing.com/search';
                 break;
               case 'google':
                 form.action = 'https://www.google.com/search';
+                break;
+              case 'duckduckgo':
+              default:
+                form.action = 'https://duckduckgo.com/';
                 break;
             }
 
