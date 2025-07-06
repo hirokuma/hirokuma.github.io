@@ -21,4 +21,11 @@ layout: default
   {% endfor %}
 </div>
 
+<div class="blogs">
+  {% assign tag_pages = site.pages | where: "writing" %}
+  {% for post in tag_pages %}
+    ({{ post.title }})
+  {% endfor %}
+</div>
+
 <hr/>
