@@ -2,6 +2,8 @@
 title: "rust: ファイルの分割"
 tags:
   - rust
+date: "2025/07/06"
+draft: true
 ---
 
 ## 勉強中
