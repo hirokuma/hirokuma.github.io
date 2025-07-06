@@ -12,5 +12,3 @@ author: hiro99ma
 collections:
   tags:
     output: true
-  writing:
-    output: false
