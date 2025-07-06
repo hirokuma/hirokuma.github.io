@@ -3,7 +3,7 @@ title: "rust: ファイルの分割"
 tags:
   - rust
 date: "2025/07/06"
-draft: true
+writing: true
 ---
 
 ## 勉強中

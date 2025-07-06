@@ -5,7 +5,7 @@ layout: default
 <h2>tag: {{ page.name }}</h2>
 
 <div class="blogs">
-  {% assign tag_pages = site.pages | where: "draft", nil | where: "tags", page.tag | sort: "date" | reverse %}
+  {% assign tag_pages = site.pages | where: "writing", nil | where: "tags", page.tag | sort: "date" | reverse %}
   {% for post in tag_pages %}
     <article class="blog-post">
       <div class="post-header">
