@@ -23,7 +23,7 @@ layout: default
 </div>
 
 <div class="blogs">
-  {% assign tag_pages = site.pages | where: "writing", nil %}
+  {% assign tag_pages = site.pages | where: "writing", true %}
   {% for post in tag_pages %}
     ({{ post.title }})
   {% endfor %}
