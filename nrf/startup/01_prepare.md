@@ -1,6 +1,12 @@
-# はじめ方 > 1. 準備
-
-_最終更新日: 2024/11/01_
+---
+layout: "record"
+title: "環境準備"
+tags:
+  - ble
+  - ncs
+daily: false
+date: "2024/11/01"
+---
 
 nRF Connect SDK は略して "ncs" とも呼ばれます。
 

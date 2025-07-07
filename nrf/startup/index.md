@@ -1,7 +1,13 @@
-# Nordic Semiconductor 調査 > BLEプロジェクトのはじめ方
+---
+layout: "record"
+title: "nRF Connect SDKプロジェクトのはじめ方"
+tags:
+  - ble
+  - ncs
+daily: false
+date: "2024/11/06"
+---
 
-_最終更新日: 2024/11/06_
-
-* [1. 準備](01_prepare.md)
+* [1. 環境準備](01_prepare.md)
 * [2. 実機とデバッガ](02_device.md)
-* [3. プロジェクト](03_proj.md)
+* [3. ncsプロジェクト](03_proj.md)

@@ -1,4 +1,12 @@
-# Zephyr > Fatal Error Handling
+---
+layout: "record"
+title: "Zephyr OS: Fatal Error Handling"
+tags:
+  - ble
+  - ncs
+daily: false
+date: "2024/11/08"
+---
 
 [k_panic()](https://docs.nordicsemi.com/bundle/zephyr-apis-latest/page/kernel_8h.html#aedd541f707b1463aaac15c7798340329) などによってシステム復帰ができない場合は `k_sys_fatal_error_handler()` が呼び出される。
 

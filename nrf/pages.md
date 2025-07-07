@@ -1,6 +1,11 @@
-# Nordic Semiconductor 調査 > よく使うページ
-
-_最終更新日: 2024/11/06_
+---
+layout: "record"
+title: "よく使うページ"
+tags:
+  - ble
+daily: false
+date: "2024/11/06"
+---
 
 ## Nordic Semiconductor
 

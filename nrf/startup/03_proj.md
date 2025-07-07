@@ -1,6 +1,12 @@
-# はじめ方 > 3. プロジェクト
-
-_最終更新日: 2024/11/01_
+---
+layout: "record"
+title: "ncsプロジェクト"
+tags:
+  - ble
+  - ncs
+daily: false
+date: "2024/11/01"
+---
 
 ## vscodeの設定
 

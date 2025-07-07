@@ -1,12 +1,16 @@
-# Nordic Semiconductor 調査
-
-_最終更新日: 2025/05/13_
+---
+layout: "record"
+title: "Nordic Semiconductor 調査"
+tags:
+  - ble
+  - ncs
+daily: false
+date: "2025/05/13"
+---
 
 Nordic Semiconductor 社の製品、主に BLE 向けについて
 
 ## 近況
-
-_2025/05/13_
 
 2025年4月に ncs v3.0.0 がリリースされた。v3.0.1 もリリースされている。
 

@@ -1,4 +1,11 @@
-# GATT Error Codes
+---
+layout: "record"
+title: "GATT Error Codes"
+tags:
+  - ble
+daily: false
+date: "2024/11/19"
+---
 
 ## Core v5.1, Vol.3, Part F "3.4.1.1 Error Response"
 

@@ -1,6 +1,12 @@
-# ビルドについて
-
-_最終更新日: 2024/11/08_
+---
+layout: "record"
+title: "nRF Connect SDKでのビルドについて"
+tags:
+  - ble
+  - ncs
+daily: false
+date: "2024/11/08"
+---
 
 ## よく参照するビルド済みファイル
 
