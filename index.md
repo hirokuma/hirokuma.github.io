@@ -16,7 +16,7 @@ recentlies: 3
 <ul>
   <li>最近の記事
     <ul>
-{% assign posts = site.pages | sort: "date" | reverse %}
+{% assign posts = site.pages | where: "daily": true | sort: "date" | reverse %}
 {% for post in posts limit:page.recentlies %}
       <li>{{ post.date }} <a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
 {% endfor %}

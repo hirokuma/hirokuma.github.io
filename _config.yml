@@ -12,3 +12,7 @@ author: hiro99ma
 collections:
   tags:
     output: true
+defaults:
+  -
+    values:
+      daily: true
