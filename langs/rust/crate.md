@@ -1,13 +1,11 @@
 ---
-title: "rust: ファイルの分割"
+layout: "record"
+title: "rust: クレート、パッケージ、モジュール"
 tags:
   - rust
-draft: true
 daily: false
 date: "2025/07/06"
 ---
-
-## 勉強中
 
 ## 概要
 
@@ -135,4 +133,6 @@ fn main() {
 
 ![image](images/call-external-package.png)
 
+## 記載予定
 
+* selfとかsuperとか
