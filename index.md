@@ -10,11 +10,23 @@ recentlies: 3
 * [Bitcoin調査](bitcoin/index.md)
 * [Nordic Semiconductor調査](nrf/index.md)
 * [Android開発](android/index.md)
+* [プログラミング言語](langs/index.md)
+
+<ul>
+  <li>最近の調査
+    <ul>
+{% assign posts = site.pages | where: "daily": false | sort: "date" | reverse %}
+{% for post in posts limit:page.recentlies %}
+      <li>{{ post.date }} <a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+{% endfor %}
+    </ul>
+  </li>
+</ul>
 
 ## 開発日記
 
 <ul>
-  <li>最近の記事
+  <li>最近の日記
     <ul>
 {% assign posts = site.pages | where: "daily": true | sort: "date" | reverse %}
 {% for post in posts limit:page.recentlies %}
