@@ -1,4 +1,11 @@
-# Android開発
+---
+layout: "record"
+title: "Android開発"
+tags:
+  - android
+daily: false
+date: "2024/10/31"
+---
 
 Android Studio を使った Jetpack Compose でのアプリを作ろうとしたときの調査メモを残すページ。  
 BLE Peripheral デバイスの動作確認をするためのテスト用 Central アプリを作りたいという観点で書いていく。

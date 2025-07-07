@@ -1,6 +1,11 @@
-# UI Layer(Jetpack Compose)
-
-_2024/10/31_
+---
+layout: "record"
+title: "UI Layer(Jetpack Compose)"
+tags:
+  - android
+daily: false
+date: "2024/10/31"
+---
 
 Android Studio の新規プロジェクト作成で作るか、[archtecture-templates/base](https://github.com/android/architecture-templates/tree/base) を元にするのがよい。  
 View ベースアプリの場合は GUI で XML ファイルを更新することができたが Composable 関数の場合にはそれが無い。

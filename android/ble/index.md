@@ -1,6 +1,12 @@
-# BLE 操作(Jetpack Compose)
-
-_2024/10/31_
+---
+layout: "record"
+title: "BLE 操作(Jetpack Compose)"
+tags:
+  - android
+  - ble
+daily: false
+date: "2024/10/31"
+---
 
 Android の API としては Peripheral として動作させる機能もありそうだが、
 ここでは Central のみ扱う。  
