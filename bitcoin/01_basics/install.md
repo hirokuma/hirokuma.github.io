@@ -1,6 +1,10 @@
-# Bitcoin Core(bitcoind) のインストール
-
-_最終更新日: 2025/04/12_
+---
+title: "Bitcoin Core(bitcoind) のインストール"
+tags:
+  - bitcoin
+daily: false
+date: "2025/04/12"
+---
 
 ## はじめに
 

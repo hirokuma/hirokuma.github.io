@@ -1,4 +1,10 @@
-# MuSig2 Sequence
+---
+title: "MuSig2 Sequence"
+tags:
+  - bitcoin
+daily: false
+date: "2025/03/01"
+---
 
 ## Generate MultiSig pubkey
 

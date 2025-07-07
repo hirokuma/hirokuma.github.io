@@ -1,4 +1,11 @@
-# library: C/C++
+---
+title: "C/C++"
+tags:
+  - bitcoin
+  - library
+daily: false
+date: "2025/03/13"
+---
 
 ## libsecp256k1
 

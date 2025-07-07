@@ -1,4 +1,11 @@
-# library: Go
+---
+title: "Go"
+tags:
+  - bitcoin
+  - library
+daily: false
+date: "2025/03/11"
+---
 
 ## btcd, btcwallet
 

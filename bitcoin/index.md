@@ -1,4 +1,10 @@
-# Bitcoin調査
+---
+title: "Bitcoin調査"
+tags:
+  - bitcoin
+daily: false
+date: "2025/06/19"
+---
 
 Bitcoin技術に関する調査メモを残すページ。
 

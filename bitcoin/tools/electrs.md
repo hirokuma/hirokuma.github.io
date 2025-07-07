@@ -1,4 +1,11 @@
-# tools: romanz/electrs
+---
+title: "romanz/electrs"
+tags:
+  - bitcoin
+  - tools
+daily: false
+date: "2025/04/07"
+---
 
 [repository](https://github.com/romanz/electrs)
 

@@ -1,6 +1,10 @@
-# P2WPKH
-
-_最終更新日:2025/03/07_
+---
+title: "P2WPKH"
+tags:
+  - bitcoin
+daily: false
+date: "2025/03/07"
+---
 
 P2WPKH に関するトランザクションを作るための説明である。  
 

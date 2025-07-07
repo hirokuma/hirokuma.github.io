@@ -1,4 +1,10 @@
-# txout proof
+---
+title: "txout proof"
+tags:
+  - bitcoin
+daily: false
+date: "2025/06/19"
+---
 
 _最終更新日: 2025/06/19_
 

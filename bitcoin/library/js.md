@@ -1,4 +1,11 @@
-# library: JavaScript / TypeScript
+---
+title: "JavaScript / TypeScript"
+tags:
+  - bitcoin
+  - library
+daily: false
+date: "2025/03/11"
+---
 
 ## bitcoinjs-lib
 

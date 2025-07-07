@@ -1,6 +1,10 @@
-# Bitcoin Core(bitcoind) を regtest で動かす
-
-_最終更新日: 2025/02/19_
+---
+title: "Bitcoin Core(bitcoind) を regtest で動かす"
+tags:
+  - bitcoin
+daily: false
+date: "2025/02/19"
+---
 
 ## はじめに
 

@@ -1,4 +1,11 @@
-# library: Rust
+---
+title: "Rust"
+tags:
+  - bitcoin
+  - library
+daily: false
+date: "2025/03/11"
+---
 
 ## rust-bitcoin
 

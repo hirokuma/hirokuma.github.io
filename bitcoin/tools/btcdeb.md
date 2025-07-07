@@ -1,4 +1,11 @@
-# tools: btcdeb
+---
+title: "btcdeb"
+tags:
+  - bitcoin
+  - tools
+daily: false
+date: "2025/03/12"
+---
 
 [repository](https://github.com/bitcoin-core/btcdeb)
 

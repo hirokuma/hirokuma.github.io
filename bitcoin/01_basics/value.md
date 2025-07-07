@@ -1,6 +1,10 @@
-# 値の表現
-
-_最終更新日: 2024/12/11_
+---
+title: "値の表現"
+tags:
+  - bitcoin
+daily: false
+date: "2024/12/11"
+---
 
 数値は 2の補数の little endian で表す。  
 固定長の場合はそのバイト数のデータ型、可変長は Compact Size型が使われている。
