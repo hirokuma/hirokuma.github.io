@@ -1,4 +1,5 @@
 ---
+layout: "record"
 title: "トランザクション"
 tags:
   - bitcoin

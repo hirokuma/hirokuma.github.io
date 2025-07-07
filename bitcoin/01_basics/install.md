@@ -1,4 +1,5 @@
 ---
+layout: "record"
 title: "Bitcoin Core(bitcoind) のインストール"
 tags:
   - bitcoin

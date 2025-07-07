@@ -1,4 +1,5 @@
 ---
+layout: "record"
 title: "Bitcoin Core(bitcoind) を regtest で動かす"
 tags:
   - bitcoin

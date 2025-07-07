@@ -1,4 +1,5 @@
 ---
+layout: "record"
 title: "JavaScript / TypeScript"
 tags:
   - bitcoin

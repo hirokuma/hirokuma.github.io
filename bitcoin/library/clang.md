@@ -1,4 +1,5 @@
 ---
+layout: "record"
 title: "C/C++"
 tags:
   - bitcoin

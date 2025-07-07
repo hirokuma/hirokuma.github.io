@@ -1,4 +1,5 @@
 ---
+layout: "record"
 title: "P2TR および BIP-341周辺"
 tags:
   - bitcoin

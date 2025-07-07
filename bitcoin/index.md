@@ -1,4 +1,5 @@
 ---
+layout: "record"
 title: "Bitcoin調査"
 tags:
   - bitcoin

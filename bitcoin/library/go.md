@@ -1,4 +1,5 @@
 ---
+layout: "record"
 title: "Go"
 tags:
   - bitcoin

@@ -1,4 +1,5 @@
 ---
+layout: "record"
 title: "P2WSH"
 tags:
   - bitcoin

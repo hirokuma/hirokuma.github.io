@@ -1,4 +1,5 @@
 ---
+layout: "record"
 title: "値の表現"
 tags:
   - bitcoin

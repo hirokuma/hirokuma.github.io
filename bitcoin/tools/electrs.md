@@ -1,4 +1,5 @@
 ---
+layout: "record"
 title: "romanz/electrs"
 tags:
   - bitcoin

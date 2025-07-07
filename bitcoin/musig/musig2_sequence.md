@@ -1,4 +1,5 @@
 ---
+layout: "record"
 title: "MuSig2 Sequence"
 tags:
   - bitcoin
