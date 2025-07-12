@@ -30,6 +30,7 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 
 * [インストール](01_basics/install.md)
 * [Bitcoin Core(bitcoind) を regtest で動かす](01_basics/bitcoind.md)
+  * [標準ポート番号](01_basics/port.md)
 * [値の表現](01_basics/value.md)
 * [ブロック](01_basics/blocks.md)
 * [トランザクション](01_basics/transactions.md)

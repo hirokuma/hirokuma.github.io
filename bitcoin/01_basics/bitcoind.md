@@ -85,14 +85,23 @@ server=1
 txindex=1
 regtest=1
 rpcbind=
-rpcuser=ほげほげ
-rpcpassword=ふがふが
+rpcuser=user
+rpcpassword=pass
 fallbackfee=0.00001000
 ```
 
 `rpcuser` と `rpcpassword` は JSON-RPC で通信したい場合に設定する。
-代わりに [rpcauth](https://github.com/bitcoin/bitcoin/tree/v28.1/share/rpcauth) を使うこともできる。
-`rpcauth` は複数設定することができる。
+
+```console
+$ curl --user user:pass --data-binary '{"jsonrpc": "2.0", "id": "curltest", "method": "getblockcount", "params": []}' -H 'content-type: application/json' http://127.0.0.1:18443/
+{"jsonrpc":"2.0","result":0,"id":"curltest"}
+```
+
+### rpcauth
+
+`rpcuser`と`rpcpassword`は推奨されておらず、[rpcauth](https://github.com/bitcoin/bitcoin/tree/v28.1/share/rpcauth)を使う方が望ましい。  
+`rpcauth` は複数設定することができる。  
+また、electrs などのツールで参照する cookie ファイルは`rpcauth`を設定した場合
 
 ```console
 $ ./share/rpcauth/rpcauth.py user pass
@@ -100,38 +109,9 @@ String to be appended to bitcoin.conf:
 rpcauth=user:<省略>
 Your password:
 pass
-
-$ ./share/rpcauth/rpcauth.py user2 pass2
-String to be appended to bitcoin.conf:
-rpcauth=user2:<省略>
-Your password:
-pass2
 ```
 
-出力された `rpcauth` の行を `bitcoin.conf` にそれぞれ貼り付けて `bitcoind` を起動する。
-
-```console
-$ curl --user user:pass --data-binary '{"jsonrpc": "2.0", "id": "curltest", "method": "getblockcount", "params": []}' -H 'content-type: application/json' http://127.0.0.1:18443/
-{"jsonrpc":"2.0","result":0,"id":"curltest"}
-
-$ curl --user user2:pass2 --data-binary '{"jsonrpc": "2.0", "id": "curltest", "method": "getblockcount", "params": []}' -H 'content-type: application/json' http://127.0.0.1:18443/
-{"jsonrpc":"2.0","result":0,"id":"curltest"}
-```
-
-### ポート番号
-
-bitcoind がデフォルトで使用するポート番号を以下に示す。  
-ZMQ はポート番号指定が必要なので記載していない。
-
-| network | P2P | P2P(onion) | RPC |
-| -- | -- | -- | -- |
-| mainnet | 8333 | 8334 | 8332 |
-| testnet3 | 18333 | 18334 | 18332 |
-| testnet4 | 48333 | 48334 | 48332 |
-| signet | 38333 | 38334 | 38332 |
-| regtest | 18444 | 18445 | 18443 |
-
-ZMQ はデフォルトのポート番号はない。
+出力された `rpcauth` の行を `bitcoin.conf` に貼り付ける。
 
 ## ウォレットの作成
 
