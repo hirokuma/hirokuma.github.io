@@ -2,9 +2,8 @@
 
 ## C/C++言語
 
-{% assign selected_tag = "clang" %}
-
 <!-- begin -->
+{% assign selected_tag = "clang" %}
 {% assign tag_pages = site.pages | where: "tags", selected_tag | where: "daily": false | sort: "date" | reverse %}
 {% for post in tag_pages %}
 <p class="post-header">
