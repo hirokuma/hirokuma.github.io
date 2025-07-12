@@ -99,9 +99,7 @@ $ curl --user user:pass --data-binary '{"jsonrpc": "2.0", "id": "curltest", "met
 
 ### rpcauth
 
-`rpcuser`と`rpcpassword`は推奨されておらず、[rpcauth](https://github.com/bitcoin/bitcoin/tree/v28.1/share/rpcauth)を使う方が望ましい。  
-`rpcauth` は複数設定することができる。  
-また、electrs などのツールで参照する cookie ファイルは`rpcauth`を設定した場合
+`rpcuser`と`rpcpassword`は推奨されておらず、[rpcauth](https://github.com/bitcoin/bitcoin/tree/v28.1/share/rpcauth)を使う方が望ましい。
 
 ```console
 $ ./share/rpcauth/rpcauth.py user pass
@@ -112,6 +110,9 @@ pass
 ```
 
 出力された `rpcauth` の行を `bitcoin.conf` に貼り付ける。
+
+`rpcauth` は複数設定することができる。  
+また、electrs などのツールで参照する cookieファイル(`~/.bitcoin/regtest/.cookie`など)は`rpcauth`を設定した場合しか生成されない。
 
 ## ウォレットの作成
 

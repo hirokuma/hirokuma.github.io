@@ -42,7 +42,7 @@ dynamic link するとアップデートが簡単、みたいに書いてある�
 electrs の設定は `config.toml` という名前である。  
 [テンプレート](https://github.com/romanz/electrs/blob/v0.10.9/doc/config_example.toml) を参考にすると良い。  
 `cookie_file` と `db_dir` は変更するだろう。  
-なお`cookie_file`は`bitcoin.conf`で`rpcauth`を設定しないと作られないので注意すること。
+なお`cookie_file`は`bitcoin.conf`で[rpcauth](https://blog.hirokuma.work/bitcoin/01_basics/bitcoind.html#rpcauth)を設定しないと作られないので注意すること。
 
 `config_specification.toml` が設定できるパラメータ名で `Config` が最終的に使われる設定値なのかな。
 
@@ -129,7 +129,8 @@ $ du -h
 ```
 
 ポートの LISTEN は最初から行われているようだ。  
-いつから API にアクセスできるのかは未確認。
+いつから API にアクセスできるのかは未確認。  
+(`netcat`はRaspberry Piでは`sudo apt install ncat`でインストールした)
 
 ```console
 $ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "id": 0}' | netcat 192.168.0.30 50001
