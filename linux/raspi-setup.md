@@ -156,3 +156,72 @@ $ sudo chown hoge:hoge /mnt/usb
 $ sudo findmnt --verify
 Success, no errors or warnings detected
 ```
+
+## Docker
+
+Raspbian OS 64bit の場合は [Debian](https://docs.docker.com/engine/install/debian/)でのインストールを参照する。
+
+インストールは手順通りで良い。
+
+### 保存場所
+
+うちのRaspberry Pi3はMicroSDにOSを焼いて立ち上げている。  
+USBストレージからも立ち上げることはできるそうだ。
+
+* [Raspberry pi 3 Model B+ を USB SSD から起動する - Raspberry Pi 備忘録 / Mbedもあるよ！](https://pongsuke.hatenablog.com/entry/2018/08/15/183341)
+
+何を気にしているかというと、MicroSD は容量も大きくないし高頻度なアクセスは心配なので極力SSDに逃がしたいのだ。  
+dockerは自分が使う気がなくてもツールが要求するのでインストールするのだが、
+お試しで動かしたプロジェクトの残骸が残りっぱなしになったりしやすい。  
+面倒ごとを回避するなら、保存場所を容量が大きいストレージにするとよいだろう。速度は落ちるかもしれんが。
+
+* [Dockerイメージの格納場所を変更する方法](https://zenn.dev/karaage0703/articles/46195947629c35)
+
+ここまできれいにしなくても、`/var/lib/docker/`に保存されることが分かるなら、ディレクトリごと移動してシンボリックリンクしておけばよいだろう。
+
+## Swap file
+
+Rustのプロジェクトのせいかどうかは分からないが、`cargo build`はかなりメモリを消費すると思っている。  
+Raspbian OSをインストールするとSwap file無しになっているのだが、メモリが足りずにビルドに失敗することがある。
+そうでなくても、メモリが不足すると全体的に不安定になるので、それくらいだったらSwap fileを設定した法が精神的によろしい。
+
+よくわからないのが"dphys-swapfile"だ。  
+`swapon -s`で見ると`/var/swap`だけがある。  
+これを`systemctl stop`で止めると、何も出てこない。  
+つまり、これでswapファイルの制御ができているはずだ。
+ならばこちらのサイトのように`/etc/dphys-swapfile`を書き換えるのが自然な気がする。
+
+* [Raspberry PIにてSWAPファイルのリサイズ #RaspberryPi - Qiita](https://qiita.com/neomi/items/9212885b7c08a17f1572)
+
+ただ、今までのRaspberry Piは`dd`コマンドでswapfileを作る方式の説明が多かったように思う。
+
+* [Raspberry PiにSwapファイルを作成する - 作業中のメモ](https://workspacememory.hatenablog.com/entry/2021/03/27/230512)
+
+```console
+$ sudo systemctl stop dphys-swapfile
+$ swapon -s
+$ sudo vi /etc/dphys-swapfile
+```
+
+編集内容
+```
+CONF_SWAPFILE=/mnt/usb/swapfile
+CONF_SWAPSIZE=2048
+```
+
+続き
+
+```console
+$ sudo dphys-swapfile setup
+$ sudo dphys-swapfile swapon
+$ sudo systemctl start dphys-swapfile
+$ swapon -s
+Filename                                Type            Size            Used            Priority
+/mnt/usb/swapfile                       file            2097148         1059288         -2
+$ sudo rm /var/swap
+```
+
+これで見た目上は成り立っている。  
+`dphys-swapfile`は以前からあったと思うのだが、なぜこの方式ではなくわざわざ`dd`でファイルを作っていたのだろうか。
+単に私が目にした記事がそうだっただけで、設定ファイルを書き換える方式も説明されていたのだろうか。。。
+
