@@ -16,3 +16,4 @@ defaults:
   -
     values:
       daily: true
+      draft: false
