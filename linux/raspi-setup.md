@@ -179,6 +179,16 @@ dockerは自分が使う気がなくてもツールが要求するのでイン�
 
 ここまできれいにしなくても、`/var/lib/docker/`に保存されることが分かるなら、ディレクトリごと移動してシンボリックリンクしておけばよいだろう。
 
+### group
+
+rootではないユーザでも使えるようにしておくと便利だろう。
+
+* [Post-installation steps - Docker Docs](https://docs.docker.com/engine/install/linux-postinstall/)
+
+```console
+$ sudo usermod -aG docker $USER
+```
+
 ## Swap file
 
 Rustのプロジェクトのせいかどうかは分からないが、`cargo build`はかなりメモリを消費すると思っている。  
