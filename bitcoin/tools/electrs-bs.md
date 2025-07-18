@@ -22,13 +22,22 @@ Electrm Server APIだけでなく[Esplora HTTP API](https://github.com/blockstre
 
 * [Installing & indexing](https://github.com/Blockstream/electrs?tab=readme-ov-file#installing--indexing)
 
+書いてあるのは`cargo run`なので、そのままだと実行される。  
+単にビルドするだけであればこの程度で良いだろう。
+
+```console
+$ cargo build --release --bin electrs
+
+# 実行ファイルをパスが通ったところにコピー
+$ cp target/release/electrs ~/.local/bin/
+```
+
 Raspberry Pi3 を新規立ち上げした環境でビルドした。  
 Rust だけでなく`clang`がインストールされていないとビルドエラーになる。  
 `cmake`も必要らしいが、私の時にはなくてもビルドできたようだ。  
 また`ulimit -n 100000`などしてオープンできるファイル数を拡大しておくことを推奨している。
 
-Raspberry Pi3 だったためか非常に時間がかかった。  
-書いてあるままの`cargo run`でやったため、見たときには実行されていて
+Raspberry Pi3 だったためか非常に時間がかかった。
 
 ## 実行
 
@@ -38,9 +47,10 @@ Raspberry Pi3 だったためか非常に時間がかかった。
 
 ```console
 $ electrs --db-dir="/mnt/usb/electrs-data" \
-    --network="gtest" \
+    --network="regtest" \
     --cookie="testuser:testpass"  \
-    --electrum-rpc-addr="127.0.0.1:50001"
+    --electrum-rpc-addr="127.0.0.1:50001" \
+    --http_url="127.0.0.1:3002"
 ```
 
 [Electrum Protocol](https://electrumx.readthedocs.io/en/latest/protocol.html)が使用できるようになっていればOK。
