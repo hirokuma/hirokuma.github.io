@@ -45,12 +45,16 @@ Raspberry Pi3 だったためか非常に時間がかかった。
 `--cookie`は、未設定なら`~/.bitcoin/.cookie`から読むが、そうでなければ`"<rpcuser>:<rpcpassword>"`を設定する。
 なので`rpcauth`でなくても使えるのかもしれないが確認はしていない。
 
+`--cors`の設定は必要に応じて変更する。  
+ここでは[esplora](./esplora.md)から呼び出される
+
 ```console
 $ electrs --db-dir="/mnt/usb/electrs-data" \
     --network="regtest" \
     --cookie="testuser:testpass"  \
-    --electrum-rpc-addr="127.0.0.1:50001" \
-    --http_url="127.0.0.1:3002"
+    --electrum-rpc-addr="localhost:50001" \
+    --http_url="localhost:3002" \
+    --cors="http://localhost:5000"
 ```
 
 [Electrum Protocol](https://electrumx.readthedocs.io/en/latest/protocol.html)が使用できるようになっていればOK。

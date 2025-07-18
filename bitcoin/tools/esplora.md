@@ -30,6 +30,13 @@ Dockerコンテナ版もあるが、Bitcoin regtestで試したところBitcoin�
 Elctrs の REST API が `http://localhost:3002/` で動いている場合はこうなる。  
 環境変数の終わりは `/` を付けること。
 
+この設定だと`STATIC_ROOT`と`API_URL`が同じ`localhost`ではあるもののポート番号が異なるため[Origin](https://developer.mozilla.org/ja/docs/Glossary/Origin)が別と判断される。
+ここでは`STATIC_ROOT`から`API_URL`を呼び出す経路に影響がある。  
+関連する設定で、esplora には環境変数`CORS_ALLOW`が、electrs には `--cors`がある。
+どちらに対して設定するかというと、「アクセスを許可する」なのでAPIを提供するelectrsに`--cors="http://localhost:5000"`などとして相手を許すようにしておく。
+
+* [CORS(Cross-Origin Resource Sharing) - とほほのWWW入門](https://www.tohoho-web.com/ex/cors.html)
+
 ```console
 # Don't forget last "/"
 $ export STATIC_ROOT=http://localhost:5000/
