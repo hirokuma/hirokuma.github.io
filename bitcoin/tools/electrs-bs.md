@@ -45,6 +45,8 @@ Raspberry Pi3 だったためか非常に時間がかかった。
 `--cookie`は、未設定なら`~/.bitcoin/.cookie`から読むが、そうでなければ`"<rpcuser>:<rpcpassword>"`を設定する。
 なので`rpcauth`でなくても使えるのかもしれないが確認はしていない。
 
+`--electrum-rpc-addr`はElectrum APIのアドレス、`--http-addr`はEsplora APIのアドレスである。
+
 `--cors`の設定は必要に応じて変更する。  
 ここでは[esplora](./esplora.md)から呼び出される
 
@@ -53,14 +55,14 @@ $ electrs --db-dir="/mnt/usb/electrs-data" \
     --network="regtest" \
     --cookie="testuser:testpass"  \
     --electrum-rpc-addr="localhost:50001" \
-    --http_url="localhost:3002" \
+    --http-addr="localhost:3002" \
     --cors="http://localhost:5000"
 ```
 
 [Electrum Protocol](https://electrumx.readthedocs.io/en/latest/protocol.html)が使用できるようになっていればOK。
 
 ```console
-$ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "id": 0}' | netcat 127.0.0.1 50001
+$ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "id": 0}' | netcat localhost 50001
 {"id":0,"jsonrpc":"2.0","result":["electrs-esplora 0.4.1","1.4"]}
 ```
 
@@ -68,6 +70,6 @@ $ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "i
 アドレスは`electrs`起動時のログで`http_addr`を見ると良い。
 
 ```console
-$ curl http://127.0.0.1:3002/block-height/1
+$ curl http://localhost:3002/block-height/1
 79900ad51d7e6a8aed2a17570dd5a324134693af6e59df973f6a3bec16de12a5
 ```

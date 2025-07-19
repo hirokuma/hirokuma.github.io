@@ -35,6 +35,37 @@ Raspbian OSは[Pi Imager](https://www.raspberrypi.com/software/)を使ってSD�
   * 有線LANで接続した
   * ログインして`wlan0`が無効になっていたので、`rfkill unblock`して`ifconfig up`したあと`raspi-config`で設定した
 
+```console
+# unblockされている
+$ rfkill
+ID TYPE      DEVICE      SOFT      HARD
+ 0 bluetooth hci0   unblocked unblocked
+ 1 wlan      phy0   unblocked unblocked
+
+# 確認
+$ nmcli device status
+DEVICE         TYPE      STATE                   CONNECTION
+wlan0          wifi      connected               <SSID名>
+lo             loopback  connected (externally)  lo
+p2p-dev-wlan0  wifi-p2p  disconnected            --
+eth0           ethernet  unavailable             --
+```
+
+`nmtui`はGUIで操作できるので楽だ。`LANG=C`などしておかないと文字化けするかもしれない。
+
+WiFi接続する場合、WiFiルータでネットワークの分離や隔離のような機能を有効にしているとSSH接続などができないかもしれない。
+
+### UARTの有効化
+
+![image](images/imager3.png)
+
+microSDカードの`config.txt`に`enable_uart=1`を追加。セクションのどこがよいかわからないので、セクションが無いところに追加した。
+USBシリアル変換をつないでTeraTermで動かすことができた。
+
+Prolificのチップが古いとWindowsではドライバが接続を拒否するかもしれない。
+偽物チップが出回ったのでそうなったようだ。  
+問題ないUSBシリアル変換機器を持っていると残念なところだが、ネットで検索してみるのも良いだろう。
+
 ## ストレージの追加
 
 SDカードではいろいろ足りないので外部ストレージを付けたくなる。  
