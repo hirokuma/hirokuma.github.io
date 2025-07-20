@@ -49,6 +49,7 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 * [btcdeb](tools/btcdeb.md)
 * [romanz/electrs](tools/electrs.md)
 * [Blockstream/electrs](tools/electrs-bs.md)
+* [Blockstream/esplora](tools/esplora.md)
 
 ### 自作
 
