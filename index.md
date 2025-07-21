@@ -21,7 +21,7 @@ recentlies: 3
       <li>
         {{ post.date }} <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
           {% for tag in post.tags %}
-            <span>#</span>{{ tag }}
+            <small><span>#</span>{{ tag }}</small>
           {% endfor %}
       </li>
 {% endfor %}
