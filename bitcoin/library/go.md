@@ -1,6 +1,6 @@
 ---
 layout: "record"
-title: "Go"
+title: "Bitcoin library: Go"
 tags:
   - bitcoin
   - library

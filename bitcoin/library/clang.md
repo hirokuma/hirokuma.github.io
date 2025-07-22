@@ -1,6 +1,6 @@
 ---
 layout: "record"
-title: "C/C++"
+title: "Bitcoin library: C/C++"
 tags:
   - bitcoin
   - library

@@ -1,6 +1,6 @@
 ---
 layout: "record"
-title: "JavaScript / TypeScript"
+title: "Bitcoin library: JavaScript/TypeScript"
 tags:
   - bitcoin
   - library

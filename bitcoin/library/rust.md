@@ -1,6 +1,6 @@
 ---
 layout: "record"
-title: "Rust"
+title: "Bitcoin library: Rust"
 tags:
   - bitcoin
   - library
