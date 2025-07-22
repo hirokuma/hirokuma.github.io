@@ -11,7 +11,6 @@
   {% if post.tags %}
     {% for tag in post.tags %}
       <a href="{{ 'tag/' | append: tag | url_encode | relative_url }}" class="post-tag"><small><span>#{{ tag }}</span></small></a>
-      &nbsp;
     {% endfor %}
   {% endif %} <!-- post.tags -->
 </p>
@@ -29,7 +28,6 @@
   {% if post.tags %}
     {% for tag in post.tags %}
       <a href="{{ 'tag/' | append: tag | url_encode | relative_url }}" class="post-tag"><small><span>#{{ tag }}</span></small></a>
-      &nbsp;
     {% endfor %}
   {% endif %} <!-- post.tags -->
 </p>
