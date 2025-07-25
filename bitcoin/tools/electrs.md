@@ -107,14 +107,22 @@ export RUST_LOG=${RUST_LOG-electrs=INFO}
 
 systemd に登録する場合はこちらを参考にすると良い。  
 `WorkingDirectory` を `config.toml` があるのと同じディレクトリにしたのだが、どうも読み取られないように見える。  
-`--conf` で指定するのが安全そうだ。
+なので`--conf`ではなくパラメータを展開する。
 
 * [Sample Systemd Unit File](https://github.com/romanz/electrs/blob/v0.10.9/doc/config.md#sample-systemd-unit-file)
 
 ```ini
 .........
 WorkingDirectory=/home/xxx/hdddisk/electrs
-ExecStart=/home/xxx/hdddisk/electrs/electrs --conf="/home/xxx/hdddisk/electrs/config.toml"
+ExecStart=/home/xxx/hdddisk/electrs/electrs \
+        --log-filters INFO \
+        --network="bitcoin" \
+        --db-dir="/home/xxx/hdddisk/electrs/db" \
+        --daemon-dir="/home/xxx/usbdisk/bitcoin/data" \
+        --cookie-file="/home/xxx/usbdisk/bitcoin/data/.cookie" \
+        --electrum-rpc-addr="0.0.0.0:50001" \
+        --daemon-p2p-addr="127.0.0.1:8333" \
+        --daemon-rpc-addr="127.0.0.1:8332"
 .........
 ```
 
