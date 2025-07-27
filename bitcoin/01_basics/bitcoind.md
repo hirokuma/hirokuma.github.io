@@ -84,7 +84,8 @@ regtest でしか使わないならこんな感じでよいだろう。
 server=1
 txindex=1
 regtest=1
-rpcbind=
+
+[regtest]
 rpcuser=user
 rpcpassword=pass
 fallbackfee=0.00001000
