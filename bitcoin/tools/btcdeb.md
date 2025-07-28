@@ -10,7 +10,7 @@ date: "2025/03/12"
 
 [repository](https://github.com/bitcoin-core/btcdeb)
 
-_2025/03/12_: v0.3.20
+_2025/03/12_: commit `e2c2e7b`
 
 ## 用途
 
@@ -143,7 +143,9 @@ help     Show help information.
 btcdeb>
 ```
 
-#### 引数
+#### スクリプトデータを使う
+
+もし raw transaction データがあるなら次の「Raw Transaction データを使う」の方が簡単だろう。
 
 最初の `'[]'` で囲んだ 1まとまりが Bitcoinスクリプト、それ以降はスペース区切りごとにスタックに積まれるようだ。
 `''` で囲まなかったり `[]` で囲まなかったりするとエラーになった。
@@ -159,7 +161,7 @@ btcdeb>
 
 ![image](btcdeb-2.png)
 
-#### ステップ実行の様子
+##### ステップ実行の様子
 
 ステップ実行はこのようになる。
 
@@ -204,8 +206,6 @@ btcdeb> print
 この場合、次に "step" と入力すると `OP_HASH160` が実行される。
 
 ### tap
-
-調査中
 
 `tap` は Tapscript で使用することができる。
 `btcdeb` でもできるようだが、まずは `tap` を使うことをお勧めされている。

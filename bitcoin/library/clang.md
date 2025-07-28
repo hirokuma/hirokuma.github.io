@@ -8,6 +8,14 @@ daily: false
 date: "2025/07/22"
 ---
 
+## はじめに
+
+いくつかツールのインストールがいるだろう。
+
+```console
+$ sudo apt install build-essential pkg-config libtool
+```
+
 ## libsecp256k1
 
 [repository](https://github.com/bitcoin-core/secp256k1)
@@ -66,7 +74,8 @@ sys     0m0.261s
 $ sudo cmake --install build
 ```
 
-インストール先は`/usr/local/lib/`だった。v0.7.0では共有ライブラリは`libsecp256k1.so.6.0.0`になっていた。
+インストール先は`/usr/local/lib/`だった。v0.7.0では共有ライブラリは`libsecp256k1.so.6.0.0`になっていた。  
+また`/usr/local/lib/cmake/libsecp256k1/`に`*.cmake`というファイルもあった。
 
 ### 補足
 
@@ -85,19 +94,18 @@ $ cd libwally-core
 $ git checkout -b v1.4.0 refs/tags/release_1.4.0
 $ ./tools/autogen.sh
 # no Elements API, use only standard secp256k1 API
-$ ./configure --prefix=$HOME/.local --enable-minimal --disable-elements --enable-standard-secp --with-system-secp256k1
-$ make && make install
+$ ./configure --enable-minimal --disable-elements --enable-standard-secp --with-system-secp256k1
+$ make
+$ sudo make install
 ```
 
 ### 備考
 
-* v1.3.1 は descriptors の `tr()` に対応していなかった。v1.4.0 は対応済み([sample code](https://github.com/hirokuma/cpp-descriptor/tree/733869bbddcbeccdbc25bdf44f9a8fd42df8c648))。
-* `--prefix` で `$HOME` の中に置くようにした。
-  * install に `sudo` はいらない
-  * include path や library の置き場所が標準ではないので使用時には気をつけること
-    * `-I${HOME}/.local/include -L ${HOME}/.local/lib -lwallycore -lsecp256k1`
+* `--prefix=$HOME/.local` などとするとインストール先を変更できる。
+  * install に `sudo` はいらないので楽だと思うが、それ以外のことが面倒になるので、ここは好みで。
+    * include path や library の置き場所が標準ではないのでビルド時などに指定が必要になるなど
+      * `-I${HOME}/.local/include -L ${HOME}/.local/lib -lwallycore -lsecp256k1`
 * `--enable-standard-secp --with-system-secp256k1` として Blockstream の libsecp256k1-zkp を使わないようにしている
-  * v1.3.1 では libsecp256k1-zkp で musig2 が使えなかったので差し替えた。v1.4.0 は見ていない。
 
 ## libbitcoin(C++)
 
