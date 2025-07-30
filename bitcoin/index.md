@@ -43,7 +43,7 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 
 ## 小技
 
-* [初期ダウンロードが終わったかどうか](03_tips/initialdownloaded.md)
+* [初期ブロックダウンロードが終わったかどうか](03_tips/initialdownloaded.md)
 
 ## ライブラリ
 
