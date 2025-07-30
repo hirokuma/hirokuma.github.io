@@ -37,7 +37,7 @@ makeでは`configure`でオプションを指定する。
 $ ./configure --help
 ```
 
-ここではrecoveryを有効にする。
+ここではrecoveryを有効にする(libwally-core で使うため)。
 
 ```console
 $ ./autogen.sh
@@ -79,8 +79,8 @@ $ sudo cmake --install build
 
 ### 補足
 
-* libwally-core をビルドする場合、[Blockstream の libsecp256k1-zkp](https://github.com/BlockstreamResearch/secp256k1-zkp) がインストールされるかもしれないので注意すること(同じファイル名になる)
-* `--enable-module-recovery` は libwally-core で使うために指定した
+* `pkg-config --cflags --libs libsecp256k1`
+* libwally-core をビルドした場合、[Blockstream の libsecp256k1-zkp](https://github.com/BlockstreamResearch/secp256k1-zkp) がインストールされるかもしれないので注意すること(同じファイル名になる)
 
 ## libwally-core
 
@@ -101,6 +101,7 @@ $ sudo make install
 
 ### 備考
 
+* `pkg-config --cflags --libs wallycore`
 * `--prefix=$HOME/.local` などとするとインストール先を変更できる。
   * install に `sudo` はいらないので楽だと思うが、それ以外のことが面倒になるので、ここは好みで。
     * include path や library の置き場所が標準ではないのでビルド時などに指定が必要になるなど
