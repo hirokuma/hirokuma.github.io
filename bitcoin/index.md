@@ -35,8 +35,15 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 * [ブロック](01_basics/blocks.md)
 * [トランザクション](01_basics/transactions.md)
 * [アドレス](01_basics/address.md)
+  * [P2WPKH](02_bip/p2wpkh.md)
+  * [P2WSH](02_bip/p2wsh.md)
+  * [P2TR](02_bip/p2tr.md)
 * [ウォレット](01_basics/wallet.md)
 * [txout proof](01_basics/txoutproof.md)
+
+## 小技
+
+* [初期ダウンロードが終わったかどうか](03_tips/initialdownloaded.md)
 
 ## ライブラリ
 
