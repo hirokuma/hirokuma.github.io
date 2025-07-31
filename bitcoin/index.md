@@ -44,6 +44,7 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 ## 小技
 
 * [初期ブロックダウンロードが終わったかどうか](03_tips/initialdownloaded.md)
+* [Public KeyからscriptPubKeyを得る](03_tips/pubkey2scriptpubkey.md)
 
 ## ライブラリ
 
