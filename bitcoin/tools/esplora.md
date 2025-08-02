@@ -38,10 +38,13 @@ Elctrs の REST API が `http://localhost:3002/` で動いている場合はこ�
 
 * [CORS(Cross-Origin Resource Sharing) - とほほのWWW入門](https://www.tohoho-web.com/ex/cors.html)
 
-```console
+```script
+HOST=http://localhost
+
+export CORS_ALLOW="*"
 # Don't forget last "/"
-$ export STATIC_ROOT=http://localhost:5000/
-$ export API_URL=http://localhost:3002/
+$ export STATIC_ROOT=$HOST:5000/
+$ export API_URL=$HOST:3002/
 $ npm run dev-server
 ```
 

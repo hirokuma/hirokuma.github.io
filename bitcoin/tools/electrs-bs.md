@@ -59,12 +59,39 @@ $ electrs --db-dir="/mnt/usb/electrs-data" \
     --cors="http://localhost:5000"
 ```
 
+スクリプトにしておくと楽か。
+
+```script
+#!/bin/bash
+
+DATADIR="$HOME/.bitcoin/regtest/electrs"
+NETWORK="regtest"
+RPCUSER="testuser"
+RPCPASS="testpass"
+ZMQ_ADDR="localhost:28332"
+ELECTRUM_URL="localhost:50001"
+REST_URL="0.0.0.0:3002"
+ESPLORA_URL="*"
+
+electrs --db-dir="$DATADIR" \
+    --network="$NETWORK" \
+    --cookie="${RPCUSER}:${RPCPASS}"  \
+    --zmq-addr="$ZMQ_ADDR" \
+    --electrum-rpc-addr="$ELECTRUM_URL" \
+    --http-addr="$REST_URL" \
+    --cors="$ESPLORA_URL"
+```
+
+### Electrum API
+
 [Electrum Protocol](https://electrumx.readthedocs.io/en/latest/protocol.html)が使用できるようになっていればOK。
 
 ```console
 $ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "id": 0}' | netcat localhost 50001
 {"id":0,"jsonrpc":"2.0","result":["electrs-esplora 0.4.1","1.4"]}
 ```
+
+### Esplora API
 
 [Esplora API](https://github.com/blockstream/esplora/blob/master/API.md)も使用できる。  
 アドレスは`electrs`起動時のログで`http_addr`を見ると良い。
