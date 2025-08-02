@@ -5,7 +5,7 @@ tags:
   - bitcoin
   - library
 daily: false
-date: "2025/07/22"
+date: "2025/08/02"
 ---
 
 ## はじめに
@@ -86,15 +86,17 @@ $ sudo cmake --install build
 
 [repository](https://github.com/ElementsProject/libwally-core)
 
-_2025/07/22_: v1.4.0
+_2025/08/02_: v1.5.0
+
+v1.5.0から `--enable-minimal` と `--with-system-secp256k1` の両方は設定できなくなったようだ。
 
 ```console
 $ git clone https://github.com/ElementsProject/libwally-core.git
 $ cd libwally-core
-$ git checkout -b v1.4.0 refs/tags/release_1.4.0
+$ git checkout -b v1.5.0 refs/tags/release_1.5.0
 $ ./tools/autogen.sh
 # no Elements API, use only standard secp256k1 API
-$ ./configure --enable-minimal --disable-elements --enable-standard-secp --with-system-secp256k1
+$ ./configure --disable-elements --enable-standard-secp --with-system-secp256k1
 $ make
 $ sudo make install
 ```
@@ -102,10 +104,13 @@ $ sudo make install
 ### 備考
 
 * `pkg-config --cflags --libs wallycore`
+    * `export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig`
 * `--prefix=$HOME/.local` などとするとインストール先を変更できる。
   * install に `sudo` はいらないので楽だと思うが、それ以外のことが面倒になるので、ここは好みで。
     * include path や library の置き場所が標準ではないのでビルド時などに指定が必要になるなど
       * `-I${HOME}/.local/include -L ${HOME}/.local/lib -lwallycore -lsecp256k1`
+      * `export LD_LIBRARY_PATH=$HOME/.local/lib:/usr/local/lib`
+      * `export PKG_CONFIG_PATH=$HOME/.local/lib/pkgconfig:/usr/local/lib/pkgconfig`
 * `--enable-standard-secp --with-system-secp256k1` として Blockstream の libsecp256k1-zkp を使わないようにしている
 
 ## libbitcoin(C++)
