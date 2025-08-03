@@ -54,10 +54,15 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 
 ## ツール
 
-* [btcdeb](tools/btcdeb.md)
-* [romanz/electrs](tools/electrs.md)
-* [Blockstream/electrs](tools/electrs-bs.md)
-* [Blockstream/esplora](tools/esplora.md)
+* デバッグ
+  * [btcdeb](tools/btcdeb.md)
+* Electrum Server
+  * [romanz/electrs](tools/electrs.md)
+  * [Blockstream/electrs](tools/electrs-bs.md)
+  * [mempool/electrs](tools/electrs-ms.md)
+* Block Explorer
+  * [Blockstream/esplora](tools/esplora.md)
+  * [janoside/btc-rpc-explorer](tools/btc-rpc-explorer.md)
 
 ### 自作
 

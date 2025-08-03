@@ -39,6 +39,73 @@ Rust だけでなく`clang`がインストールされていないとビルド�
 
 Raspberry Pi3 だったためか非常に時間がかかった。
 
+### help
+
+```console
+$ electrs --help
+Electrum Rust Server 0.4.1
+
+USAGE:
+    electrs [FLAGS] [OPTIONS]
+
+FLAGS:
+        --address-search                          Enable prefix address search
+        --anonymize-json-rpc-logging-source-ip    enables ip anonymization in rpc logs
+        --enable-json-rpc-logging                 turns on rpc logging
+    -h, --help                                    Prints help information
+        --hide-json-rpc-logging-parameters        disables parameter printing in rpc logs
+        --index-unspendables                      Enable indexing of provably unspendable outputs
+        --initial-sync-compaction
+            Perform compaction during initial sync (slower but less disk space required)
+
+        --jsonrpc-import
+            Use JSONRPC instead of directly importing blk*.dat files. Useful for remote full node or low memory system
+
+        --lightmode                               Enable light mode for reduced storage
+        --timestamp                               Prepend log lines with a timestamp
+    -V, --version                                 Prints version information
+    -v                                            Increase logging verbosity
+
+OPTIONS:
+        --blocks-dir <blocks_dir>
+            Analogous to bitcoind's -blocksdir option, this specifies the directory containing the raw blocks files
+            (blk*.dat) (default: ~/.bitcoin/blocks/)
+        --cookie <cookie>
+            JSONRPC authentication cookie ('USER:PASSWORD', default: read from ~/.bitcoin/.cookie)
+
+        --cors <cors>                                Origins allowed to make cross-site requests
+        --daemon-dir <daemon_dir>                    Data directory of Bitcoind (default: ~/.bitcoin/)
+        --daemon-parallelism <daemon_parallelism>    Number of JSONRPC requests to send in parallel [default: 4]
+        --daemon-rpc-addr <daemon_rpc_addr>
+            Bitcoin daemon JSONRPC 'addr:port' to connect (default: 127.0.0.1:8332 for mainnet, 127.0.0.1:18332 for
+            testnet3 and 127.0.0.1:48332 for testnet4 and 127.0.0.1:18443 for regtest)
+        --db-dir <db_dir>                            Directory to store index database (default: ./db/)
+        --electrum-banner <electrum_banner>
+            Welcome banner for the Electrum server, shown in the console to clients.
+
+        --electrum-rpc-addr <electrum_rpc_addr>
+            Electrum server JSONRPC 'addr:port' to listen on (default: '127.0.0.1:50001' for mainnet, '127.0.0.1:60001'
+            for testnet3, '127.0.0.1:40001' for testnet4 and '127.0.0.1:60401' for regtest)
+        --electrum-txs-limit <electrum_txs_limit>
+            Maximum number of transactions returned by Electrum history queries. Lookups with more results will fail.
+            [default: 500]
+        --http-addr <http_addr>
+            HTTP server 'addr:port' to listen on (default: '127.0.0.1:3000' for mainnet, '127.0.0.1:3001' for testnet3
+            and '127.0.0.1:3004' for testnet4 and '127.0.0.1:3002' for regtest)
+        --http-socket-file <http_socket_file>
+            HTTP server 'unix socket file' to listen on (default disabled, enabling this disables the http server)
+
+        --monitoring-addr <monitoring_addr>
+            Prometheus monitoring 'addr:port' to listen on (default: 127.0.0.1:4224 for mainnet, 127.0.0.1:14224 for
+            testnet3 and 127.0.0.1:44224 for testnet4 and 127.0.0.1:24224 for regtest)
+        --network <network>                          Select network type (mainnet, testnet, testnet4, regtest, signet)
+        --precache-scripts <precache_scripts>        Path to file with list of scripts to pre-cache
+        --utxos-limit <utxos_limit>
+            Maximum number of utxos to process per address. Lookups for addresses with more utxos will fail. Applies to
+            the Electrum and HTTP APIs. [default: 500]
+        --zmq-addr <zmq_addr>                        Optional zmq socket address of the bitcoind daemon
+```
+
 ## 実行
 
 `config.toml`は使わず引数ですべて指定する。  
