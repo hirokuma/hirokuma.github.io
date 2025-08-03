@@ -61,3 +61,9 @@ Electrs を立ち上げたPC が headless の Raspberry Pi3 だったのでブ�
 開発サーバの設定に`CORS_ALLOW`があるのでURLだったり"*"だったりを書いてみたのだが、どうにも解決しなかった。
 
 * [Development server options](https://github.com/Blockstream/esplora?tab=readme-ov-file#development-server-options)
+
+## その他
+
+regtestでvoutをSpentしたトランザクションにジャンプしたかったのでちょっと改造した(Gemini Code Assist)。
+
+* [hirokuma/esplora](https://github.com/hirokuma/esplora)
