@@ -1,8 +1,8 @@
 ---
 layout: record
-title: ""
+title: "janoside/btc-rpc-explorer"
 tags:
-  - 
+  - bitcoin
 daily: false
 date: "2025/08/03"
 ---
