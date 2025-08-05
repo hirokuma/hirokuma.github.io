@@ -38,6 +38,7 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
   * [P2WPKH](02_bip/p2wpkh.md)
   * [P2WSH](02_bip/p2wsh.md)
   * [P2TR](02_bip/p2tr.md)
+  * [MuSig2シーケンス](musig/musig2_sequence.md)
 * [ウォレット](01_basics/wallet.md)
 * [txout proof](01_basics/txoutproof.md)
 
@@ -63,6 +64,8 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 * Block Explorer
   * [Blockstream/esplora](tools/esplora.md)
   * [janoside/btc-rpc-explorer](tools/btc-rpc-explorer.md)
+* その他
+  * [Miniscript](tools/miniscript.md)
 
 ### 自作
 
