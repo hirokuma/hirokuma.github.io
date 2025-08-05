@@ -8,7 +8,9 @@ daily: false
 date: "2025/04/07"
 ---
 
-[repository](https://github.com/romanz/electrs)
+## サイト
+
+* [repository: github.com/romanz/electrs](https://github.com/romanz/electrs)
 
 _2025/04/07_: v0.10.9
 
@@ -163,3 +165,9 @@ $ bitcoin-cli getblockhash 5
 $ bitcoin-cli getblockheader 000000009b7262315dbf071787ad3656097b892abffd1f95a1a022f896f533fc false
 0100000085144a84488ea88d221c8bd6c059da090e88f8a2c99690ee55dbba4e00000000e11c48fecdd9e72510ca84f023370c9a38bf91ac5cae88019bee94d24528526344c36649ffff001d1d03e477
 ```
+
+## リンク
+
+* 開発日記
+  * [btc: ElectrumX API - hiro99ma blog](https://blog.hirokuma.work/2025/03/20250317-btc.html)
+  * [btc: electrsのストレージは500GB超→ではない！ - hiro99ma blog](https://blog.hirokuma.work/2025/04/20250407-btc.html)

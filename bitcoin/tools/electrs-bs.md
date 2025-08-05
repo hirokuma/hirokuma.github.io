@@ -8,7 +8,9 @@ daily: false
 date: "2025/07/13"
 ---
 
-[repository](https://github.com/Blockstream/electrs)
+## サイト
+
+* [repository: github.com/Blockstream/electrs](https://github.com/Blockstream/electrs)
 
 最初はタグを付けていたようだが、今はブランチ`new-index`をビルドしている。
 

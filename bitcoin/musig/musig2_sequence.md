@@ -57,3 +57,11 @@ sequenceDiagram
   Note over coordinator: aggregate sigA and sigB
   Note over coordinator: broadcast signed transaction
 ```
+
+## リンク
+
+* 開発日記
+  * [btc: MuSig - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250131-btc.html)
+  * [btc: MuSigは難しい - hiro99ma blog](https://blog.hirokuma.work/2025/02/20250201-btc.html)
+  * [btc: libsecp256k1 は MuSig 2 だった - hiro99ma blog](https://blog.hirokuma.work/2025/02/20250202-btc.html)
+  

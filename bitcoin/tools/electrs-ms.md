@@ -8,7 +8,9 @@ daily: false
 date: "2025/08/03"
 ---
 
-[repository](https://github.com/mempool/electrs)
+## サイト
+
+* [repository: github.com/mempool/electrs](https://github.com/mempool/electrs)
 
 オリジナルは[romanz/electrs](./electrs.md)だが、作りとしては[Blockstream/electrs](./electrs-bs.md)がベースだろう。
 

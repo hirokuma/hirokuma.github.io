@@ -7,7 +7,9 @@ daily: false
 date: "2025/08/03"
 ---
 
-[repository](https://github.com/janoside/btc-rpc-explorer)
+## サイト
+
+* [repository: github.com/janoside/btc-rpc-explorer](https://github.com/janoside/btc-rpc-explorer)
 
 直接 `bitcoind` を参照するので、regtestで構築するだけならこちらが楽か。  
 Electrum APIの設定もあるので、そちらでも使えるかも(試していない)？

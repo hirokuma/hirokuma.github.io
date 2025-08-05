@@ -993,3 +993,4 @@ script                                                             |            
   * [btc: btcdebを使う - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250119-btc.html)
   * [btc: btcdebを使う (2) - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250120-btc.html)
   * [btc: btcdebを使う (3) - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250121-btc.html)
+  * [btc: btcdebを使う (4) - hiro99ma blog](https://blog.hirokuma.work/2025/03/20250316-btc.html)

@@ -8,7 +8,9 @@ daily: false
 date: "2025/08/03"
 ---
 
-[repository](https://github.com/Blockstream/esplora)
+## サイト
+
+* [repository: github.com/Blockstream/esplora](https://github.com/Blockstream/esplora)
 
 _2025/07/16_: commit_id=`52de3ccf39c56ff839e26829ccd6d18f169832f7`
 

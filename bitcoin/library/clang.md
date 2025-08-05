@@ -82,6 +82,11 @@ $ sudo cmake --install build
 * `pkg-config --cflags --libs libsecp256k1`
 * libwally-core をビルドした場合、[Blockstream の libsecp256k1-zkp](https://github.com/BlockstreamResearch/secp256k1-zkp) がインストールされるかもしれないので注意すること(同じファイル名になる)
 
+### リンク
+
+* 開発日記
+  * [btc: libsecp256k1 は MuSig 2 だった - hiro99ma blog](https://blog.hirokuma.work/2025/02/20250202-btc.html)
+
 ## libwally-core
 
 [repository](https://github.com/ElementsProject/libwally-core)
@@ -112,6 +117,17 @@ $ sudo make install
       * `export LD_LIBRARY_PATH=$HOME/.local/lib:/usr/local/lib`
       * `export PKG_CONFIG_PATH=$HOME/.local/lib/pkgconfig:/usr/local/lib/pkgconfig`
 * `--enable-standard-secp --with-system-secp256k1` として Blockstream の libsecp256k1-zkp を使わないようにしている
+
+### リンク
+
+* 開発日記
+  * [btc: libwally-core を使う (1) - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250126-btc.html)
+  * [btc: libwally-core を使う (2) - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250127-btc.html)
+  * [btc: libwally-core を使う (3) - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250128-btc.html)
+  * [btc: libwally-core を使う (4) - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250129-btc.html)
+  * [btc: libwally-core で script path (1) - hiro99ma blog](https://blog.hirokuma.work/2025/02/20250204-btc.html)
+  * [btc: libwally-core で script path (2) - hiro99ma blog](https://blog.hirokuma.work/2025/02/20250205-btc.html)
+  * [btc: libwally-core v1.4.0 - hiro99ma blog](https://blog.hirokuma.work/2025/03/20250313-btc.html)
 
 ## libbitcoin(C++)
 
