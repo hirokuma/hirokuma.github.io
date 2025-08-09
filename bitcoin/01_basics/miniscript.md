@@ -140,9 +140,13 @@ $ make miniscript.js
 
 * Policy to Miniscript
 
+policy: `or(99@pk(key_likely),pk(key_unlikely))` ==> miniscript: `or_d(pk(key_likely),pkh(key_unlikely))`
+
 ![image](images/miniscript1.png)
 
 * Analyze
+
+miniscript: `or_d(pk(key_likely),pkh(key_unlikely))`
 
 ![image](images/miniscript2.png)
 
