@@ -5,21 +5,63 @@ tags:
   - bitcoin
   - tools
 daily: false
-date: "2025/08/05"
+date: "2025/08/09"
 draft: true
 ---
 
 (書きかけ)
 
-"policy" という記述を P2WSH Miniscript に変換するコンパイラのデモ。
+Miniscriptという、Bitcoinスクリプトを構造的に書くための言語が[BIP-0379](https://github.com/bitcoin/bips/blob/master/bip-0379.md)にある。
+ここではその仕様とデモ実装を紹介する。  
+この実装を使った[サイト](https://bitcoin.sipa.be/miniscript/)では最初に"policy"というものが出てくるので混乱するかもしれないが、構成はこうなっている。
 
-P2WSH と TaspScript で大きい違いがあるのは MultiSig の扱いで、TapScript には `OP_CHECKMULTISIG` のような MultiSig 関係の命令がない。
-その代わりに `CHECKSIGADD` で公開鍵に対して署名チェックが正常だったらインクリメントする命令が追加され、チェックが成功した数を比較するスクリプトを書く。
+* Introduction
+* Policy to Miniscript compiler
+  * "policy" は BIP-379 に出てこない
+* Analyze a Miniscript
+  * Miniscriptを解析する
+* Miniscript reference
+  * [BIP-379 Specification](https://github.com/bitcoin/bips/blob/master/bip-0379.md#specification)と同じような内容
+* Satisfactions and malleability
+
+Miniscriptで書くことによって自分で直接Bitcoinスクリプトを書くよりも間違いを減らしやすい。  
+また解析もできるため最適化したり動的にスクリプトを解くウォレットにできるかもしれない。
 
 ## サイト
 
 * [Miniscript](https://bitcoin.sipa.be/miniscript/)
 * [repository: github.com/sipa/miniscript](https://github.com/sipa/miniscript)
+
+## 仕様
+
+[demoサイト](https://bitcoin.sipa.be/miniscript/)の"Miniscript reference"を見ていく。
+
+### P2WSH / TapScript
+
+P2WSHとTapScriptで使用できる命令が異なるところがある。
+ここで関係するのはMultiSigのところで、P2WSHまでは `OP_CHECKMULTISIG` のようなMultiSig専用の命令がいくつかあったが、
+TapScriptではそれらは使用できなくなって代わりに [`OP_CHECKSIGADD`](https://opcodeexplained.com/opcodes/OP_CHECKSIGADD.html#op-checksigadd) が使えるようになった。
+署名と公開鍵のチェックをする `OP_CHECKSIG` にカウント値をインクリメントする機能が加わったような命令である。  
+Miniscriptでは `multi()` がP2WSH用、`multi_a()` がTapScript用となっている。
+
+### 変換テーブル
+
+"translation table"という表が載っている。  
+左列から順に、表記の意味、Miniscriptでの表記(fragment)、対応するBitcoinスクリプトとなっている。
+Bitcoinスクリプトで使用できるものにすべて割り当てがあるわけではないが、よほど複雑なことをしようとしなければ事足りると思われる。
+
+`pk(key)` など関数のように表記する fragment と、その前にコロンで区切って `s:pk(key)` のように表記する wrapper がある。  
+wrapper が複数ある場合は `tar` コマンドのオプションのようにつなげて書く。
+
+"key" に相当するデータは、P2WSH では 33バイト(`02` か `03` で始まる)、TapScript では 32バイト(x-only表現)として扱う。
+
+真ん中の列にイコールの表記があるものはシンタックスシュガーだそうだ。
+ここから下にも表がいくつか出てくるが、シンタックスシュガーの方は省略するとのこと。
+わざわざそう書いているのは、記載がないからシンタックスシュガーだと対象外になるのでは？という心配をさせないためだろう。
+
+ハッシュのpreimage、つまり元値は 32バイトのみとする。
+いろいろ理由は書いてあるが、ちょっと英語が難しい。。。不正なことをしやすくなるからだと読み取った。  
+Merkleツリーの時のように `SHA256(A || B)` なんかはあり得そうだが、そういうのをやりたかったら自分でBitcoinスクリプトを書けば良いだけだろう。
 
 ## ビルド
 
@@ -96,48 +138,9 @@ $ make miniscript.js
 
 これらのファイルが生成された後であれば、ローカルのブラウザで `index.html` を開くと[サイト](https://bitcoin.sipa.be/miniscript/)と同じことができた。
 
-## 概要
-
-MiniscriptはBitcoinスクリプトを構造的に書くための言語である。
-
-このリポジトリはサンプルコードを含んでいるライブラリだと考えるのがよいと思う。
-`index.html` はサンプルであると同時に help 代わりにもなっていて、
-[BIP-379](https://github.com/bitcoin/bips/blob/master/bip-0379.md)の説明をしている。
-
-プログラムで動的にスクリプトを生成するために組み込むという使い方になると思っている。
-
-## 使い方
-
-Bitcoinスクリプトは、高級言語というよりも逆ポーランド記法の方が近いと思う。
-値をスタックに載せ、スタックに対して命令を実行し、最終的にスタックが1つになって `0` 以外なら true、`0` なら false と判定される。
-[Script](https://en.bitcoin.it/wiki/Script)に表があるが、この "Output"列で "fail" がある命令は、その場でスクリプトの判定を失敗扱いにして終わる。
-
-例えば[こういう](https://github.com/lightning/bolts/blob/master/03-transactions.md#to_local-output)ものである。
-
-```text
-OP_IF
-    <revocationpubkey>
-OP_ELSE
-    `to_self_delay`
-    OP_CHECKSEQUENCEVERIFY
-    OP_DROP
-    <local_delayedpubkey>
-OP_ENDIF
-OP_CHECKSIG
-```
-
-TapScriptでは分岐させずにスクリプト自体を別々に作ることが多いだろうが、ともかくこういう書き方になる。
-`<revocationpubkey>` は 33バイトの公開鍵で `to_self_delay` はスタックに載せる命令になる。
-
-それを構造的に書くことができる言語だそうだ。  
-構造的ってなんだろう？
-
-ともかく、命令によってスタックに結果を載せたり載せなかったりするので `OP_DUP` や `OP_DROP` で調整することを考えるのは面倒だ。
-それをうまくやってくれそうではある。
-
-また、直接 Miniscript で書かずに Policy というもので書いて Miniscript に変換できるようになっている。
-
 ## Policy の例
+
+"policy" は BIP-379 
 
 ### A single key
 
@@ -261,9 +264,14 @@ OP_ENDIF
   * `"pk(key_1)"` ==> `21`(データ長) + `02504b626b65795f31000000000000000000000000000000000000000000000000`(公開鍵) + `ac`(`OP_CHECKSIG`)
 * PubKeyHash は ``PKh` + 名前([compiler.h](https://github.com/sipa/miniscript/blob/6806dfb15a1fafabf7dd28aae3c9d2bc49db01f1/compiler.h#L30-L35))
 
+## その他
+
+P2WSH と TaspScript で大きい違いがあるのは MultiSig の扱いで、TapScript には `OP_CHECKMULTISIG` のような MultiSig 関係の命令がない。
+その代わりに `CHECKSIGADD` で公開鍵に対して署名チェックが正常だったらインクリメントする命令が追加され、チェックが成功した数を比較するスクリプトを書く。
+
+
 ## リンク
 
-* [bips/bip-0379.md at master · bitcoin/bips](https://github.com/bitcoin/bips/blob/master/bip-0379.md)
 * [Miniscript - Bitcoin Optech](https://bitcoinops.org/en/topics/miniscript/)
 * [rust-bitcoin/rust-miniscript: Support for Miniscript and Output Descriptors for rust-bitcoin](https://github.com/rust-bitcoin/rust-miniscript)
 * 開発日記
