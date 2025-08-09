@@ -3,6 +3,7 @@ layout: record
 title: "初期ブロックダウンロードが終わったかどうか"
 tags:
   - bitcoin
+  - tips
 daily: false
 date: "2025/07/30"
 ---

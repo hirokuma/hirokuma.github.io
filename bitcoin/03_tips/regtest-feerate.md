@@ -2,7 +2,8 @@
 layout: record
 title: "Regtest環境でfee rateを得たい"
 tags:
-  - 
+  - bitcoin
+  - tips
 daily: false
 date: "2025/08/07"
 ---

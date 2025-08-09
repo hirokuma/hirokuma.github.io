@@ -3,6 +3,7 @@ layout: record
 title: "Public KeyからscriptPubKeyを得る"
 tags:
   - bitcoin
+  - tips
 daily: false
 date: "2025/07/31"
 ---
