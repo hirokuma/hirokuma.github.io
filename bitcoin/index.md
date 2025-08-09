@@ -41,6 +41,7 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
   * [MuSig2シーケンス](musig/musig2_sequence.md)
 * [ウォレット](01_basics/wallet.md)
 * [txout proof](01_basics/txoutproof.md)
+* [Miniscript](01_basics/miniscript.md)
 
 ## 小技
 
@@ -65,8 +66,6 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 * Block Explorer
   * [Blockstream/esplora](tools/esplora.md)
   * [janoside/btc-rpc-explorer](tools/btc-rpc-explorer.md)
-* その他
-  * [Miniscript](tools/miniscript.md)
 
 ### 自作
 

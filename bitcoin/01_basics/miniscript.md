@@ -138,9 +138,17 @@ $ make miniscript.js
 
 これらのファイルが生成された後であれば、ローカルのブラウザで `index.html` を開くと[サイト](https://bitcoin.sipa.be/miniscript/)と同じことができた。
 
+* Policy to Miniscript
+
+![image](images/miniscript1.png)
+
+* Analyze
+
+![image](images/miniscript2.png)
+
 ## Policy の例
 
-"policy" は BIP-379 
+"policy" はBIP-379にはないが、Miniscriptを一から書くのも大変なので便利そうだ。
 
 ### A single key
 
