@@ -12,13 +12,15 @@ date: "2025/08/03"
 
 * [repository: github.com/mempool/electrs](https://github.com/mempool/electrs)
 
-オリジナルは[romanz/electrs](./electrs.md)だが、作りとしては[Blockstream/electrs](./electrs-bs.md)がベースだろう。
+オリジナルは[romanz/electrs](./electrs.md)だが、作りとしては[Blockstream/electrs](./electrs-bs.md)がベースだろう。  
+REST API に追加があるので、こちらでないと動かないアプリがあるかもしれない。
 
 ## インストール
 
 * [Installing & indexing](https://github.com/mempool/electrs?tab=readme-ov-file#installing--indexing)
 
 ```console
+$ git clone https://github.com/mempool/electrs && cd electrs
 $ cargo build --release --bin electrs
 ...(略)...
 $ ls -l target/release/electrs
