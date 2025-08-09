@@ -138,7 +138,7 @@ $ make miniscript.js
 
 これらのファイルが生成された後であれば、ローカルのブラウザで `index.html` を開くと[サイト](https://bitcoin.sipa.be/miniscript/)と同じことができた。
 
-* Policy to Miniscript: `pk(key_1)` --> `pk(key_1)` --> `<key_1> OP_CHECKSIG`
+* Policy to Miniscript: `pk(key_1)` --> `pk(key_1)`
   * Script
     * `<key_1>`: 1 + 33
     * OP_CHECKSIG`* 1
@@ -150,7 +150,9 @@ $ make miniscript.js
   * Total
     * 35 + 73 = 108
 
-* Policy to Miniscript
+![image](images/miniscript3.png)
+
+* Policy to Miniscript: `or(99@pk(key_likely),pk(key_unlikely))` --> `or_d(pk(key_likely),pkh(key_unlikely))`
   * Script
     * `<key_likery>`: 1 + 33
     * `OP_CHECKSIG OP_IFDUP OP_NOTIF OP_DUP OP_HASH160`: 5
@@ -166,6 +168,10 @@ $ make miniscript.js
       * stack#1: `<key_unilikely>`: 1 + 33
       * stack#2: `<signature_unlikely>`: 1 + 2 + (2+32～33) + (2+32～33) + 1 = 72～74
       * 合計: 35 + 73(平均) = 108
+    * 合計: 73.35 になるはず
+      * 
+  * Total
+    * 63 + 73.35 = 136.35
 
 policy: `or(99@pk(key_likely),pk(key_unlikely))` ==> miniscript: `or_d(pk(key_likely),pkh(key_unlikely))`
 
