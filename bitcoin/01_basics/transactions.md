@@ -310,7 +310,6 @@ segwit(witness)のトランザクションの場合、その位置に`0x00`が�
 00000000
 ```
 
-
 ## TXID
 
 個別のトランザクションを指し示すとき、通常は TXID(Transaction ID)を使う。  
@@ -375,8 +374,15 @@ version 3 はまだドラフトなようだが試作版が Bitcoin Core に実�
 ### 署名
 
 楕円曲線の署名をスクリプトに載せることがある。  
-DER形式なのだが先頭の値が `0x80` 以上になってはいけない([stackexchange](https://bitcoin.stackexchange.com/questions/12554/why-the-signature-is-always-65-13232-bytes-long/12556#12556))。  
+[DER形式](https://learnmeabitcoin.com/technical/keys/signature/#der)なのだが先頭の値が `0x80` 以上になってはいけない([stackexchange](https://bitcoin.stackexchange.com/questions/12554/why-the-signature-is-always-65-13232-bytes-long/12556#12556))。
+そうなってしまう場合は頭に `0x00` を付けるようにする。  
+署名は `R` と `S` の 2つで構成されるので、署名データ長だけでいうと以下の3パターンがある。
 
+* `R` も `S` も先頭が `0x80` 未満: 2 + (2+32) + (2+32)
+* `R` か `S` のどちらかの先頭が `0x80` 以上: 2 + (2+33) + (2+32)
+* `R` も `S` も先頭が `0x80` 以上: 2 + (2+33) + (2+33)
+
+つまり 70～72 バイトである。
 
 ## おわりに
 
