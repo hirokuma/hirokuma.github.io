@@ -41,6 +41,7 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
   * [MuSig2シーケンス](musig/musig2_sequence.md)
 * [ウォレット](01_basics/wallet.md)
 * [txout proof](01_basics/txoutproof.md)
+* [スクリプト](01_basics/script.md)
 * [Miniscript](01_basics/miniscript.md)
 
 ## 小技

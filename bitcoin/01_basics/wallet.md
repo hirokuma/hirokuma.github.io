@@ -66,7 +66,7 @@ under construction...
 ## 関連ページ
 
 * [bitcoind](./bitcoind.md)
-* [ブロック](/.blocks.md)
+* [ブロック](./blocks.md)
 * [トランザクション](./transactions.md)
 * [アドレス](./address.md)
 * [スクリプト](./script.md)

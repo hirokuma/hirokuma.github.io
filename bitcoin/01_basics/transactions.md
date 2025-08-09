@@ -396,4 +396,4 @@ P2TR というか、シュノア署名の場合はサイズが 64 バイト固�
 * [value](./value.md)
 * [スクリプト](./script.md)
 * [アドレス](./address.md)
-* [ブロック](/.blocks.md)
+* [ブロック](./blocks.md)

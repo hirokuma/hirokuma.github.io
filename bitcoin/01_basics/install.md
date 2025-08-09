@@ -195,7 +195,7 @@ gpg: Can't check signature: No public key
 
 * [bitcoind](./bitcoind.md)
 * [ウォレット](./wallet.md)
-* [ブロック](/.blocks.md)
+* [ブロック](./blocks.md)
 * [トランザクション](./transactions.md)
 * [アドレス](./address.md)
 * [スクリプト](./script.md)

@@ -50,6 +50,7 @@ BitcoinはUTXO方式なので、送金、すなわちamountの持ち主を移動
 ## 関連ページ
 
 * [value](./value.md)
-* [ブロック](/.blocks.md)
+* [ブロック](./blocks.md)
 * [トランザクション](./transactions.md)
 * [アドレス](./address.md)
+* [Miniscript](./miniscript.md)
