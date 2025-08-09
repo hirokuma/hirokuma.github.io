@@ -138,7 +138,34 @@ $ make miniscript.js
 
 これらのファイルが生成された後であれば、ローカルのブラウザで `index.html` を開くと[サイト](https://bitcoin.sipa.be/miniscript/)と同じことができた。
 
+* Policy to Miniscript: `pk(key_1)` --> `pk(key_1)` --> `<key_1> OP_CHECKSIG`
+  * Script
+    * `<key_1>`: 1 + 33
+    * OP_CHECKSIG`* 1
+    * 合計: 35
+  * Input
+    * witness
+      * stack#0: `<signature>`: 1 + 2 + (2+32～33) + (2+32～33) + 1 = 72～74
+      * 合計: 72～74(平均 73)
+  * Total
+    * 35 + 73 = 108
+
 * Policy to Miniscript
+  * Script
+    * `<key_likery>`: 1 + 33
+    * `OP_CHECKSIG OP_IFDUP OP_NOTIF OP_DUP OP_HASH160`: 5
+    * `<HASH160(key_unilikely)>`: 1 + 20
+    * `OP_EQUALVERIFY OP_CHECKSIG OP_ENDIF`: 3
+    * 合計: 63
+  * Input
+    * witness パターン#0(likely)
+      * stack#0: `<signature>`: 1 + 2 + (2+32～33) + (2+32～33) + 1 = 72～74
+      * 合計: 72～74(平均 73)
+    * witness パターン#1(unlikely)
+      * stack#0: `OP_FALSE`: 1
+      * stack#1: `<key_unilikely>`: 1 + 33
+      * stack#2: `<signature_unlikely>`: 1 + 2 + (2+32～33) + (2+32～33) + 1 = 72～74
+      * 合計: 35 + 73(平均) = 108
 
 policy: `or(99@pk(key_likely),pk(key_unlikely))` ==> miniscript: `or_d(pk(key_likely),pkh(key_unlikely))`
 
@@ -216,9 +243,10 @@ TapScript ならそれぞれの script path にしてしまえばよいと思う
 #### one likely, one unlikely
 
 こちらは確率が高い鍵とそうでない鍵があるパターン。  
-Policy の `N@` は、そちらの Policy の方がデフォルトよりも `N` 倍高い確率で選択されるという意味である。
-
-2倍までだとどちらでもよいからなのか等確率と同じMiniscriptになった。
+Policy の `N@` は、そちらの Policy の方がデフォルトよりも `N` 倍高い確率で選択されるという意味である。  
+2倍までだとどちらでもよいからなのか等確率と同じMiniscriptになった。  
+それ以外にも、平均的なトランザクションサイズの計算にも使われる。
+likelyが発生する確率が高いと平均的なトランザクションサイズにもそれが反映されるというわけである。
 
 ```
 # Policy
@@ -232,7 +260,7 @@ Bitcoinスクリプトで解くときはこうなる(未確認)。
 `<<～>>` は redeem する witness スタックである。
 
 ```
-<<signature A>>
+OP_FALSE
 <<key_unlikely>>
 <<signature B>>
 <key_likely> OP_CHECKSIG OP_IFDUP OP_NOTIF
@@ -240,7 +268,7 @@ Bitcoinスクリプトで解くときはこうなる(未確認)。
 OP_ENDIF
 ```
 
-最初の `OP_CHECKSIG` までは同じである。  
+最初の `OP_CHECKSIG` までは同じだが、そちらは失敗するのが分かっているので `<witness>` はダミーで良いはず。  
 違いはその次で、`<key_likely>` の署名である確率が高いから、もしその署名チェックに失敗したときだけ続きを行うよう `OP_NOTIF` で囲んでいる。  
 [`OP_IFDUP`](https://opcodeexplained.com/opcodes/OP_IFDUP.html#op-ifdup) は、スタック最上部が非ゼロならそれを複製、そうでなければ何もしない命令。
 なので、
