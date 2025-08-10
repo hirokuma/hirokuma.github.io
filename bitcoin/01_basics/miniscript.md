@@ -11,6 +11,8 @@ draft: true
 
 (書きかけ)
 
+## 概要
+
 Miniscriptという、Bitcoinスクリプトを構造的に書くための言語が[BIP-0379](https://github.com/bitcoin/bips/blob/master/bip-0379.md)にある。
 ここではその仕様とデモ実装を紹介する。  
 この実装を使った[sipaサイト](https://bitcoin.sipa.be/miniscript/)では最初に"policy"というものが出てくるので混乱するかもしれないが、構成はこうなっている。
@@ -87,6 +89,8 @@ Merkleツリーの時のように `SHA256(A || B)` なんかはあり得そう�
 ### Security properties
 
 ## ビルド
+
+### C++
 
 ```console
 $ git clone https://github.com/sipa/miniscript.git
