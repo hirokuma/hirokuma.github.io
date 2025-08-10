@@ -7,7 +7,7 @@ daily: false
 date: "2025/06/19"
 ---
 
-_最終更新日: 2025/06/19_
+## 概要
 
 `bitcoin-cli` のコマンドに `gettxoutproof` と `verifytxoutproof` がある。  
 指定した TXID(s) がこのブロックに取り込まれていますよ、という証明の出力と、それを検証するコマンドである。

@@ -1,22 +1,27 @@
-# Devicetree
-
-_最終更新日: 2024/11/08_
-
-ncs v2.6 (v2.7 はまだ見ていないが[DevAcademyの一部](https://academy.nordicsemi.com/courses/nrf-connect-sdk-fundamentals/lessons/lesson-2-reading-buttons-and-controlling-leds/topic/dissecting-blinky/)で v2.7以降があることから何かしら変更があることがうかがえる)。  
-nRF Connect for VSCode は書いている時点での最新だが、しばしば更新されるのでこれを読んだ時点では画面や挙動が違うかもしれない。
+---
+layout: record
+title: "Devicetree"
+tags:
+  - ble
+daily: false
+date: "2024/11/08"
+---
 
 ## はじめに
+
+Devicetree は ncs というよりも Zephyr に属している。  
+Linux の kernel でも Devicetree 方式は使われているが、[devicetree.org](https://www.devicetree.org/)が本家のようで[Syntax and structure](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/intro-syntax-structure.html)でもそこのリンクが載っていた。
 
 * Nordic
   * [Devicetree - nordic v2.6.1](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/index.html)
   * [Devicetree - Nordic Developer Academy](https://academy.nordicsemi.com/courses/nrf-connect-sdk-fundamentals/lessons/lesson-2-reading-buttons-and-controlling-leds/topic/devicetree/)
 * [devicetree.org v0.4](https://github.com/devicetree-org/devicetree-specification/releases/tag/v0.4)
 
-Devicetree は ncs というよりも Zephyr に属している。  
-Linux の kernel でも Devicetree 方式は使われているが、[devicetree.org](https://www.devicetree.org/)が本家のようで[Syntax and structure](https://docs.nordicsemi.com/bundle/ncs-2.6.1/page/zephyr/build/dts/intro-syntax-structure.html)でもそこのリンクが載っていた。
-
 ncs で使うための知識だけにするので詳細は各ドキュメントをご参考に。  
 まだ調査中なところが多いので、予測で書いているところは「と思う」などとしている。
+
+ncs v2.6 (v2.7 はまだ見ていないが[DevAcademyの一部](https://academy.nordicsemi.com/courses/nrf-connect-sdk-fundamentals/lessons/lesson-2-reading-buttons-and-controlling-leds/topic/dissecting-blinky/)で v2.7以降があることから何かしら変更があることがうかがえる)。  
+nRF Connect for VSCode は書いている時点での最新だが、しばしば更新されるのでこれを読んだ時点では画面や挙動が違うかもしれない。
 
 ## DTSファイルの構造(Version 1)
 
