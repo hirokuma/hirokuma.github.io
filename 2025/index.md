@@ -5,7 +5,7 @@ thisyear: "2025"
 
 # 年間リスト
 
-## 開発日記 {{ page.thisyear }}年
+## {{ page.thisyear }}年
 
 <ul>
 {% assign posts = site.pages | sort: "date" | reverse %}
