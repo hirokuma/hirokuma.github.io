@@ -11,6 +11,9 @@ draft: true
 
 (書きかけ)
 
+{% include toc.html html=content %}
+{{ content }}
+
 Miniscriptという、Bitcoinスクリプトを構造的に書くための言語が[BIP-0379](https://github.com/bitcoin/bips/blob/master/bip-0379.md)にある。
 ここではその仕様とデモ実装を紹介する。  
 この実装を使った[sipaサイト](https://bitcoin.sipa.be/miniscript/)では最初に"policy"というものが出てくるので混乱するかもしれないが、構成はこうなっている。
@@ -35,11 +38,12 @@ Miniscriptで書くことによって自分で直接Bitcoinスクリプトを書
 
 ![image](images/miniscript2.png)
 
-Bitcoinスクリプトに変換した結果が一番下にあるが、これだけ見てどういうスクリプトなのか理解するのは難しい。  
-これが Miniscript だと `or_d(pk(key_likely),pkh(key_unlikely))` のように書ける。
-スクリプトを解く条件が 2つあってどちらか片方だけでよいことなどがわかる。
+Bitcoinスクリプトに変換した結果が一番下にあるが、いきなりこのスクリプトを書くのは難しいだろう。  
+これが Miniscript だと、「スクリプトを解く条件が 2つあってどちらか片方だけでよいので `or系`」「署名チェックを条件にしたいので `pk系`」のように決めていって `or_d(pk(key_likely),pkh(key_unlikely))` のように書ける。  
+それでもいきなり Miniscript にするのは難しいので "policy" で「こうしたい」を書いて Miniscript に変換することもできるようになっている。
+"policy" は BIP-379 には書かれていないので、sipa氏の親切から生まれたのだろうか。
 
-そう書いてしまうとBitcoinスクリプトをMiniscriptに変換できそうに思うが、少なくともこのデモページにはなかった([ChatGPT](https://chatgpt.com/share/6897e2ef-f3b0-8010-8fd7-0d1377368867))。
+BitcoinスクリプトをMiniscriptに変換できそうに思うが、少なくともこのデモページにはなかった([ChatGPT](https://chatgpt.com/share/6897e2ef-f3b0-8010-8fd7-0d1377368867))。
 
 ## サイト
 
