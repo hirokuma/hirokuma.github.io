@@ -8,6 +8,7 @@ layout: default
   <em>最終更新日: {{ page.date | date: "%Y/%m/%d" }}</em>
 </p>
 
+{% include toc.html html=content %}
 {{content}}
 
 <p class="view">

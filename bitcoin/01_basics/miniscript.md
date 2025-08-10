@@ -11,9 +11,6 @@ draft: true
 
 (書きかけ)
 
-{% include toc.html html=content %}
-{{ content }}
-
 Miniscriptという、Bitcoinスクリプトを構造的に書くための言語が[BIP-0379](https://github.com/bitcoin/bips/blob/master/bip-0379.md)にある。
 ここではその仕様とデモ実装を紹介する。  
 この実装を使った[sipaサイト](https://bitcoin.sipa.be/miniscript/)では最初に"policy"というものが出てくるので混乱するかもしれないが、構成はこうなっている。
