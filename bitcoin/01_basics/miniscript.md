@@ -12,7 +12,11 @@ draft: true
 ## 概要
 
 Miniscriptという、Bitcoinスクリプトを構造的に書くための言語が[BIP-0379](https://github.com/bitcoin/bips/blob/master/bip-0379.md)にある。
-ここではその仕様とデモ実装を紹介する。  
+ここではその仕様とデモ実装を紹介する。
+
+仕様については Miniscriptを書くユーザーが必要な情報もあるが、それ以上に Miniscriptを実装するための情報が多い。
+私は書くだけのつもりなので実装仕様については読み飛ばした。
+
 この実装を使った[sipaサイト](https://bitcoin.sipa.be/miniscript/)では最初に"policy"というものが出てくるので混乱するかもしれないが、構成はこうなっている。
 
 * Introduction
@@ -168,12 +172,17 @@ regtest で試したとしても、スクリプトそのものの間違いは確
 
 ### Security properties
 
-いろいろ書いてあるのだが、Bitcoinスクリプトのアドレスへ送金してトランザクションを展開する以上、その責任は各自で取りなさいということだろう。  
-「Miniscriptコンパイラにバグがあったんです！」と主張しても誰も納得しない。
+ここまでの内容を満たすことで保証できるものとできないものが書いてあるのだと思う。
+"completeness"なんてめったに聞かない単語なのだが、検証界隈でよく使われる用語なのだろうか。
+
+また、署名チェックがないスクリプトは脆弱だとも書かれている。
+確かに、ほとんど見たことはない。
+Lightning Networkの [anchor](https://github.com/lightning/bolts/blob/master/03-transactions.md#to_local_anchor-and-to_remote_anchor-output-option_anchors)くらいではなかろうか。
 
 ### "policy"
 
-
+"Policy to Miniscript compiler" の "Supported policies:" 以下に policy というものの書き方が載っている。  
+いきなりMiniscriptを書くというのは難しいので、さらに 1つ層をもうけたというところか。
 
 ## ビルド
 
