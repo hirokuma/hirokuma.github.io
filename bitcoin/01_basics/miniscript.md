@@ -261,51 +261,6 @@ $ make miniscript.js
 
 これらのファイルが生成された後であれば、ローカルのブラウザで `index.html` を開くと[sipaサイト](https://bitcoin.sipa.be/miniscript/)と同じことができた。
 
-* Policy to Miniscript: `pk(key_1)` --> `pk(key_1)`
-  * Script
-    * `<key_1>`: 1 + 33
-    * OP_CHECKSIG`* 1
-    * 合計: 35
-  * Input
-    * witness
-      * stack#0: `<signature>`: 1 + 2 + (2+32～33) + (2+32～33) + 1 = 72～74
-      * 合計: 72～74(平均 73)
-  * Total
-    * 35 + 73 = 108
-
-![image](images/miniscript3.png)
-
-* Policy to Miniscript: `or(99@pk(key_likely),pk(key_unlikely))` --> `or_d(pk(key_likely),pkh(key_unlikely))`
-  * Script
-    * `<key_likery>`: 1 + 33
-    * `OP_CHECKSIG OP_IFDUP OP_NOTIF OP_DUP OP_HASH160`: 5
-    * `<HASH160(key_unilikely)>`: 1 + 20
-    * `OP_EQUALVERIFY OP_CHECKSIG OP_ENDIF`: 3
-    * 合計: 63
-  * Input
-    * witness パターン#0(likely)
-      * stack#0: `<signature>`: 1 + 2 + (2+32～33) + (2+32～33) + 1 = 72～74
-      * 合計: 72～74(平均 73)
-    * witness パターン#1(unlikely)
-      * stack#0: `OP_FALSE`: 1
-      * stack#1: `<key_unilikely>`: 1 + 33
-      * stack#2: `<signature_unlikely>`: 1 + 2 + (2+32～33) + (2+32～33) + 1 = 72～74
-      * 合計: 35 + 73(平均) = 108
-    * 合計: 73.35 になるはず
-      * 
-  * Total
-    * 63 + 73.35 = 136.35
-
-policy: `or(99@pk(key_likely),pk(key_unlikely))` ==> miniscript: `or_d(pk(key_likely),pkh(key_unlikely))`
-
-![image](images/miniscript1.png)
-
-* Analyze
-
-miniscript: `or_d(pk(key_likely),pkh(key_unlikely))`
-
-![image](images/miniscript2.png)
-
 ## Policy の例
 
 "policy" はBIP-379にはないが、Miniscriptを一から書くのも大変なので便利そうだ。
@@ -330,6 +285,22 @@ Bitcoinスクリプトで解くときはこうなる(未確認)。
 <key_1>
 OP_CHECKSIG
 ```
+
+#### 計算
+
+* Policy to Miniscript: `pk(key_1)` --> `pk(key_1)`
+  * Script
+    * `<key_1>`: 1 + 33
+    * OP_CHECKSIG`* 1
+    * 合計: 35
+  * Input
+    * witness
+      * stack#0: `<signature>`: 1 + 2 + (2+32～33) + (2+32～33) + 1 = 72～74
+      * 合計: 72～74(平均 73)
+  * Total
+    * 35 + 73 = 108
+
+![image](images/miniscript3.png)
 
 ### One of two keys
 
@@ -414,6 +385,37 @@ OP_ENDIF
 その結果がそのままスクリプトの結果になる。
 
 なぜスクリプトに `<key_unlikely>` を直接埋め込まないかというと、おそらくそちらの方が確率が高い方の鍵だった場合のサイズが小さくなるからだ。
+
+#### 計算
+
+* Policy to Miniscript: `or(99@pk(key_likely),pk(key_unlikely))` --> `or_d(pk(key_likely),pkh(key_unlikely))`
+  * Script
+    * `<key_likery>`: 1 + 33
+    * `OP_CHECKSIG OP_IFDUP OP_NOTIF OP_DUP OP_HASH160`: 5
+    * `<HASH160(key_unilikely)>`: 1 + 20
+    * `OP_EQUALVERIFY OP_CHECKSIG OP_ENDIF`: 3
+    * 合計: 63
+  * Input
+    * witness パターン#0(likely)
+      * stack#0: `<signature>`: 1 + 2 + (2+32～33) + (2+32～33) + 1 = 72～74
+      * 合計: 72～74(平均 73)
+    * witness パターン#1(unlikely)
+      * stack#0: `OP_FALSE`: 1
+      * stack#1: `<key_unilikely>`: 1 + 33
+      * stack#2: `<signature_unlikely>`: 1 + 2 + (2+32～33) + (2+32～33) + 1 = 72～74
+      * 合計: 35 + 73(平均) = 108
+    * 合計: ((73 * 99) + (108 * 1)) / 100 = 73.35
+      * policy の優先度 `99@` が影響している
+  * Total
+    * 63 + 73.35 = 136.35
+
+![image](images/miniscript1.png)
+
+* Analyze
+
+miniscript: `or_d(pk(key_likely),pkh(key_unlikely))`
+
+![image](images/miniscript2.png)
 
 ### A user and a 2FA service need to sign off, but after 90 days the user alone is enough
 
