@@ -3,10 +3,8 @@ layout: record
 title: "Miniscript"
 tags:
   - bitcoin
-  - tools
 daily: false
-date: "2025/08/09"
-draft: true
+date: "2025/08/12"
 ---
 
 ## 概要
@@ -261,6 +259,8 @@ $ make miniscript.js
 
 これらのファイルが生成された後であれば、ローカルのブラウザで `index.html` を開くと[sipaサイト](https://bitcoin.sipa.be/miniscript/)と同じことができた。
 
+知識がないので、ここは調べていない。
+
 ## Policy の例
 
 "policy" はBIP-379にはないが、Miniscriptを一から書くのも大変なので便利そうだ。
@@ -417,15 +417,134 @@ miniscript: `or_d(pk(key_likely),pkh(key_unlikely))`
 
 ![image](images/miniscript2.png)
 
+Analyze された結果の上にカーソルを当てると情報がホバーされる。  
+その情報がかなり難解である。
+
+scriptlen はそのままスクリプトの長さだろう。
+分岐命令があるので合計してもあわないが、そこは気にしなくてよい。
+
+max stack size はスクリプトを解くときに使用するスタックの最大サイズだろう。
+"key_unlikely"を通る経路の方はスタックが多くなるので、そちらが 4 ということだと思う。
+"key_likely"は witness stack には署名だけだが、解く際には"key_likely"もスタックに載せるので合計で 2になる。
+
+max ops は関数コメントが "Return the maximum number of ops needed to satisfy this script non-malleably."。  
+`Ops` 構造体の中身からすると、OPコードのカウントをしているようだ。  
+"key_likely"の経路がぜろということは `OP_CHECKSIG` は数に入っていない？
+
+そして type。  
+最初の 1文字は "Correctness properties" にある `B`, `V`, `K`, `W` だろう。
+次の `o`, `n`, `d` までは載っている。  
+それ以降の `m`, `u`, `s`, `k` がわからない。`u` は Unit かもしれないが後ろ過ぎないか。  
+ただ [`Props()`](https://github.com/sipa/miniscript/blob/6806dfb15a1fafabf7dd28aae3c9d2bc49db01f1/js_bindings.cpp#L22-L35) には載っている。
+
+プロパティは主にMiniscriptを処理する側の情報なので、深追いしないことにした。
+
+* `or_d()`
+  * type: `Bdemusk`
+  * scriptlen: 63
+  * max ops: 8
+  * max stack size: 4
+* `c: pk_k(key_likely)`
+  * type: `Kondemusk`
+  * scriptlen: 34
+  * max ops: 0
+  * max stack size: 2
+* `c: pk_h(key_unlikely)`
+  * type: `Kndemusk`
+  * scriptlen: 24
+  * max ops: 3
+  * max stack size: 3
+
 ### A user and a 2FA service need to sign off, but after 90 days the user alone is enough
+
+```
+# Policy
+and(pk(key_user),or(99@pk(key_service),older(12960)))
+
+# Miniscript
+and_v(v:pk(key_user),or_d(pk(key_service),older(12960)))
+
+# Bitcoin Script
+<key_user> OP_CHECKSIGVERIFY <key_service> OP_CHECKSIG OP_IFDUP OP_NOTIF
+  <a032> OP_CHECKSEQUENCEVERIFY
+OP_ENDIF
+```
 
 ### A 3-of-3 that turns into a 2-of-3 after 90 days
 
+```
+# Policy
+thresh(3,pk(key_1),pk(key_2),pk(key_3),older(12960))
+
+# Miniscript
+thresh(3,pk(key_1),s:pk(key_2),s:pk(key_3),sln:older(12960))
+
+# Bitcoin Script
+<key_1> OP_CHECKSIG OP_SWAP <key_2> OP_CHECKSIG OP_ADD OP_SWAP <key_3>
+OP_CHECKSIG OP_ADD OP_SWAP OP_IF
+  0
+OP_ELSE
+  <a032> OP_CHECKSEQUENCEVERIFY OP_0NOTEQUAL
+OP_ENDIF
+OP_ADD 3 OP_EQUAL
+```
+
 ### The BOLT #3 to_local policy
+
+```
+# Policy
+or(pk(key_revocation),and(pk(key_local),older(1008)))
+
+# Miniscript
+andor(pk(key_local),older(1008),pk(key_revocation))
+
+# Bitcoin Script
+<key_local> OP_CHECKSIG OP_NOTIF
+  <key_revocation> OP_CHECKSIG
+OP_ELSE
+  <f003> OP_CHECKSEQUENCEVERIFY
+OP_ENDIF
+```
 
 ### The BOLT #3 offered HTLC policy
 
+```
+# Policy
+or(pk(key_revocation),and(pk(key_remote),or(pk(key_local),hash160(H))))
+
+# Miniscript
+t:or_c(pk(key_revocation),and_v(v:pk(key_remote),or_c(pk(key_local),v:hash160(H))))
+
+# Bitcoin Script
+<key_revocation> OP_CHECKSIG OP_NOTIF
+  <key_remote> OP_CHECKSIGVERIFY <key_local> OP_CHECKSIG OP_NOTIF
+    OP_SIZE <20> OP_EQUALVERIFY OP_HASH160 <h> OP_EQUALVERIFY
+  OP_ENDIF
+OP_ENDIF
+1
+```
+
 ### The BOLT #3 received HTLC policy
+
+```
+# Policy
+or(pk(key_revocation),and(pk(key_remote),or(and(pk(key_local),hash160(H)),older(1008))))
+
+# Miniscript
+andor(pk(key_remote),or_i(and_v(v:pkh(key_local),hash160(H)),older(1008)),pk(key_revocation))
+
+# Bitcoin Script
+<key_remote> OP_CHECKSIG OP_NOTIF
+  <key_revocation> OP_CHECKSIG
+OP_ELSE
+  OP_IF
+    OP_DUP OP_HASH160 <HASH160(key_local)> OP_EQUALVERIFY OP_CHECKSIGVERIFY
+    OP_SIZE <20> OP_EQUALVERIFY OP_HASH160 <h> OP_EQUAL
+  OP_ELSE
+    <f003> OP_CHECKSEQUENCEVERIFY
+  OP_ENDIF
+OP_ENDIF
+```
 
 ## miniscriptコンパイラの内部動作
 
