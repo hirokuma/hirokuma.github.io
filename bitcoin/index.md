@@ -72,6 +72,8 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 
 * [hirokuma/bitcoin-flow-dot](https://github.com/hirokuma/bitcoin-flow-dot/tree/f7665b37d6811d780e439a67ad7b2735a36d560e)
   * [開発日記:トランザクションのつながり図](/2025/06/20250615-btc.html)
+* [gist: hirokuma/start-new-bitcoind-with-feerate.sh](https://gist.github.com/4feb14eea9ccccd0e2d42e8c90d434c6.git)
+  * [Regtest環境でfee rateを得たい](03_tips/regtest-feerate.md)
 
 ## リンク集
 
