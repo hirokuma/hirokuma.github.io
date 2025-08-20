@@ -18,7 +18,7 @@ MultiSig のようなこともあれば、鍵を持たせないアプリでト�
 PSBT はそういったときに使用できるデータフォーマットである。  
 これがないときは各アプリでフォーマットを決めていたので共通性がなかった。
 
-現在(2025/08/19)のところ version 0(BIP-174、以下 PSBTv0) と version 2(BIP-370、以下 PSBTv2) の 2つがある。version 1 はない。
+現在(2025/08/19)のところ version 0([BIP-174](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki)、以下 PSBTv0) と version 2([BIP-370](https://github.com/bitcoin/bips/blob/master/bip-0370.mediawiki)、以下 PSBTv2) の 2つがある。version 1 はない。
 
 詳細は各人で確認するのが良い。自分でデータを作るよりもツールやAPIなどでやった方がよいだろう。  
 たとえば C言語系なら [libwally-core/psbt](https://wally.readthedocs.io/en/latest/psbt.html) が使えるだろう(Pythonのラッパーもあると思う)。
@@ -48,6 +48,45 @@ v29.0 で "psbt" をコマンド名に含むものを洗い出した。
 ### Rawtransactions
 
 #### [analyzepsbt](https://developer.bitcoin.org/reference/rpc/analyzepsbt.html)
+
+与えた PSBTv0 base64 文字列を簡易的に調べて現在の状態を教えてくれる。  
+"next" はおそらく [Roles](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki#user-content-Roles)。
+
+input が未設定の場合は "extractor" になった。  
+これは [Transaction Extractor](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki#transaction-extractor) だろう。  
+"must only accept a PSBT" と書いてあるが、これはいくつかの role にも書かれている。
+Transaction Extractor では input の scriptSig や scriptWitness を確認するので、まだ input がない PSBT だと「次は Transaction Extractor だから input の設定が必要」という読み方をすれば良いか。
+
+```console
+$ PSBT=`bitcoin-cli createpsbt '[]' '[{"bcrt1qh5kmd2rq23l9qwykn6dtdkfhtvt550ux5ffd0y":0.0001}]'`
+$ bitcoin-cli analyzepsbt $PSBT
+{
+  "estimated_vsize": 41,
+  "estimated_feerate": -0.00243902,
+  "fee": -0.00010000,
+  "next": "extractor"
+}
+```
+
+`bitcoin-cli listunspent` の UTXO を input に追加した PSBT では ["updater"](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki#updater) になった。  
+「次は input を追加するか、redeemScript か witnessScript などを追加すること」という意味だろう。  
+`listunspent` で取得した outPoint なのに "has_utxo" が false なのが気になる。「Whether a UTXO is provided」という意味なので UTXO であるかどうかだと思う。  
+coinbase transaction の報酬だからかと思ったが、`sendtoaddres` で送金した UTXO を使っても同じだった。
+
+```console
+$ PSBT=`bitcoin-cli createpsbt '[{"txid":"1dcadd8c3096f1e7e127f10fe681c403f4782278c3225ae1820bf218cdfd4c58","vout":0}]' '[{"bcrt1qh5kmd2rq23l9qwykn6dtdkfhtvt550ux5ffd0y":0.0001}]'`
+$ bitcoin-cli analyzepsbt $PSBT
+{
+  "inputs": [
+    {
+      "has_utxo": false,
+      "is_final": false,
+      "next": "updater"
+    }
+  ],
+  "next": "updater"
+}
+```
 
 #### [combinepsbt](https://developer.bitcoin.org/reference/rpc/combinepsbt.html)
 
