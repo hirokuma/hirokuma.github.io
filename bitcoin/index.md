@@ -43,6 +43,7 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 * [txout proof](01_basics/txoutproof.md)
 * [スクリプト](01_basics/script.md)
 * [Miniscript](01_basics/miniscript.md)
+* [PSBT](01_basics/psbt.md)
 
 ## 小技
 

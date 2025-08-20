@@ -43,6 +43,8 @@ v29.0 で "psbt" をコマンド名に含むものを洗い出した。
 
 今のところ bitcoind は PSBTv2 をサポートしていないそうだ([Implement BIP 370 PSBTv2 by achow101 · Pull Request #21283 · bitcoin/bitcoin · GitHub](https://github.com/bitcoin/bitcoin/pull/21283))。
 
+`bitcoin-cli` コマンドで使用する PSBT データは Base64 エンコードした文字列データが多い。
+
 ### Rawtransactions
 
 #### [analyzepsbt](https://developer.bitcoin.org/reference/rpc/analyzepsbt.html)
@@ -98,9 +100,23 @@ $ bitcoin-cli finalizepsbt "cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5
 
 #### [decodepsbt](https://developer.bitcoin.org/reference/rpc/decodepsbt.html)
 
+PSBTv0 は "psbt" のヘッダで始まる key-value 式のバイナリデータである。  
+大きく `<global-map>`、`<input-map>`、`<output-map>` の 3つに分かれる。  
+それぞれセパレータとして `0x00` を終わりに置く。
+`<input-map>` と `<output-map>` は複数置くことができる。
+
+* [Structure - Partially Signed Bitcoin Transaction](https://learnmeabitcoin.com/technical/transaction/psbt/#structure)
+
+![image](images/psbt-1.png)
+
+`decodepsbtP はこれを JSON フォーマットにして出力する。  
+見やすいが、元の PSBT フォーマットと見比べるのは難しい。
+
 #### [descriptorprocesspsbt](https://bitcoincore.org/en/doc/28.0.0/rpc/rawtransactions/descriptorprocesspsbt/)
 
 #### [finalizepsbt](https://developer.bitcoin.org/reference/rpc/finalizepsbt.html)
+
+* 全部署名されていたら、`sendrawtransaction` でブロードキャストできる HEX文字列を出力する
 
 #### [joinpsbts](https://developer.bitcoin.org/reference/rpc/joinpsbts.html)
 
