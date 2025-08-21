@@ -37,6 +37,36 @@ PSBT はそういったときに使用できるデータフォーマットであ
 と書かれているので、後からでも INPUT/OUTPUT を追加できるようにしたのが PSBTv2 と思われる。  
 ただしフォーマットに互換性はないとのこと。
 
+今のところ(2025/08/21)、PSBTv2 に対応しているアプリやサービスは少ない。  
+Bitcoin Core もまだ対応していないので、主に PSBTv0 を見ていく。
+
+### PSBTv0
+
+"psbt" ヘッダで始まる key-value 式のバイナリデータである。  
+大きく `<global-map>`、`<input-map>`、`<output-map>` の 3つに分かれる。  
+それぞれセパレータとして `0x00` を終わりに置く。
+`<input-map>` と `<output-map>` は複数置くことができる。
+
+* [Structure - Partially Signed Bitcoin Transaction](https://learnmeabitcoin.com/technical/transaction/psbt/#structure)
+
+![image](images/psbt-1.png)
+
+#### Roles
+
+"partially" といっているように、ちょっとずつデータを埋めながら完成させていくことができる。
+そうすると、今どこまでできあがっていて次に何するのかが分かりづらい。  
+
+[Roles](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki#user-content-Roles)
+
+* Creator
+* Updater
+* Signer
+* Combiner
+* Input Finalizer
+* Transaction Extractor
+
+Bitcoin Core では `analyzepsbt` で確認できる。
+
 ## bitcoin-cli
 
 v29.0 で "psbt" をコマンド名に含むものを洗い出した。
@@ -44,6 +74,78 @@ v29.0 で "psbt" をコマンド名に含むものを洗い出した。
 今のところ bitcoind は PSBTv2 をサポートしていないそうだ([Implement BIP 370 PSBTv2 by achow101 · Pull Request #21283 · bitcoin/bitcoin · GitHub](https://github.com/bitcoin/bitcoin/pull/21283))。
 
 `bitcoin-cli` コマンドで使用する PSBT データは Base64 エンコードした文字列データが多い。
+
+### 使用例
+
+regtest でウォレットを持っている状態で PSBT を作って展開までしようとする。  
+しかし input に対して output の amount が小さくお釣りの output もないため残額が fee になってしまい、
+fee の上限を超えたため展開には失敗して終わる。
+
+```console
+$ bitcoin-cli listunspent
+....
+
+# listunspentの結果から"txid"と"vout"を選ぶ
+$ TXIN="...."
+$ VOUT=...
+
+# 送金先アドレス
+$ ADDR=`bitcoin-cli getnewaddress`
+
+$ PSBT=`bitcoin-cli createpsbt '[{"txid":"'$TXIN'","vout":'$VOUT'}]' '[{"'$ADDR'":0.00001}]'`
+$ bitcoin-cli analyzepsbt $PSBT
+{
+  "inputs": [
+    {
+      "has_utxo": false,
+      "is_final": false,
+      "next": "updater"
+    }
+  ],
+  "next": "updater"
+}
+
+$ PSBT2=`bitcoin-cli utxoupdatepsbt $PSBT`
+$ bitcoin-cli analyzepsbt $PSBT2
+{
+  "inputs": [
+    {
+      "has_utxo": true,
+      "is_final": false,
+      "next": "updater",
+      "missing": {
+        "pubkeys": [
+          "b4abcd7ffce2c069bbfa2ff3f0ed24c068bd09bd"
+        ]
+      }
+    }
+  ],
+  "fee": 49.99999000,
+  "next": "updater"
+}
+
+$ PROC=`bitcoin-cli walletprocesspsbt $PSBT2`
+$ echo $PROC | jq .complete
+true
+$ bitcoin-cli analyzepsbt `echo $PROC | jq -r .psbt`
+{
+  "inputs": [
+    {
+      "has_utxo": true,
+      "is_final": true,
+      "next": "extractor"
+    }
+  ],
+  "estimated_vsize": 110,
+  "estimated_feerate": 454.54536363,
+  "fee": 49.99999000,
+  "next": "extractor"
+}
+$ bitcoin-cli sendrawtransaction `echo $PROC | jq -r .hex`
+error code: -25
+error message:
+Fee exceeds maximum configured by user (e.g. -maxtxfee, maxfeerate)
+```
 
 ### Rawtransactions
 
@@ -66,6 +168,23 @@ $ bitcoin-cli analyzepsbt $PSBT
   "fee": -0.00010000,
   "next": "extractor"
 }
+```
+
+"extractor" は `walletprocesspsbt` に与えると成功してしまう。  
+しかし input は空なので署名などもなく、`sendrawtransaction` しても失敗する。
+
+```console
+$ bitcoin-cli walletprocesspsbt $PSBT
+{
+  "psbt": "cHNidP8BACkCAAAAAAEQJwAAAAAAABYAFL0ttqhgVH5QOJaemrbZN1sXSj+GAAAAAAAA",
+  "complete": true,
+  "hex": "0200000000011027000000000000160014bd2db6a860547e5038969e9ab6d9375b174a3f8600000000"
+}
+
+$ bitcoin-cli sendrawtransaction 0200000000011027000000000000160014bd2db6a860547e5038969e9ab6d9375b174a3f8600000000
+error code: -22
+error message:
+TX decode failed. Make sure the tx has at least one input.
 ```
 
 `bitcoin-cli listunspent` の UTXO を input に追加した PSBT では ["updater"](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki#updater) になった。  
@@ -94,7 +213,15 @@ $ bitcoin-cli analyzepsbt $PSBT
 
 #### [createpsbt](https://developer.bitcoin.org/reference/rpc/createpsbt.html)
 
-`walletcreatefundedpsbt` と違って input は省略できない。  
+`walletcreatefundedpsbt` と違って input は省略できないが空にしておくことはできる。  
+しかし `bitcoin-cli` には input を追加するコマンドはないらしい。
+
+```console
+$ bitcoin-cli createpsbt '[]' '[{"bcrt1qyz7yq6m6rdqxaypzrz0qywj40448926dxz60eg":0.0001}]'
+cHNidP8BACkCAAAAAAEQJwAAAAAAABYAFCC8QGt6G0BukCIYngI6VX1qcqtNAAAAAAAA
+```
+
+bitcoin
 
 ```console
 $ bitcoin-cli createpsbt '[{"txid":"8514c2b50431b9a59be4ba5813a23f1559a6a43a1344950f1747f5d383dbd699","vout":0}]' '[{"bcrt1qyz7yq6m6rdqxaypzrz0qywj40448926dxz60eg":0.0001}]' 0 true
@@ -139,23 +266,15 @@ $ bitcoin-cli finalizepsbt "cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5
 
 #### [decodepsbt](https://developer.bitcoin.org/reference/rpc/decodepsbt.html)
 
-PSBTv0 は "psbt" のヘッダで始まる key-value 式のバイナリデータである。  
-大きく `<global-map>`、`<input-map>`、`<output-map>` の 3つに分かれる。  
-それぞれセパレータとして `0x00` を終わりに置く。
-`<input-map>` と `<output-map>` は複数置くことができる。
-
-* [Structure - Partially Signed Bitcoin Transaction](https://learnmeabitcoin.com/technical/transaction/psbt/#structure)
-
-![image](images/psbt-1.png)
-
-`decodepsbtP はこれを JSON フォーマットにして出力する。  
+`decodepsbt` はバイナリの PSBT構造を JSON フォーマットにして出力する。  
 見やすいが、元の PSBT フォーマットと見比べるのは難しい。
 
 #### [descriptorprocesspsbt](https://bitcoincore.org/en/doc/28.0.0/rpc/rawtransactions/descriptorprocesspsbt/)
 
 #### [finalizepsbt](https://developer.bitcoin.org/reference/rpc/finalizepsbt.html)
 
-* 全部署名されていたら、`sendrawtransaction` でブロードキャストできる HEX文字列を出力する
+全部の input に適切な処理がされていたら、`sendrawtransaction` でブロードキャストできる HEX文字列を出力する。  
+
 
 #### [joinpsbts](https://developer.bitcoin.org/reference/rpc/joinpsbts.html)
 
