@@ -2,7 +2,7 @@
 
 <!-- begin -->
 {% assign selected_tag = "linux" %}
-{% assign tag_pages = site.pages | where: "tags", selected_tag | where: "daily": false | sort: "date" | reverse %}
+{% assign tag_pages = site.pages | where: "tags", selected_tag | where: "daily", false | sort: "date" | reverse %}
 <p class="post-header">
 <ul>
   {% for post in tag_pages %}

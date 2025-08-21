@@ -4,7 +4,7 @@
 
 <!-- begin -->
 {% assign selected_tag = "clang" %}
-{% assign tag_pages = site.pages | where: "tags", selected_tag | where: "daily": false | sort: "date" | reverse %}
+{% assign tag_pages = site.pages | where: "tags", selected_tag | where: "daily", false | sort: "date" | reverse %}
 {% for post in tag_pages %}
 <p class="post-header">
   {{ post.date }}: <a href="{{ post.url | relative_url }}" class="post-title">{{ post.title }}</a>
@@ -21,7 +21,7 @@
 
 <!-- begin -->
 {% assign selected_tag = "rust" %}
-{% assign tag_pages = site.pages | where: "tags", selected_tag | where: "daily": false | sort: "date" | reverse %}
+{% assign tag_pages = site.pages | where: "tags", selected_tag | where: "daily", false | sort: "date" | reverse %}
 {% for post in tag_pages %}
 <p class="post-header">
   {{ post.date }}: <a href="{{ post.url | relative_url }}" class="post-title">{{ post.title }}</a>
