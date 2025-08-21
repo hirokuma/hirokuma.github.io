@@ -3,7 +3,6 @@ lang: ja-JP
 source: .
 plugins:
   - jekyll-remote-theme
-  - jekyll-sitemap
 title: hiro99ma blog
 google_analytics: G-552KB5LZK4
 show_downloads: false
@@ -19,5 +18,3 @@ defaults:
     values:
       daily: true
       draft: false
-      sitemap: true
-      last_modified_at: "2025-08-20T00:00:00+09:00"

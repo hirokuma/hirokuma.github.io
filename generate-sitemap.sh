@@ -36,4 +36,4 @@ done
 # print foot
 echo "</urlset>"
 
-# cp my-sitemap.xml sitemap.xml
+cp my-sitemap.xml sitemap.xml
