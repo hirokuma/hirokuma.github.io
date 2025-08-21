@@ -26,9 +26,9 @@ for f in $(find ./ -name "*.md"); do
         DATE=`echo $DT | cut -c${DTS}-${DTE} | sed -e 's|/|-|g' -e 's/$/T00:00:00+00:00/'`
     fi
     echo "<url>"
-    echo "<loc>${URL}${HTML}</loc>"
+    echo "  <loc>${URL}${HTML}</loc>"
     if [ -n "${DATE}" ]; then
-        echo "<lastmod>${DATE}</lastmod>"
+        echo "  <lastmod>${DATE}</lastmod>"
     fi
     echo "</url>"
 done
