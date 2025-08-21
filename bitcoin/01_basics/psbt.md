@@ -4,8 +4,7 @@ title: "PSBT"
 tags:
   - bitcoin
 daily: false
-date: "2025/08/19"
-draft: true
+date: "2025/08/21"
 ---
 
 ## はじめに
@@ -72,8 +71,6 @@ Bitcoin Core では `analyzepsbt` で確認できる。
 v29.0 で "psbt" をコマンド名に含むものを洗い出した。
 
 今のところ bitcoind は PSBTv2 をサポートしていないそうだ([Implement BIP 370 PSBTv2 by achow101 · Pull Request #21283 · bitcoin/bitcoin · GitHub](https://github.com/bitcoin/bitcoin/pull/21283))。
-
-`bitcoin-cli` コマンドで使用する PSBT データは Base64 エンコードした文字列データが多い。
 
 ### 使用例
 
@@ -149,13 +146,23 @@ Fee exceeds maximum configured by user (e.g. -maxtxfee, maxfeerate)
 
 ### Rawtransactions
 
+Rawtransactions 系のコマンドは bitcoind にウォレットがなくても実行できる。  
+チェーンのデータを参照しないコマンドであればネットワークが違う bitcoind でも実行できるだろう。
+たとえば regtest で作った PSBTデータを mainnet で動かしている環境で `analyzepsbt` できた。
+
 #### [analyzepsbt](https://developer.bitcoin.org/reference/rpc/analyzepsbt.html)
 
 与えた PSBTv0 base64 文字列を簡易的に調べて現在の状態を教えてくれる。  
-"next" はおそらく [Roles](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki#user-content-Roles)。
+"next" はおそらく [Roles](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki#user-content-Roles)。  
+[ソースコード](https://github.com/bitcoin/bitcoin/blob/v29.0/src/psbt.cpp#L524-L534)からすると以下。
+
+* creator
+* updater
+* signer
+* finalizer
+* extractor
 
 input が未設定の場合は "extractor" になった。  
-これは [Transaction Extractor](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki#transaction-extractor) だろう。  
 "must only accept a PSBT" と書いてあるが、これはいくつかの role にも書かれている。
 Transaction Extractor では input の scriptSig や scriptWitness を確認するので、まだ input がない PSBT だと「次は Transaction Extractor だから input の設定が必要」という読み方をすれば良いか。
 
@@ -189,8 +196,7 @@ TX decode failed. Make sure the tx has at least one input.
 
 `bitcoin-cli listunspent` の UTXO を input に追加した PSBT では ["updater"](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki#updater) になった。  
 「次は input を追加するか、redeemScript か witnessScript などを追加すること」という意味だろう。  
-`listunspent` で取得した outPoint なのに "has_utxo" が false なのが気になる。「Whether a UTXO is provided」という意味なので UTXO であるかどうかだと思う。  
-coinbase transaction の報酬だからかと思ったが、`sendtoaddres` で送金した UTXO を使っても同じだった。
+`listunspent` で取得した outPoint なのに "has_utxo" が false となるのは、PSBT の中に input の UTXO情報がまだ入っていないためだ。
 
 ```console
 $ PSBT=`bitcoin-cli createpsbt '[{"txid":"1dcadd8c3096f1e7e127f10fe681c403f4782278c3225ae1820bf218cdfd4c58","vout":0}]' '[{"bcrt1qh5kmd2rq23l9qwykn6dtdkfhtvt550ux5ffd0y":0.0001}]'`
@@ -206,6 +212,55 @@ $ bitcoin-cli analyzepsbt $PSBT
   "next": "updater"
 }
 ```
+
+`utxoupdatepsbt` で UTXO情報を更新すると "has_utxo" は true になった。
+
+```console
+$ PSBT2=`bitcoin-cli utxoupdatepsbt $PSBT`
+$ bitcoin-cli analyzepsbt $PSBT2
+{
+  "inputs": [
+    {
+      "has_utxo": true,
+      "is_final": false,
+      "next": "updater",
+      "missing": {
+        "pubkeys": [
+          "b2f1a744e1b2ba1d248ab91ab126579641d08c00"
+        ]
+      }
+    }
+  ],
+  "fee": 49.99990000,
+  "next": "updater"
+}
+```
+
+input transaction の outPoint はこうなっていた。
+この "scriptPubKey.asm" の witness program と outPoint の "missing.pubkeys" が一致しているのが確認できる。
+
+```
+    {
+      "value": 50.00000000,
+      "n": 0,
+      "scriptPubKey": {
+        "asm": "0 b2f1a744e1b2ba1d248ab91ab126579641d08c00",
+        "desc": "addr(bcrt1qktc6w38pk2ap6fy2hydtzfjhjeqaprqqv7auy9)#ejg7wzpz",
+        "hex": "0014b2f1a744e1b2ba1d248ab91ab126579641d08c00",
+        "address": "bcrt1qktc6w38pk2ap6fy2hydtzfjhjeqaprqqv7auy9",
+        "type": "witness_v0_keyhash"
+      }
+    },
+```
+
+データ構造でいえば、`$PSBT` は `<global_map>` の `PSBT_GLOBAL_UNSIGNED_TX`(未署名で input と output がある raw-tx) だけなのだが、
+`$PSBT2` は ``<input-map #0>` に `PSBT_IN_NON_WITNESS_UTXO`(input の raw-tx) と `PSBT_IN_WITNESS_UTXO`(outPoint の raw-data) が追加されていた。  
+つまり、秘密鍵以外でトランザクションに署名するのに必要なデータを全部詰め込もうとしているのだ。
+
+プログラムでトランザクションに署名しようとするとわかるのだが、いろいろなデータが必要になる。
+特に segwit トランザクションは input になるトランザクションのデータも署名対象になるので面倒である。  
+PSBT のデータを作るのも同じくらい手間がかかると思えば良いだろう。  
+その代わりといってはなんだが、署名処理を実装するときは PSBT のデータを作るように進めていけば間違いはないだろう。
 
 #### [combinepsbt](https://developer.bitcoin.org/reference/rpc/combinepsbt.html)
 
@@ -274,7 +329,6 @@ $ bitcoin-cli finalizepsbt "cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5
 #### [finalizepsbt](https://developer.bitcoin.org/reference/rpc/finalizepsbt.html)
 
 全部の input に適切な処理がされていたら、`sendrawtransaction` でブロードキャストできる HEX文字列を出力する。  
-
 
 #### [joinpsbts](https://developer.bitcoin.org/reference/rpc/joinpsbts.html)
 
