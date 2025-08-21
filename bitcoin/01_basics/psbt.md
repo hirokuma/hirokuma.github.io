@@ -254,7 +254,7 @@ input transaction の outPoint はこうなっていた。
 ```
 
 データ構造でいえば、`$PSBT` は `<global_map>` の `PSBT_GLOBAL_UNSIGNED_TX`(未署名で input と output がある raw-tx) だけなのだが、
-`$PSBT2` は ``<input-map #0>` に `PSBT_IN_NON_WITNESS_UTXO`(input の raw-tx) と `PSBT_IN_WITNESS_UTXO`(outPoint の raw-data) が追加されていた。  
+`$PSBT2` は `<input-map #0>` に `PSBT_IN_NON_WITNESS_UTXO`(input の raw-tx) と `PSBT_IN_WITNESS_UTXO`(outPoint の raw-data) が追加されていた。  
 つまり、秘密鍵以外でトランザクションに署名するのに必要なデータを全部詰め込もうとしているのだ。
 
 プログラムでトランザクションに署名しようとするとわかるのだが、いろいろなデータが必要になる。
