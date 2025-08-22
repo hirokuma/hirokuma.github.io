@@ -268,15 +268,19 @@ PSBT のデータを作るのも同じくらい手間がかかると思えば良
 
 #### [createpsbt](https://developer.bitcoin.org/reference/rpc/createpsbt.html)
 
-`walletcreatefundedpsbt` と違って input は省略できないが空にしておくことはできる。  
-しかし `bitcoin-cli` には input を追加するコマンドはないらしい。
+output は必須だが `walletcreatefundedpsbt` と違って input は省略できないが空にしておくことはできる。  
+しかし `bitcoin-cli` には input/output を追加するコマンドはないらしい。
+`decodepsbt` でデコードして作り直せば済むからだろうか。
 
 ```console
 $ bitcoin-cli createpsbt '[]' '[{"bcrt1qyz7yq6m6rdqxaypzrz0qywj40448926dxz60eg":0.0001}]'
 cHNidP8BACkCAAAAAAEQJwAAAAAAABYAFCC8QGt6G0BukCIYngI6VX1qcqtNAAAAAAAA
 ```
 
-bitcoin
+input と output は配列で指定できる。  
+特に output はお釣りの設定を忘れないようにしよう。
+そうしないと上に載せた例のように fee が高すぎて展開できない、だったらまだよいとして、
+意図せず高い手数料で展開してしまうということがあり得る。
 
 ```console
 $ bitcoin-cli createpsbt '[{"txid":"8514c2b50431b9a59be4ba5813a23f1559a6a43a1344950f1747f5d383dbd699","vout":0}]' '[{"bcrt1qyz7yq6m6rdqxaypzrz0qywj40448926dxz60eg":0.0001}]' 0 true
@@ -329,10 +333,15 @@ $ bitcoin-cli finalizepsbt "cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5
 #### [finalizepsbt](https://developer.bitcoin.org/reference/rpc/finalizepsbt.html)
 
 全部の input に適切な処理がされていたら、`sendrawtransaction` でブロードキャストできる HEX文字列を出力する。  
+PSBT 文字列の通りにしかトランザクションを作らないので、念のために `decoderawtransaction` などで内容を確認した方がよい。
+特に fee が期待した値なのか確認した方がよい。お釣りの output がないため送金額以外が全部 fee になる、ということをやってしまうからだ。
 
 #### [joinpsbts](https://developer.bitcoin.org/reference/rpc/joinpsbts.html)
 
 #### [utxoupdatepsbt](https://developer.bitcoin.org/reference/rpc/utxoupdatepsbt.html)
+
+input の UTXO 情報を更新する。  
+
 
 ### Wallets
 
@@ -342,6 +351,17 @@ $ bitcoin-cli finalizepsbt "cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5
 
 #### [walletprocesspsbt](https://developer.bitcoin.org/reference/rpc/walletprocesspsbt.html)
 
+## 使用例
+
+### LND
+
+LND では PSBT を使うことができる。  
+チャネルを開きたいけど LND のウォレットに amount がない、というときに使ったように思う。
+feerate が高いときだと LND に送るのですらためらうし、confirm がいつになるのかわからないので、支払えるウォレットを使うという選択肢を持っていて良いだろう。
+
+* [Partially Signed Bitcoin Transactions - Builder's Guide](https://docs.lightning.engineering/lightning-network-tools/lnd/psbt)
+
+`bumpfee` のときにも使ったような気がするが、忘れてしまった。
 
 ## 関連ページ
 
