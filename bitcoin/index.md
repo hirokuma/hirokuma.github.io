@@ -7,24 +7,10 @@ daily: false
 date: "2025/06/19"
 ---
 
-Bitcoin技術に関する調査メモを残すページ。
+## 注意！
 
-## 禁止事項
-
-* このサイトでは Bitcoin の購入を含め、仮想通貨の購入を勧める行為はしません
-  * 売買するのは個人の自由だが、このサイトはそういう目的のために調査しているわけではない
-
-## はじめに
-
-Bitcoin技術は更新が続いているので、ここに書いたことも「当時は正しかったかもしれないが」ということになるかもしれない。  
-読む人も注意して、記事を信用しないように。  
-よく言われる「Don't trust, verify」である。
-
-最終的には「プログラムで書かれているのでそれを解読するのが正しい」になってしまうが、そんなことをしていたら時間がいくらあっても足りなくなる。
-なので、その人が言っているのと別の情報源から確認することが多くなるだろう。
-
-実際にコーディングする場合は信用できるライブラリだけを使うようにしよう。  
-まったくライブラリを使わずにコーディングするのはもはや無理な世界だと思う。
+このサイトでは Bitcoin の購入を含め、仮想通貨の購入を勧める行為はしません。  
+売買するのは個人の自由だが、このサイトはそういう目的のために調査しているわけではない。
 
 ## 基本
 
@@ -34,16 +20,16 @@ Bitcoin技術は更新が続いているので、ここに書いたことも「�
 * [値の表現](01_basics/value.md)
 * [ブロック](01_basics/blocks.md)
 * [トランザクション](01_basics/transactions.md)
+  * [スクリプト](01_basics/script.md)
+  * [Miniscript](01_basics/miniscript.md)
+  * [PSBT](01_basics/psbt.md)
+  * [MuSig2シーケンス](musig/musig2_sequence.md)
 * [アドレス](01_basics/address.md)
   * [P2WPKH](02_bip/p2wpkh.md)
   * [P2WSH](02_bip/p2wsh.md)
   * [P2TR](02_bip/p2tr.md)
-  * [MuSig2シーケンス](musig/musig2_sequence.md)
 * [ウォレット](01_basics/wallet.md)
 * [txout proof](01_basics/txoutproof.md)
-* [スクリプト](01_basics/script.md)
-* [Miniscript](01_basics/miniscript.md)
-* [PSBT](01_basics/psbt.md)
 
 ## 小技
 

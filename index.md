@@ -5,7 +5,7 @@ recentlies: 5
 
 # ![image](favicon.ico)
 
-## 調査
+## 技術調査
 
 * [Bitcoin調査](bitcoin/index.md)
 * [Nordic Semiconductor調査](nrf/index.md)

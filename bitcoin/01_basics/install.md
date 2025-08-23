@@ -22,13 +22,13 @@ Bitcoin 財団のような団体があっても、それは Bitcoin Core とは�
 公式での Docker コンテナも存在しない。  
 今後はどうなるかわからないので絶対にないとは言いきれないが、公式のように見える配布であるほど注意が必要です。
 
-## 入手先
+## 入手方法
 
-### ソースコードからビルドする
+### その1: ソースコードからビルドする
 
-[Bitcoin Core(bitcoind) を regtest で動かす](bitcoind.md) を参照。
+ビルド](./build.md) を参照。
 
-### 実行ファイルをダウンロードする
+### その2: 実行ファイルをダウンロードする
 
 [https://bitcoincore.org/en/download/](https://bitcoincore.org/en/download/) からダウンロードする。  
 このページには最新のリリースがダウンロードできるようになっている。  
@@ -190,6 +190,17 @@ gpg: Signature made Wed Jan  8 23:17:43 2025 JST
 gpg:                using RSA key 0CCBAAFD76A2ECE2CCD3141DE2FFD5B1D88CA97D
 gpg: Can't check signature: No public key
 ```
+
+### その3: Dockerコンテナ
+
+はじめに書いたように、Bitcoin Core チームは Docker コンテナを提供していない。  
+これは怠慢だとかそういうのではなく、基本的に Bitcoin Core は自分で立ち上げるものだからだ。  
+ビルド済みのバイナリを提供するのがギリギリな線というところだろう。
+おそらく、不正なバイナリがはびこるくらいなら公式で提供するようにした方がよいという判断だと思う。
+
+その代わり、Bitcoin サービスを提供しているプロジェクトが提供していることがある。  
+ただ、ちゃんとした `bitcoind` を提供しているのか確認するのは難しいだろう。
+そういう意味ではお勧めしない。
 
 ## 関連ページ
 

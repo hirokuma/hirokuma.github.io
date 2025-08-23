@@ -4,7 +4,7 @@ title: "Bitcoin Core(bitcoind) を regtest で動かす"
 tags:
   - bitcoin
 daily: false
-date: "2025/02/19"
+date: "2025/08/23"
 ---
 
 ## はじめに
@@ -13,66 +13,16 @@ date: "2025/02/19"
 ここでは最も一般的と思われる Bitcoin Core(bitcoind) のビルドとオプションについてメモを残す。  
 Ubuntu 22.04 (WSL2) で確認しているが、既にいろいろインストールされているのでビルドに不足しているツールがあるかもしれない。
 
-現時点で Bitcoin Core の最新バージョンは v28.1 のためそれを使っていく。  
+現時点で Bitcoin Core の最新バージョンは v29.0 のためそれを使っていく。  
 以前のバージョン表記は `v0.XX.YY`(v0.21.2まで) だったが、比較的最近から `vXX.YY`(v22.0～) に変わった。
 もし「v0.」で始まっている記事があっても、それがものすごく古いとは限らないことは覚えておいて良いだろう。
 ただ記事の更新日時が新しいのに「v0.」の場合は単に日付だけ新しいだけなので気をつけよう。  
 基本的に、周辺アプリの互換性の都合以外で Bitcoin Core の古いバージョンを使う必要はほぼない。
 
-## リポジトリ
+## Bitcoin Core インストール
 
-* [bitcoin/bitcoin at v28.1](https://github.com/bitcoin/bitcoin/tree/v28.1)
+[Bitcoin Core(bitcoind) のインストール](./install.md) 参照
 
-## ビルド
-
-### 前準備
-
-* [Linux Distribution Specific Instructions - v28.1](https://github.com/bitcoin/bitcoin/blob/v28.1/doc/build-unix.md#linux-distribution-specific-instructions)
-
-```console
-$ sudo apt-get install \
-  build-essential \
-  libtool \
-  autotools-dev \
-  automake \
-  pkg-config \
-  bsdmainutils \
-  python3 \
-  libevent-dev \
-  libboost-dev \
-  libsqlite3-dev
-```
-
-[ZMQ](https://github.com/bitcoin/bitcoin/blob/v28.1/doc/zmq.md) を使うなら `libzmq3-dev` もいるだろう。
-私の環境ではインストールしていない状態でビルドしたところ、`zmqpubrawblock` を設定してもエラーにならずにポートが開いていなかったので無視されたようだ。
-
-DB をどうするか悩むかもしれない。  
-新規環境だったりウォレットが無いのであればそのままにして、既に使っているウォレットがあるなら [Berkeley DB](https://github.com/bitcoin/bitcoin/blob/v28.1/doc/build-unix.md#berkeley-db) を使うとよいだろう。
-`mainnet` では内蔵のウォレットを使わない方がよいだろう。
-
-### Clone and Build
-
-適当な場所に clone してリリースタグを checkout する。  
-`master` を使いたいかもしれないので、その辺りは自身の判断で。
-
-```console
-$ git clone https://github.com/bitcoin/bitcoin.git
-$ cd bitcoin
-$ git checkout -b v28_1 refs/tags/v28.1
-```
-
-ビルドは `configure` のオプションを指定して `make` する。  
-オプションはいろいろあるので `configure --help` で確認すると良い。
-GUI無しで `$HOME/.local` にインストールするならこういう感じだ。
-
-* [bitcoin/doc/build-unix.md at v28.1 · bitcoin/bitcoin](https://github.com/bitcoin/bitcoin/blob/v28.1/doc/build-unix.md#to-build)
-
-```console
-./autogen.sh
-./configure --prefix=$HOME/.local --without-gui
-make
-make install
-```
 ## 設定と実行
 
 ノードとして動作する `bitcoind` や 操作する `bitcoin-cli` は設定ファイル `bitcoin.conf` を参照する。  
@@ -85,16 +35,23 @@ server=1
 txindex=1
 regtest=1
 
+zmqpubrawblock=tcp://127.0.0.1:28332
+zmqpubrawtx=tcp://127.0.0.1:28333
+
 [regtest]
-rpcuser=user
-rpcpassword=pass
-fallbackfee=0.00001000
+#rpcuser=testuser
+#rpcpassword=testpass
+rpcauth=testuser:90d538109436dcea4d3da67f65d6aa00$21214960fe9d1bbd9d5f40ab16212fe9aa3d87a59e2cfef91232729c5de00657
+fallbackfee=0.000001
+
+blockfilterindex=1
+peerblockfilters=1
 ```
 
 `rpcuser` と `rpcpassword` は JSON-RPC で通信したい場合に設定する。
 
 ```console
-$ curl --user user:pass --data-binary '{"jsonrpc": "2.0", "id": "curltest", "method": "getblockcount", "params": []}' -H 'content-type: application/json' http://127.0.0.1:18443/
+$ curl --user testuser:testpass --data-binary '{"jsonrpc": "2.0", "id": "curltest", "method": "getblockcount", "params": []}' -H 'content-type: application/json' http://127.0.0.1:18443/
 {"jsonrpc":"2.0","result":0,"id":"curltest"}
 ```
 
@@ -134,6 +91,24 @@ $ addr=`bitcoin-cli -regtest getnewaddress`
 $ bitcoin-cli -regtest generatetoaddress 150 $addr
 $ bitcoin-cli -regtest getbalance
 ```
+
+## おまけ
+
+私が使っている設定やスクリプト。
+
+* [gist](https://gist.github.com/hirokuma/6a8d1553a813fa569599d5b0f54f722a)
+
+## おまけ(Polar)
+
+[Polar](https://lightningpolar.com/) という、Lightning Network の regtest 環境を立ち上げるプロジェクトがある。  
+GUI で操作は比較的簡単である。  
+Lightning Network 開発用だが、Bitcoin Core だけを立ち上げることもできる。
+
+## おまけ(Nigiri)
+
+Polar と同じようなプロジェクトで [Nigiri](https://nigiri.vulpem.com/) がある。  
+こちらは GUI ではなく CUIで、主に環境の立ち上げを行ってくれる。  
+それほど使ったことがないので、ここでは紹介だけしておく。
 
 ## おわりに
 
