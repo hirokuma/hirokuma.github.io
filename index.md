@@ -59,10 +59,11 @@ recentlies: 3
 </li>
 </ul>
 
-* アーカイブ
-  * [2025年](2025/index.md)
-  * [2024年](2024/index.md)
-  * [それ以前(別サイト)](https://hiro99ma.blogspot.com/)
+## アーカイブ
+
+* [2025年](2025/index.md)
+* [2024年](2024/index.md)
+* [それ以前(別サイト)](https://hiro99ma.blogspot.com/)
 
 ## その他
 
