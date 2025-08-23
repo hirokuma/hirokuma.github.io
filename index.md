@@ -1,6 +1,6 @@
 ---
 layout: default
-recentlies: 3
+recentlies: 5
 ---
 
 # ![image](favicon.ico)
@@ -36,7 +36,12 @@ recentlies: 3
     <ul>
 {% assign posts = site.pages | where: "daily", true | where: "draft", false | sort: "date" | reverse %}
 {% for post in posts limit:page.recentlies %}
-      <li>{{ post.date }} <a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+      <li>
+        {{ post.date }} <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          {% for tag in post.tags %}
+            <small><span>#{{ tag }}</span></small>
+          {% endfor %}
+      </li>
 {% endfor %}
     </ul>
   </li>
