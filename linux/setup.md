@@ -1,0 +1,74 @@
+---
+layout: record
+title: "Linuxセットアップ"
+tags:
+  - linux
+daily: false
+date: "2025/08/23"
+---
+
+## はじめに
+
+Linux 環境を作ったときに行っておきたい設定。  
+私がやっておきたいだけのメモです。
+
+## rc
+
+### PS1
+
+WSL2 Ubuntu を主に使っているが、コンソールのプロンプトが `ユーザ名@マシン名 ディレクトリ名 $ ` みたいになっている。  
+私の場合はブログで貼り付けたりするので、あまり名前などは載ってほしくない。  
+現在のディレクトリ名だけでよい。
+
+```bash
+PS1="\[\033[01;34m\]\w\[\033[00m\]$ "
+```
+
+### LD_LIBRARY_PATHとPKG_CONFIG_PATH
+
+`make install` で `/usr/local/` に置きたくないときがあって、そういうときに `$HOME/.local/` に置いている。  
+ライブラリの読み込みだけなら `LD_LIBRARY_PATH` で、`pkgconfig` で `CFLAGS` などを設定したければ `PKG_CONFIG_PATH` も設定する。  
+検索パスなので、設定していても負担にはなるまい(たぶん)。
+
+```bash
+export LD_LIBRARY_PATH=$HOME/.local/lib
+export PKG_CONFIG_PATH=$HOME/.local/lib/pkgconfig:/usr/local/lib/pkgconfig
+```
+
+### ベルを鳴らさない
+
+他にもあると思うがよく鳴らしてしまうところだけ。
+
+* `~/.inputrc`
+
+```rc
+set bell-style none
+```
+
+* `~/.vimrc`
+
+```rc
+set belloff=all
+```
+
+## Git
+
+### 名前とメールアドレス
+
+初めて commit しようとしたときにエラーになって気付くから意識しなくてもよいとは思う。  
+仕事で別のアカウントで作業することもあるだろうから、そういうときはわざと設定せず、`--global` をつけずリポジトリごとに付けるようにすると良いだろう。
+
+```console
+$ git config --global user.name "ほげほげ"
+$ git config --global user.email "はにゃはにゃ"
+```
+
+### デフォルトブランチ
+
+特に呼び名にこだわりはないので、よく使われているし短いしで "main" にしておく。
+
+* [Git - git-init Documentation](https://git-scm.com/docs/git-init#_configuration)
+
+```console
+$ git config --global init.defaultBranch main
+```
