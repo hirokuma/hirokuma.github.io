@@ -1,9 +1,8 @@
 ---
 layout: default
+title: ""
 recentlies: 5
 ---
-
-# ![image](assets/images/banner.png)
 
 ## 技術調査
 
