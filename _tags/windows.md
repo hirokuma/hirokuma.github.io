@@ -1,6 +1,6 @@
 ---
 sortorder: "00500"
 layout: tag
-tag: windows
+tag: windows/WSL
 name: "Windows"
 ---

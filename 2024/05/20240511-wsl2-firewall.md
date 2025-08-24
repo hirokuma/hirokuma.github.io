@@ -3,6 +3,7 @@ layout: post
 title: "WSL2のファイアウォール設定"
 tags:
   - windows
+  - wsl
 date: 2024/05/11
 ---
 

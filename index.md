@@ -3,7 +3,7 @@ layout: default
 recentlies: 5
 ---
 
-# ![image](favicon.ico)
+# 
 
 ## 技術調査
 
