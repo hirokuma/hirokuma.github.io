@@ -72,3 +72,24 @@ $ git config --global user.email "はにゃはにゃ"
 ```console
 $ git config --global init.defaultBranch main
 ```
+
+## protoc
+
+### protoc
+
+*  [Releases · protocolbuffers/protobuf](https://github.com/protocolbuffers/protobuf/releases)
+
+### protoc-gen-go, protoc-gen-go-grpc
+
+`$HOME/go/bin/` にインストールされる。
+
+* [Quick start - Go - gRPC](https://grpc.io/docs/languages/go/quickstart/)
+
+```
+$ go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+$ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+```
+
+### protoc-gen-validate
+
+* [Releases · bufbuild/protoc-gen-validate](https://github.com/bufbuild/protoc-gen-validate/releases)
