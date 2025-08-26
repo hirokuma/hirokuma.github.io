@@ -4,7 +4,7 @@ title: "Linuxセットアップ"
 tags:
   - linux
 daily: false
-date: "2025/08/23"
+date: "2025/08/26"
 ---
 
 ## はじめに
@@ -93,3 +93,25 @@ $ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 ### protoc-gen-validate
 
 * [Releases · bufbuild/protoc-gen-validate](https://github.com/bufbuild/protoc-gen-validate/releases)
+
+## PostgreSQL
+
+### ユーザ(role)の追加
+
+インストール直後は `postgres` ユーザしか扱えないようなので、一旦 `su` で `postgres` になりきる。
+
+```console
+$ sudo su postgres
+```
+
+```bash
+ROLE="アクセスさせたいアカウント"
+PASS="あなたの使いたいパスワード"
+echo "CREATE ROLE ${ROLE} CREATEDB LOGIN;" | psql
+echo "ALTER ROLE ${ROLE} with PASSWORD '${PASS}';" | psql #パスワードを付けないなら不要(NULLで削除)
+```
+
+```bash
+ROLE="削除したいアカウント"
+echo "DROP ROLE ${ROLE};" | psql
+```
