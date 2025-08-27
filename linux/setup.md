@@ -10,7 +10,7 @@ date: "2025/08/26"
 ## はじめに
 
 Linux 環境を作ったときに行っておきたい設定。  
-私がやっておきたいだけのメモです。
+私が WSL2 でやっておきたいだけのメモです。
 
 ## rc
 
@@ -51,6 +51,34 @@ set bell-style none
 set belloff=all
 ```
 
+## build-essential
+
+```bash
+sudo apt install build-essential
+```
+
+C/C++ のコンパイルと make はできるようになりそうだ。
+CMake は含まれていない。
+
+```shell
+$ apt show build-essential
+......
+Depends: libc6-dev | libc-dev, gcc (>= 4:12.3), g++ (>= 4:12.3), make, dpkg-dev (>= 1.17.11)
+......
+```
+
+<small>
+いつも "build-essentials" と "s" を付けるかどうかで迷い、
+英語圏は単数/複数に厳しいから付けるだろう、とやってエラーになる。
+なんで付けないんだろう？
+</small>
+
+## jq
+
+```bash
+sudo apt install jq
+```
+
 ## Git
 
 ### 名前とメールアドレス
@@ -69,8 +97,8 @@ $ git config --global user.email "はにゃはにゃ"
 
 * [Git - git-init Documentation](https://git-scm.com/docs/git-init#_configuration)
 
-```console
-$ git config --global init.defaultBranch main
+```bash
+git config --global init.defaultBranch main
 ```
 
 ## protoc
@@ -100,8 +128,8 @@ $ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
 インストール直後は `postgres` ユーザしか扱えないようなので、一旦 `su` で `postgres` になりきる。
 
-```console
-$ sudo su postgres
+```bash
+sudo su postgres
 ```
 
 ```bash
