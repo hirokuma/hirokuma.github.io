@@ -43,13 +43,11 @@ $ ./configure --help
 $ ./autogen.sh
 $ ./configure --enable-module-recovery
 $ make
-$ time make check
-...
-real    0m51.198s
-user    0m52.676s
-sys     0m0.128s
+$ make check
 $ sudo make install
 ```
+
+Raspberry Pi3 で `make` は 6分半程度、`make check` は 11分半程度だった。
 
 ### CMake
 
