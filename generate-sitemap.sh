@@ -24,6 +24,8 @@ for f in $(find ./ -name "*.md"); do
     fi
     if [ $? -eq 0 ]; then
         DATE=`echo $DT | cut -c${DTS}-${DTE} | sed -e 's|/|-|g' -e 's/$/T00:00:00+00:00/'`
+    else
+        DATE=""
     fi
     echo "<url>"
     echo "  <loc>${URL}${HTML}</loc>"

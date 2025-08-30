@@ -1,9 +1,7 @@
 ---
-layout: default
+title: "年間リスト"
 thisyear: "2024"
 ---
-
-# 年間リスト
 
 ## {{ page.thisyear }}年
 

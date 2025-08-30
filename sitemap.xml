@@ -781,16 +781,7 @@
   <lastmod>2024-12-30T00:00:00+00:00</lastmod>
 </url>
 <url>
-  <loc>https://blog.hirokuma.work/2024/2024-1.html</loc>
-  <lastmod>2024-12-30T00:00:00+00:00</lastmod>
-</url>
-<url>
-  <loc>https://blog.hirokuma.work/2024/2024-2.html</loc>
-  <lastmod>2024-12-30T00:00:00+00:00</lastmod>
-</url>
-<url>
   <loc>https://blog.hirokuma.work/2024/index.html</loc>
-  <lastmod>2024-12-30T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/2025/01/20250106-clang.html</loc>
@@ -1366,15 +1357,26 @@
 </url>
 <url>
   <loc>https://blog.hirokuma.work/2025/08/20250824-rst.html</loc>
-  <lastmod>2025-08-23T00:00:00+00:00</lastmod>
+  <lastmod>2025-08-24T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2025/08/20250825-rpi.html</loc>
+  <lastmod>2025-08-25T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2025/08/20250827-btc.html</loc>
+  <lastmod>2025-08-27T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2025/08/20250829-btc.html</loc>
+  <lastmod>2025-08-29T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/2025/index.html</loc>
-  <lastmod>2025-08-23T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/aboutme.html</loc>
-  <lastmod>2025-08-23T00:00:00+00:00</lastmod>
+  <lastmod>2025-06-15T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/android/ble/index.html</loc>
@@ -1522,7 +1524,6 @@
 </url>
 <url>
   <loc>https://blog.hirokuma.work/index.html</loc>
-  <lastmod>2025-08-03T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/langs/clang/fff.html</loc>
@@ -1530,7 +1531,6 @@
 </url>
 <url>
   <loc>https://blog.hirokuma.work/langs/index.html</loc>
-  <lastmod>2025-07-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/langs/rust/crate.html</loc>
@@ -1538,7 +1538,6 @@
 </url>
 <url>
   <loc>https://blog.hirokuma.work/linux/index.html</loc>
-  <lastmod>2025-07-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/linux/raspi-setup.html</loc>
@@ -1550,7 +1549,7 @@
 </url>
 <url>
   <loc>https://blog.hirokuma.work/linux/setup.html</loc>
-  <lastmod>2025-08-23T00:00:00+00:00</lastmod>
+  <lastmod>2025-08-26T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/nrf/build.html</loc>
@@ -1562,7 +1561,6 @@
 </url>
 <url>
   <loc>https://blog.hirokuma.work/nrf/dfu/index.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/nrf/gatt_error_codes.html</loc>
@@ -1602,58 +1600,44 @@
 </url>
 <url>
   <loc>https://blog.hirokuma.work/tags.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/android.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/bitcoin.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/ble.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/clang.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/embedded.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/jade.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/kotlin.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/lang.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/linux.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/other.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/rust.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/web.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/_tags/windows.html</loc>
-  <lastmod>2024-11-08T00:00:00+00:00</lastmod>
 </url>
 </urlset>

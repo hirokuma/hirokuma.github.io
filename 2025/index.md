@@ -1,5 +1,5 @@
 ---
-layout: default
+title: "年間リスト"
 thisyear: "2025"
 ---
 
