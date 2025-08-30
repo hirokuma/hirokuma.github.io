@@ -5,7 +5,7 @@ tags:
   - bitcoin
   - library
 daily: false
-date: "2025/08/02"
+date: "2025/08/30"
 ---
 
 ## はじめに
@@ -89,14 +89,14 @@ $ sudo cmake --install build
 
 [repository](https://github.com/ElementsProject/libwally-core)
 
-_2025/08/02_: v1.5.0
+_2025/08/30_: v1.5.1
 
 v1.5.0から `--enable-minimal` と `--with-system-secp256k1` の両方は設定できなくなったようだ。
 
 ```console
 $ git clone https://github.com/ElementsProject/libwally-core.git
 $ cd libwally-core
-$ git checkout -b v1.5.0 refs/tags/release_1.5.0
+$ git checkout -b v1.5.1 refs/tags/release_1.5.1
 $ ./tools/autogen.sh
 # no Elements API, use only standard secp256k1 API
 $ ./configure --disable-elements --enable-standard-secp --with-system-secp256k1

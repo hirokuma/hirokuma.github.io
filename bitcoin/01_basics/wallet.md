@@ -11,6 +11,8 @@ date: "2025/03/24"
 
 * [BIP-32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki)
 * [BIP-44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki)
+* [BIP-84 - P2WPKH](https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki)
+* [BIP-86 - P2TR](https://github.com/bitcoin/bips/blob/master/bip-0086.mediawiki)
 
 (ここに階層の図を入れる)
 

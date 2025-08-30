@@ -27,13 +27,20 @@ PS1='\[\033[01;33m\]\w\[\033[0;32m\]\$\[\033[00m\] '
 ### LD_LIBRARY_PATHとPKG_CONFIG_PATH
 
 `make install` で `/usr/local/` に置きたくないときがあって、そういうときに `$HOME/.local/` に置いている。  
-ライブラリの読み込みだけなら `LD_LIBRARY_PATH` で、`pkgconfig` で `CFLAGS` などを設定したければ `PKG_CONFIG_PATH` も設定する。  
+ライブラリの読み込みだけなら `LD_LIBRARY_PATH` で、`pkgconfig` を使って `CFLAGS` などを設定したければ `PKG_CONFIG_PATH` も設定する。  
 検索パスなので、設定していても負担にはなるまい(たぶん)。
 
 ```bash
 export LD_LIBRARY_PATH=$HOME/.local/lib
-export PKG_CONFIG_PATH=$HOME/.local/lib/pkgconfig:/usr/local/lib/pkgconfig
+export PKG_CONFIG_PATH=$HOME/.local/lib/pkgconfig
 ```
+
+`LD_LIBRARY_PATH` になくても `/etc/ld.so.conf.d/` の設定も反映される。
+WSL2のubuntu と RaspbianOS は `/etc/ld.so.conf.d/libc.conf` に `/usr/local/lib` が入っていたので `LD_LIBRARY_PATH` に書かなくても良い。
+
+`PKG_CONFIG_PATH` は `/etc` にそういうのがないので書かないといけない。  
+が  `/usr/local/lib/pkgconfig` などは参照するようになっているので書かなくても良い。
+`pkg-config --variable pc_path pkg-config` で調べられる。
 
 ### ベルを鳴らさない
 
