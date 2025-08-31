@@ -87,45 +87,7 @@ $ sudo cmake --install build
 
 ## libwally-core
 
-[repository](https://github.com/ElementsProject/libwally-core)
-
-_2025/08/30_: v1.5.1
-
-v1.5.0から `--enable-minimal` と `--with-system-secp256k1` の両方は設定できなくなったようだ。
-
-```console
-$ git clone https://github.com/ElementsProject/libwally-core.git
-$ cd libwally-core
-$ git checkout -b v1.5.1 refs/tags/release_1.5.1
-$ ./tools/autogen.sh
-# no Elements API, use only standard secp256k1 API
-$ ./configure --disable-elements --enable-standard-secp --with-system-secp256k1
-$ make
-$ sudo make install
-```
-
-### 備考
-
-* `pkg-config --cflags --libs wallycore`
-    * `export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig`
-* `--prefix=$HOME/.local` などとするとインストール先を変更できる。
-  * install に `sudo` はいらないので楽だと思うが、それ以外のことが面倒になるので、ここは好みで。
-    * include path や library の置き場所が標準ではないのでビルド時などに指定が必要になるなど
-      * `-I${HOME}/.local/include -L ${HOME}/.local/lib -lwallycore -lsecp256k1`
-      * `export LD_LIBRARY_PATH=$HOME/.local/lib:/usr/local/lib`
-      * `export PKG_CONFIG_PATH=$HOME/.local/lib/pkgconfig:/usr/local/lib/pkgconfig`
-* `--enable-standard-secp --with-system-secp256k1` として Blockstream の libsecp256k1-zkp を使わないようにしている
-
-### リンク
-
-* 開発日記
-  * [btc: libwally-core を使う (1) - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250126-btc.html)
-  * [btc: libwally-core を使う (2) - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250127-btc.html)
-  * [btc: libwally-core を使う (3) - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250128-btc.html)
-  * [btc: libwally-core を使う (4) - hiro99ma blog](https://blog.hirokuma.work/2025/01/20250129-btc.html)
-  * [btc: libwally-core で script path (1) - hiro99ma blog](https://blog.hirokuma.work/2025/02/20250204-btc.html)
-  * [btc: libwally-core で script path (2) - hiro99ma blog](https://blog.hirokuma.work/2025/02/20250205-btc.html)
-  * [btc: libwally-core v1.4.0 - hiro99ma blog](https://blog.hirokuma.work/2025/03/20250313-btc.html)
+[専用ページ](./libwally.md)
 
 ## libbitcoin(C++)
 

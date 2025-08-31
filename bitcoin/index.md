@@ -41,6 +41,7 @@ date: "2025/06/19"
 ## ライブラリ
 
 * [C/C++](library/clang.md)
+  * [libwally-core](library/libwally.md)
 * [JavaScript/TypeScript](library/js.md)
 * [Go](library/go.md)
 
