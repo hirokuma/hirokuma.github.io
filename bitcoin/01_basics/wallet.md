@@ -16,6 +16,25 @@ date: "2025/03/24"
 
 (ここに階層の図を入れる)
 
+[BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) は鍵導出について、[BIP-44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki) は各階層(path)の用途を決めている。  
+
+```
+m / purpose' / coin_type' / account' / change / address_index
+```
+
+「ウォレットを作る」としたときに 12単語や 24単語のニモニック(場合によってはパスフレーズも)を記録するが、
+それだけだとこの階層では最初の `m` だけしか決まらない。  
+`purpose'` が P2TR(86') や P2WPKH(84') などを決めているので、これも記録しておかないと面倒だ(数種類なので全部試せば良いのだが、それが面倒だと思う)。  
+`coin_type'` は "Bitcoin mainnet" や "Bitcoin testnet"(regtest などもたぶん含む)、おそらく Ethereum なども使っているんじゃ無かったか。  
+`account'` はおそらく切り替えて使いたい場合、`change` は `0` が受信アドレス(公開用)、`1` がお釣りアドレス(内部用)。
+`address_index` はアドレスを作るごとに増やしていく値。
+
+ウォレットに紐付く UTXO を探す場合、`address_index` をインクリメントさせながら調べていく。
+32 bit あるので全部の空間を調べることはできない。
+アドレスを作ったけど受信しなかったということもあるので、
+デフォルトでは UTXO が見つからないアドレスが 20個続いた場合は探索を打ち切る([gap limit](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#address-gap-limit))。  
+あくまでデフォルトなので、20個調べたら必ず打ち切る、というものではない。
+
 ### seed
 
 seed は 128～512 bits の乱数である。  
