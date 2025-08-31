@@ -41,6 +41,8 @@ $ sudo make install
 
 ## 使い方
 
+コードをいくつか載せることがあるが、長くなるのでエラー処理は省いている。
+
 ### 引数の順番
 
 だいたい、前半が入力系、後半が出力系になっている。
@@ -68,6 +70,20 @@ $ sudo make install
 APIの説明にだいたい書かれていると思う。
 
 私の場合、[valgrind](https://valgrind.org/) で解放漏れをチェックしている。
+
+### 始めと終わり
+
+libwally-core は内部で [secp256k1](./clang.md#libsecp256k1) を使っている。  
+secp256k1は使い始めに [secp256k1_context_randomize()](https://github.com/bitcoin-core/secp256k1/blob/f36afb8b3dd7daf9edf4bf15c49fcd540f8ce393/examples/schnorr.c#L40-L43) を使うことを推奨しているので、
+[wally_secp_randomize()](https://wally.readthedocs.io/en/latest/core.html#c.wally_secp_randomize) を呼び出しておくのが良い。  
+乱数の生成は secp256k1 の[サンプル](https://github.com/bitcoin-core/secp256k1/blob/f36afb8b3dd7daf9edf4bf15c49fcd540f8ce393/examples/examples_util.h#L43)を参照するのは悪くないと思う(secp256k1 の関数は戻り値が OK=1, NG=0 と libwally-core と逆なので注意)。
+
+```c
+  wally_init(0);
+  wally_secp_randomize(bytes, bytes_len);
+  ......
+  wally_cleanup(0);
+```
 
 ## リンク
 
