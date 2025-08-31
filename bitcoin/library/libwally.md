@@ -143,6 +143,28 @@ struct ext_key {
   bip32_key_from_seed(seed, sizeof(seed), BIP32_VER_TEST_PRIVATE, 0, &hdkey);
 ```
 
+#### 階層
+
+BIP-44 に従う場合、master 以下は深度が 5つまである([HDウォレット参照](../01_basics/wallet.md))。
+
+```
+m / purpose' / coin_type' / account' / change / address_index
+```
+
+これを `struct ext_key` に反映させるためにいくつかの API がある。  
+[`bip32_key_from_parent()`](https://wally.readthedocs.io/en/latest/bip32.html#c.bip32_key_from_parent) や [`bip32_key_from_parent_path_str()`](https://wally.readthedocs.io/en/latest/bip32.html#c.bip32_key_from_parent_path_str) のような bip32_key_from_parent系を使うことになる。  
+これらは階層を下に降りる API である。  
+他の階層はともかく `address_index` は一番下でインクリメント横方向に展開するだけである。  
+`bip32_key_from_parent_path_str()` のように文字列で `"m/86'/0'/0'/0/1"` のような指定はわかりやすいのだが、それぞれ master から階層を降りていかないと見つけることができない。  
+`bip32_key_from_parent()` は相対的に下に降りる
+("_str" 系も相対的にできるのかもしれないが調べていない)。
+
+今の調査段階での感想になるが一般的なウォレットとして使う場合、
+`m/purpose'/coin_type'/account'` までは str系で降りていき、次に external と internal に `bip32_key_from_parent()` で分かれ、
+あとは別々のインデックス値で `bip32_key_from_parent()` を使って鍵管理をするとよいのではなかろうか。  
+
+(調査中)
+
 ### 秘密鍵からP2TRアドレスを取得
 
 [アドレス系API](https://wally.readthedocs.io/en/latest/address.html) に [`wally_bip32_key_to_addr_segwit()`](https://wally.readthedocs.io/en/latest/address.html#c.wally_bip32_key_to_addr_segwit) があるのだが、これは P2WPKH 用である。  
