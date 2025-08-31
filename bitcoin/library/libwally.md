@@ -162,6 +162,7 @@ m / purpose' / coin_type' / account' / change / address_index
 今の調査段階での感想になるが一般的なウォレットとして使う場合、
 `m/purpose'/coin_type'/account'` までは str系で降りていき、次に external と internal に `bip32_key_from_parent()` で分かれ、
 あとは別々のインデックス値で `bip32_key_from_parent()` を使って鍵管理をするとよいのではなかろうか。  
+つまり、depth=3 で一旦止め、depth=4 で 2つに分け、depth=5 で個別にインデックス管理するのである。
 
 (調査中)
 
