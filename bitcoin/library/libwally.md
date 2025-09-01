@@ -157,7 +157,9 @@ m / purpose' / coin_type' / account' / change / address_index
 他の階層はともかく `address_index` は一番下でインクリメント横方向に展開するだけである。  
 `bip32_key_from_parent_path_str()` のように文字列で `"m/86'/0'/0'/0/1"` のような指定はわかりやすいのだが、それぞれ master から階層を降りていかないと見つけることができない。  
 `bip32_key_from_parent()` は相対的に下に降りる
-("_str" 系も相対的にできるのかもしれないが調べていない)。
+("_str" 系も相対的にできるのかもしれないが調べていない)。  
+なので、"_str" 系は階層の分だけ処理を繰り返すことになるので効率があまりよくないはずだ。
+`address_index` をインクリメントしてアドレスを作るだけなら `bip32_key_from_parent()` の方が速いだろう。
 
 今の調査段階での感想になるが一般的なウォレットとして使う場合、
 `m/purpose'/coin_type'/account'` までは str系で降りていき、次に external と internal に `bip32_key_from_parent()` で分かれ、
@@ -203,6 +205,15 @@ m / purpose' / coin_type' / account' / change / address_index
 [wally_bip32_key_to_addr_segwit()の実装](https://github.com/ElementsProject/libwally-core/blob/a445157d180c5d67d7f6f0d8abe9c84d956d8dad/src/address.c#L67) を参考にして `struct ext_key` を直接参照するくらいしかなさそうだ。
 `priv_key` の先頭の 1バイトは フラグなので注意。  
 また、`struct ext_key` は public only の場合もあるのでフラグが `BIP32_FLAG_KEY_PRIVATE` であることを確認すること(もちろん変数が正しく設定されているという前提)。
+
+(調査中)
+
+### テストデータ
+
+* [BIP32 Test Vectors](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vectors)
+  * seed と ext pub/prv 
+* [BIP39 Test vectors](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki#user-content-Test_vectors)
+  * Trezor と bip32JP のテストコード
 
 ## リンク
 
