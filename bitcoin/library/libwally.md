@@ -67,6 +67,39 @@ DeepWiki に登録があるので、ひとまず質問してみるのも良い�
 私の場合、わからなかったらライブラリにログ出力を埋め込んでいる。
 面倒だが手っ取り早い。
 
+#### written のサイズ不足
+
+API で結果としてバッファに書き込んだ量を返すことがある。仮引数名はだいたい `written` になっている。
+
+たとえば [wally_scriptpubkey_p2tr_from_bytes](https://wally.readthedocs.io/en/latest/script.html#c.wally_scriptpubkey_p2tr_from_bytes)を見てみよう。
+
+```c
+int wally_scriptpubkey_p2tr_from_bytes(const unsigned char *bytes, size_t bytes_len,
+                                       uint32_t flags,
+                                       unsigned char *bytes_out, size_t len,
+                                       size_t *written)
+```
+
+バッファのサイズは `WALLY_SCRIPTPUBKEY_P2TR_LEN` 以上であることを期待している。
+
+ではそれより小さかった場合はどうなるのかというと、
+[コード](https://github.com/ElementsProject/libwally-core/blob/a445157d180c5d67d7f6f0d8abe9c84d956d8dad/src/script.c#L1318-L1322) を見るとこうなっている。
+
+```c
+    if (len < WALLY_SCRIPTPUBKEY_P2TR_LEN) {
+        /* Tell the caller their buffer is too short */
+        *written = WALLY_SCRIPTPUBKEY_P2TR_LEN;
+        return WALLY_OK;
+    }
+```
+
+エラーにはならないが処理を行わず `written` に `WALLY_SCRIPTPUBKEY_P2TR_LEN` を代入している。
+
+これはなかなか難しい。  
+わざわざこうしたのは、API によってはバッファサイズが決められないので試行してもらうタイプもあるからだろうか？  
+[DeepWikiさん](https://deepwiki.com/search/wallyscriptpubkeyp2trfrombytes_4e3d031a-cd7e-4b02-a898-3961aef28112) によると全体でそうなっているそうだ。  
+ともかく、`WALLY_OK` だったとしても `written` が `len` 以下であることも確認する必要があるということだ。
+
 ### メモリの解放
 
 いくつかのAPIはメモリを確保して返すものがある。  
