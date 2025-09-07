@@ -27,34 +27,51 @@ Bitcoin で新しく追加された方式(2025年03月現在)。
 * スクリプトから支払う際、これまではスクリプト全体を載せていたが、P2TRスクリプトの場合は条件を満たすスクリプトだけで済む。
 * witness version 1
 
-## シュノア署名とスクリプト
+## scriptPubKey
 
-シュノアは "Shnorr" で[人名](https://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%A9%E3%82%A6%E3%82%B9%E3%83%BB%E3%82%B7%E3%83%A5%E3%83%8E%E3%82%A2)から来ている。  
-楕円曲線の署名は ECDSA だがシュノア署名は何DSAなのかわからなかった。
+scriptPubKey は Bitcoin トランザクションでは転送先アドレスに相当する。  
+人間が見るときは文字列のアドレスに変換されているが、トランザクションの中ではバイナリ値である。
+
+`scriptPubKey` は [Witness Program](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki#user-content-Witness_program) のルールが使われる。  
+[Witness Version が 1](https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki#script-validation-rules) なので `OP_1` = `0x51`、
+次は 32 バイトのデータが続くので `20`。  
+最後に tweaked public key で、以前の圧縮公開鍵のように先頭に `02` や `03` はつかない。  
+圧縮公開鍵の先頭 1バイトを削除したのと同じ値である。
+
+P2TR より前はシングル鍵署名には "署名" と "公開鍵" が必要だったが、
+P2TR は scriptPubKey に公開鍵が載っているのでシングル鍵であれば署名だけで良い。
+その分サイズが小さくなる。
+
+P2TR アドレス(witness version が 1の `scriptPubKey`)はシングル鍵(Key Path Spend)もスクリプト(Script Path Spend)も同じフォーマットなので区別が付かない。  
+見分けられるのは redeem するトランザクションが展開されたときで、witness stack が 1つならシングル鍵、2つ以上であればスクリプトである(0個は失敗する)。
+
+## シュノア署名
+
+シュノアは "Shnorr" で[人名](https://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%A9%E3%82%A6%E3%82%B9%E3%83%BB%E3%82%B7%E3%83%A5%E3%83%8E%E3%82%A2)から来ている。
 
 いろいろシュノア署名について書いてあるサイトがあるが、
 トランザクションを作る実装者目線としては MuSig というマルチシグのような動作がシングル鍵と同じトランザクションでできるのが大きいかなと思った。
 シュノア署名は複数の署名を集約することができるからである。
 
-それ以外はちょっとしたことだが、署名のサイズが固定になったというところか。  
+署名のサイズが 64バイト固定になった。  
 ECDSA の場合は ASN.1 というフォーマットだったので、署名データの先頭に最上位ビットが立っているとマイナス値と見なされないようにするため `0x00` を付けていた。  
 それが `R` と `S` のそれぞれにあったので署名サイズがトランザクションによって微妙に違う(0～+2)。  
-シュノア署名になってそれを断ち切ることができたのか、きっちり 64バイトで済むようになった。  
-署名型も "`SIGHASH_DEFAULT`" ならトランザクションから省略できるようになっている。
+シュノア署名ではバイナリ値だけを使うようになり、きっちり 64バイトで済むようになった。  
+署名型も `SIGHASH_DEFAULT` ならトランザクションから省略できるようになっているので 64バイトである。
 
-シュノア署名の影響か taproot の影響かわからないが、Bitcoin スクリプトの命令に変化が生じている。  
-まず、署名を検証する命令の `OP_CHECKSIG` や `OP_CHECKSIGVERIFY` が tapscript で使われる場合はシュノア署名用になっている。  
-またマルチシグ用の `OP_CHECKMULTISIG` や `OP_CHECKMULTISIGVERIFY` が tapscript では無効になった。`OP_RETURN` と同じ扱いになるそうだ。  
+## スクリプトの変更
+
+P2TR では Bitcoin スクリプトの命令に変化が生じている。
+
+署名を検証する命令の `OP_CHECKSIG` や `OP_CHECKSIGVERIFY` が tapscript で使われる場合はシュノア署名用になっている。
+
+マルチシグ用の `OP_CHECKMULTISIG` や `OP_CHECKMULTISIGVERIFY` が tapscript では無効になった。`OP_RETURN` と同じ扱いになるそうだ。  
 その代わりに `OP_CHECKSIGADD` が使えるようになり、マルチシグ命令ではなく署名の検証に成功した数を加算して M-of-N のマルチシグを自分でスクリプトを作って実現する方式になっている。  
 この辺りは [BIP-342](https://github.com/bitcoin/bips/blob/master/bip-0342.mediawiki#design) を参考にするのが良い。
 
-P2TR アドレス(witness version が 1の `scriptPubKey`)を見てもシングル鍵(Key Path Spend)かスクリプト(Script Path Spend)か区別がつかない。
-見分けられるのは redeem するトランザクションが展開されたときで、witness stack が 1つならシングル鍵、2つ以上であればスクリプトである(0個は失敗する)。
-
 ## シングル鍵
 
-P2TR のシングル鍵での支払いは Key Path Spend などと呼ばれる。  
-(スクリプトの方は Script Path。)
+P2TR のシングル鍵での支払いは Key Path Spend などと呼ばれる(スクリプトの方は Script Path)。
 
 今までは、秘密鍵から公開鍵を作り、公開鍵から送金先を指す `scriptPubKey` 向けのデータを作っていた。  
 P2TR では今までの秘密鍵を "Internal Private Key"、そこから作った公開鍵を "Internal Public Key" と呼ぶようになった。  
@@ -64,22 +81,13 @@ Tweaked Public Key を作る過程で出てきた値を使って Internal Privat
 
 ![image](images/bip341-1.png)
 
-`scriptPubKey` は [Witness Program](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki#user-content-Witness_program) のルールが使われる。  
-[Witness Version が 1](https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki#script-validation-rules) なので `OP_1` = `0x51`、
-続けてデータ長 は 32 バイト = `0x20`、
-そして Tweaked Public Key がそのまま 32バイト続く。  
-そのおかげで署名の検証ではスクリプトに Public Key を載せずに済み、トランザクションサイズが少し小さくなっている。
-以前は `scriptPubKey` には公開鍵を `HASH160` した値が載っていたので、
-スクリプトには公開鍵が必要だったし、検証するときに公開鍵から `scriptPubKey` になることの確認が必要だったので、
-サイズだけでなく検証の負荷もちょっと下がったのだと思う。
-
-redeem する署名データは witness の最初のスタックに置く。
-公開鍵は対象トランザクションの scriptPubKey が Tweaked Public Key なので witness に置かなくてよい。  
-つまりスタックは 1つだけしか使わない。
-
+redeem する署名データは witness の最初のスタックに置く。  
 署名データはシュノア署名したもので、署名タイプが `SIGHASH_DEFAULT` の場合は署名データの 64 バイトだけでよい。
 `SIGHASH_ALL` などを使うといつものように署名データの末尾に署名タイプ値の 1 バイトを載せる。  
-`SIGHASH_DEFAULT` も `SIGHASH_ALL` もトランザクションデータ全体を使うのは同じなので、特に `SIGHASH_ALL` を使う理由はないだろう。
+`SIGHASH_DEFAULT` も `SIGHASH_ALL` もトランザクションデータ全体を使うのは同じなので、特に `SIGHASH_ALL` を使う理由はないだろう。  
+
+公開鍵は不要で witness に置かなくてよい(scriptPubKey が Tweaked Public Key なのでそれを使う)。  
+つまりスタックは 1つだけしか使わない。
 
 ## スクリプト
 
@@ -200,4 +208,5 @@ BIP-341 周辺の P2TR について概要をまとめた。
   * [btc: libsecp256k1 は MuSig 2 だった](/2025/02/20250202-btc.html)
   * [btc: libwally-core で script path (1)](/2025/02/20250204-btc.html)
   * [btc: libwally-core で script path (2)](/2025/02/20250205-btc.html)
-
+  * [btc: シュノア署名のトリック](https://blog.hirokuma.work/2025/04/20250428-btc.html)
+  * [btc: シュノア署名のトリック(2)](https://blog.hirokuma.work/2025/08/20250827-btc.html)
