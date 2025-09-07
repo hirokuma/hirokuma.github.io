@@ -42,6 +42,8 @@ P2TR より前はシングル鍵署名には "署名" と "公開鍵" が必要�
 P2TR は scriptPubKey に公開鍵が載っているのでシングル鍵であれば署名だけで良い。
 その分サイズが小さくなる。
 
+![image](images/bip341-3.png)
+
 P2TR アドレス(witness version が 1の `scriptPubKey`)はシングル鍵(Key Path Spend)もスクリプト(Script Path Spend)も同じフォーマットなので区別が付かない。  
 見分けられるのは redeem するトランザクションが展開されたときで、witness stack が 1つならシングル鍵、2つ以上であればスクリプトである(0個は失敗する)。
 
