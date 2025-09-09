@@ -67,7 +67,9 @@ segwit 以前はこの構造のみだった。
 | item | size | unit |
 |---|---|---|
 | value | 8 | `uint64_t` |
-| scriptPubKey | | script |
+| [scriptPubKey](./scriptpubkey.md) | | script |
+
+* value は [dust limit](./dustlimit.md) を下回らないこと
 
 ### script_witness
 
@@ -394,6 +396,8 @@ P2TR というか、シュノア署名の場合はサイズが 64 バイト固�
 ## 関連ページ
 
 * [value](./value.md)
+* [dust limit](./dustlimit.md)
+* [scriptPubKey](./scriptpubkey.md)
 * [スクリプト](./script.md)
 * [アドレス](./address.md)
 * [ブロック](./blocks.md)
