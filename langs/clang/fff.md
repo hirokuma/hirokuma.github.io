@@ -3,6 +3,7 @@ layout: "record"
 title: "clang: テストフレームワーク fff"
 tags:
   - clang
+  - tools
 daily: false
 date: "2025/07/08"
 ---
