@@ -4,7 +4,7 @@ title: "rust: クレート、パッケージ、モジュール"
 tags:
   - rust
 daily: false
-date: "2025/07/08"
+date: "2025/09/20"
 ---
 
 ## 概要
@@ -78,9 +78,9 @@ fn main() {
 }
 ```
 
-### `mod名`のファイルを作る
+### `mod名` のファイルを作る
 
-例えば`hello_mod.rs`というファイルを作り、その中に`hello_func()`という関数を作ったとする。
+例えば `hello_mod.rs` というファイルを作り、その中に `hello_func()` という関数を作ったとする。
 
 ```rust
 pub fn hello_func() {
@@ -98,22 +98,54 @@ fn main() {
 }
 ```
 
-つまり`mod <ファイル名> {}`で定義したのと同じ意味を持つことになる。
+つまり `mod <ファイル名> {}` で定義したのと同じ意味を持つことになる。
 
 ### ディレクトリを作ってその下に`mod名`のファイルを作る
 
 同じディレクトリではなく別のディレクトリにしたい場合もある。  
 
-`hello_func()`を含んだファイルを`hello_mod2.rs`とする。  
-ディレクトリ`hello_mod1`を作って`hello_mod2.rs`を移動させる。
+`hello_func()` を含んだファイルを `hello_mod2.rs` とする。  
+ディレクトリ `hello_mod1` を作って `hello_mod2.rs` を移動させる。
 
-そうすると、なんとなく`main.rs`からは`mod hello_mod1::hello_mod2;`と書けばよさそうな気がするが、そうは書けない。  
-`mod`に書けるのは単独のモジュール名だけで`::`は使えないのだった。  
-その代わりに、`hello_mod1.rs`というファイルを`main.rs`と同じディレクトリに作り、その中で`pub mod hello_mod2;`と書く。
+そうすると、なんとなく `main.rs` からは `mod hello_mod1::hello_mod2;` と書けばよさそうな気がするが、そうは書けない。  
+`mod` に書くことができるのは単独のモジュール名だけで `::` は使えないのだった。  
+その代わりに、`hello_mod1.rs` というファイルを `main.rs` と同じディレクトリに作り、その中で `pub mod hello_mod2;` と書く。
 
 * [ファイルの階層構造 - Rust By Example](https://doc.rust-lang.org/stable/rust-by-example/ja/mod/split.html)
 
-以前は`mod.rs`というファイルに書く方式だったが今ではこうらしい。
+以前は `mod.rs` というファイルに書く方式だったが今ではそうしなくてもよいそうだ。  
+テキストエディタのタブで "mod.rs" が複数表示されると面倒だ、みたいな理由らしいので特に理由がなければモジュールごとのファイル名を使えばよいだろう。
+
+* [No more mod.rs](https://doc.rust-lang.org/edition-guide/rust-2018/path-changes.html#no-more-modrs)
+
+現在の方式に倣うとこうなる(はず。少なくともエラーにはならない)。  
+なんとなく `main.rs` にある `mod` はなくてもよいかと思ったのだがダメだった。
+
+* `src/main.rs`
+
+```rust
+mod hello_mod1;
+
+use hello_mod1::hello_mod2;
+
+fn main() {
+    hello_mod2::hello_func();
+}
+```
+
+* `src/hello_mod1.rs`
+
+```rust
+pub mod hello_mod2;
+```
+
+* src/hello_mod1/hello_mod2.rs
+
+```rust
+pub fn hello_func() {
+    println!("Hello, abc!");
+}
+```
 
 ### モジュールツリー
 
