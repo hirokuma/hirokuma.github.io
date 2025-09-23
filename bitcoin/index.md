@@ -26,9 +26,9 @@ date: "2025/06/19"
   * [PSBT](01_basics/psbt.md)
   * [MuSig2シーケンス](musig/musig2_sequence.md)
 * [アドレス](01_basics/address.md)
-  * [P2WPKH](02_bip/p2wpkh.md)
-  * [P2WSH](02_bip/p2wsh.md)
-  * [P2TR](02_bip/p2tr.md)
+  * [P2WPKH](02_addr/p2wpkh.md)
+  * [P2WSH](02_addr/p2wsh.md)
+  * [P2TR](02_addr/p2tr.md)
 * [ウォレット](01_basics/wallet.md)
 * [txout proof](01_basics/txoutproof.md)
 
