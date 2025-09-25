@@ -66,12 +66,12 @@ Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし�
 
 | name | length | note |
 | ---- | ---- | ---- |
-| version bytes | 4 |  |
-| depth | 1 |
-| fingerprint | 4 |
-| child number | 4 |
-| chain code | 32 |
-| privkey or pubkey | 33 |
+| [version bytes](#prefix-と-version-bytes) | 4 |  |
+| depth | 1 | |
+| [fingerprint](#fingerprint) | 4 | |
+| child number | 4 | |
+| [chain code](#master-key-と-chain-code) | 32 | |
+| privkey or pubkey | 33 | privkey は先頭に `00` を付ける |
 
 #### prefix と version bytes
 
