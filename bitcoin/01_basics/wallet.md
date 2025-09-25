@@ -75,14 +75,12 @@ Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし�
 
 #### prefix と version bytes
 
-* P2PKH?: `xprv`(0x0488ade4), `xpub`(0x0488b21e) ([BIP-32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format))
-  * testnet: `tprv`(0x04358394), `tpub`(0x043587cf)
-* P2WPKH-nested-in-P2SH: `yprv`(0x049d7878), `ypub`(0x049d7cb2) ([BIP-49](https://github.com/bitcoin/bips/blob/master/bip-0049.mediawiki#extended-key-version))
-  * testnet: `uprv`(0x044a4e28), `upub`(0x044a5262)
-* P2WPKH: `zprv`(0x04b2430c), `zpub`(0x04b24746) ([BIP-84](https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki#extended-key-version))
-  * testnet: `vprv`(0x045f18bc), `vpub`(0x045f1cf6)
-* P2TR(single key): `xprv`, `xpub` ([BIP-86](https://github.com/bitcoin/bips/blob/master/bip-0086.mediawiki#test-vectors))
-  * testnet: `tprv`, `tpub`
+| type | mainnet private | mainnet public | testnet private | testnet public |
+| ---- | ---- | ---- | ---- | ---- |
+| [P2PKH](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format) | `xprv`(`0x0488ade4`) | `xpub`(`0x0488b21e`) | `tprv`(`0x04358394`) | `tpub`(`0x043587cf`) |
+| [P2WPKH-nested-in-P2SH](https://github.com/bitcoin/bips/blob/master/bip-0049.mediawiki#extended-key-version) | `yprv`(`0x049d7878`) | `ypub`(`0x049d7cb2`) | `uprv`(`0x044a4e28`) | `upub`(`0x044a5262`) |
+| [P2WPKH](https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki#extended-key-version) | `zprv`(`0x04b2430c`) | `zpub`(`0x04b24746`) | `vprv`(`0x045f18bc`) | `vpub`(`0x045f1cf6`) |
+| [P2TR(single key)](https://github.com/bitcoin/bips/blob/master/bip-0086.mediawiki#test-vectors) | `xprv`(`0x0488ade4`) | `xpub`(`0x0488b21e`) | `tprv`(`0x04358394`) | `tpub`(`0x043587cf`) |
 
 ### 参考
 
