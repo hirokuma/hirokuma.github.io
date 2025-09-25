@@ -4,7 +4,7 @@ title: "ウォレット"
 tags:
   - bitcoin
 daily: false
-date: "2025/03/24"
+date: "2025/09/25"
 ---
 
 ## HDウォレット
@@ -55,25 +55,34 @@ Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし�
 * extended private key は前半 256 bit が private key で後半 256 bit が chain code
 * extended public key は前半 256 bit がその public key で後半 256 bit が chain code
 
-#### シリアライズ
+### fingerprint
 
-プレフィクス
+[Key identifiers](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#key-identifiers)
 
-* P2PKH?: `xprv`, `xpub` ([BIP-32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format))
-* P2WPKH-nested-in-P2SH: `yprv`, `ypub` ([BIP-49](https://github.com/bitcoin/bips/blob/master/bip-0049.mediawiki#extended-key-version))
-* P2WPKH: `zprv`, `zpub` ([BIP-84](https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki#extended-key-version))
+階層として 1つ上の extended public key を HASH160 した先頭 4バイトを fingerprint と呼ぶ。  
+ただし master key の場合は `00000000` を使用する。
+
+### シリアライズ
+
+| name | length | note |
+| ---- | ---- | ---- |
+| version bytes | 4 |  |
+| depth | 1 |
+| fingerprint | 4 |
+| child number | 4 |
+| chain code | 32 |
+| privkey or pubkey | 33 |
+
+#### prefix と version bytes
+
+* P2PKH?: `xprv`(0x0488ade4), `xpub`(0x0488b21e) ([BIP-32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format))
+  * testnet: `tprv`(0x04358394), `tpub`(0x043587cf)
+* P2WPKH-nested-in-P2SH: `yprv`(0x049d7878), `ypub`(0x049d7cb2) ([BIP-49](https://github.com/bitcoin/bips/blob/master/bip-0049.mediawiki#extended-key-version))
+  * testnet: `uprv`(0x044a4e28), `upub`(0x044a5262)
+* P2WPKH: `zprv`(0x04b2430c), `zpub`(0x04b24746) ([BIP-84](https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki#extended-key-version))
+  * testnet: `vprv`(0x045f18bc), `vpub`(0x045f1cf6)
 * P2TR(single key): `xprv`, `xpub` ([BIP-86](https://github.com/bitcoin/bips/blob/master/bip-0086.mediawiki#test-vectors))
-
-### 参考
-
-* 開発日記
-  * [btc: ニモニック](https://blog.hirokuma.work/2025/03/20250324-btc.html)
-
-## Output Descriptors
-
-under construction...
-
-* [BIP-380](https://github.com/bitcoin/bips/blob/master/bip-0380.mediawiki)
+  * testnet: `tprv`, `tpub`
 
 ### 参考
 
@@ -91,3 +100,4 @@ under construction...
 * [トランザクション](./transactions.md)
 * [アドレス](./address.md)
 * [スクリプト](./script.md)
+* [Descriptors](./descriptors.md)

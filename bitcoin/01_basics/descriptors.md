@@ -4,7 +4,7 @@ title: "Output Descriptors"
 tags:
   - bitcoin
 daily: false
-date: "2025/09/23"
+date: "2025/09/25"
 draft: true
 ---
 
@@ -64,6 +64,6 @@ hardened は `h` でも `'` (シングルクォーテーション) でもよい�
   * 省略されているとウォレットが読み込まないかもしれない
 * 8文字の英数字
   * 使用する文字は [bech32](https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki#bech32) と同じく `qpzry9x8` `gf2tvdw0` `s3jn54kh` `ce6mua7l`
-* error correcting checksum になっているので多少であれば自動で修正できるのだと思うが、そこまで期待しない方がよいだろう(私の感想)
+* error correcting checksum になっているので多少であれば自動で修正できるのだと思うが、限度があるので期待しすぎないようにしよう
 * Python3 での checksum 算出とチェックコード
   * [gist - descriptors_checksum.py](https://gist.github.com/hirokuma/bbae79effd16d8345e7fa4f5fa1d70ee)
