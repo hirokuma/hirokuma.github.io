@@ -82,20 +82,10 @@ Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし�
 | [P2WPKH](https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki#extended-key-version) | `zprv`(`0x04b2430c`) | `zpub`(`0x04b24746`) | `vprv`(`0x045f18bc`) | `vpub`(`0x045f1cf6`) |
 | [P2TR(single key)](https://github.com/bitcoin/bips/blob/master/bip-0086.mediawiki#test-vectors) | `xprv`(`0x0488ade4`) | `xpub`(`0x0488b21e`) | `tprv`(`0x04358394`) | `tpub`(`0x043587cf`) |
 
-### 参考
-
-* 開発日記
-  * [btc: Output Descriptors](https://blog.hirokuma.work/2025/02/20250224-btc.html)
-  * [btc: Output Descriptors (2)](https://blog.hirokuma.work/2025/02/20250225-btc2.html)
-  * [btc: Output Descriptors (3)](https://blog.hirokuma.work/2025/03/20250301-btc.html)
-  * [btc: Output Descriptors (4)](https://blog.hirokuma.work/2025/03/20250302-btc.html)
-  * [btc: Output Descriptors (5)](https://blog.hirokuma.work/2025/03/20250303-btc.html)
-
 ## 関連ページ
 
 * [bitcoind](./bitcoind.md)
-* [ブロック](./blocks.md)
 * [トランザクション](./transactions.md)
 * [アドレス](./address.md)
 * [スクリプト](./script.md)
-* [Descriptors](./descriptors.md)
+* [Output Descriptors](./descriptors.md)

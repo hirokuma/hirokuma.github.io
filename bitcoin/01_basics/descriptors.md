@@ -13,13 +13,13 @@ draft: true
 BIP-32 の HDウォレットや BIP-39 のニモニックだけでは解決できないウォレットに関する問題点を解決する。
 
 * [BIP-380](https://github.com/bitcoin/bips/blob/master/bip-0380.mediawiki)
-  * [BIP-381](https://github.com/bitcoin/bips/blob/master/bip-0381.mediawiki)
-  * [BIP-382](https://github.com/bitcoin/bips/blob/master/bip-0382.mediawiki)
-  * [BIP-383](https://github.com/bitcoin/bips/blob/master/bip-0383.mediawiki)
-  * [BIP-384](https://github.com/bitcoin/bips/blob/master/bip-0384.mediawiki)
-  * [BIP-385](https://github.com/bitcoin/bips/blob/master/bip-0385.mediawiki)
-  * [BIP-386](https://github.com/bitcoin/bips/blob/master/bip-0386.mediawiki)
-  * [BIP-390](https://github.com/bitcoin/bips/blob/master/bip-0390.mediawiki)
+  * [BIP-381 - pk, pkh, sh](https://github.com/bitcoin/bips/blob/master/bip-0381.mediawiki)
+  * [BIP-382 - wpkh, wsh](https://github.com/bitcoin/bips/blob/master/bip-0382.mediawiki)
+  * [BIP-383 - multi, sortedmulti](https://github.com/bitcoin/bips/blob/master/bip-0383.mediawiki)
+  * [BIP-384 - combo](https://github.com/bitcoin/bips/blob/master/bip-0384.mediawiki)
+  * [BIP-385 - raw, addr](https://github.com/bitcoin/bips/blob/master/bip-0385.mediawiki)
+  * [BIP-386 - tr, TREE](https://github.com/bitcoin/bips/blob/master/bip-0386.mediawiki)
+  * [BIP-390 - musig](https://github.com/bitcoin/bips/blob/master/bip-0390.mediawiki)
 
 ## Output Descriptors を考案するに至った問題点
 
@@ -67,3 +67,20 @@ hardened は `h` でも `'` (シングルクォーテーション) でもよい�
 * error correcting checksum になっているので多少であれば自動で修正できるのだと思うが、限度があるので期待しすぎないようにしよう
 * Python3 での checksum 算出とチェックコード
   * [gist - descriptors_checksum.py](https://gist.github.com/hirokuma/bbae79effd16d8345e7fa4f5fa1d70ee)
+
+### 参考
+
+* 開発日記
+  * [btc: Output Descriptors](https://blog.hirokuma.work/2025/02/20250224-btc.html)
+  * [btc: Output Descriptors (2)](https://blog.hirokuma.work/2025/02/20250225-btc2.html)
+  * [btc: Output Descriptors (3)](https://blog.hirokuma.work/2025/03/20250301-btc.html)
+  * [btc: Output Descriptors (4)](https://blog.hirokuma.work/2025/03/20250302-btc.html)
+  * [btc: Output Descriptors (5)](https://blog.hirokuma.work/2025/03/20250303-btc.html)
+
+## 関連ページ
+
+* [bitcoind](./bitcoind.md)
+* [トランザクション](./transactions.md)
+* [アドレス](./address.md)
+* [スクリプト](./script.md)
+* [ウォレット](./wallet.md)
