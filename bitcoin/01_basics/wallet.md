@@ -42,7 +42,7 @@ BIP-32 では 256 bit を推奨していたが今もそうなのかは未確認�
 
 ### master key と chain code
 
-*　[Master key generation](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#master-key-generation)
+* [Master key generation](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#master-key-generation)
 
 Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし、それを半分に割って <code class="language-plaintext highlighter-rouge">I<sub>L</sub></code>、<code class="language-plaintext highlighter-rouge">I<sub>R</sub></code> とする(左半分と右半分)。  
 左半分が master secret key、右半分が master chain code である。  
@@ -50,14 +50,14 @@ Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし�
 
 ### 拡張鍵
 
-[extended key](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#extended-keys) はこう。
+* [extended key](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#extended-keys) はこう。
 
 * extended private key は前半 256 bit が private key で後半 256 bit が chain code
 * extended public key は前半 256 bit がその public key で後半 256 bit が chain code
 
 ### fingerprint
 
-[Key identifiers](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#key-identifiers)
+* [Key identifiers](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#key-identifiers)
 
 階層として 1つ上の extended public key を HASH160 した先頭 4バイトを fingerprint と呼ぶ。  
 ただし master key の場合は `00000000` を使用する。
