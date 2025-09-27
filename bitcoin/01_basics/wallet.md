@@ -4,7 +4,7 @@ title: "ウォレット"
 tags:
   - bitcoin
 daily: false
-date: "2025/09/25"
+date: "2025/09/26"
 ---
 
 ## HDウォレット
@@ -26,47 +26,77 @@ Bitcoinではアドレスを使い回すのをよしとしないので、受信�
 
 (ここに階層の図を入れる)
 
-[BIP-32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) は鍵導出について、[BIP-44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki) は P2PKH の各階層(path)の用途を決めている。
+### 鍵導出
+
+HDウォレットは階層構造になっていて、最上位の `m` から下に降りていく。  
+`/` はファイル構造のパス区切りと同じものと考えて良い。  
+各階層は実際には符号無し32bit整数で表される。
+`'` は "hardened" を意味し、最上位ビットを立てる。
+
+Bitcoin の運用としては次の説明にあるように 5階層としているが、計算上はどの階層でも鍵導出できる。
+自作するときにこの階層を間違うと他のウォレットで鍵の復元ができなくなるので注意しよう。
+
+### 階層構造の運用
+
+Bitcoin で BIP-32 の HDウォレットを使う場合は以下の階層構造を用いる(BIP44, 49, 84, 86など)。
 
 ```
 m / purpose' / coin_type' / account' / change / address_index
 ```
 
+`m` がルートで、深さを 0 と考えると `address_index` は深さが 5 になる。  
+
 「ウォレットを作る」としたときに 12単語や 24単語のニモニック(場合によってはパスフレーズも)を記録するが、
 それだけだとこの階層では最初の `m` だけしか決まらない。  
 HDウォレットには階層があり、それぞれの階層の値も同じにしないと同じアドレスは復元できない。
 
-* `purpose'`: 該当する BIP の番号
+* `purpose'`: 該当する BIP の番号(P2PKH=44, P2WPKH nested in P2SH=49, P2WPKH=84, P2TR=86)
 * `coin_type'`: "Bitcoin mainnet" や "Bitcoin testnet"(regtest などもたぶん含む)
 * `account'`: 切り替えて使いたい場合
 * `change`: `0` が受信アドレス(公開用)、`1` がお釣りアドレス(内部用)
 * `address_index`: アドレスを作るごとに増やしていく値
 
+### 主な使い方
+
+鍵を作る場合、同じ種類(P2WPKH や P2TR)のアドレスを作ることになる。  
+なので `m / purpose' / coin_type' / account'` まで鍵導出し、
+あとは公開用なのかお釣り用なのかで `change` を選択肢、最後に `address_index` を決める。  
+`change` ごとの `address_index` を管理して、最後に作った `address_index` をインクリメントしていくことになるだろう。
+
 ウォレットに紐付く UTXO を探す場合、`address_index` をインクリメントさせながら調べていく。
 32 bit あるので全部の空間を調べることはできない。
 アドレスを作ったけど受信しなかったということもあるので、
 デフォルトでは UTXO が見つからないアドレスが 20個続いた場合は探索を打ち切る([gap limit](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#address-gap-limit))。  
-あくまでデフォルトなので、20個調べたら必ず打ち切る、というものではない。
+あくまでデフォルトなので、設定が変更可能なウォレットもある。
 
-### seed
-
-seed は 128～512 bits の乱数である。  
-BIP-32 では 256 bit を推奨していたが今もそうなのかは未確認。
-
-### master key と chain code
+### Master Seed と Master Key
 
 * [Master key generation](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#master-key-generation)
 
-Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし、それを半分に割って <code class="language-plaintext highlighter-rouge">I<sub>L</sub></code>、<code class="language-plaintext highlighter-rouge">I<sub>R</sub></code> とする(左半分と右半分)。  
-左半分が master secret key、右半分が master chain code である。  
-<code class="language-plaintext highlighter-rouge">I<sub>L</sub></code> が 0 と等しいか `n` 以上だと NG。
+まず Master Seed を求める。  
+Master Seed は 128～512 bits の乱数を求める(推奨は 256 bit)。
+できるだけちゃんとした乱数を使用すること。
 
-### 拡張鍵
+Master Seed はそのまま使うのでは無く、
+Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし、それを長さで半分に分割し <code class="language-plaintext highlighter-rouge">I<sub>L</sub></code>、<code class="language-plaintext highlighter-rouge">I<sub>R</sub></code> とする(左半分と右半分)。  
+左半分が master secret key、右半分が master chain code でそれぞれ長さは 256 bit である。  
+<code class="language-plaintext highlighter-rouge">I<sub>L</sub></code> が 0 と等しいか `n` 以上だと NG。  
+両方ひっくるめて Master Key `m` と呼び、これから階層を下りながら生成していく extended key の親玉である。
+
+### Extended Key
 
 * [extended key](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#extended-keys) はこう。
 
-* extended private key は前半 256 bit が private key で後半 256 bit が chain code
-* extended public key は前半 256 bit がその public key で後半 256 bit が chain code
+* extended private key(拡張秘密鍵) は前半 256 bit が private key で後半 256 bit が chain code
+* extended public key(拡張公開鍵) は前半 256 bit がその public key で後半 256 bit が chain code
+
+Master Key から階層を下りながら鍵を作っていく。
+
+* 拡張秘密鍵からは拡張公開鍵を作ることができ、子拡張秘密鍵も子拡張公開鍵も作ることができる。
+* 拡張公開鍵からは子拡張公開鍵を作ることができる。
+* 子から親を作ることはできない。
+
+一度に数段下の階層の拡張鍵を作ることはできないので、`change` の階層で公開用とお釣り用の拡張鍵を作っておき、各アドレスはそれぞれ拡張鍵から派生させるのが効率よいと思われる。
 
 ### シリアライズ
 
