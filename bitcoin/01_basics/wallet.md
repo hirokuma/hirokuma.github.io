@@ -26,7 +26,6 @@ Bitcoinではアドレスを使い回すのをよしとしないので、受信�
 
 (ここに階層の図を入れる)
 
-
 ### Master Seed と Master Key
 
 * [Master key generation](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#master-key-generation)
@@ -36,17 +35,26 @@ Master Seed は 128～512 bits の乱数を求める(推奨は 256 bit)。
 できるだけちゃんとした乱数を使用すること。
 
 Master Seed はそのまま使うのでは無く、
-Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし、それを長さで半分に分割し <code class="language-plaintext highlighter-rouge">I<sub>L</sub></code>、<code class="language-plaintext highlighter-rouge">I<sub>R</sub></code> とする(左半分と右半分)。  
+Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし、それを長さで半分に分割し $I_L$、$I_R$ とする(左半分と右半分)。  
 左半分が master secret key、右半分が master chain code でそれぞれ長さは 256 bit である。  
-<code class="language-plaintext highlighter-rouge">I<sub>L</sub></code> が 0 と等しいか `n` 以上だと NG。  
+$I_L$ が 0 と等しいか `n` 以上だと NG。  
 両方ひっくるめて Master Key `m` と呼び、これから階層を下りながら生成していく extended key の親玉である。
+
+ウォレットを作る際に 12単語や24単語のメモを求められたことがあると思うが、あれは "mnemonic code(ニモニックコード)" と呼ばれる。  
+方式は [BIP-39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) に規定されていて、
+ニモニックから Seed を生成する([From mnemonic to seed](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki#from-mnemonic-to-seed))。  
+「passphrase(パスフレーズ)」は本来 [BIP-38](https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki) にあるように秘密鍵を保護するためのものだが、
+ニモニックのことをパスフレーズと表現しているウォレットもしばしばある。
 
 ### Extended Key
 
-* [extended key](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#extended-keys) はこう。
+* [extended key](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#extended-keys)
 
-* extended private key(拡張秘密鍵) は前半 256 bit が private key で後半 256 bit が chain code
-* extended public key(拡張公開鍵) は前半 256 bit がその public key で後半 256 bit が chain code
+* extended private key(拡張秘密鍵) は前半 32 byte が private key 、後半 32 byte が chain code
+* extended public key(拡張公開鍵) は前半 33 byte が public key 、後半 32 byte が chain code
+  * 公開鍵部分は圧縮公開鍵
+
+### 鍵導出
 
 Master Key から階層を下りながら鍵を作っていく。
 
@@ -56,12 +64,18 @@ Master Key から階層を下りながら鍵を作っていく。
 
 一度に数段下の階層の拡張鍵を作ることはできないので、`change` の階層で公開用とお釣り用の拡張鍵を作っておき、各アドレスはそれぞれ拡張鍵から派生させるのが効率よいと思われる。
 
-### 鍵導出
-
 HDウォレットは階層構造になっていて、最上位の `m` から下に降りていく。  
 `/` はファイル構造のパス区切りと同じものと考えて良い。  
-各階層は実際には符号無し32bit整数で表される。
-`'` は "hardened" を意味し、最上位ビットを立てる。
+各階層は実際には符号無し32bit整数で表される。  
+`'` は "hardened"(強化) を意味し、最上位ビットを立てる(`h` で表すこともある)。
+
+hardened にしていない親拡張公開鍵が他の人に知られていて、ミスなどでその子の秘密鍵の 1つが漏洩してしまうと、親拡張鍵が公開鍵であっても拡張秘密鍵がわかってしまう。
+[Creating an HD Wallet from the Seed](https://github.com/bitcoinbook/bitcoinbook/blob/third_edition_print1/ch05_wallets.adoc#creating-an-hd-wallet-from-the-seed) の図にあるように
+chain code は拡張秘密鍵ではなく拡張公開鍵を使い、Index number も BIP-86 などの階層で推測がつくため計算できてしまうのだ。  
+hardned にすると chain code の計算に拡張公開鍵を使わないようになるため影響が少ない([Hardened child key derivation](https://github.com/bitcoinbook/bitcoinbook/blob/third_edition_print1/ch05_wallets.adoc#hardened-child-key-derivation))。
+
+拡張公開鍵を他の人に伝えることなどなさそうだが、ショップサイトなどで受信アドレスだけ作ることができれば良い場合や、ウォレットに関するトランザクションの流れを追跡するサービスなど、ときどき拡張公開鍵を求められることがある。
+公開する相手には気をつけよう。
 
 Bitcoin の運用としては次の説明にあるように 5階層としているが、計算上はどの階層でも鍵導出できる。
 自作するときにこの階層を間違うと他のウォレットで鍵の復元ができなくなるので注意しよう。
@@ -97,7 +111,7 @@ HDウォレットには階層があり、それぞれの階層の値も同じに
 32 bit あるので全部の空間を調べることはできない。
 アドレスを作ったけど受信しなかったということもあるので、
 デフォルトでは UTXO が見つからないアドレスが 20個続いた場合は探索を打ち切る([gap limit](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#address-gap-limit))。  
-あくまでデフォルトなので、設定が変更可能なウォレットもある。
+あくまでデフォルトなので、gap_limit を変更可能なウォレットもある。
 
 ### シリアライズ
 
