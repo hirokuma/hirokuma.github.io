@@ -26,6 +26,36 @@ Bitcoinではアドレスを使い回すのをよしとしないので、受信�
 
 (ここに階層の図を入れる)
 
+
+### Master Seed と Master Key
+
+* [Master key generation](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#master-key-generation)
+
+まず Master Seed を求める。  
+Master Seed は 128～512 bits の乱数を求める(推奨は 256 bit)。
+できるだけちゃんとした乱数を使用すること。
+
+Master Seed はそのまま使うのでは無く、
+Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし、それを長さで半分に分割し <code class="language-plaintext highlighter-rouge">I<sub>L</sub></code>、<code class="language-plaintext highlighter-rouge">I<sub>R</sub></code> とする(左半分と右半分)。  
+左半分が master secret key、右半分が master chain code でそれぞれ長さは 256 bit である。  
+<code class="language-plaintext highlighter-rouge">I<sub>L</sub></code> が 0 と等しいか `n` 以上だと NG。  
+両方ひっくるめて Master Key `m` と呼び、これから階層を下りながら生成していく extended key の親玉である。
+
+### Extended Key
+
+* [extended key](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#extended-keys) はこう。
+
+* extended private key(拡張秘密鍵) は前半 256 bit が private key で後半 256 bit が chain code
+* extended public key(拡張公開鍵) は前半 256 bit がその public key で後半 256 bit が chain code
+
+Master Key から階層を下りながら鍵を作っていく。
+
+* 拡張秘密鍵からは拡張公開鍵を作ることができ、子拡張秘密鍵も子拡張公開鍵も作ることができる。
+* 拡張公開鍵からは子拡張公開鍵を作ることができる。
+* 子から親を作ることはできない。
+
+一度に数段下の階層の拡張鍵を作ることはできないので、`change` の階層で公開用とお釣り用の拡張鍵を作っておき、各アドレスはそれぞれ拡張鍵から派生させるのが効率よいと思われる。
+
 ### 鍵導出
 
 HDウォレットは階層構造になっていて、最上位の `m` から下に降りていく。  
@@ -69,35 +99,6 @@ HDウォレットには階層があり、それぞれの階層の値も同じに
 デフォルトでは UTXO が見つからないアドレスが 20個続いた場合は探索を打ち切る([gap limit](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#address-gap-limit))。  
 あくまでデフォルトなので、設定が変更可能なウォレットもある。
 
-### Master Seed と Master Key
-
-* [Master key generation](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#master-key-generation)
-
-まず Master Seed を求める。  
-Master Seed は 128～512 bits の乱数を求める(推奨は 256 bit)。
-できるだけちゃんとした乱数を使用すること。
-
-Master Seed はそのまま使うのでは無く、
-Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし、それを長さで半分に分割し <code class="language-plaintext highlighter-rouge">I<sub>L</sub></code>、<code class="language-plaintext highlighter-rouge">I<sub>R</sub></code> とする(左半分と右半分)。  
-左半分が master secret key、右半分が master chain code でそれぞれ長さは 256 bit である。  
-<code class="language-plaintext highlighter-rouge">I<sub>L</sub></code> が 0 と等しいか `n` 以上だと NG。  
-両方ひっくるめて Master Key `m` と呼び、これから階層を下りながら生成していく extended key の親玉である。
-
-### Extended Key
-
-* [extended key](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#extended-keys) はこう。
-
-* extended private key(拡張秘密鍵) は前半 256 bit が private key で後半 256 bit が chain code
-* extended public key(拡張公開鍵) は前半 256 bit がその public key で後半 256 bit が chain code
-
-Master Key から階層を下りながら鍵を作っていく。
-
-* 拡張秘密鍵からは拡張公開鍵を作ることができ、子拡張秘密鍵も子拡張公開鍵も作ることができる。
-* 拡張公開鍵からは子拡張公開鍵を作ることができる。
-* 子から親を作ることはできない。
-
-一度に数段下の階層の拡張鍵を作ることはできないので、`change` の階層で公開用とお釣り用の拡張鍵を作っておき、各アドレスはそれぞれ拡張鍵から派生させるのが効率よいと思われる。
-
 ### シリアライズ
 
 | name | length | note |
@@ -106,7 +107,7 @@ Master Key から階層を下りながら鍵を作っていく。
 | depth | 1 | |
 | [fingerprint](#fingerprint) | 4 | |
 | child number | 4 | |
-| [chain code](#master-key-と-chain-code) | 32 | |
+| [chain code](#Master-Seed-と-Master-Key) | 32 | |
 | privkey or pubkey | 33 | privkey は先頭に `00` を付ける |
 
 #### prefix と version bytes
