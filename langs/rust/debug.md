@@ -42,6 +42,7 @@ Visual Studio Code + CodeLLDB でのデバッグあれこれ。
 自動的に付与されるのは外せなさそうなので、実行ファイルを直接 `program` で指定して実行することになりそう。
 
 ```json
+{
     "version": "0.2.0",
     "configurations": [
         {
@@ -72,6 +73,7 @@ vscode で候補を出して選ぶとよいだろう。
 `readlink -f <ディレクトリ名>` などで正式名称が取得できるので `"sourceMap": {"<readlink -f . したパス>": "pwd したパス"}` などでよいだろう。
 
 ```json
+{
     "version": "0.2.0",
     "configurations": [
         {
