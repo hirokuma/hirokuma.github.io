@@ -1472,6 +1472,10 @@
   <lastmod>2025-10-08T00:00:00+00:00</lastmod>
 </url>
 <url>
+  <loc>https://blog.hirokuma.work/2025/10/20251012-rst.html</loc>
+  <lastmod>2025-10-12T00:00:00+00:00</lastmod>
+</url>
+<url>
   <loc>https://blog.hirokuma.work/2025/index.html</loc>
 </url>
 <url>
@@ -1655,6 +1659,10 @@
 <url>
   <loc>https://blog.hirokuma.work/langs/rust/crate.html</loc>
   <lastmod>2025-09-20T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/langs/rust/debug.html</loc>
+  <lastmod>2025-10-09T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/linux/index.html</loc>
