@@ -90,11 +90,24 @@ vscode で候補を出して選ぶとよいだろう。
     ]
 ```
 
-## デバッグで値をwatchしたい
+## デバッグで値をwatchしたい(調査中)
 
-CodeLLDB は gdb みたいなものっぽくて、C/C++ のデバッグをしているような `$variants$` みたいな表示になっていてつらい。  
+CodeLLDB は gdb みたいなものっぽくて、C/C++ のデバッグをしているような `$variants$` みたいな表示になっていてつらい。
 
 ![image](images/debug-var.png)
 
-なんかありそうな気はするのだけど、わからんのよね。
+なんかありそうな気はするのだけど、わからんのよね。  
+Windows ではデバッグしやすいというコメントを見つけた。
+
+一番近そうなのがこれだったが 7年も前だ。  
+"LLDB Debugger" と "Native Debug" という vscode extension を使うようだけど、これで解決しているならたぶんもっと広まっていると思う。
+
+* [How do I inspect local variables or use the watch window with Rust code using VSCode and LLDB? - Stack Overflow](https://stackoverflow.com/questions/48067874/how-do-i-inspect-local-variables-or-use-the-watch-window-with-rust-code-using-vs)
+
+C/C++ はデバッガで扱えるし、スクリプト言語も有名どころであれば対応していると思う。  
+つまり、デバッグ情報からオブジェクトの使い方を解釈して vscode の形式に変換してくれる何かが存在すれば何とかなる気がする。
+
+rust-lldb というのはあるようだが、vscode で楽をしたいのよね。
+
+* [Rustのコードを`rust-lldb`でデバッグする - Memory ice cubes](https://leaysgur.github.io/posts/2025/02/23/213809/)
 
