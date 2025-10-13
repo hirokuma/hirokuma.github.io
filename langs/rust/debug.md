@@ -111,3 +111,12 @@ rust-lldb というのはあるようだが、vscode で楽をしたいのよね
 
 * [Rustのコードを`rust-lldb`でデバッグする - Memory ice cubes](https://leaysgur.github.io/posts/2025/02/23/213809/)
 
+lldp-dap で何かできないだろうか
+
+* https://github.com/llvm/llvm-project/tree/main/lldb/tools/lldb-dap
+* https://github.com/rust-lang/rust/tree/master/src/etc
+* https://github.com/llvm/llvm-project/issues/134564#issuecomment-2825782949
+
+おおお、なんとかいけたっぽい。
+
+![image](/images/lldp-dap.png)
