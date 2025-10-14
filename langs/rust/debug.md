@@ -69,6 +69,10 @@ vscode で候補を出して選ぶとよいだろう。
 
 * [UbuntuのVSCodeでlldbを使ってRustコードをデバッグしたらブレークポイントが効かなくて困った - ま、そんなところで。](https://zv-louis.hatenablog.com/entry/2021/07/06/102907)
 
+[lldbのsourceMap](https://github.com/vadimcn/codelldb/blob/master/MANUAL.md#source-path-remapping) は `{"<from>": "<to>"}` 形式らしい。  
+複数指定できないのだろうか？  
+もしかしたら、下に書いた "lldb-dap" にある配列形式が使えるかもしれない(未確認)。
+
 シンボリックリンクのディレクトリの中にあるディレクトリをさらにシンボリックリンクして。。。とかだと正式名称?がわからなくなってくる。  
 `readlink -f <ディレクトリ名>` などで正式名称が取得できるので `"sourceMap": {"<readlink -f . したパス>": "pwd したパス"}` などでよいだろう。
 
@@ -162,6 +166,8 @@ Extension "lldb-dap" をインストール。
 * `type` を `lldb-dap` にする
 * `initCommands` を追加して設定
 * `sourceMap` は [ブレークポイントに止まらない](#ブレークポイントに止まらない) を参考にして必要に応じて
+  * [lldb-dapのsourceMap](https://github.com/llvm/llvm-project/blob/main/lldb/tools/lldb-dap/README.md#configuration-settings-reference) は `[string[2]]` なので `["<from>", "<to>"]` になるようだ。
+
 
 ```json
         {
@@ -174,7 +180,9 @@ Extension "lldb-dap" をインストール。
                 "command script import /opt/rust/src/etc/lldb_lookup.py",
                 "command source /opt/rust/src/etc/lldb_commands"
             ],
-            "sourceMap": {"/mnt/wsl/home2/xxx/Bitcoin/rust/bdk-example": "/home/xxx/Bitcoin/rust/bdk-example"},
+            "sourceMap": [
+                ["/mnt/wsl/home2/xxx/Bitcoin/rust/bdk-example", "/home/xxx/Bitcoin/rust/bdk-example"]
+            ],
             "cwd": "${workspaceFolder}"
         }
 ```
