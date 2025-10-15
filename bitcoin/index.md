@@ -44,6 +44,8 @@ date: "2025/06/19"
   * [libwally-core](library/libwally.md)
 * [JavaScript/TypeScript](library/js.md)
 * [Go](library/go.md)
+* [Rust](library/rust.md)
+  * [BDK](library/bdk.md)
 
 ## ツール
 
