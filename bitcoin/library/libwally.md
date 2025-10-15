@@ -4,13 +4,14 @@ title: "Bitcoin library: libwally-core"
 tags:
   - bitcoin
   - library
+  - clang
 daily: false
 date: "2025/08/31"
 ---
 
 [repository](https://github.com/ElementsProject/libwally-core)
 
-_2025/08/30_: v1.5.1
+_調査日:2025/08/30_: v1.5.1
 
 ## ビルド
 
@@ -258,3 +259,11 @@ m / purpose' / coin_type' / account' / change / address_index
   * [btc: libwally-core で script path (1) - hiro99ma blog](https://blog.hirokuma.work/2025/02/20250204-btc.html)
   * [btc: libwally-core で script path (2) - hiro99ma blog](https://blog.hirokuma.work/2025/02/20250205-btc.html)
   * [btc: libwally-core v1.4.0 - hiro99ma blog](https://blog.hirokuma.work/2025/03/20250313-btc.html)
+
+* サンプルコード
+  * [hirokuma/wally-sample-keypath: libwally-core sample: keypath spend](https://github.com/hirokuma/wally-sample-keypath)
+  * [hirokuma/c-keypath: key path spend with libwally-core](https://github.com/hirokuma/c-keypath)
+  * [hirokuma/c-scriptpath: script path spend with libwally-core](https://github.com/hirokuma/c-scriptpath)
+  * [hirokuma/c-hdwallet-p2tr: P2TR keypath HD wallet spend with libwally-core](https://github.com/hirokuma/c-hdwallet-p2tr)
+  * [hirokuma/c-musig2: MuSig2 spend with libwally-core and libsecp256k1](https://github.com/hirokuma/c-musig2)
+  * [hirokuma/cpp-descriptor: descriptor wallet with libwally-core](https://github.com/hirokuma/cpp-descriptor)

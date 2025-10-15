@@ -4,6 +4,7 @@ title: "Bitcoin library: C/C++"
 tags:
   - bitcoin
   - library
+  - clang
 daily: false
 date: "2025/08/30"
 ---
@@ -20,7 +21,7 @@ $ sudo apt install build-essential pkg-config libtool
 
 [repository](https://github.com/bitcoin-core/secp256k1)
 
-_2025/07/22_: v0.7.0
+_調査日:2025/07/22_: v0.7.0
 
 ```console
 $ git clone https://github.com/bitcoin-core/secp256k1.git
@@ -93,7 +94,7 @@ $ sudo cmake --install build
 
 [repository](https://github.com/libbitcoin/libbitcoin-system)
 
-_2025/07/22_: v3.8.0
+_調査日:2025/07/22_: v3.8.0
 
 ### 備考
 

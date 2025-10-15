@@ -4,6 +4,7 @@ title: "Bitcoin library: Go"
 tags:
   - bitcoin
   - library
+  - golang
 daily: false
 date: "2025/03/11"
 ---
