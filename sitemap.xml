@@ -1480,6 +1480,14 @@
   <lastmod>2025-10-14T00:00:00+00:00</lastmod>
 </url>
 <url>
+  <loc>https://blog.hirokuma.work/2025/10/20251016-rst.html</loc>
+  <lastmod>2025-10-16T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2025/10/20251018-rst.html</loc>
+  <lastmod>2025-10-18T00:00:00+00:00</lastmod>
+</url>
+<url>
   <loc>https://blog.hirokuma.work/2025/index.html</loc>
 </url>
 <url>
@@ -1597,6 +1605,10 @@
 <url>
   <loc>https://blog.hirokuma.work/bitcoin/index.html</loc>
   <lastmod>2025-06-19T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/bitcoin/library/bdk.html</loc>
+  <lastmod>2025-10-15T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/bitcoin/library/clang.html</loc>
