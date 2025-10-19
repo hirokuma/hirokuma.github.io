@@ -2,6 +2,6 @@
 sortorder: "00910"
 layout: tag
 tag: clang
-name: "C language"
+name: "C/C++言語"
 sub: true
 ---

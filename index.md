@@ -7,10 +7,12 @@ recentlies: 5
 ## 技術調査
 
 * [Bitcoin調査](bitcoin/index.md)
+* プログラミング言語
+  * [Rust言語](langs/rust/index.md)
+  * [C/C++言語](langs/clang/index.md)
+* [Linux](linux/index.md)
 * [Nordic Semiconductor調査](nrf/index.md)
 * [Android開発](android/index.md)
-* [プログラミング言語](langs/index.md)
-* [Linux](linux/index.md)
 
 <ul>
   <li>最近の調査

@@ -2,6 +2,6 @@
 sortorder: "00920"
 layout: tag
 tag: rust
-name: "Rust language"
+name: "Rust言語"
 sub: true
 ---

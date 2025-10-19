@@ -2,6 +2,6 @@
 sortorder: "00930"
 layout: tag
 tag: kotlin
-name: "Kotlin language"
+name: "Kotlin言語"
 sub: true
 ---
