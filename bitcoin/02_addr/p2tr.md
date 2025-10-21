@@ -27,7 +27,13 @@ Bitcoin で新しく追加された方式(2025年03月現在)。
 * スクリプトから支払う際、これまではスクリプト全体を載せていたが、P2TRスクリプトの場合は条件を満たすスクリプトだけで済む。
 * witness version 1
 
-## scriptPubKey
+## internal key は `internal_pubkey`
+
+BIP-341 にしばしば "internal key" という表現が出てくる。  
+"key" なので private key かと思い込んでいたのだが public key の方である。  
+式として表すときは `internal_pubkey` なので間違えないだろう。
+
+## scriptPubKey は tweaked public key
 
 scriptPubKey は Bitcoin トランザクションでは転送先アドレスに相当する。  
 人間が見るときは文字列のアドレスに変換されているが、トランザクションの中ではバイナリ値である。
@@ -172,8 +178,9 @@ P2TR のスクリプトはマークルルートが計算できるかどうかし
 
 そういうことをしたくない場合には NUMS("Nothing Up My Sleeve"。まくる袖が無い？)ポイントを使う。
 
-`lift_x(0x50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0)`
+`H = lift_x(0x50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0)`
 
+推奨は `H + rG` (`r` はランダム値)である。  
 BIP-341 の [Constructing and spending Taproot outputs](https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki#constructing-and-spending-taproot-outputs) を参照のこと。  
 今までの Bitcoinスクリプトを Tapscript に分ける考え方なども書いてあるので一度は目を通すのが良い。
 
