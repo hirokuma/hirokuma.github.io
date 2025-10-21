@@ -4,7 +4,7 @@ title: "P2TR および BIP-341周辺"
 tags:
   - bitcoin
 daily: false
-date: "2025/03/06"
+date: "2025/10/21"
 ---
 
 P2TR に関するトランザクションを作るための説明である。  
@@ -83,7 +83,12 @@ Tweaked Public Key を作る過程で出てきた値を使って Internal Privat
 
 ![image](images/bip341-1.png)
 
-redeem する署名データは witness の最初のスタックに置く。  
+redeem する witness はこうなる(個数は witness stack の数)。  
+シングル鍵の場合は合計で 1個である。
+
+* シングル鍵による署名データ(1個)
+
+redeem する署名データを `witness[0]` に置く。  
 署名データはシュノア署名したもので、署名タイプが `SIGHASH_DEFAULT` の場合は署名データの 64 バイトだけでよい。
 `SIGHASH_ALL` などを使うといつものように署名データの末尾に署名タイプ値の 1 バイトを載せる。  
 `SIGHASH_DEFAULT` も `SIGHASH_ALL` もトランザクションデータ全体を使うのは同じなので、特に `SIGHASH_ALL` を使う理由はないだろう。  
@@ -98,7 +103,9 @@ P2TR のスクリプトでの支払いは Script Path Spend などと呼ばれ�
 シングル鍵で説明した Tweaked Public Key などの作り方だが、全体としてはスクリプトがある場合の鍵の作り方があり、
 上に載せたのはスクリプトが無い場合の方法になる。
 
-redeem する witness はこうなる(個数は witness stack の数)。
+redeem する witness はこうなる(個数は witness stack の数)。  
+スクリプトの場合は合計で 2個以上である。
+シングル鍵で解くのかスクリプトで解くのかの区別は witness stack の数で見分ける。
 
 * このスクリプトを解くためのデータ(必要な数だけ)
 * スクリプト本体(1個)
@@ -145,7 +152,7 @@ OP_CHECKSIG
 今回は `<pubkey-A> OP_CHECKSIG` か `<pubkey-B> OP_CHECKSIG` のどちらかを `witness[1]` に置く。
 
 そして最後に control block というデータを `witness[2]` に積む。  
-これには Internal Public Key や今回使ったスクリプトからマークルルートを求めるのに必要なデータである。
+これには internal key(`internal_pubkey`) や今回使ったスクリプトからマークルルートを求めるのに必要なデータである。
 前段で解きたいスクリプトだけ載せ、それ以外のマークルルートまでの計算に必要なハッシュ値を載せる。
 
 マークルツリーを作るとき、スクリプトが 1つや 2つの場合は平たく並べるが、
@@ -157,6 +164,18 @@ OP_CHECKSIG
 
 ブロックデータのマークルツリーは平たくしないと他の人が検証できないが、
 P2TR のスクリプトはマークルルートが計算できるかどうかしか検証できないので構成は比較的自由である。
+
+### internal_key を使わない
+
+スクリプトを解く場合の control block には `internal_pubkey` が載っている(BIP-341 で "internal key" となっているが公開鍵である)。  
+これはシングル鍵署名でも解くことができるもので、スクリプトの中にシングル鍵で解くことができる経路が 1つ以上ある場合に一番確率が高い鍵を指定するというものである。
+
+そういうことをしたくない場合には NUMS("Nothing Up My Sleeve"。まくる袖が無い？)ポイントを使う。
+
+`lift_x(0x50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0)`
+
+BIP-341 の [Constructing and spending Taproot outputs](https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki#constructing-and-spending-taproot-outputs) を参照のこと。  
+今までの Bitcoinスクリプトを Tapscript に分ける考え方なども書いてあるので一度は目を通すのが良い。
 
 ### マルチシグ
 
