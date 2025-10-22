@@ -4,7 +4,7 @@ title: "rust: クレート、パッケージ、モジュール"
 tags:
   - rust
 daily: false
-date: "2025/09/20"
+date: "2025/10/22"
 ---
 
 ## 概要
@@ -24,38 +24,38 @@ Cargoを使う前提とする。
 ![image](images/crate.png)
 
 [バイナリクレート](https://doc.rust-lang.org/cargo/reference/cargo-targets.html#binaries)と[ライブラリクレート](https://doc.rust-lang.org/cargo/reference/cargo-targets.html#library)の種類が生まれるのはパッケージのようにも思うが、細かく区別する必要もないだろう。  
-バイナリクレートは`cargo new --bin`(`--bin`はデフォルトなのでなくてもよい)で作られるタイプで`src/main.rs`がエントリーポイントと思っていて良いだろう。  
-ライブラリクレートは`src/lib.rs`を持つ。
+バイナリクレートは `cargo new --bin` ( `--bin` はデフォルトなのでなくてもよい)で作られるタイプで `src/main.rs` がエントリーポイントと思っていて良いだろう。  
+ライブラリクレートは `src/lib.rs` を持つ。
 
-`cargo add`はクレートを追加する[Manifestコマンド](https://doc.rust-lang.org/cargo/commands/cargo-add.html)で、空のクレートを追加するのではなく`Cargo.toml`に依存関係を追加するコマンドである。
-「`Cargo.toml` Manifestファイル」と書いてあるので、Manifestコマンドは`Cargo.toml`に関するコマンドだろう。
+`cargo add` はクレートを追加する[Manifestコマンド](https://doc.rust-lang.org/cargo/commands/cargo-add.html)で、空のクレートを追加するのではなく `Cargo.toml` に依存関係を追加するコマンドである。
+「`Cargo.toml` Manifestファイル」と書いてあるので、Manifestコマンドは `Cargo.toml` に関するコマンドだろう。
 
 ## パッケージ(package)
 
 「パッケージ」は1つ以上のクレートを持つ。  
-`cargo new`で作られるのはパッケージである。[packageコマンド](https://doc.rust-lang.org/cargo/commands/package-commands.html)という分類になっている。
+`cargo new` で作られるのはパッケージである。[packageコマンド](https://doc.rust-lang.org/cargo/commands/package-commands.html)という分類になっている。
 
 ![image](images/package.png)
 
-ライブラリクレートは最大でも1つなので`src/lib.rs`があるかどうかでわかる。  
-`Cargo.toml`では`[lib]`セクションでカスタマイズできる。
+ライブラリクレートは最大でも1つなので `src/lib.rs` があるかどうかでわかる。  
+`Cargo.toml` では `[lib]` セクションでカスタマイズできる。
 
-バイナリクレートも`src/main.rs`があるかどうかでわかるのだが、こちらは複数持つことができる。その場合は`src/bin/`にディレクトリを作って`main.rs`を置く。  
-`src/main.rs`を持たずに`src/bin/*`に複数のディレクトリを作ってそれぞれに`main.rs`を持っても良い。  
-`Cargo.toml`では`[[bin]]`セクションでカスタマイズできる。括弧が1つ多い。
+バイナリクレートも `src/main.rs` があるかどうかでわかるのだが、こちらは複数持つことができる。その場合は `src/bin/` にディレクトリを作って `main.rs` を置く。  
+`src/main.rs` を持たずに `src/bin/*` に複数のディレクトリを作ってそれぞれに `main.rs` を持っても良い。  
+`Cargo.toml` では `[[bin]]` セクションでカスタマイズできる。括弧が1つ多い。
 
 ## モジュール(module)
 
 クレートやパッケージがどちらかといえば物理的？なのに対して、モジュールはどちらかといえば論理的なものだという印象を持った。  
-たぶん`mod`で定義できるからそう感じるのだろう。
+たぶん `mod` で定義できるからそう感じるのだろう。
 
-`mod <mod名> {...}`という書き方は`mod`の定義と宣言を兼ねている。  
-`mod <mod名>;`とすると、このファイルで`mod名`というモジュールを使用するという宣言になる。
+`mod <mod名> {...}` という書き方は `mod` の定義と宣言を兼ねている。  
+`mod <mod名>;` とすると、このファイルで `mod名` というモジュールを使用するという宣言になる。
 
-### `mod`の定義
+### `mod` の定義
 
 同じファイルの中にあるので定義と使用する宣言を兼ねている。  
-`use`はC++の`using`と`using namespace`を混ぜたような使い方になる。
+`use` はC++の `using` と `using namespace` を混ぜたような使い方になる。
 
 ```rust
 mod world_mod1 {
@@ -88,7 +88,7 @@ pub fn hello_func() {
 }
 ```
 
-それと同じディレクトリにある`main.rs`から`hello_func()`を呼び出したい場合はこうなる。
+それと同じディレクトリにある `main.rs` から `hello_func()` を呼び出したい場合はこうなる。
 
 ```rust
 mod hello_mod;
@@ -100,7 +100,7 @@ fn main() {
 
 つまり `mod <ファイル名> {}` で定義したのと同じ意味を持つことになる。
 
-### ディレクトリを作ってその下に`mod名`のファイルを作る
+### ディレクトリを作ってその下に `mod名` のファイルを作る
 
 同じディレクトリではなく別のディレクトリにしたい場合もある。  
 
@@ -109,7 +109,7 @@ fn main() {
 
 そうすると、なんとなく `main.rs` からは `mod hello_mod1::hello_mod2;` と書けばよさそうな気がするが、そうは書けない。  
 `mod` に書くことができるのは単独のモジュール名だけで `::` は使えないのだった。  
-その代わりに、`hello_mod1.rs` というファイルを `main.rs` と同じディレクトリに作り、その中で `pub mod hello_mod2;` と書く。
+その代わりに、 `hello_mod1.rs` というファイルを `main.rs` と同じディレクトリに作り、その中で `pub mod hello_mod2;` と書く。
 
 * [ファイルの階層構造 - Rust By Example](https://doc.rust-lang.org/stable/rust-by-example/ja/mod/split.html)
 
@@ -150,9 +150,9 @@ pub fn hello_func() {
 ### モジュールツリー
 
 モジュールは入れ子にできるので、モジュールツリーと呼ぶツリー構造として表すようになっている。  
-ツリーのルートは`main.rs`や`lib.rs`である。  
-`use world_mod1::world_mod2 as w2;`のように書いたあれは相対パスのような表現で、
-これを絶対パスのような表現にすると`use crate::world_mod1::world_mod2 as w2;`とルートを表す`crate::`が頭に付く。
+ツリーのルートは `main.rs` や `lib.rs` である。  
+`use world_mod1::world_mod2 as w2;` のように書いたあれは相対パスのような表現で、
+これを絶対パスのような表現にすると `use crate::world_mod1::world_mod2 as w2;` とルートを表す `crate::` が頭に付く。
 
 そうなると、モジュールとして扱えるのは今のクレートの中だけということになるのでは？  
 もちろんそういうことはなく、外部で既に公開されている関数などを使うこともできる。
@@ -161,24 +161,34 @@ pub fn hello_func() {
 
 「パッケージ」なのだ。  
 とはいえ実行ファイルを取り込むこともできないだろうから、ライブラリクレートを含むパッケージのはずである。  
-パッケージには最大で 1つまでしかライブラリクレートを持つことができないので、ライブラリクレートを持つパッケージのみ`use`で使えるようにできるのだろう。
+パッケージには最大で 1つまでしかライブラリクレートを持つことができないので、ライブラリクレートを持つパッケージのみ `use` で使えるようにできるのだろう。
 
 ![image](images/call-external-package.png)
 
 ### モジュール参照の絶対パスと相対パス
 
-`use`でパスをスコープに持ち込んだり、関数呼び出しでパスを指定する際の書き方に、絶対パスと相対パスがある。
+`use` でパスをスコープに持ち込んだり、関数呼び出しでパスを指定する際の書き方に、絶対パスと相対パスがある。
 
-`crate`で始まるとルートからの絶対パスになる。
+`crate` で始まるとルートからの絶対パスになる。
 
 ファイルのパス指定と同じで、何も書かなければカレントモジュールから始まる。
-`self`で初めても良い。ファイルで`./`を明示するかどうかに似ている。  
-`self`はパスの途中では使用できない。
+`self` で初めても良い。ファイルで `./` を明示するかどうかに似ている。  
+`self` はパスの途中では使用できない。
 
-`super`を使うと1つ上のパスになる。これはパスの途中で使うことができるが、最初が`super`で始まるときだけだ。
-上がったり下がったりするような書き方はできないし、ルートである`crate`より上に上がることもできない。
+`super` を使うと1つ上のパスになる。これはパスの途中で使うことができるが、最初が `super` で始まるときだけだ。
+上がったり下がったりするような書き方はできないし、ルートである `crate` より上に上がることもできない。
 
 なんというか、素直なパスの書き方だけと思っておけば良いだろう。
+
+### `use` にどこまで書くか
+
+ルールではなく慣例があるそうだ。
+
+* 関数はクレートまで `use` してコード中は `クレート + 関数名()` と書く
+* `struct` や `enum` などは使いたい要素まで `use` してコード中は要素だけ書く
+  * 同じ要素名になる場合は関数と同じ書き方にする
+
+* [慣例に従ったuseパスを作る](https://doc.rust-jp.rs/book-ja/ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#%E6%85%A3%E4%BE%8B%E3%81%AB%E5%BE%93%E3%81%A3%E3%81%9Fuse%E3%83%91%E3%82%B9%E3%82%92%E4%BD%9C%E3%82%8B)
 
 ## 記載予定
 
