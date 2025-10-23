@@ -1,6 +1,6 @@
 ---
 layout: "record"
-title: "rust: Result<T, E> と Option<T>"
+title: "rust: Result&lt;T, E&gt; と Option&lt;T&gt;"
 tags:
   - rust
 daily: false
