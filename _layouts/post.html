@@ -15,8 +15,7 @@ layout: default
     <small>writer: <em><a href="https://blog.hirokuma.work/aboutme.html">{{ page.author | default: site.author }}</a></em></small>
   </div>
 {% if page.tags %}
-  <div class="tags" style="color: #808080;">
-    <small>tags: <em>
+  <div class="tags" style="color: #808080;"><small>tags: <em>
   {% for tag in page.tags %}
     {% for taglist in site.tags %}
       {% if taglist.tag == tag %}
@@ -24,7 +23,6 @@ layout: default
       {% endif %}
     {% endfor %}
   {% endfor %}
-    </em></small>
-  </div>
+  </em></small></div>
 {% endif %}
 </p>

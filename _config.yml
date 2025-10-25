@@ -5,7 +5,6 @@ plugins:
   - jekyll-remote-theme
 title: hiro99ma blog
 google_analytics: G-552KB5LZK4
-show_downloads: false
 theme: jekyll-theme-hacker
 author: hiro99ma
 collections:
