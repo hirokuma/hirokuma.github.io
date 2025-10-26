@@ -72,13 +72,86 @@ v29.0 で "psbt" をコマンド名に含むものを洗い出した。
 
 今のところ bitcoind は PSBTv2 をサポートしていないそうだ([Implement BIP 370 PSBTv2 by achow101 · Pull Request #21283 · bitcoin/bitcoin · GitHub](https://github.com/bitcoin/bitcoin/pull/21283))。
 
-### 使用例
+### 実行例1
 
-regtest でウォレットを持っている状態で PSBT を作って展開までしようとする。  
-しかし input に対して output の amount が小さくお釣りの output もないため残額が fee になってしまい、
-fee の上限を超えたため展開には失敗して終わる。
+regtest でウォレットを持っている状態で PSBT を使ってトランザクション展開まで行う。  
+どちらも自分のウォレット宛だが、送金先とお釣りのイメージで output を指定している。  
+bitcoin-cli では手数料率を指定できる PSBT 関連のコマンドが `walletcreatefundedpsbt` だけらしい(まだ使ったことが無い)。
+`createpsbt` など手数料率を指定できないオプションを使う場合はお釣りの output も指定しないと input の総額から output の総額を引いた額がすべて手数料になるよう計算される。
 
-```console
+そう書くと不親切に見えるが、単純に指定したデータを使ってトランザクションを構築しているだけである。
+トランザクションの展開は別のコマンドで行うので、それまでに `decoderawtransaction` などで確認を忘れないようにすること。
+
+```shell
+$ bitcoin-cli listunspent
+....
+
+# listunspentの結果から"txid"と"vout"を選ぶ
+$ TXIN="...."
+$ VOUT=...
+
+# 送金先アドレス
+$ ADDR=`bitcoin-cli getnewaddress`
+$ ADDR2=`bitcoin-cli getnewaddress`
+
+$ PSBT=`bitcoin-cli createpsbt '[{"txid":"'$TXIN'","vout":'$VOUT'}]' '[{"'$ADDR'":0.00001}, {"'$ADDR2'":49.998}]'`
+$ bitcoin-cli analyzepsbt $PSBT
+{
+  "inputs": [
+    {
+      "has_utxo": false,
+      "is_final": false,
+      "next": "updater"
+    }
+  ],
+  "next": "updater"
+}
+
+$ PSBT2=`bitcoin-cli utxoupdatepsbt $PSBT`
+$ bitcoin-cli analyzepsbt $PSBT2
+{
+  "inputs": [
+    {
+      "has_utxo": true,
+      "is_final": false,
+      "next": "updater"
+    }
+  ],
+  "estimated_vsize": 130,
+  "estimated_feerate": 0.00760269,
+  "fee": 0.00098835,
+  "next": "updater"
+}
+
+$ PROC=`bitcoin-cli walletprocesspsbt $PSBT2`
+$ echo $PROC | jq .complete
+true
+$ bitcoin-cli analyzepsbt `echo $PROC | jq -r .psbt`
+{
+  "inputs": [
+    {
+      "has_utxo": true,
+      "is_final": true,
+      "next": "extractor"
+    }
+  ],
+  "fee": 0.00098835,
+  "next": "extractor"
+}
+
+$ bitcoin-cli sendrawtransaction `echo $PROC | jq -r .hex`
+9a959aeef2f6c1c5e1383a0fbfa3fe5eac182b41ebbb2cca0587df2c01988ffd
+```
+
+### 実行例2
+
+実行例1 で output にお釣りを指定しなかった場合。  
+fee が大きすぎるトランザクションになってしまうが、作成自体は成功する。  
+トランザクションを展開する際、fee の上限を超えたため展開には失敗する。
+
+input の額によっては展開に成功してしまうということでもあるので、展開前の確認を必ず行おう。
+
+```shell
 $ bitcoin-cli listunspent
 ....
 
@@ -144,11 +217,7 @@ error message:
 Fee exceeds maximum configured by user (e.g. -maxtxfee, maxfeerate)
 ```
 
-### Rawtransactions
-
-Rawtransactions 系のコマンドは bitcoind にウォレットがなくても実行できる。  
-チェーンのデータを参照しないコマンドであればネットワークが違う bitcoind でも実行できるだろう。
-たとえば regtest で作った PSBTデータを mainnet で動かしている環境で `analyzepsbt` できた。
+### 各コマンド
 
 #### [analyzepsbt](https://developer.bitcoin.org/reference/rpc/analyzepsbt.html)
 
@@ -166,7 +235,7 @@ input が未設定の場合は "extractor" になった。
 "must only accept a PSBT" と書いてあるが、これはいくつかの role にも書かれている。
 Transaction Extractor では input の scriptSig や scriptWitness を確認するので、まだ input がない PSBT だと「次は Transaction Extractor だから input の設定が必要」という読み方をすれば良いか。
 
-```console
+```shell
 $ PSBT=`bitcoin-cli createpsbt '[]' '[{"bcrt1qh5kmd2rq23l9qwykn6dtdkfhtvt550ux5ffd0y":0.0001}]'`
 $ bitcoin-cli analyzepsbt $PSBT
 {
@@ -180,7 +249,7 @@ $ bitcoin-cli analyzepsbt $PSBT
 "extractor" は `walletprocesspsbt` に与えると成功してしまう。  
 しかし input は空なので署名などもなく、`sendrawtransaction` しても失敗する。
 
-```console
+```shell
 $ bitcoin-cli walletprocesspsbt $PSBT
 {
   "psbt": "cHNidP8BACkCAAAAAAEQJwAAAAAAABYAFL0ttqhgVH5QOJaemrbZN1sXSj+GAAAAAAAA",
@@ -198,7 +267,7 @@ TX decode failed. Make sure the tx has at least one input.
 「次は input を追加するか、redeemScript か witnessScript などを追加すること」という意味だろう。  
 `listunspent` で取得した outPoint なのに "has_utxo" が false となるのは、PSBT の中に input の UTXO情報がまだ入っていないためだ。
 
-```console
+```shell
 $ PSBT=`bitcoin-cli createpsbt '[{"txid":"1dcadd8c3096f1e7e127f10fe681c403f4782278c3225ae1820bf218cdfd4c58","vout":0}]' '[{"bcrt1qh5kmd2rq23l9qwykn6dtdkfhtvt550ux5ffd0y":0.0001}]'`
 $ bitcoin-cli analyzepsbt $PSBT
 {
@@ -215,7 +284,7 @@ $ bitcoin-cli analyzepsbt $PSBT
 
 `utxoupdatepsbt` で UTXO情報を更新すると "has_utxo" は true になった。
 
-```console
+```shell
 $ PSBT2=`bitcoin-cli utxoupdatepsbt $PSBT`
 $ bitcoin-cli analyzepsbt $PSBT2
 {
@@ -239,7 +308,7 @@ $ bitcoin-cli analyzepsbt $PSBT2
 input transaction の outPoint はこうなっていた。
 この "scriptPubKey.asm" の witness program と outPoint の "missing.pubkeys" が一致しているのが確認できる。
 
-```
+```json
     {
       "value": 50.00000000,
       "n": 0,
@@ -272,7 +341,7 @@ output は必須だが `walletcreatefundedpsbt` と違って input は省略で�
 しかし `bitcoin-cli` には input/output を追加するコマンドはないらしい。
 `decodepsbt` でデコードして作り直せば済むからだろうか。
 
-```console
+```shell
 $ bitcoin-cli createpsbt '[]' '[{"bcrt1qyz7yq6m6rdqxaypzrz0qywj40448926dxz60eg":0.0001}]'
 cHNidP8BACkCAAAAAAEQJwAAAAAAABYAFCC8QGt6G0BukCIYngI6VX1qcqtNAAAAAAAA
 ```
@@ -282,7 +351,7 @@ input と output は配列で指定できる。
 そうしないと上に載せた例のように fee が高すぎて展開できない、だったらまだよいとして、
 意図せず高い手数料で展開してしまうということがあり得る。
 
-```console
+```shell
 $ bitcoin-cli createpsbt '[{"txid":"8514c2b50431b9a59be4ba5813a23f1559a6a43a1344950f1747f5d383dbd699","vout":0}]' '[{"bcrt1qyz7yq6m6rdqxaypzrz0qywj40448926dxz60eg":0.0001}]' 0 true
 cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5MQS1whSFAAAAAAD9////ARAnAAAAAAAAFgAUILxAa3obQG6QIhieAjpVfWpyq00AAAAAAAAA
 
@@ -292,7 +361,7 @@ cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5MQS1whSFAAAAAAD9////ARAnAAAA
 
 これだけでは署名がないため `finalizepsbt` しても失敗("complete"=false)する。
 
-```console
+```shell
 $ bitcoin-cli finalizepsbt cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5MQS1whSFAAAAAAD9////ARAnAAAAAAAAFgAUILxAa3obQG6QIhieAjpVfWpyq00AAAAAAAAA
 {
   "psbt": "cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5MQS1whSFAAAAAAD9////ARAnAAAAAAAAFgAUILxAa3obQG6QIhieAjpVfWpyq00AAAAAAAAA",
@@ -303,7 +372,7 @@ $ bitcoin-cli finalizepsbt cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5M
 input が bitcoind のウォレットだった場合、`walletprocesspsbt` で署名することができる。  
 こちらは regtest での実行例。
 
-```console
+```shell
 $ bitcoin-cli walletprocesspsbt cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5MQS1whSFAAAAAAD9////ARAnAAAAAAAAFgAUILxAa3obQG6QIhieAjpVfWpyq00AAAAAAAAA
 {
   "psbt": "cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5MQS1whSFAAAAAAD9////ARAnAAAAAAAAFgAUILxAa3obQG6QIhieAjpVfWpyq00AAAAAAAEAgwIAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////AlEA/////wIA8gUqAQAAABYAFKF4tU8/qXlx9NpgO2wsP4E4PwNbAAAAAAAAAAAmaiSqIant4vYcP3HR3v0/qZnfo2lTdVxpBol5mWK0i+vYNpdOjPkAAAAAAQEfAPIFKgEAAAAWABSheLVPP6l5cfTaYDtsLD+BOD8DWwEIawJHMEQCIAK6ZP4wGtznzftRc4xfDjWHkjri0XpjalfFJdtZsb81AiAqT1RkGfXFbkKkJAECE8eJYJX4V2aJrlXDV5zvV146MgEhA6NpGWa5VloKcla51LY18/XbmVrwCiz/gaj3iHdRgt08ACICA5M7j0nG3X9V3Gyo5qdUKsQZlRUrrcHx5URyRqfOL1H/GFZDv61UAACAAQAAgAAAAIAAAAAAAgAAAAA=",
@@ -315,7 +384,7 @@ $ bitcoin-cli walletprocesspsbt cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrk
 その結果を `finalizepsbt` に与えると成功する。
 今回は HEXデータは `walletprocesspsbt` と同じなので特に finalize は必要なかった。
 
-```console
+```shell
 $ bitcoin-cli finalizepsbt "cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5MQS1whSFAAAAAAD9////ARAnAAAAAAAAFgAUILxAa3obQG6QIhieAjpVfWpyq00AAAAAAAEAgwIAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////AlEA/////wIA8gUqAQAAABYAFKF4tU8/qXlx9NpgO2wsP4E4PwNbAAAAAAAAAAAmaiSqIant4vYcP3HR3v0/qZnfo2lTdVxpBol5mWK0i+vYNpdOjPkAAAAAAQEfAPIFKgEAAAAWABSheLVPP6l5cfTaYDtsLD+BOD8DWwEIawJHMEQCIAK6ZP4wGtznzftRc4xfDjWHkjri0XpjalfFJdtZsb81AiAqT1RkGfXFbkKkJAECE8eJYJX4V2aJrlXDV5zvV146MgEhA6NpGWa5VloKcla51LY18/XbmVrwCiz/gaj3iHdRgt08ACICA5M7j0nG3X9V3Gyo5qdUKsQZlRUrrcHx5URyRqfOL1H/GFZDv61UAACAAQAAgAAAAIAAAAAAAgAAAAA="
 {
   "hex": "0200000000010199d6db83d3f547170f9544133aa4a659153fa21358bae49ba5b93104b5c214850000000000fdffffff01102700000000000016001420bc406b7a1b406e9022189e023a557d6a72ab4d02473044022002ba64fe301adce7cdfb51738c5f0e3587923ae2d17a636a57c525db59b1bf3502202a4f546419f5c56e42a424010213c7896095f8576689ae55c3579cef575e3a32012103a3691966b9565a0a7256b9d4b635f3f5db995af00a2cff81a8f788775182dd3c00000000",
