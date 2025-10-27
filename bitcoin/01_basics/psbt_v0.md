@@ -1,10 +1,10 @@
 ---
 layout: record
-title: "PSBT"
+title: "PSBT v0"
 tags:
   - bitcoin
 daily: false
-date: "2025/08/21"
+date: "2025/10/27"
 ---
 
 ## はじめに
@@ -39,7 +39,7 @@ PSBT はそういったときに使用できるデータフォーマットであ
 今のところ(2025/08/21)、PSBTv2 に対応しているアプリやサービスは少ない。  
 Bitcoin Core もまだ対応していないので、主に PSBTv0 を見ていく。
 
-### PSBTv0
+## 概要
 
 "psbt" ヘッダで始まる key-value 式のバイナリデータである。  
 大きく `<global-map>`、`<input-map>`、`<output-map>` の 3つに分かれる。  
@@ -50,17 +50,25 @@ Bitcoin Core もまだ対応していないので、主に PSBTv0 を見てい�
 
 ![image](images/psbt-1.png)
 
-#### Roles
+## Roles
 
 "partially" といっているように、ちょっとずつデータを埋めながら完成させていくことができる。
-そうすると、今どこまでできあがっていて次に何するのかが分かりづらい。  
+そうすると、今どこまでできあがっていて何ができるのかが分かりづらい。  
+役割(role)によって何ができるのかを決めているもので、PSBT データの役割というよりは、
+その PSBT データに我々は何ができるかというような考え方になるようだ。
 
 [Roles](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki#user-content-Roles)
 
 * Creator
+  * 新しい空の PSBT を作る
+  * これ以外の role では何らかの PSBT に対しての操作を行う
 * Updater
+  * PSBT に情報の追加を行う
 * Signer
+  * PSBT に署名を行う
+  * UTXO の確認のような署名できるかどうかのチェックも行う
 * Combiner
+  * 1つ以上の PSBT を受け取って 1つの PSBT にマージする
 * Input Finalizer
 * Transaction Extractor
 

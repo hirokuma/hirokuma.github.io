@@ -23,7 +23,7 @@ date: "2025/06/19"
 * [トランザクション](01_basics/transactions.md)
   * [スクリプト](01_basics/script.md)
   * [Miniscript](01_basics/miniscript.md)
-  * [PSBT](01_basics/psbt.md)
+  * [PSBT v0](01_basics/psbt_v0.md)
   * [MuSig2シーケンス](musig/musig2_sequence.md)
 * [アドレス](01_basics/address.md)
   * [P2WPKH](02_addr/p2wpkh.md)
