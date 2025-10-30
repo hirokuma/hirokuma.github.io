@@ -37,7 +37,7 @@ PSBT はそういったときに使用できるデータフォーマットであ
 ただしフォーマットに互換性はないとのこと。
 
 今のところ(2025/08/21)、PSBTv2 に対応しているアプリやサービスは少ない。  
-Bitcoin Core もまだ対応していないので、主に PSBTv0 を見ていく。
+Bitcoin Core もまだ対応していないので PSBTv0 を見ていく。
 
 ## 概要
 
@@ -72,7 +72,8 @@ Bitcoin Core もまだ対応していないので、主に PSBTv0 を見てい�
 * Input Finalizer
 * Transaction Extractor
 
-Bitcoin Core では `analyzepsbt` で確認できる。
+Bitcoin Core では `analyzepsbt` で確認できる。  
+最初に `createpsbt` で作ってからはほぼ Role は "updater" になり、finalize 的なことをすると "extractor" になる。
 
 ## bitcoin-cli
 
@@ -341,9 +342,13 @@ PSBT のデータを作るのも同じくらい手間がかかると思えば良
 
 #### [combinepsbt](https://developer.bitcoin.org/reference/rpc/combinepsbt.html)
 
+例えばマルチシグの Bitcoinスクリプトに対する PSBTデータを作り、署名できる人に署名してもらった PSBTデータをまとめるのに使う。
+
 #### [converttopsbt](https://developer.bitcoin.org/reference/rpc/converttopsbt.html)
 
 #### [createpsbt](https://developer.bitcoin.org/reference/rpc/createpsbt.html)
+
+何も無い状態から PSBT データを作るのに使う。
 
 output は必須だが `walletcreatefundedpsbt` と違って input は省略できないが空にしておくことはできる。  
 しかし `bitcoin-cli` には input/output を追加するコマンドはないらしい。
@@ -356,8 +361,8 @@ cHNidP8BACkCAAAAAAEQJwAAAAAAABYAFCC8QGt6G0BukCIYngI6VX1qcqtNAAAAAAAA
 
 input と output は配列で指定できる。  
 特に output はお釣りの設定を忘れないようにしよう。
-そうしないと上に載せた例のように fee が高すぎて展開できない、だったらまだよいとして、
-意図せず高い手数料で展開してしまうということがあり得る。
+そうしないと上に載せた例のように fee が高すぎて展開できない、だったらまだよいのだが、
+意図せず高い手数料で展開してしまうということもあり得る。
 
 ```shell
 $ bitcoin-cli createpsbt '[{"txid":"8514c2b50431b9a59be4ba5813a23f1559a6a43a1344950f1747f5d383dbd699","vout":0}]' '[{"bcrt1qyz7yq6m6rdqxaypzrz0qywj40448926dxz60eg":0.0001}]' 0 true
@@ -403,7 +408,7 @@ $ bitcoin-cli finalizepsbt "cHNidP8BAFICAAAAAZnW24PT9UcXD5VEEzqkplkVP6ITWLrkm6W5
 #### [decodepsbt](https://developer.bitcoin.org/reference/rpc/decodepsbt.html)
 
 `decodepsbt` はバイナリの PSBT構造を JSON フォーマットにして出力する。  
-見やすいが、元の PSBT フォーマットと見比べるのは難しい。
+出力が多い。
 
 #### [descriptorprocesspsbt](https://bitcoincore.org/en/doc/28.0.0/rpc/rawtransactions/descriptorprocesspsbt/)
 
@@ -427,6 +432,8 @@ input の UTXO 情報を更新する。
 #### [walletcreatefundedpsbt](https://developer.bitcoin.org/reference/rpc/walletcreatefundedpsbt.html)
 
 #### [walletprocesspsbt](https://developer.bitcoin.org/reference/rpc/walletprocesspsbt.html)
+
+`finalizepsbt` 
 
 ## 使用例
 
