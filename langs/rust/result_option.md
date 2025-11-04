@@ -67,14 +67,14 @@ fn main() -> Result<(), String> {
 }
 ```
 
-## `.unwrap()`
+## .unwrap()
 
 [doc.rust-lang.org で検索](https://doc.rust-lang.org/std/result/enum.Result.html?search=unwrap#method.unwrap)すると、単語一致で "unwrap" を持っているのは `Result::unwrap` と `Option::unwrap` だけだった。
 
 値が取得できないときは panic するのであまり下の方の関数で使うのはよろしくないと思う。
 まったく想定していない異常ならありかもしれない。
 
-### `Result<T, E>`
+### Result<T, E>
 
 [Result<T, E>.unwrap()](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap) は `T` か `E` しか返さないのでわかりやすい。  
 `T` は `Ok(T)` に、`E` は `Err(E)` になる。  
@@ -112,7 +112,7 @@ pub enum Result<T, E> {
 ......
 ```
 
-### `Option<T>`
+### Option<T>
 
 [Option<T>.unwrap()](https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap) も `enum` なので `Result` と同じ系統なのだが、`None` と `Some(T)` がわかりづらい。
 
@@ -214,7 +214,7 @@ impl<T> const ops::Try for Option<T> {
 }
 ```
 
-## `anyhow`
+## anyhow
 
 `Result<T, E>` とすると `E` が固定の型になっていろいろなエラーを受け付ける可能性がある関数では使いづらい。  
 `anyhow::Result` を使って `Result<T, anyhow::Error>` とすることで「いろいろ」を受け付けられるようになる。  
