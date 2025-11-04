@@ -76,7 +76,7 @@ fn main() -> Result<(), String> {
 
 ### Result&lt;T, E&gt;
 
-[Result<T, E>.unwrap()](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap) は `T` か `E` しか返さないのでわかりやすい。  
+[Result&lt;T, E&gt;.unwrap()](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap) は `T` か `E` しか返さないのでわかりやすい。  
 `T` は `Ok(T)` に、`E` は `Err(E)` になる。  
 `Ok()` や `Err()` に何か実装があるわけではなく、そういう意味づけがある enum値というだけのようだ。
 
@@ -114,7 +114,7 @@ pub enum Result<T, E> {
 
 ### Option&lt;T&gt;
 
-[Option<T>.unwrap()](https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap) も `enum` なので `Result` と同じ系統なのだが、`None` と `Some(T)` がわかりづらい。
+[Option&lt;T&gt;.unwrap()](https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap) も `enum` なので `Result` と同じ系統なのだが、`None` と `Some(T)` がわかりづらい。
 
 * [Option enumとNull値に勝る利点](https://doc.rust-jp.rs/book-ja/ch06-01-defining-an-enum.html?highlight=some%28T%29#option-enum%E3%81%A8null%E5%80%A4%E3%81%AB%E5%8B%9D%E3%82%8B%E5%88%A9%E7%82%B9)
 
