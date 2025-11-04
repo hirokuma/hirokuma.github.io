@@ -7,9 +7,72 @@ daily: false
 date: "2025/10/22"
 ---
 
+戻り値が `Result<T, E>` や `Option<T>` の場合について。  
+
+## 例
+
+コンパイルが通るというだけで意味は無い。
+
+だいたい使い方はこんな感じになると思う。
+
+* `Result<T, E>`
+  * `T` を取得したいときは `?` か `.unwrap()` 系を使う(`match` もできたはず)
+  * `?` を使ったときは伝播するので関数の戻り値も同じ `Result<T, E>` にする
+* `Option<T>`
+  * `T` を取得したいときは `?` か `match` か `.unwrap()` 系を使う
+  * `?` を使ったときは伝播するので関数の戻り値も同じ `Option<T>` にする
+
+```rust
+fn func1() -> Result<i32, String> {
+    Ok(123)
+}
+
+fn func2() -> Result<i32, String> {
+    Err("hello".to_string())
+}
+
+fn func3() -> Option<i32> {
+    return Some(123);
+}
+
+fn func4() -> Option<i32> {
+    return None;
+}
+
+fn func5() -> Option<i32> {
+    let a = func3()?;
+    let b = if let Some(k) = func3() {
+        k * 2
+    } else {
+        3
+    };
+    match func4() {
+        Some(i) => Some(a * i + b),
+        None => None,
+    }
+}
+
+fn main() -> Result<(), String> {
+    let a = func1()?;
+    let b = func2()?;
+    println!("{} {}", a, b);
+
+    let c = match func5() {
+        Some(i) => format!("{}", i),
+        None => "None".to_string(),
+    };
+    println!("{}", c);
+
+    Ok(())
+}
+```
+
 ## `.unwrap()`
 
 [doc.rust-lang.org で検索](https://doc.rust-lang.org/std/result/enum.Result.html?search=unwrap#method.unwrap)すると、単語一致で "unwrap" を持っているのは `Result::unwrap` と `Option::unwrap` だけだった。
+
+値が取得できないときは panic するのであまり下の方の関数で使うのはよろしくないと思う。
+まったく想定していない異常ならありかもしれない。
 
 ### `Result<T, E>`
 
@@ -18,7 +81,7 @@ date: "2025/10/22"
 `Ok()` や `Err()` に何か実装があるわけではなく、そういう意味づけがある enum値というだけのようだ。
 
 `.unwrap()` には `where` があるので `E` が何でもよいわけでは無くデバッグ出力っぽいことができないとダメそうだ。
-そういうときでも `.unwrap_なんちゃら()` を探せばほどよいのがあるだろう。  
+そういうときでも探せばよいのがあるだろう。  
 `Return<>` を使いたいだけであればそういう制約はない。
 
 ```rust
