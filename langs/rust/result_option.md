@@ -74,7 +74,7 @@ fn main() -> Result<(), String> {
 値が取得できないときは panic するのであまり下の方の関数で使うのはよろしくないと思う。
 まったく想定していない異常ならありかもしれない。
 
-### Result<T, E>
+### Result&lt;T, E&gt;
 
 [Result<T, E>.unwrap()](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap) は `T` か `E` しか返さないのでわかりやすい。  
 `T` は `Ok(T)` に、`E` は `Err(E)` になる。  
@@ -112,7 +112,7 @@ pub enum Result<T, E> {
 ......
 ```
 
-### Option<T>
+### Option&lt;T&gt;
 
 [Option<T>.unwrap()](https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap) も `enum` なので `Result` と同じ系統なのだが、`None` と `Some(T)` がわかりづらい。
 
