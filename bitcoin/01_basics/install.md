@@ -4,7 +4,7 @@ title: "Bitcoin Core(bitcoind) のインストール"
 tags:
   - bitcoin
 daily: false
-date: "2025/04/12"
+date: "2025/11/09"
 ---
 
 ## はじめに
@@ -201,6 +201,44 @@ gpg: Can't check signature: No public key
 その代わり、Bitcoin サービスを提供しているプロジェクトが提供していることがある。  
 ただ、ちゃんとした `bitcoind` を提供しているのか確認するのは難しいだろう。
 そういう意味ではお勧めしない。
+
+## mainnet で必要となるストレージサイズ
+
+Raspberry Pi 4 で動かしている Bitcoin Core mainnet でのストレージサイズは 814 GB くらいである(2025/11/09時点)。  
+1 TB の HDD に置いているが、chainstate は速度に影響がありそうなので SSD に配置している(11 GB)。  
+
+
+サイズに影響しそうなオプションはこれらである。
+
+* txindex=1
+* blockfilterindex=1
+* peerblockfilters=1
+
+Bitcoin Core のバイナリサイズも含んでいるが誤差のようなものだろう。
+
+```txt
+Filesystem      Size  Used Avail Use%
+/dev/sdb1       916G  814G   56G  94%
+```
+
+```shell
+$ du -h
+61G     ./indexes/txindex
+103M    ./indexes/blockfilter/basic/db
+12G     ./indexes/blockfilter/basic
+12G     ./indexes/blockfilter
+73G     ./indexes
+142M    ./blocks/index
+742G    ./blocks
+814G    .
+```
+
+1 TB ではそのうち足りなくなりそうだ。  
+`chainstate/`, `indexes/` を別のドライブに置くくらいしか思いつかない。
+
+`blocks/` は 1ディレクトリなので、やるなら各ファイルをシンボリックリンクにするか。
+それで運用していたのだが、ドライブの調子が悪かったので別のドライブに移動させるときに操作ミスでファイルを消してしまって復旧がひどく大変だった。  
+スクリプトで自動化するべきだったな、とミスした後から手順をそうするようにした私だった。
 
 ## 関連ページ
 
