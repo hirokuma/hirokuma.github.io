@@ -81,7 +81,10 @@ $border-color: #159759;
 
     .toc {
         border: 1px solid #808080;
-        background-color: #404040;
+        background-color: #303030;
+        display: inline-block;
+        padding: 10px;
+        margin-bottom: 20px;
     }
     .writer {
         color: #808080;

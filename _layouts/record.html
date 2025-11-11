@@ -9,7 +9,8 @@ layout: default
 <h1>{{ page.title }}</h1>
 
 <div class="toc"><small>
-  <em>目次 (<div class="date">最終更新日:{{ page.date | date: "%Y/%m/%d" }}</div>)</em>
+  目次
+  <div class="date"><em>最終更新日:{{ page.date | date: "%Y/%m/%d" }}</em></div>
   {% include toc.html html=content %}
 </small></div>
 
