@@ -8,19 +8,19 @@ layout: default
 
 <h1>{{ page.title }}</h1>
 
-<div><small>
-  <em>目次 (最終更新日:{{ page.date | date: "%Y/%m/%d" }})</em>
+<div class="toc"><small>
+  <em>目次 (<div class="date">最終更新日:{{ page.date | date: "%Y/%m/%d" }}</div>)</em>
   {% include toc.html html=content %}
 </small></div>
 
 {{content}}
 
 <p class="view">
-  <div class="writer" style="color: #808080;">
+  <div class="writer"">
     <small>writer: <em><a href="https://blog.hirokuma.work/aboutme.html">{{ page.author | default: site.author }}</a></em></small>
   </div>
 {% if page.tags %}
-  <div class="tags" style="color: #808080;">
+  <div class="tags">
     <small>tags: <em>
   {% for tag in page.tags %}
     {% for taglist in site.tags %}

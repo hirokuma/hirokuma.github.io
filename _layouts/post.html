@@ -13,11 +13,11 @@ layout: default
 
 <!-- view -->
 <div class="view">
-  <div class="writer" style="color: #808080;">
+  <div class="writer">
     <small>writer: <em><a href="https://blog.hirokuma.work/aboutme.html">{{ page.author | default: site.author }}</a></em></small>
   </div>
 {% if page.tags %}
-  <div class="tags" style="color: #808080;"><small>tags: <em>
+  <div class="tags"><small>tags: <em>
   {% for tag in page.tags %}
     {% for taglist in site.tags %}
       {% if taglist.tag == tag %}
