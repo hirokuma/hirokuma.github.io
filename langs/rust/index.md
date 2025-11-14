@@ -2,6 +2,13 @@
 
 ## Rust言語
 
+* [vscode デバッグ](./debug.md)
+* [よく見る記号](./symbol.md)
+* [クレート](./crate.md)
+* [Result, Option](./result_option.md)
+
+----
+
 <!-- begin -->
 {% assign selected_tag = "rust" %}
 {% assign tag_pages = site.pages | where: "tags", selected_tag | where: "daily", false | sort: "date" | reverse %}

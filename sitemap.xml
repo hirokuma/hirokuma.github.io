@@ -1517,11 +1517,11 @@
 </url>
 <url>
   <loc>https://blog.hirokuma.work/2025/10/20251031-rst.html</loc>
-  <lastmod>2025-10-31T00:00:00+00:00</lastmod>
+  <lastmod>2025-11-14T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/2025/11/20251101-and.html</loc>
-  <lastmod>2025-11-01T00:00:00+00:00</lastmod>
+  <lastmod>2025-11-10T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/2025/11/20251102-linux.html</loc>
@@ -1530,6 +1530,22 @@
 <url>
   <loc>https://blog.hirokuma.work/2025/11/20251103-rst.html</loc>
   <lastmod>2025-11-03T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2025/11/20251107-rst.html</loc>
+  <lastmod>2025-11-09T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2025/11/20251111-rst.html</loc>
+  <lastmod>2025-11-13T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2025/11/20251112-rst.html</loc>
+  <lastmod>2025-11-12T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2025/11/20251114-rst.html</loc>
+  <lastmod>2025-11-14T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/2025/index.html</loc>
@@ -1584,7 +1600,7 @@
 </url>
 <url>
   <loc>https://blog.hirokuma.work/bitcoin/01_basics/install.html</loc>
-  <lastmod>2025-04-12T00:00:00+00:00</lastmod>
+  <lastmod>2025-11-09T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/bitcoin/01_basics/miniscript.html</loc>
@@ -1730,6 +1746,10 @@
 <url>
   <loc>https://blog.hirokuma.work/langs/rust/result_option.html</loc>
   <lastmod>2025-10-22T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/langs/rust/symbol.html</loc>
+  <lastmod>2025-11-14T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/linux/index.html</loc>
