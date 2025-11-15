@@ -14,7 +14,7 @@ thisyear: "2025"
   {% if year == page.thisyear %}
     <li>
       {{ post.date }}
-        {% if post.draft = true }(下書き){% endif %}
+        {% if post.draft %}(下書き){% endif %}
         <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         {% for tag in post.tags %}
           <a href="{{ 'tag/' | append: tag | url_encode | relative_url }}" class="post-tag"><small><span>#{{ tag }}</span></small></a>
