@@ -4,7 +4,7 @@ title: "rust: Result&lt;T, E&gt; と Option&lt;T&gt;"
 tags:
   - rust
 daily: false
-date: "2025/10/22"
+date: "2025/11/17"
 ---
 
 戻り値が `Result<T, E>` や `Option<T>` の場合について。  
@@ -267,5 +267,65 @@ fn main() {
         },
     };
     println!("{}", ret);
+}
+```
+
+## Result 早見表
+
+### .unwrap() : T か panic
+
+```rust
+fn main() {
+    let f = || -> Result<String, &str> { Err("NG") };
+    let v = f().unwrap();
+    println!("v = {}", v);
+}
+```
+
+### .unwrap_or_else(f) : T かクロージャ f の結果
+
+こちらは `Option` と違ってクロージャの引数がある。
+
+```rust
+fn main() {
+    let f = || -> Result<String, &str> { Err("NG") };
+    let v = f().unwrap_or_else(|_| "abc".to_string());
+    println!("v = {}", v);
+}
+```
+
+### .unwrap_or(v) : T か値 v
+
+```rust
+fn main() {
+    let f = || -> Result<String, &str> { Err("NG") };
+    let v = f().unwrap_or("abc".to_string());
+    println!("v = {}", v);
+}
+```
+
+## Option 早見表
+
+### .unwrap() : T か panic
+
+### .unwrap_or_else(f) : T かクロージャ f の結果
+
+こちらは `Result` と違ってクロージャの引数がない。
+
+```rust
+fn main() {
+    let f = || -> Option<String> { None };
+    let v = f().unwrap_or_else(|| "abc".to_string());
+    println!("v = {}", v);
+}
+```
+
+### .unwrap_or(v) : T か値 v
+
+```rust
+fn main() {
+    let f = || -> Option<String> { None };
+    let v = f().unwrap_or("abc".to_string());
+    println!("v = {}", v);
 }
 ```
