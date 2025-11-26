@@ -4,14 +4,14 @@ title: "Bitcoin Core(bitcoind) を regtest で動かす"
 tags:
   - bitcoin
 daily: false
-date: "2025/08/23"
+date: "2025/11/26"
 ---
 
 ## はじめに
 
 よほど野心的でない限り Bitcoin のフルノードを自作しようとは思わないだろう。  
 ここでは最も一般的と思われる Bitcoin Core(bitcoind) のビルドとオプションについてメモを残す。  
-Ubuntu 22.04 (WSL2) で確認しているが、既にいろいろインストールされているのでビルドに不足しているツールがあるかもしれない。
+Ubuntu 22.04 (WSL2) で確認している。
 
 現時点で Bitcoin Core の最新バージョンは v29.0 のためそれを使っていく。  
 以前のバージョン表記は `v0.XX.YY`(v0.21.2まで) だったが、比較的最近から `vXX.YY`(v22.0～) に変わった。
@@ -71,6 +71,23 @@ pass
 
 `rpcauth` は複数設定することができる。  
 また、electrs などのツールで参照する cookieファイル(`~/.bitcoin/regtest/.cookie`など)は`rpcauth`を設定した場合しか生成されない。
+
+### 起動
+
+`PATH` が通っていればコマンド名だけで実行できる。  
+何も指定しないと `bitcoin.conf` は `$HOME/.bitcoin/bitcoin.conf` が使用され、regtest のデータは `$HOME/.bitcoin/regtest/` 以下に置かれる。
+
+```bash
+bitcoind
+```
+
+regtest を使っていると最初からやり直したいことがしばしばある。
+そういう場合は `$HOME/.bitcoin/regtest/` をディレクトリごと削除するとよい。
+mainnet のデータは `$HOME/.bitcoin/` の直下に置かれるので間違えて削除してしまわないよう。
+
+なお、mainnet で Bitcoin Core のウォレットを直接使うのはあまりよろしくないと思う。
+間違って削除しやすいし、BIP-39 のようなバックアップもできないはずだ(ちょっと私の知識は古いかも？)。  
+どうしてもというときは Spector などを挟むとよいとは思うが、私は使ったことがない。
 
 ## ウォレットの作成
 
