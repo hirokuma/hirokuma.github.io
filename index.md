@@ -67,7 +67,6 @@ recentlies: 5
 
 * [2025年](2025/index.md)
 * [2024年](2024/index.md)
-* [それ以前(別サイト)](https://hiro99ma.blogspot.com/)
 
 ## その他
 
@@ -75,3 +74,4 @@ recentlies: 5
 * [X/Twitter](https://x.com/hiro99ma)
 * [お仕事ページ](https://hirokuma.work)
 * [About me](aboutme.md)
+* [hiro99ma old blog](https://hiro99ma.blogspot.com/)
