@@ -44,7 +44,10 @@
           function submitSearch(engine) {
             const form = document.getElementById('search-form');
             const input = document.getElementById('search-box');
-            const originalQuery = input.value;
+            const originalQuery = input.value
+              .split(/\s+/)
+              .map(s => `"${s}"`)
+              .join(" ");
             const site = 'blog.hirokuma.work';
 
             if (!originalQuery.trim()) return; // 空白検索防止
