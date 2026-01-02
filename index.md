@@ -65,6 +65,7 @@ recentlies: 5
 
 ## 年別
 
+* [2026年](2026/index.md)
 * [2025年](2025/index.md)
 * [2024年](2024/index.md)
 
