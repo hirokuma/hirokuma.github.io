@@ -25,20 +25,23 @@ $ git clone https://github.com/Blockstream/esplora && cd esplora
 $ npm install
 ```
 
-Dockerコンテナ版もあるが、Bitcoin regtestで試したところBitcoinノードとElectrsも一緒に起動した。
-私の用途に合わなかったのでそれ以上試していない。
+Dockerコンテナ版もあるが、[Bitcoin regtest](https://github.com/Blockstream/esplora/blob/master/README.md#how-to-run-the-explorer-for-bitcoin-regtest)で試したところBitcoinノードとElectrsも一緒に起動した(要docker login)。  
+この場合のポートは、electrs は 50001、esplora は 8094 が使われる。
+
+```bash
+docker run --name blockstream_esplora \
+           -p 50001:50001 -p 8094:80 \
+           --volume $PWD/data_bitcoin_regtest:/data \
+           --rm -i -t blockstream/esplora \
+           bash -c "/srv/explorer/run.sh bitcoin-regtest explorer"
+```
+
+`curl http://localhost:8094/regtest/api/blocks/tip/hash` のようにしてアクセスする。
 
 ## 実行
 
 Elctrs の REST API が `http://localhost:3002/` で動いている場合はこうなる。  
 環境変数の終わりは `/` を付けること。
-
-この設定だと`STATIC_ROOT`と`API_URL`が同じ`localhost`ではあるもののポート番号が異なるため[Origin](https://developer.mozilla.org/ja/docs/Glossary/Origin)が別と判断される。
-ここでは`STATIC_ROOT`から`API_URL`を呼び出す経路に影響がある。  
-関連する設定で、esplora には環境変数`CORS_ALLOW`が、electrs には `--cors`がある。
-どちらに対して設定するかというと、「アクセスを許可する」なのでAPIを提供するelectrsに`--cors="http://localhost:5000"`などとして相手を許すようにしておく。
-
-* [CORS(Cross-Origin Resource Sharing) - とほほのWWW入門](https://www.tohoho-web.com/ex/cors.html)
 
 ```script
 HOST=http://localhost
@@ -49,6 +52,13 @@ $ export STATIC_ROOT=$HOST:5000/
 $ export API_URL=$HOST:3002/
 $ npm run dev-server
 ```
+
+この設定だと`STATIC_ROOT`と`API_URL`が同じ`localhost`ではあるもののポート番号が異なるため[Origin](https://developer.mozilla.org/ja/docs/Glossary/Origin)が別と判断される。
+ここでは`STATIC_ROOT`から`API_URL`を呼び出す経路に影響がある。  
+関連する設定で、esplora には環境変数`CORS_ALLOW`が、electrs には `--cors`がある。
+どちらに対して設定するかというと、「アクセスを許可する」なのでAPIを提供するelectrsに`--cors="http://localhost:5000"`などとして相手を許すようにしておく。
+
+* [CORS(Cross-Origin Resource Sharing) - とほほのWWW入門](https://www.tohoho-web.com/ex/cors.html)
 
 `STATIC_ROOT`がブラウザでアクセスするURLである。  
 別PC だった場合はこれに IPアドレスなどを設定するとよさそうなのだが、"Unexpected token" で500エラーになる。  
