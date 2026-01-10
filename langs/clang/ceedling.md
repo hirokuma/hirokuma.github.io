@@ -6,7 +6,6 @@ tags:
   - tools
 daily: false
 date: "2025/09/15"
-draft: true
 ---
 
 ## 概要

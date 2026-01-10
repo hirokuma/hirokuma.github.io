@@ -5,7 +5,6 @@ tags:
   - bitcoin
 daily: false
 date: "2025/09/25"
-draft: true
 ---
 
 ## 目的

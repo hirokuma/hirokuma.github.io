@@ -5,7 +5,6 @@ tags:
   - rust
 daily: false
 date: "2025/11/15"
-draft: true
 ---
 
 ## はじめに
