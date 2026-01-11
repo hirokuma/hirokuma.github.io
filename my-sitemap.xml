@@ -1750,6 +1750,10 @@
   <lastmod>2025-03-07T00:00:00+00:00</lastmod>
 </url>
 <url>
+  <loc>https://blog.hirokuma.work/bitcoin/03_tips/bitcoincore-opreturn.html</loc>
+  <lastmod>2026-01-11T00:00:00+00:00</lastmod>
+</url>
+<url>
   <loc>https://blog.hirokuma.work/bitcoin/03_tips/initialdownloaded.html</loc>
   <lastmod>2025-07-30T00:00:00+00:00</lastmod>
 </url>
@@ -1853,6 +1857,10 @@
 <url>
   <loc>https://blog.hirokuma.work/langs/rust/symbol.html</loc>
   <lastmod>2025-11-14T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/langs/rust/workspace.html</loc>
+  <lastmod>2026-01-10T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/linux/index.html</loc>
