@@ -84,4 +84,5 @@ date: "2025/06/19"
 
 ### 情報
 
+* [マスタリング・ビットコイン 第3版 - O'Reilly Japan](https://www.oreilly.co.jp/books/9784814401444/)
 * [Weekly Recap on the Bitcoin ecosystem - th_sat - Substack](https://thsatcrypto.substack.com/)
