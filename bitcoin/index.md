@@ -37,6 +37,7 @@ date: "2025/06/19"
 * [初期ブロックダウンロードが終わったかどうか](03_tips/initialdownloaded.md)
 * [Public KeyからscriptPubKeyを得る](03_tips/pubkey2scriptpubkey.md)
 * [Regtest環境でfee rateを得たい](03_tips/regtest-feerate.md)
+* [Bitcoin CoreでOP_RETURNありTXを作りたい](03_tips/bitcoincore-opreturn.md)
 
 ## ライブラリ
 
@@ -80,3 +81,7 @@ date: "2025/06/19"
   * [Reference — Bitcoin](https://developer.bitcoin.org/reference/)
 
 * [Learn Me A Bitcoin (By Greg Walker)](https://learnmeabitcoin.com/)
+
+### 情報
+
+* [Weekly Recap on the Bitcoin ecosystem - th_sat - Substack](https://thsatcrypto.substack.com/)
