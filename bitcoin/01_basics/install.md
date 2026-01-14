@@ -4,7 +4,7 @@ title: "Bitcoin Core(bitcoind) のインストール"
 tags:
   - bitcoin
 daily: false
-date: "2025/11/09"
+date: "2026/01/14"
 ---
 
 ## はじめに
@@ -189,6 +189,35 @@ gpg: Can't check signature: No public key
 gpg: Signature made Wed Jan  8 23:17:43 2025 JST
 gpg:                using RSA key 0CCBAAFD76A2ECE2CCD3141DE2FFD5B1D88CA97D
 gpg: Can't check signature: No public key
+```
+#### `verify.py` を使ったダウンロード
+
+`SHA256SUMS` のチェックなどをいちいちやるのは面倒だ。  
+ダウンロードと検証を行うスクリプトがある。
+
+* [bitcoin/contrib/verify-binaries/README.md at 30.x · bitcoin/bitcoin](https://github.com/bitcoin/bitcoin/blob/30.x/contrib/verify-binaries/README.md)
+
+`verify.py` を実行すると、鍵がインポートされていればダウンロードして `/tmp/` にディレクトリを作ってダウンロードする。
+
+```shell
+$ ./verify.py pub 30.2-x86_64-linux
+[INFO] got file https://bitcoincore.org/bin/bitcoin-core-30.2/SHA256SUMS.asc as SHA256SUMS.asc
+[WARNING] https://bitcoin.org failed to provide file (https://bitcoin.org/bin/bitcoin-core-30.2/SHA256SUMS.asc). Continuing based solely upon https://bitcoincore.org.
+[INFO] got file https://bitcoincore.org/bin/bitcoin-core-30.2/SHA256SUMS as SHA256SUMS
+[WARNING] https://bitcoin.org failed to provide file (https://bitcoin.org/bin/bitcoin-core-30.2/SHA256SUMS). Continuing based solely upon https://bitcoincore.org.
+[INFO] got 3 good signatures
+[INFO] GOOD SIGNATURE (untrusted): SigData('E2FFD5B1D88CA97D', '.0xB10C <b10c@b10c.me>', trusted=False, status='')
+[INFO] GOOD SIGNATURE (untrusted): SigData(略)
+[INFO] GOOD SIGNATURE (untrusted): SigData(略)
+[WARNING] UNKNOWN SIGNATURE: SigData(略)
+[WARNING] UNKNOWN SIGNATURE: SigData(略)
+[WARNING] UNKNOWN SIGNATURE: SigData(略)
+[WARNING] UNKNOWN SIGNATURE: SigData(略)
+[WARNING] UNKNOWN SIGNATURE: SigData(略)
+[INFO] removing *-debug binaries (bitcoin-30.2-x86_64-linux-gnu-debug.tar.gz) from verification since https://bitcoincore.org does not host *-debug binaries
+[INFO] downloading bitcoin-30.2-x86_64-linux-gnu.tar.gz to /tmp/bitcoin_verify_binaries.30.2-x86_64-linux
+[INFO] did not clean up /tmp/bitcoin_verify_binaries.30.2-x86_64-linux
+VERIFIED: bitcoin-30.2-x86_64-linux-gnu.tar.gz
 ```
 
 ### その3: Dockerコンテナ
