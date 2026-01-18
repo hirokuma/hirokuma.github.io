@@ -46,7 +46,7 @@ docker run --name blockstream_esplora \
 docker compose の service にすることもできる。
 今使っているのはこういう設定である。コメントが入っているのでAIに作ってもらったのだと思う。
 
-```toml
+```yaml
   blockstream_esplora:
     container_name: blockstream_esplora
     image: blockstream/esplora
