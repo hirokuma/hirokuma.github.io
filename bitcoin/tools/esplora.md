@@ -25,8 +25,12 @@ $ git clone https://github.com/Blockstream/esplora && cd esplora
 $ npm install
 ```
 
-Dockerコンテナ版もあるが、[Bitcoin regtest](https://github.com/Blockstream/esplora/blob/master/README.md#how-to-run-the-explorer-for-bitcoin-regtest)で試したところBitcoinノードとElectrsも一緒に起動した(要docker login)。  
+### dockerコンテナ
+
+Dockerコンテナ版もある。  
+[Bitcoin regtest](https://github.com/Blockstream/esplora/blob/master/README.md#how-to-run-the-explorer-for-bitcoin-regtest)で試したところBitcoinノードとElectrsも一緒に起動した。  
 この場合のポートは、electrs は 50001、esplora は 8094 が使われる。
+`curl http://localhost:8094/regtest/api/blocks/tip/hash` のようにしてアクセスする。
 
 ```bash
 docker run --name blockstream_esplora \
@@ -36,7 +40,27 @@ docker run --name blockstream_esplora \
            bash -c "/srv/explorer/run.sh bitcoin-regtest explorer"
 ```
 
-`curl http://localhost:8094/regtest/api/blocks/tip/hash` のようにしてアクセスする。
+その代わりと言っては何だが BitcoinノードのRPCポートは開いていない。
+操作するには `docker exec` で `/bin/cli` を実行する。
+
+docker compose の service にすることもできる。
+今使っているのはこういう設定である。コメントが入っているのでAIに作ってもらったのだと思う。
+
+```toml
+  blockstream_esplora:
+    container_name: blockstream_esplora
+    image: blockstream/esplora
+    ports:
+      - "50001:50001"
+      - "3000:80"
+    stdin_open: true  # -i オプションに相当
+    tty: true         # -t オプションに相当
+    command: bash -c "/srv/explorer/run.sh bitcoin-regtest explorer"
+    networks:
+      shared:
+        aliases:
+          - bitcoind.local
+```
 
 ## 実行
 
