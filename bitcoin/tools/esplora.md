@@ -98,6 +98,17 @@ Electrs を立ち上げたPC が headless の Raspberry Pi3 だったのでブ�
 
 * [Development server options](https://github.com/Blockstream/esplora?tab=readme-ov-file#development-server-options)
 
+### anyhow::Resultで似たようなものはない
+
+`anyhow::Result<boo>` を戻り値にしている関数があったので同じようなものがないかと思ったが、そういうのはないようだ。 
+`.unwrap_or(false)` を使えば `Err` か `Ok(false)` のときはこうする、という書き方ができるそうだ。
+
+```rust
+if !my_func().unwrap_or(false) {
+  ...
+}
+```
+
 ## その他
 
 regtestでvoutをSpentしたトランザクションにジャンプしたかったのでちょっと改造した(Gemini Code Assist)。
