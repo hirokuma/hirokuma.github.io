@@ -1647,6 +1647,34 @@
   <lastmod>2026-01-06T00:00:00+00:00</lastmod>
 </url>
 <url>
+  <loc>https://blog.hirokuma.work/2026/01/20260111-book.html</loc>
+  <lastmod>2026-01-11T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2026/01/20260111-rst.html</loc>
+  <lastmod>2026-01-12T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2026/01/20260114-sha.html</loc>
+  <lastmod>2026-01-14T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2026/01/20260116-dck.html</loc>
+  <lastmod>2026-01-16T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2026/01/20260116-rst.html</loc>
+  <lastmod>2026-01-16T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2026/01/20260118-dck.html</loc>
+  <lastmod>2026-01-18T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/2026/01/20260124-wsl.html</loc>
+  <lastmod>2026-01-24T00:00:00+00:00</lastmod>
+</url>
+<url>
   <loc>https://blog.hirokuma.work/2026/index.html</loc>
 </url>
 <url>
@@ -1699,7 +1727,7 @@
 </url>
 <url>
   <loc>https://blog.hirokuma.work/bitcoin/01_basics/install.html</loc>
-  <lastmod>2025-11-09T00:00:00+00:00</lastmod>
+  <lastmod>2026-01-14T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/bitcoin/01_basics/miniscript.html</loc>
@@ -1853,6 +1881,10 @@
 <url>
   <loc>https://blog.hirokuma.work/langs/rust/result_option.html</loc>
   <lastmod>2025-11-17T00:00:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://blog.hirokuma.work/langs/rust/subscriber.html</loc>
+  <lastmod>2026-01-23T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/langs/rust/symbol.html</loc>

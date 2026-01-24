@@ -22,7 +22,7 @@ tracing-subscriber = { version = "0.3.22", features = ["env-filter", "json"] }
 // https://deepwiki.com/search/withlevel_fe927987-cab6-4a10-8e71-3e569cbc284b?mode=fast
 tracing_subscriber::fmt::Subscriber::builder()
     .with_ansi(true) // 色を付けるかどうか
-    .with_file(true) // ファイル名を出力するかどうか
+    .with_file(true) // ファイル名を出力するかどうか(フルパス)
     .with_level(true) // ログレベルを出力するかどうか
     .with_line_number(true) // 行番号を出力するかどうか
     .with_span_events(tracing_subscriber::fmt::format::FmtSpan::NONE) // spanをどうするか
@@ -35,6 +35,11 @@ tracing_subscriber::fmt::Subscriber::builder()
     .without_time() // 時間を表示しない
     .init();
 ```
+
+* `with_source_location(bool)`
+  * `with_file(bool)` と `.with_line_number(bool)` を同時に設定する
+* `FormatEvent` を使ったカスタマイズが可能
+  * [deep wiki](https://deepwiki.com/search/withfile_06d63fd0-a59b-42ac-97c2-95210e76e49b?mode=fast)
 
 ## メモ
 
