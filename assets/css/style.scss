@@ -73,6 +73,12 @@ $border-color: #159759;
     table td {
         border: solid 1px #6a6a6a;
     }
+    a {
+        color: #0066cc;
+    }
+    a:visited {
+        color: #66015e;
+    }
 
     .date {
         font-style: italic;
