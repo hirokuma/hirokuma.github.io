@@ -12,7 +12,7 @@ echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
 
 # print urls
 # find . \( -type d -and -name "201*" -and -prune \) -or -type f \( -name "*.md" -o -name "*.html" \) -printf "%TY-%Tm-%Td%p\n" | \
-for f in $(find ./ -name "*.md"); do
+for f in $(find ./ -type d -name '_*' -prune -o -type f -name "*.md" ! -name '_*' -print); do
     HTML=`echo $f | sed -e "s|\./||g" -e "s/\.md$/\.html/g"`
     DTS=8
     DTE=17
