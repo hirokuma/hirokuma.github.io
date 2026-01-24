@@ -16,7 +16,7 @@ thisyear: "2024"
         <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         <small><em>{% if post.daily %}$日記{% else %}$調査{% endif %}</em></small>
         {% for tag in post.tags %}
-          <a href="{{ 'tag/' | append: tag | url_encode | relative_url }}" class="post-tag"><small><span>#{{ tag }}</span></small></a>
+          <a href="{{ 'tags/' | append: tag | relative_url }}" class="post-tag"><small><span>#{{ tag }}</span></small></a>
         {% endfor %}
     </li>
   {% endif %}
