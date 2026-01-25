@@ -9,6 +9,9 @@ date: "2026/01/23"
 
 ## tracing_subscriber
 
+* [tokio-rs/tracing: Application level tracing for Rust.](https://github.com/tokio-rs/tracing/search?l=shell)
+* [tokio-rs/tracing | DeepWiki](https://deepwiki.com/tokio-rs/tracing)
+
 ```toml
 log = "0.4.29"
 tokio = { version = "1.48.0", features = ["macros", "rt-multi-thread"] }
@@ -40,6 +43,19 @@ tracing_subscriber::fmt::Subscriber::builder()
   * `with_file(bool)` と `.with_line_number(bool)` を同時に設定する
 * `FormatEvent` を使ったカスタマイズが可能
   * [deep wiki](https://deepwiki.com/search/withfile_06d63fd0-a59b-42ac-97c2-95210e76e49b?mode=fast)
+
+### `RUST_LOG`
+
+環境変数 `RUST_LOG` でログレベルの設定ができる。  
+これは `tracing_subscriber` が行っている解釈なので、他のログシステムはまた違う。
+
+* `=` 無しで書いたレベルは全体のレベル(`RUST_LOG=debug`)
+* `::` 無しで書いたレベルは特定のクレートのレベル(`RUST_LOG=debug,libp2p=trace`)
+* `::` 有りで書いたレベルは特定のモジュールのレベル(`RUST_LOG=debug,libp2p=trace,myapp::network=info`)
+
+他にも色々できる。
+
+* [deep wiki](https://deepwiki.com/search/_eee534ac-67e4-400a-832b-0c6063249bbc?mode=fast)
 
 ## メモ
 
