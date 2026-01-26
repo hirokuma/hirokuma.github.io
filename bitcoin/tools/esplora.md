@@ -98,15 +98,14 @@ Electrs を立ち上げたPC が headless の Raspberry Pi3 だったのでブ�
 
 * [Development server options](https://github.com/Blockstream/esplora?tab=readme-ov-file#development-server-options)
 
-### anyhow::Resultで似たようなものはない
+### Esplora API
 
-`anyhow::Result<boo>` を戻り値にしている関数があったので同じようなものがないかと思ったが、そういうのはないようだ。 
-`.unwrap_or(false)` を使えば `Err` か `Ok(false)` のときはこうする、という書き方ができるそうだ。
+[Esplora API](https://github.com/blockstream/esplora/blob/master/API.md)はREST APIなので `curl` などで実行できて手軽である。  
+アドレスは`electrs`起動時のログで`http_addr`を見ると良い。
 
-```rust
-if !my_func().unwrap_or(false) {
-  ...
-}
+```console
+$ curl http://localhost:3002/block-height/1
+79900ad51d7e6a8aed2a17570dd5a324134693af6e59df973f6a3bec16de12a5
 ```
 
 ## その他

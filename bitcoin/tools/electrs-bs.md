@@ -159,13 +159,3 @@ electrs --db-dir="$DATADIR" \
 $ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "id": 0}' | netcat localhost 50001
 {"id":0,"jsonrpc":"2.0","result":["electrs-esplora 0.4.1","1.4"]}
 ```
-
-### Esplora API
-
-[Esplora API](https://github.com/blockstream/esplora/blob/master/API.md)も使用できる。  
-アドレスは`electrs`起動時のログで`http_addr`を見ると良い。
-
-```console
-$ curl http://localhost:3002/block-height/1
-79900ad51d7e6a8aed2a17570dd5a324134693af6e59df973f6a3bec16de12a5
-```
