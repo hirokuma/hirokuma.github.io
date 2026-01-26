@@ -5,6 +5,7 @@
 * [vscode デバッグ](./debug.md)
   * [log](./log.md)
   * [tracing_subscriber](./subscriber.md)
+  * [tokio-console](./tokio-console.md)
 * [よく見る記号](./symbol.md)
 * [クレート](./crate.md)
 * [Result, Option](./result_option.md)

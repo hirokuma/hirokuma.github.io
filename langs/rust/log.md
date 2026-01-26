@@ -30,13 +30,12 @@ use log::*;
 
 ### tracing::log
 
-[tracing_subscriber](./subscriber.md)は Available logging implementations には載っていないが、
-私の記憶では `log` クレートでも使えたように思う。  
-ただ互換性の章があるし、`tracing_subscriber` を使いたいのは細かいログ制御を欲しているときでもあるので、
-`main.rs` だけ `use tracing::*` でそれ以外を `use log::*` にするより `tracing` に統一したほうが無難かもしれない。
+[tracing_subscriber](./subscriber.md)は [Available logging implementations](https://docs.rs/log/latest/log/#available-logging-implementations) には載っていないが、
+`log` クレートでも使える。
 
 * [log Compatibility](https://docs.rs/tracing/latest/tracing/#log-compatibility)
 * [For log Users](https://docs.rs/tracing/latest/tracing/#for-log-users)
+* [deep wiki](https://deepwiki.com/search/tracingsubscriber-log_d982ec35-4e8a-4809-9fb7-572a2ed3bb95?mode=fast)
 
 ```rust
 use tracing::*;
