@@ -1855,7 +1855,7 @@
 </url>
 <url>
   <loc>https://blog.hirokuma.work/bitcoin/tools/esplora.html</loc>
-  <lastmod>2025-08-03T00:00:00+00:00</lastmod>
+  <lastmod>2026-01-26T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/index.html</loc>
@@ -1887,12 +1887,16 @@
   <loc>https://blog.hirokuma.work/langs/rust/index.html</loc>
 </url>
 <url>
+  <loc>https://blog.hirokuma.work/langs/rust/log.html</loc>
+  <lastmod>2026-01-26T00:00:00+00:00</lastmod>
+</url>
+<url>
   <loc>https://blog.hirokuma.work/langs/rust/result_option.html</loc>
   <lastmod>2025-11-17T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/langs/rust/subscriber.html</loc>
-  <lastmod>2026-01-23T00:00:00+00:00</lastmod>
+  <lastmod>2026-01-26T00:00:00+00:00</lastmod>
 </url>
 <url>
   <loc>https://blog.hirokuma.work/langs/rust/symbol.html</loc>

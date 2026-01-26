@@ -5,7 +5,7 @@ tags:
   - bitcoin
   - tools
 daily: false
-date: "2025/08/03"
+date: "2026/01/26"
 ---
 
 ## サイト
@@ -98,7 +98,7 @@ Electrs を立ち上げたPC が headless の Raspberry Pi3 だったのでブ�
 
 * [Development server options](https://github.com/Blockstream/esplora?tab=readme-ov-file#development-server-options)
 
-### Esplora API
+## Esplora API
 
 [Esplora API](https://github.com/blockstream/esplora/blob/master/API.md)はREST APIなので `curl` などで実行できて手軽である。  
 アドレスは`electrs`起動時のログで`http_addr`を見ると良い。
@@ -107,6 +107,9 @@ Electrs を立ち上げたPC が headless の Raspberry Pi3 だったのでブ�
 $ curl http://localhost:3002/block-height/1
 79900ad51d7e6a8aed2a17570dd5a324134693af6e59df973f6a3bec16de12a5
 ```
+
+APIの見方は、コロンがついた名前は実データに置き換える、という程度である。  
+例えば `GET /tx/:txid` であれば `:txid` を実際のTXIDに置き換えて呼び出す。
 
 ## その他
 

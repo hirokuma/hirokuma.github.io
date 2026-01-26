@@ -3,6 +3,7 @@
 ## Rust言語
 
 * [vscode デバッグ](./debug.md)
+  * [log](./log.md)
   * [tracing_subscriber](./subscriber.md)
 * [よく見る記号](./symbol.md)
 * [クレート](./crate.md)

@@ -4,7 +4,7 @@ title: "tracing_subscriber"
 tags:
   - rust
 daily: false
-date: "2026/01/23"
+date: "2026/01/26"
 ---
 
 ## tracing_subscriber
@@ -44,7 +44,7 @@ tracing_subscriber::fmt::Subscriber::builder()
 * `FormatEvent` を使ったカスタマイズが可能
   * [deep wiki](https://deepwiki.com/search/withfile_06d63fd0-a59b-42ac-97c2-95210e76e49b?mode=fast)
 
-### `RUST_LOG`
+## `RUST_LOG`
 
 環境変数 `RUST_LOG` でログレベルの設定ができる。  
 これは `tracing_subscriber` が行っている解釈なので、他のログシステムはまた違う。
@@ -57,6 +57,24 @@ tracing_subscriber::fmt::Subscriber::builder()
 
 * [deep wiki](https://deepwiki.com/search/_eee534ac-67e4-400a-832b-0c6063249bbc?mode=fast)
 
-## メモ
+### 必ずしも `RUST_LOG` が使われるとは限らない
+
+`tracing_subscriber` の `.from_env_lossy()` を使うと環境変数 `RUST_LOG` を読み取ってくれる。
+ということは `.from_env_lossy()` を使っていないと読み取ってくれないということである。
+
+* [DEFAULT_ENV](https://docs.rs/tracing-subscriber/latest/tracing_subscriber/filter/struct.EnvFilter.html#associatedconstant.DEFAULT_ENV)
+
+また `.from_env_lossy()` は基本的にフィルタの並びの最後に使うものになっていて自分の設定と織り交ぜにくい時がある。
+そういうときは自分で設定を作って `.parse_lossy()` で `EnvFilter` にしてから `.with(filter)` のようにして使うと良いと思う。
+
+* [parse_lossy](https://docs.rs/tracing-subscriber/latest/tracing_subscriber/filter/struct.Builder.html#method.parse_lossy)
+
+開発中は一時的にログ出力を制限したかったり、しばらく同じ箇所の開発を続けるので実装で埋め込んでしまいたかったりするんじゃなかろうか。
+そういうときに使うとよい。  
+両方活かすための実装自体が結構面倒で、私は途中で投げ出して中途半端になってしまった。
+ほどほどがよいのだろう。
+
+## 日記参照
 
 * [rust: tracing_subscriber ログあれこれ - hiro99ma blog](https://blog.hirokuma.work/2025/12/20251216-rst.html)
+* [rust: tracing_subscriber は RUST_LOG より実装が優先 - hiro99ma blog](https://blog.hirokuma.work/2025/12/20251209-rst.html)
