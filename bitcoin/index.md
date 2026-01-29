@@ -4,7 +4,7 @@ title: "Bitcoin調査"
 tags:
   - bitcoin
 daily: false
-date: "2025/06/19"
+date: "2026/01/30"
 ---
 
 ## 注意！
@@ -53,6 +53,7 @@ date: "2025/06/19"
 * デバッグ
   * [btcdeb](tools/btcdeb.md)
 * Electrum Server
+  * [Electrum Protocol — ElectrumX ElectrumX 1.20.2 documentation](https://electrumx.readthedocs.io/en/latest/protocol.html)
   * [romanz/electrs](tools/electrs.md)
   * [Blockstream/electrs](tools/electrs-bs.md)
   * [mempool/electrs](tools/electrs-ms.md)
