@@ -6,7 +6,7 @@ tags:
   - library
   - clang
 daily: false
-date: "2025/08/30"
+date: "2026/02/03"
 ---
 
 ## はじめに
@@ -21,12 +21,12 @@ $ sudo apt install build-essential pkg-config libtool
 
 [repository](https://github.com/bitcoin-core/secp256k1)
 
-_調査日:2025/07/22_: v0.7.0
+_調査日:2026/02/03_: v0.7.1
 
 ```console
 $ git clone https://github.com/bitcoin-core/secp256k1.git
 $ cd secp256k1
-$ git checkout -b v0.7.0 refs/tags/v0.7.0
+$ git checkout -b v0.7.1 refs/tags/v0.7.1
 ```
 
 ### make
