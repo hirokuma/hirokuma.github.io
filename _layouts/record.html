@@ -10,6 +10,9 @@ layout: default
 
 <div class="toc"><small>
   目次
+  {% if page.create %}
+  <div class="date"><em>作成日:{{ page.create | date: "%Y/%m/%d" }}</em></div>
+  {% endif %}
   <div class="date"><em>最終更新日:{{ page.date | date: "%Y/%m/%d" }}</em></div>
   {% include toc.html html=content %}
 </small></div>
