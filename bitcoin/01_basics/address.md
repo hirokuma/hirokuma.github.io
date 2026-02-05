@@ -3,12 +3,20 @@ title: "アドレス"
 tags:
   - bitcoin
 daily: false
-date: "2025/03/09"
+create: "2025/03/09"
+date: "2026/02/05"
 ---
 
 ## はじめに
 
 Bitcoin で送金先を指定するときにはアドレスを使うのが一般的である。
+
+mainnetのアドレス表記であれば、おおよそこうなる。
+
+* `1` で始まる : P2PKH
+* `3` で始まる : P2SH
+* `bc1q` で始まる : P2WPKH ro P2WSH
+* `bc1p` で始まる : P2TR
 
 ## アドレスの種類
 
