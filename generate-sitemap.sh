@@ -27,12 +27,12 @@ for f in $(find ./ -type d -name '_*' -prune -o -type f -name "*.md" ! -name '_*
     else
         DATE=""
     fi
-    echo "<url>"
-    echo "  <loc>${URL}${HTML}</loc>"
+    echo "  <url>"
+    echo "    <loc>${URL}${HTML}</loc>"
     if [ -n "${DATE}" ]; then
-        echo "  <lastmod>${DATE}</lastmod>"
+        echo "    <lastmod>${DATE}</lastmod>"
     fi
-    echo "</url>"
+    echo "  </url>"
 done
 
 # print foot
