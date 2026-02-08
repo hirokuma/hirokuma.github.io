@@ -4,7 +4,8 @@ title: "tracing_subscriber"
 tags:
   - rust
 daily: false
-date: "2026/01/26"
+create: "2026/01/26"
+date: "2026/02/08"
 ---
 
 ## tracing_subscriber
@@ -74,7 +75,29 @@ tracing_subscriber::fmt::Subscriber::builder()
 両方活かすための実装自体が結構面倒で、私は途中で投げ出して中途半端になってしまった。
 ほどほどがよいのだろう。
 
+## ファイル保存
+
+出力先を stdout や stderr ではなくファイルにする場合は `tracing_appender` クレートで作った appender を `.with_writer()` で指定する。
+
+たとえばこう。
+
+```rust
+let file_appender = tracing_appender::rolling::RollingFileAppender::builder()
+    .rotation(tracing_appender::rolling::Rotation::MINUTELY)
+    .filename_prefix("mylog")
+    .max_log_files(3)
+    .build("./logs")
+    .unwrap();
+```
+
+* ログの出力先: `./logs/mylog.YYYY-MM-DD-hh-mm`
+  * なければディレクトリを作るがコンソールにエラーログが出る
+* 分単位で作成され、3ファイルでローテーション。あふれたファイルは削除。
+
+Linuxの `logrotate` と組み合わせるのは面倒そうだった。
+
 ## 日記参照
 
 * [rust: tracing_subscriber ログあれこれ - hiro99ma blog](https://blog.hirokuma.work/2025/12/20251216-rst.html)
 * [rust: tracing_subscriber は RUST_LOG より実装が優先 - hiro99ma blog](https://blog.hirokuma.work/2025/12/20251209-rst.html)
+* [rust: tracing_subscriberの出力先をファイルにする - hiro99ma blog](https://blog.hirokuma.work/2026/02/20260208-rst.html)
