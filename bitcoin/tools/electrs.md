@@ -40,11 +40,15 @@ dynamic link するとアップデートが簡単、みたいに書いてある�
 
 ## 実行
 
+TOMLファイルでの項目名はアンダーバーだが実行ファイルの引数に与える場合はハイフンなので注意すること。  
+(例: `cookie_file` ==> `--cookie-file`)
+
 ### config.toml
 
 electrs の設定は `config.toml` という名前である。  
 [テンプレート](https://github.com/romanz/electrs/blob/v0.10.9/doc/config_example.toml) を参考にすると良い。  
 `cookie_file` と `db_dir` は変更するだろう。  
+"highly recommended" ではあるが必須ではないそうだ。  
 なお`cookie_file`は`bitcoin.conf`で[rpcauth](https://blog.hirokuma.work/bitcoin/01_basics/bitcoind.html#rpcauth)を設定しないと作られないので注意すること。
 
 `config_specification.toml` が設定できるパラメータ名で `Config` が最終的に使われる設定値なのかな。
@@ -82,7 +86,7 @@ pub struct Config {
 私の環境だとおおよそこんな感じである。  
 Raspberry Pi 4 の IP アドレスが 192.168.0.30 なので `electrum_rpc_addr` で設定することで少なくとも LAN の中では公開という形にしている(よね？)。
 
-```conf
+```toml
 cookie_file = "/home/xxx/usbdisk/bitcoin/data/.cookie"
 daemon_rpc_addr = "127.0.0.1:8332"
 daemon_p2p_addr = "127.0.0.1:8333"
@@ -97,7 +101,7 @@ log_filters = "INFO"
 
 * [Bitcoind configuration](https://github.com/romanz/electrs/blob/v0.10.9/doc/config.md#bitcoind-configuration)
 
-`rpcauth` を設定して cookie ファイルが作られるようにしておく。  
+`cookie-file` を使う場合は `rpcauth` を設定して cookie ファイルが作られるようにしておく。  
 [rpcauth.py](https://github.com/bitcoin/bitcoin/tree/master/share/rpcauth) は bitcoind が動いていなくても実行できるので、これで設定値を取得し、bitcoin.conf に追加して再起動すると datadir に `.cookie` ができている。  
 そのフルパスを `config.toml` の `cookie_file` に書いておく。
 
