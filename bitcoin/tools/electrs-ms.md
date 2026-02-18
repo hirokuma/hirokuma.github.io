@@ -129,7 +129,7 @@ OPTIONS:
             the Electrum and HTTP APIs. [default: 500]
 ```
 
-## おわりに
+## リンク
 
-regtestでトランザクションの前後移動をしたくて[mempool/mempool](https://github.com/mempool/mempool)を導入しようかと思ってビルドしたのだが、
-mempool/mempoolの構築が面倒そうだったので止めたため、これ以上は使っていない。
+* [romanz/electrs](./electrs.md)
+* [Blockstream/electrs](./electrs-bs.md)

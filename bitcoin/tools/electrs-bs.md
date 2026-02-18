@@ -159,3 +159,8 @@ electrs --db-dir="$DATADIR" \
 $ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "id": 0}' | netcat localhost 50001
 {"id":0,"jsonrpc":"2.0","result":["electrs-esplora 0.4.1","1.4"]}
 ```
+
+## リンク
+
+* [romanz/electrs](./electrs.md)
+* [mempool/electrs](./electrs-ms.md)

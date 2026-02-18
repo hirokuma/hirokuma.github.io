@@ -5,14 +5,15 @@ tags:
   - bitcoin
   - tools
 daily: false
-date: "2025/04/07"
+create: "2025/04/07"
+date: "2026/02/18"
 ---
 
 ## サイト
 
 * [repository: github.com/romanz/electrs](https://github.com/romanz/electrs)
 
-_2025/04/07_: v0.10.9
+_2026/02/18_: v0.11.0
 
 ## 用途
 
@@ -94,9 +95,13 @@ log_filters = "INFO"
 
 ### bitcoind
 
+* [Bitcoind configuration](https://github.com/romanz/electrs/blob/v0.10.9/doc/config.md#bitcoind-configuration)
+
 `rpcauth` を設定して cookie ファイルが作られるようにしておく。  
 [rpcauth.py](https://github.com/bitcoin/bitcoin/tree/master/share/rpcauth) は bitcoind が動いていなくても実行できるので、これで設定値を取得し、bitcoin.conf に追加して再起動すると datadir に `.cookie` ができている。  
 そのフルパスを `config.toml` の `cookie_file` に書いておく。
+
+`txindex=1` の設定は必須ではない。
 
 ### 実行
 
@@ -167,6 +172,10 @@ $ bitcoin-cli getblockheader 000000009b7262315dbf071787ad3656097b892abffd1f95a1a
 ```
 
 ## リンク
+
+* [Blockstream/electrs](./electrs-bs.md)
+* [mempool/electrs](./electrs-ms.md)
+
 
 * 開発日記
   * [btc: ElectrumX API - hiro99ma blog](https://blog.hirokuma.work/2025/03/20250317-btc.html)
