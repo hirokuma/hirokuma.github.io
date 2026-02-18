@@ -5,7 +5,9 @@ tags:
   - bitcoin
   - tools
 daily: false
-date: "2025/07/13"
+create: "2025/07/13"
+date: "2026/02/18"
+---
 ---
 
 ## サイト
@@ -150,6 +152,8 @@ electrs --db-dir="$DATADIR" \
     --http-addr="$REST_URL" \
     --cors="$ESPLORA_URL"
 ```
+
+なお `ZMQ_ADDR` を指定しない場合は bitcoind を5秒感覚でポーリングする([ハードコーディング](https://github.com/Blockstream/electrs/blob/477c1a33eb29d7804d5f36baa1e14e768f9b6ff1/src/bin/electrs.rs#L138))。
 
 ### Electrum API
 
