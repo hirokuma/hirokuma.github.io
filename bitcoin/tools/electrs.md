@@ -150,32 +150,6 @@ $ du -h
 ポートの LISTEN は最初から行われているようだ。  
 いつから API にアクセスできるのかは未確認。
 
-`netcat`はRaspberry Piでは`sudo apt install ncat`でインストールした。
-`-N` オプションを付けないとコマンドラインに処理が戻らない。
-
-```console
-$ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "id": 0}' | netcat -N 192.168.0.30 50001
-{"id":0,"jsonrpc":"2.0","result":["electrs/0.10.9","1.4"]}
-```
-
-ブロックチェーンのデータにアクセスできることも見ておく。  
-[blockchain.block.header](https://electrumx.readthedocs.io/en/latest/protocol-methods.html#blockchain-block-header) はこう。  
-`cp_height` を付けるとエラーになるが[electrumがそうだから](https://github.com/romanz/electrs/issues/1080)だそうだ。
-
-```console
- $ echo '{"jsonrpc": "2.0", "method": "blockchain.block.header", "params": [5], "id": 0}' | netcat -N 192.168.0.30 50001
-{"id":0,"jsonrpc":"2.0","result":"0100000085144a84488ea88d221c8bd6c059da090e88f8a2c99690ee55dbba4e00000000e11c48fecdd9e72510ca84f023370c9a38bf91ac5cae88019bee94d24528526344c36649ffff001d1d03e477"}
-```
-
-`bitcoin-cli` で確認するとデータは一致している。
-
-```console
-$ bitcoin-cli getblockhash 5
-000000009b7262315dbf071787ad3656097b892abffd1f95a1a022f896f533fc
-$ bitcoin-cli getblockheader 000000009b7262315dbf071787ad3656097b892abffd1f95a1a022f896f533fc false
-0100000085144a84488ea88d221c8bd6c059da090e88f8a2c99690ee55dbba4e00000000e11c48fecdd9e72510ca84f023370c9a38bf91ac5cae88019bee94d24528526344c36649ffff001d1d03e477
-```
-
 ## リンク
 
 * [Blockstream/electrs](./electrs-bs.md)

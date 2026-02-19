@@ -52,8 +52,7 @@ date: "2026/01/30"
 
 * デバッグ
   * [btcdeb](tools/btcdeb.md)
-* Electrum Server
-  * [Electrum Protocol — electrum-protocol Electrum Protocol 1.6.x documentation](https://electrum-protocol.readthedocs.io/en/latest/)
+* [Electrum Server](tools/electrum-api.md)
   * [romanz/electrs](tools/electrs.md)
   * [Blockstream/electrs](tools/electrs-bs.md)
   * [mempool/electrs](tools/electrs-ms.md)
