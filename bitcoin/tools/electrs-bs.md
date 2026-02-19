@@ -164,6 +164,21 @@ $ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "i
 {"id":0,"jsonrpc":"2.0","result":["electrs-esplora 0.4.1","1.4"]}
 ```
 
+### blockchain.transaction.getのverbose
+
+[blockchain.transaction.get](https://electrum-protocol.readthedocs.io/en/latest/protocol-methods.html#blockchain-transaction-get)の第2引数 `verbose` 自体は受け付けるのだが
+`true` はサポートされていないので指定してもエラーになる("verbose transactions are currently unsupported")。
+
+confirmation数を知りたい場合は遠回りな方法を使うことになりそうだ。
+
+1. トランザクションのvoutから検索に使うscriptHashを選ぶ
+1. [blockchain.scripthash.get_history](https://electrum-protocol.readthedocs.io/en/latest/protocol-methods.html#blockchain-scripthash-get-history)でリストを取得
+1. リストの中から該当するTXIDと承認されたheightのセットを探す
+1. 現在のブロック高を求める
+1. 現在のブロック高から承認されたheightを引いて+1するとconfirmation数になる
+
+最後の+1は忘れやすいので注意。
+
 ## リンク
 
 * [romanz/electrs](./electrs.md)
