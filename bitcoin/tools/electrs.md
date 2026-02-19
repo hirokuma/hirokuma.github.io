@@ -6,7 +6,7 @@ tags:
   - tools
 daily: false
 create: "2025/04/07"
-date: "2026/02/18"
+date: "2026/02/19"
 ---
 
 ## サイト
@@ -84,7 +84,7 @@ pub struct Config {
 ```
 
 私の環境だとおおよそこんな感じである。  
-Raspberry Pi 4 の IP アドレスが 192.168.0.30 なので `electrum_rpc_addr` で設定することで少なくとも LAN の中では公開という形にしている(よね？)。
+Raspberry Pi 4 の IP アドレスが 192.168.0.30 なので `electrum_rpc_addr` で設定することで少なくとも LAN の中では公開という形にしている。
 
 ```toml
 cookie_file = "/home/xxx/usbdisk/bitcoin/data/.cookie"
@@ -148,13 +148,14 @@ $ du -h
 ```
 
 ポートの LISTEN は最初から行われているようだ。  
-いつから API にアクセスできるのかは未確認。  
-(`netcat`はRaspberry Piでは`sudo apt install ncat`でインストールした)
+いつから API にアクセスできるのかは未確認。
+
+`netcat`はRaspberry Piでは`sudo apt install ncat`でインストールした。
+`-N` オプションを付けないとコマンドラインに処理が戻らない。
 
 ```console
-$ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "id": 0}' | netcat 192.168.0.30 50001
+$ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "id": 0}' | netcat -N 192.168.0.30 50001
 {"id":0,"jsonrpc":"2.0","result":["electrs/0.10.9","1.4"]}
-^C
 ```
 
 ブロックチェーンのデータにアクセスできることも見ておく。  
@@ -162,7 +163,7 @@ $ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "i
 `cp_height` を付けるとエラーになるが[electrumがそうだから](https://github.com/romanz/electrs/issues/1080)だそうだ。
 
 ```console
- $ echo '{"jsonrpc": "2.0", "method": "blockchain.block.header", "params": [5], "id": 0}' | netcat 192.168.0.30 50001
+ $ echo '{"jsonrpc": "2.0", "method": "blockchain.block.header", "params": [5], "id": 0}' | netcat -N 192.168.0.30 50001
 {"id":0,"jsonrpc":"2.0","result":"0100000085144a84488ea88d221c8bd6c059da090e88f8a2c99690ee55dbba4e00000000e11c48fecdd9e72510ca84f023370c9a38bf91ac5cae88019bee94d24528526344c36649ffff001d1d03e477"}
 ```
 
