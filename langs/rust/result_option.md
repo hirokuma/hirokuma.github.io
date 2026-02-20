@@ -4,7 +4,8 @@ title: "rust: Result&lt;T, E&gt; と Option&lt;T&gt;"
 tags:
   - rust
 daily: false
-date: "2025/11/17"
+create: "2025/11/17"
+date: "2026/02/20"
 ---
 
 戻り値が `Result<T, E>` や `Option<T>` の場合について。  
@@ -241,10 +242,9 @@ Gemini か Copilot にやってもらうと `match` のアームで `None => { r
 文字列型のエラーを返したいだけにしては大げさ気がするが、`anyhow` だからこうなるんだろうか。
 
 ネットで検索すると `Option` を `Result` にする例として `.ok_or(値)` や `.ok_or_else(関数)` などを使うそうだ。  
-こんな感じで変換できそうだ。  
 `.ok_or()` で `.to_owned()` を使っているのは extension で修正候補が出たから使っただけだ。  
 [to_owned()](https://doc.rust-lang.org/std/borrow/trait.ToOwned.html#tymethod.to_owned) は借用データから所有データを作り出すものだそうだ。  
-なら `.clone()` でいいんじゃないのと思ったがダメだったが `.to_string()` は通る。
+なら `.clone()` でいいんじゃないのと思ったがダメ。 `.to_string()` は通る。
 
 ```rust
 use std::process;
@@ -270,7 +270,7 @@ fn main() {
 }
 ```
 
-## Result 早見表
+## Result から T を得る早見表
 
 ### .unwrap() : T か panic
 
@@ -300,6 +300,32 @@ fn main() {
 fn main() {
     let f = || -> Result<String, &str> { Err("NG") };
     let v = f().unwrap_or("abc".to_string());
+    println!("v = {}", v);
+}
+```
+
+### .unwrap_or_default() : T かT型のデフォルト値
+
+`T::default()` の値。例えば `String::default()` なら空文字列。
+
+```rust
+fn main() {
+    let f = || -> Result<String, &str> { Err("NG") };
+    let v = f().unwrap_or_default();
+    println!("v = {}", v);
+}
+```
+
+### let Ok() else : T か詳細なしエラー処理
+
+この場合 `else` ルートは処理を継続しないよう `break` や `return` だったり `panic!()` で終わらせるなりする。
+
+```rust
+fn main() {
+    let f = || -> Result<String, &str> { Err("NG") };
+    let Ok(v) = f() else {
+      panic!("error");
+    };
     println!("v = {}", v);
 }
 ```
