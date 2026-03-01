@@ -5,7 +5,7 @@ tags:
   - rust
 daily: false
 create: "2025/11/17"
-date: "2026/02/20"
+date: "2026/03/01"
 ---
 
 戻り値が `Result<T, E>` や `Option<T>` の場合について。  
@@ -316,9 +316,10 @@ fn main() {
 }
 ```
 
-### let Ok() else : T か詳細なしエラー処理
+### let-else : Err なら early-return、そうでないなら継続
 
-この場合 `else` ルートは処理を継続しないよう `break` や `return` だったり `panic!()` で終わらせるなりする。
+この場合 `else` ルートは処理を継続しないよう `break` や `return` だったり `panic!()` で終わらせるなりする。  
+`Option` にも同じような書き方がある
 
 ```rust
 fn main() {
@@ -352,6 +353,21 @@ fn main() {
 fn main() {
     let f = || -> Option<String> { None };
     let v = f().unwrap_or("abc".to_string());
+    println!("v = {}", v);
+}
+```
+
+### let-else : None なら early-return を、そうでないなら継続
+
+`Result` の `let-else` と同じく、 `else` の中は `return` や `panic!()` などで終わるようにする。
+
+```rust
+fn main() {
+    let f = || -> Option<String> { None };
+    let Some(v) = f() else {
+      eprintln!("I am None!");
+      return;
+    };
     println!("v = {}", v);
 }
 ```
