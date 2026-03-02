@@ -4,13 +4,34 @@ title: "Linuxセットアップ"
 tags:
   - linux
 daily: false
-date: "2025/08/26"
+create: "2025/08/26"
+date: "2026/03/02"
 ---
 
 ## はじめに
 
 Linux 環境を作ったときに行っておきたい設定。  
 私が WSL2 でやっておきたいだけのメモです。
+
+## Windows設定
+
+WSL2でしか出てこない。
+
+### 基本設定
+
+Windowsに「WSL Settings」というアプリがあり、だいたいそちらでできる。  
+よく設定するのは「ネットワークモード」かもしれない。
+デフォルトでは "Nat" になっていて WSL2 側は別のIPアドレス(たぶん172.x.x.x)になるが、"Mirrored" だとホスト側と同じIPアドレスになったはず。
+
+### ファイアウォール
+
+デフォルトではHyper-Vファイアウォールが有効でWSL2の通信もそちらに影響されるのだが、Windows自体のファイアウォール設定にも影響される。  
+PowerShellから `Get-NetFirewallHyperVRule` コマンドでHyper-Vファイアウォールの設定を見たり `New-NetFirewallHyperVRule` で設定したりできる。
+
+* [WSL2のファイアウォール設定 - hiro99ma blog](https://blog.hirokuma.work/2024/05/20240511-wsl2-firewall.html#20260228%E8%BF%BD%E8%A8%98)
+
+経験したところでは、WSL2から `git pull` や `apt get` ができなかったので設定するとできるようになったということがある。
+しかし別PCでは同じような構成なのに設定せずにアクセスできている。
 
 ## rc
 
