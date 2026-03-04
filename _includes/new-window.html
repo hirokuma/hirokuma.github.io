@@ -1,8 +1,11 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  document.querySelectorAll("a[href^='http']").forEach(function(link) {
-    link.setAttribute("target", "_blank");
-    link.setAttribute("rel", "noopener noreferrer");
+  document.querySelectorAll("a[href]").forEach(function(link) {
+    const url = new URL(link.href, location.href);
+    if ((url.protocol === "http:" || url.protocol === "https:") && url.origin !== location.origin) {
+      link.setAttribute("target", "_blank");
+      link.setAttribute("rel", "noopener noreferrer");
+    }
   });
 });
 </script>
