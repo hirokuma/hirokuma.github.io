@@ -5,10 +5,11 @@
 
 $border-color: #159759;
 
+body {
+    background: #000000;
+}
+
 #main_content {
-    body {
-        background: #000000;
-    }
     h2 {
         border-bottom: 3px solid $border-color;
     }
