@@ -96,6 +96,17 @@ let file_appender = tracing_appender::rolling::RollingFileAppender::builder()
 
 Linuxの `logrotate` と組み合わせるのは面倒そうだった。
 
+そういうのがまったく不要で、上書きのファイル出力で良いならこう。
+
+```rust
+    let log_file = std::fs::File::create("log.log")?;
+    tracing_subscriber::fmt::Subscriber::builder()
+        .with_writer(log_file)
+        .init();
+```
+
+エスケースシーケンスも出力されるので、テキストエディタなどで文字として見たいなら `.with_ansi(false)` を付けたほうが見やすいと思う。
+
 ## 日記参照
 
 * [rust: tracing_subscriber ログあれこれ - hiro99ma blog](https://blog.hirokuma.work/2025/12/20251216-rst.html)
