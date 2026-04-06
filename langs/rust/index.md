@@ -2,13 +2,21 @@
 
 ## Rust言語
 
-* [vscode デバッグ](./debug.md)
-  * [log](./log.md)
-  * [tracing_subscriber](./subscriber.md)
-  * [tokio-console](./tokio-console.md)
+### 基礎
+
 * [よく見る記号](./symbol.md)
 * [クレート](./crate.md)
 * [Result, Option](./result_option.md)
+* [タプル構造体](./tuple_struct.md)
+
+### デバッグ
+
+* [log](./log.md)
+* [tracing_subscriber](./subscriber.md)
+* [tokio-console](./tokio-console.md)
+* [vscode デバッグ](./debug.md)
+
+### Cargo
 
 * [cargo workspace](./workspace.md)
 
