@@ -10,7 +10,7 @@ date: "2026/02/08"
 
 ## tracing_subscriber
 
-* [tokio-rs/tracing: Application level tracing for Rust.](https://github.com/tokio-rs/tracing/search?l=shell)
+* [tracing_subscriber - Rust](https://docs.rs/tracing-subscriber/latest/tracing_subscriber/)
 * [tokio-rs/tracing | DeepWiki](https://deepwiki.com/tokio-rs/tracing)
 
 ```toml
@@ -21,6 +21,17 @@ tracing-subscriber = { version = "0.3.22", features = ["env-filter", "json"] }
 ```
 
 ### 設定
+
+シンプルな使い方はこういった書き方で良い。
+
+```rust
+// https://github.com/tokio-rs/tracing/blob/72cf52a9e2723cf99a238be1e823a50915ca3977/examples/examples/log.rs
+tracing_subscriber::fmt()
+    .with_max_level(tracing::Level::TRACE)
+    .init();
+```
+
+詳細な設定も可能。
 
 ```rust
 // https://deepwiki.com/search/withlevel_fe927987-cab6-4a10-8e71-3e569cbc284b?mode=fast
@@ -44,6 +55,26 @@ tracing_subscriber::fmt::Subscriber::builder()
   * `with_file(bool)` と `.with_line_number(bool)` を同時に設定する
 * `FormatEvent` を使ったカスタマイズが可能
   * [deep wiki](https://deepwiki.com/search/withfile_06d63fd0-a59b-42ac-97c2-95210e76e49b?mode=fast)
+
+こういう設定の仕方もある。
+`filter_directives` は文字列で、`RUST_LOG` に設定する形式で書くことができる。  
+`layer()` の下につなげて書くことができるメソッドは上に書いた内容とは実は異なる。
+
+```rust
+let filter = EnvFilter::builder().parse_lossy(filter_directives);
+tracing_subscriber::Registry::default()
+    .with(console_subscriber::spawn())
+    .with(
+        tracing_subscriber::fmt::layer()
+            .with_line_number(true)
+            .with_ansi(false)
+            .with_filter(filter),
+    )
+    .init();
+```
+
+初期化は2回以上呼び出すとそこでpanicを起こす。
+`Err` を返すなどではなくpanicで終了するようになっていたと思う。
 
 ## `RUST_LOG`
 
