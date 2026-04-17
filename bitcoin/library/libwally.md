@@ -6,12 +6,13 @@ tags:
   - library
   - clang
 daily: false
-date: "2026/02/03"
+create: "2026/02/03"
+date: "2026/04/17"
 ---
 
 [repository](https://github.com/ElementsProject/libwally-core)
 
-_調査日:2026/02/03_: v1.5.2
+_調査日:2026/04/17_: v1.5.3
 
 ## ビルド
 
@@ -20,7 +21,7 @@ v1.5.0から `--enable-minimal` と `--with-system-secp256k1` の両方は設定
 ```console
 $ git clone https://github.com/ElementsProject/libwally-core.git
 $ cd libwally-core
-$ git checkout -b v1.5.2 refs/tags/release_1.5.2
+$ git checkout -b v1.5.3 refs/tags/release_1.5.3
 $ ./tools/autogen.sh
 # no Elements API, use only standard secp256k1 API
 $ ./configure --disable-elements --enable-standard-secp --with-system-secp256k1
