@@ -29,7 +29,7 @@ Electrm Server APIだけでなく[Esplora HTTP API](https://github.com/blockstre
 書いてあるのは`cargo run`なので、そのままだと実行される。  
 単にビルドするだけであればこの程度で良いだろう。
 
-```console
+```shell
 $ cargo build --release --bin electrs
 
 # 実行ファイルをパスが通ったところにコピー
@@ -45,7 +45,7 @@ Raspberry Pi3 だったためか非常に時間がかかった。
 
 ### help
 
-```console
+```shell
 $ electrs --help
 Electrum Rust Server 0.4.1
 
@@ -121,7 +121,7 @@ OPTIONS:
 `--cors`の設定は必要に応じて変更する。  
 ここでは[esplora](./esplora.md)から呼び出される
 
-```console
+```shell
 $ electrs --db-dir="/mnt/usb/electrs-data" \
     --network="regtest" \
     --cookie="testuser:testpass"  \
@@ -153,15 +153,28 @@ electrs --db-dir="$DATADIR" \
     --cors="$ESPLORA_URL"
 ```
 
-なお `ZMQ_ADDR` を指定しない場合は bitcoind を5秒感覚でポーリングする([ハードコーディング](https://github.com/Blockstream/electrs/blob/477c1a33eb29d7804d5f36baa1e14e768f9b6ff1/src/bin/electrs.rs#L138))。
+なお `ZMQ_ADDR` を指定しない場合は bitcoind を5秒間隔でポーリングする([ハードコーディング](https://github.com/Blockstream/electrs/blob/477c1a33eb29d7804d5f36baa1e14e768f9b6ff1/src/bin/electrs.rs#L138))。
 
 ### Electrum API
 
 [Electrum Protocol](https://electrumx.readthedocs.io/en/latest/protocol.html)が使用できるようになっていればOK。
 
-```console
+```shell
 $ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "id": 0}' | netcat localhost 50001
 {"id":0,"jsonrpc":"2.0","result":["electrs-esplora 0.4.1","1.4"]}
+```
+
+### Esplora API
+
+Blockstream版のelectrsはブラウザで見る[Esplora](./esplora.md)のバックエンドになるため 
+`--http-addr` で指定したURLでEsplora APIが呼び出せるはずである。
+少なくとも[dockerコンテナ](https://hub.docker.com/r/blockstream/esplora)を使った場合にはアクセスできた。
+
+* [esplora/API.md at master · Blockstream/esplora](https://github.com/blockstream/esplora/blob/master/API.md)
+
+```shell
+$ curl http://127.0.0.1:3000/regtest/api/fee-estimates
+{"504":1.009,"1":1.01,"19":1.01,"5":1.01,"18":1.01,"21":1.01,"11":1.01,"10":1.01,"22":1.01,"2":1.01,"6":1.01,"16":1.01,"17":1.01,"12":1.01,"25":1.01,"9":1.01,"3":1.01,"8":1.01,"23":1.01,"7":1.01,"4":1.01,"144":1.009,"14":1.01,"1008":1.009,"13":1.01,"24":1.01,"15":1.01,"20":1.01}
 ```
 
 ### blockchain.transaction.getのverbose
