@@ -136,8 +136,6 @@ User-agent: ZanistaBot
 Disallow: /
 
 # my settings
-User-agent: *
-Allow: /
 Disallow: /2011/
 Disallow: /2012/
 Disallow: /2013/
