@@ -41,14 +41,49 @@ Bitcoin Core もまだ対応していないので PSBTv0 を見ていく。
 
 ## 概要
 
-"psbt" ヘッダで始まる key-value 式のバイナリデータである。  
+"psbt" ヘッダ(`<magic>`)で始まる key-value 式のバイナリデータである。
+
+```bpf
+<psbt> := <magic> <global-map> <input-map>* <output-map>*
+    <magic> := 0x70 0x73 0x62 0x74 0xFF
+    <global-map> := <keypair>* 0x00
+    <input-map> := <keypair>* 0x00
+    <output-map> := <keypair>* 0x00
+
+<keypair> := <key> <value>
+    <key> := <keylen> <keytype> <keydata>
+    <value> := <valuelen> <valuedata>
+ ```
+
 大きく `<global-map>`、`<input-map>`、`<output-map>` の 3つに分かれる。  
 それぞれセパレータとして `0x00` を終わりに置く。
-`<input-map>` と `<output-map>` は複数置くことができる。
+
+`<key>` の `<keylen>` は `<keytype>` と `<keydata>` をあわせたデータ長。
+`<keydata>` はサイズがゼロになることもある。
 
 * [Structure - Partially Signed Bitcoin Transaction](https://learnmeabitcoin.com/technical/transaction/psbt/#structure)
+* [Specification - BIP174](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki#specification)
 
-![image](images/psbt-1.png)
+### global type
+
+`<global-map>` に配置できるタイプ。
+
+| 名前 | 説明 |
+| -- | -- |
+| Unsigned Transaction | - |
+| Extended Public Key | - |
+| PSBT Version Number | v0は省略可 |
+| Proprietary Use Type | - |
+
+### input type
+
+`<input-map>` に配置できるタイプ。
+0個以上配置できる。
+
+### output type
+
+`<output-map>` に配置できるタイプ。
+0個以上配置できる。
 
 ## Roles
 
