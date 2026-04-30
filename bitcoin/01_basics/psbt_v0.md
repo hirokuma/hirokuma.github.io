@@ -43,7 +43,7 @@ Bitcoin Core もまだ対応していないので PSBTv0 を見ていく。
 
 "psbt" ヘッダ(`<magic>`)で始まる key-value 式のバイナリデータである。
 
-```bpf
+```text
 <psbt> := <magic> <global-map> <input-map>* <output-map>*
     <magic> := 0x70 0x73 0x62 0x74 0xFF
     <global-map> := <keypair>* 0x00
