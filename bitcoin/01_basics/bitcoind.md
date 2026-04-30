@@ -109,19 +109,47 @@ $ bitcoin-cli -regtest generatetoaddress 150 $addr
 $ bitcoin-cli -regtest getbalance
 ```
 
-## おまけ
+### おまけ
 
 私が使っている設定やスクリプト。
 
 * [gist](https://gist.github.com/hirokuma/6a8d1553a813fa569599d5b0f54f722a)
 
-## おまけ(Polar)
+## Blockstream Esplora docker container
+
+[Blockstream/esploraのコンテナ](https://blog.hirokuma.work/bitcoin/tools/esplora.html#docker%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A)を使うとビルドなどが不要である。
+またElectrum APIやEsplora API、Esplora自体も使用できる。
+
+* [bitcoin-regtest-esplora-docker.sh](https://gist.github.com/hirokuma/e23f0baf4cf2322fdfe36fa291f6f173)
+
+```shell
+$ ./regtest.sh start
+006f249797af040c1f77d525b2611c4ab825db435f7d803ba5727dce58a6e602
+$ ./regtest.sh wallet
+{ "name": "test" }
+$ ./regtest.sh getblockcount
+100
+$ ./regtest.sh getbalance
+0.00000000
+$ ./regtest.sh generate 101
+...略...
+$ ./regtest.sh getbalance
+50.00000000
+$ curl http://localhost:8094/regtest/api/blocks/tip/height
+201$
+$ ./regtest.sh stop
+Bitcoin Core stopping
+$ docker ps
+(コンテナは残っている)
+```
+
+## Polar
 
 [Polar](https://lightningpolar.com/) という、Lightning Network の regtest 環境を立ち上げるプロジェクトがある。  
 GUI で操作は比較的簡単である。  
 Lightning Network 開発用だが、Bitcoin Core だけを立ち上げることもできる。
 
-## おまけ(Nigiri)
+## Nigiri
 
 Polar と同じようなプロジェクトで [Nigiri](https://nigiri.vulpem.com/) がある。  
 こちらは GUI ではなく CUIで、主に環境の立ち上げを行ってくれる。  
