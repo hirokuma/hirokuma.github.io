@@ -4,7 +4,8 @@ title: "PSBT v0"
 tags:
   - bitcoin
 daily: false
-date: "2025/10/27"
+create: "2025/10/27"
+date: "2026/04/30"
 ---
 
 ## はじめに
@@ -80,10 +81,16 @@ Bitcoin Core もまだ対応していないので PSBTv0 を見ていく。
 `<input-map>` に配置できるタイプ。
 0個以上配置できる。
 
+トランザクションのinputにあるような、UTXOや署名、スクリプトなどがある。
+preimageやBIP32派生パスがあるのが特徴的か。
+
 ### output type
 
 `<output-map>` に配置できるタイプ。
 0個以上配置できる。
+
+こちらもトランザクションのoutputにあるような項目で、スクリプトやBIP32派生パスがある。
+スクリプトはおそらくscriptPubKeyなどに使われるんじゃなかろうか(未確認)。
 
 ## Roles
 
