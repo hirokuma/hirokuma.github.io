@@ -143,6 +143,11 @@ $ docker ps
 (コンテナは残っている)
 ```
 
+### 補足
+
+Docker Hubに[bitcoin/bitcoin](https://hub.docker.com/r/bitcoin/bitcoin)があるが、書いてあるようにこれは**オフィシャルではない**。
+このコンテナは信用できないとかBlockstreamのコンテナは信用できるとか、そういう評価は私にはできない。
+
 ## Polar
 
 [Polar](https://lightningpolar.com/) という、Lightning Network の regtest 環境を立ち上げるプロジェクトがある。  
