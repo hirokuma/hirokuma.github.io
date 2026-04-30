@@ -118,7 +118,8 @@ $ bitcoin-cli -regtest getbalance
 ## Blockstream Esplora docker container
 
 [Blockstream/esploraのコンテナ](https://blog.hirokuma.work/bitcoin/tools/esplora.html#docker%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A)を使うとビルドなどが不要である。
-またElectrum APIやEsplora API、Esplora自体も使用できる。
+またElectrum APIやEsplora API、Esplora自体も使用できる。  
+`bitcoind` のJSON-RPCは有効になっていない。
 
 * [bitcoin-regtest-esplora-docker.sh](https://gist.github.com/hirokuma/e23f0baf4cf2322fdfe36fa291f6f173)
 
