@@ -1,6 +1,6 @@
 ---
 layout: "record"
-title: "Bitcoin Core(bitcoind) を regtest で動かす"
+title: "Bitcoin Coreをregtestで動かす"
 tags:
   - bitcoin
 daily: false
@@ -19,9 +19,7 @@ Ubuntu 22.04 (WSL2) で確認している。
 ただ記事の更新日時が新しいのに「v0.」の場合は単に日付だけ新しいだけなので気をつけよう。  
 基本的に、周辺アプリの互換性の都合以外で Bitcoin Core の古いバージョンを使う必要はほぼない。
 
-## Bitcoin Core インストール
-
-[Bitcoin Core(bitcoind) のインストール](./install.md) 参照
+インストールについては[こちら](./install.md)を参照のこと。
 
 ## 設定と実行
 

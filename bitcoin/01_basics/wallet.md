@@ -166,7 +166,6 @@ HDウォレットには階層があり、それぞれの階層の値も同じに
 
 ## 関連ページ
 
-* [bitcoind](./bitcoind.md)
 * [トランザクション](./transactions.md)
 * [アドレス](./address.md)
 * [スクリプト](./script.md)

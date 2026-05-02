@@ -18,8 +18,8 @@ date: "2026/05/02"
 
 * [インストール](01_basics/install.md)
   * [ビルド](01_basics/build.md)
-* [Bitcoin Core(bitcoind) を regtest で動かす](01_basics/bitcoind.md)
-  * [標準ポート番号](01_basics/port.md)
+* [regtestで動かす](01_basics/regtest.md)
+* [標準ポート番号](01_basics/port.md)
 
 ### データや構造
 
