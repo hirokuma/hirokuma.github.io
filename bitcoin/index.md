@@ -4,7 +4,7 @@ title: "Bitcoin調査"
 tags:
   - bitcoin
 daily: false
-date: "2026/01/30"
+date: "2026/05/02"
 ---
 
 ## 注意！
@@ -14,10 +14,15 @@ date: "2026/01/30"
 
 ## 基本
 
+### Bitcoin Core
+
 * [インストール](01_basics/install.md)
   * [ビルド](01_basics/build.md)
 * [Bitcoin Core(bitcoind) を regtest で動かす](01_basics/bitcoind.md)
   * [標準ポート番号](01_basics/port.md)
+
+### データや構造
+
 * [値の表現](01_basics/value.md)
 * [ブロック](01_basics/blocks.md)
 * [トランザクション](01_basics/transactions.md)
@@ -29,8 +34,17 @@ date: "2026/01/30"
   * [P2WPKH](02_addr/p2wpkh.md)
   * [P2WSH](02_addr/p2wsh.md)
   * [P2TR](02_addr/p2tr.md)
-* [ウォレット](01_basics/wallet.md)
 * [txout proof](01_basics/txoutproof.md)
+
+### ウォレット
+
+* [ウォレット](01_basics/wallet.md)
+
+### API(リンクのみ)
+
+* [Bitcoin Core RPC](https://developer.bitcoin.org/reference/rpc/)
+* [Electrum Protocol](https://electrum-protocol.readthedocs.io/en/latest/)
+* [Esplora HTTP API](https://github.com/blockstream/esplora/blob/master/API.md)
 
 ## 小技
 
@@ -46,7 +60,7 @@ date: "2026/01/30"
 * [JavaScript/TypeScript](library/js.md)
 * [Go](library/go.md)
 * [Rust](library/rust.md)
-  * [BDK](library/bdk.md)
+  * [BitcoinDevKit(BDK)](library/bdk.md)
 
 ## ツール
 
