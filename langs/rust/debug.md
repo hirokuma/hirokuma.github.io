@@ -4,7 +4,8 @@ title: "rust: vscodeデバッグ"
 tags:
   - rust
 daily: false
-date: "2025/10/14"
+create: "2025/10/14"
+date: "2026/05/04"
 ---
 
 Visual Studio Code + CodeLLDB でのデバッグあれこれ。
@@ -33,33 +34,47 @@ Visual Studio Code + CodeLLDB でのデバッグあれこれ。
 }
 ```
 
-## コマンドライン引数の数が合わない
+## コマンドライン引数の数が合わない(2026/05/04更新)
 
 `env::args().collect().len()` でコマンドライン引数の数をきっちり決めたアプリを作っていると、
-`cargo run` の形式でデバッグ実行すると引数があわない。  
-これは末尾に自動的に引数が付与されてしまうからである。
+`cargo run` の形式でデバッグ実行すると引数があわない。これは末尾に自動的に引数が付与されてしまうからである。  
 
-自動的に付与されるのは外せなさそうなので、実行ファイルを直接 `program` で指定して実行することになりそう。
+(2026/05/04修正)  
+...と以前書いていたが、"cargo" の外側にある "args" に書けばよいだけだったようだ。
+少なくとも今はそれで動く。
 
 ```json
 {
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug executable 'hello'",
             "type": "lldb",
             "request": "launch",
-            "name": "debug example",
-            "program": "${workspaceFolder}/target/debug/example",
-            "args": ["abc", "def"],
-            "cwd": "${workspaceFolder}",
-            "preLaunchTask": "rust: cargo build",
-            "terminal": "integrated",
+            "cargo": {
+                "args": [
+                    "run",
+                    "--bin=hello"
+                ]
+            },
+            "args": ["Good", "Morning"]
         }
     ]
+}
 ```
 
-`preLaunchTask` で実行前に行うタスクを指定できる。
-vscode で候補を出して選ぶとよいだろう。
+```rust
+use std::{env, process};
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+    if args.len() != 3 {
+        eprintln!("Usage: {} <arg1> <arg2>", args[0]);
+        process::exit(1);
+    }
+    println!("{} {}", args[1], args[2]);
+}
+```
 
 ## ブレークポイントに止まらない
 
@@ -94,19 +109,26 @@ vscode で候補を出して選ぶとよいだろう。
     ]
 ```
 
-## デバッグで値をwatchしたい
+## デバッグで値をwatchしたい(2026/05/04更新)
 
 CodeLLDB は gdb みたいなものっぽくて、C/C++ のデバッグをしているような `$variants$` みたいな表示になっていてつらい。
 
 ![image](images/debug-var.png)
 
-lldp-dap でこの辺りを参考にして値が見えるようになった。  
-全部の値なのかは分からないが、配列や文字列は参照できた。
+と以前書いていたのだが、最近はそうでもないのか、あるいは見ているプログラムがそうでもないタイプだったのかわからないが、気にならなかった。  
+少なくとも文字列と数値に関してはよさそうだ。
+
+## lldp-dapメモ
+
+当時は値をうまく参照できなかったようで(技術的になのか私の設定なのかはもうわからない)、lldp-dapを使って値が見えるようになった。  
+「配列や文字列は参照できた」(`Vec`か？)とあるので、`String` も見えなかったのか？  
+あるいはシンボリックリンクを含んだパスだったという合わせ技もあったのかも？  
+
+ともかくよくわからないが、2025年10月当時のメモを残しておく。
 
 * https://github.com/llvm/llvm-project/tree/main/lldb/tools/lldb-dap
 * https://github.com/rust-lang/rust/tree/master/src/etc
 * https://github.com/llvm/llvm-project/issues/134564#issuecomment-2825782949
-
 
 ### LLVM
 
