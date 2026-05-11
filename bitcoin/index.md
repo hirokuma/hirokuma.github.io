@@ -42,9 +42,9 @@ date: "2026/05/02"
 
 ### API(リンクのみ)
 
-* [Bitcoin Core RPC](https://developer.bitcoin.org/reference/rpc/)
-* [Electrum Protocol](https://electrum-protocol.readthedocs.io/en/latest/)
-* [Esplora HTTP API](https://github.com/blockstream/esplora/blob/master/API.md)
+* [Bitcoin Core RPC - developer.bitcoin.org](https://developer.bitcoin.org/reference/rpc/)
+* [Electrum Protocol - electrum-protocol.readthedocs.io](https://electrum-protocol.readthedocs.io/en/latest/)
+* [Esplora HTTP API - github.com/blockstream/esplora](https://github.com/blockstream/esplora/blob/master/API.md)
 
 ## 小技
 
