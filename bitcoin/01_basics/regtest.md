@@ -119,27 +119,23 @@ $ bitcoin-cli -regtest getbalance
 またElectrum APIやEsplora API、Esplora自体も使用できる。  
 `bitcoind` のJSON-RPCは有効になっていない。
 
-* [bitcoin-regtest-esplora-docker.sh](https://gist.github.com/hirokuma/e23f0baf4cf2322fdfe36fa291f6f173)
+* [bs-regtest-electrum.sh](https://gist.github.com/hirokuma/e23f0baf4cf2322fdfe36fa291f6f173)
 
 ```shell
-$ ./regtest.sh start
-006f249797af040c1f77d525b2611c4ab825db435f7d803ba5727dce58a6e602
-$ ./regtest.sh wallet
-{ "name": "test" }
-$ ./regtest.sh getblockcount
-100
-$ ./regtest.sh getbalance
-0.00000000
-$ ./regtest.sh generate 101
-...略...
-$ ./regtest.sh getbalance
+$ vi bs-regtest-docker.sh
+~/Bitcoin$ ./bs-regtest-docker.sh start
+f97031eee89b5b7a00386f7dad36ea454627610af7ac8b0467df74f6c87b2380
+{ "name": "wallet" }
+[ ...略... ]
 50.00000000
+$ ./bs-regtest-docker.sh getblockcount
+201
 $ curl http://localhost:8094/regtest/api/blocks/tip/height
-201$
-$ ./regtest.sh stop
+201
+
+$ ./bs-regtest-docker.sh stop
 Bitcoin Core stopping
-$ docker ps
-(コンテナは残っている)
+blockstream_esplora
 ```
 
 ### 補足
