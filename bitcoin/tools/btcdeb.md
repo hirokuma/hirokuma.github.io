@@ -270,7 +270,7 @@ segwit version 0 の P2WPKH と P2WSH は `bcrt1q` と `q` で、bech32 の `0` 
 コーディングせずに `tap` で署名された raw transaction を作る。
 
 `bitcoin-cli testmempoolaccept` を使って送金できるかどうかの確認をする。  
-このコマンドを知らなかったのだが [testmempoolaccept ](https://developer.bitcoin.org/reference/rpc/testmempoolaccept.html) は `sendrawtransaction` の展開しないバージョンと思えばよさそうだ。  
+このコマンドを知らなかったのだが [testmempoolaccept](https://developer.bitcoin.org/reference/rpc/testmempoolaccept.html) は `sendrawtransaction` の展開しないバージョンと思えばよさそうだ。  
 そうすることで、key path での spend ができることを確認して、同じトランザクションで script path での spend も確認できるというわけである。
 
 また、鍵での spend を taproot send、スクリプトでの spend を tapscript send と呼んでいるようである。
@@ -313,7 +313,7 @@ sighash も出力されているので、おそらくそれをデジタル署名
 ここで `tap` に `--privkey=$privkey` を追加すると署名をしてくれるようだが、
 もし btcdeb を署名できるようにしていないならエラーになる。
 
-```
+```log
 this feature requires that you compile with --enable-dangerous set; either provide a signature yourself, or recompile tap
 ```
 
@@ -478,7 +478,7 @@ tweaked pubkey の Y座標が奇数なので parity bit が立っている。
 Merkle leaf はスクリプトが Bob のものなので、反対側の leaf は Alice のスクリプトを "TapLeaf" で tagged hash 計算した値になっている。
 この値からでは Alice のスクリプトが想像できないので、スクリプトを全部のセルよりは情報が隠されていてよい、というところである。
 
-```
+```log
 # version + parity bit
 c1
 
@@ -530,7 +530,7 @@ stack の列に `i` と `k` が載っている。
 `c814...` は witness の最後にある control block から取得しているはずだ。
 step 実行するとこうなる。
 
-```
+```log
 btcdeb> step
 - looping over path (0..0)
   - 0: node = c8...; taproot control node match -> k first
@@ -568,7 +568,7 @@ input のトランザクションから取得できる。
 
 step 実行するとこうなった。
 
-```
+```log
 btcdeb> step
 - looping over path (0..0)
 - q.CheckTapTweak(p, k, 1) == success
@@ -588,7 +588,7 @@ OP_CHECKSIG                                                        |
 この段階で stack には `witness[0]` のデータが載っているので、実際はステップが 1つ進んでいると思っておくのがよさそうだ。  
 つまりここでは "#0002 CheckTapTweak" は既に実行された命令が表示されていて、次に step 実行すると "OP_SHA256" が処理されるのだ。
 
-```
+```log
 btcdeb> step
                 <> POP  stack
                 <> PUSH stack 1c4672a4c6713bcb9495abba712be251bbeff723d79f001f81e5170b1d1627a5
@@ -603,7 +603,7 @@ OP_CHECKSIG                                                        |
 
 次に step 実行すると hash 値がスタックに積まれ、さらに step 実行すると `OP_EQUALVERIFY` が処理され、不一致なので失敗する。
 
-```
+```log
 btcdeb> step
                 <> PUSH stack 6c60f404f8167a38fc70eaf8aa17ac351023bef86bcb9d1086a19afe95bd5333
 script                                                             |                                                             stack
@@ -621,7 +621,7 @@ error: Script failed an OP_EQUALVERIFY operation
 
 次にドキュメントでは、`-k<Bob privkey>` オプションと引数の最後に SHA256 の preimage を追加して実行している。
 これによって "Tapscript spending witness" では preimage が先頭に追加されている。  
-また、それ以降で Bob privkey での署名まで行われ、"Resulting transaction" 
+また、それ以降で Bob privkey での署名まで行われ、"Resulting transaction" が得られる。
 
 ```console
 $ tap -k${bob_key} --tx=$tx --txin=$txin  $pubkey 2 "${script_alice}" "${script_bob}" 1 107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f
@@ -685,7 +685,7 @@ Resulting transaction: 02000000000101bc2165a4797d59358f31a0a20b2c94534bff89a38d9
 "Resulting transaction" のデータを `bitcoin-cli decoderawtransaction` すると witness はこうなっていた。  
 preimage である `1076...` の前に "signature" に `95e8...` が追加されている。
 
-```
+```log
       "txinwitness": [
         "95e8e7ffa3f8d9ad976d1ed62c2214813fe08d5d65e6becf0584e02c8bca65320145ada870ed3f538b96fad0db98f88732570ec323ac614e88ed0d8e73badd3c",
         "107661134f21fc7c02223d50ab9eb3600bc3ffc3712423a1e47bb1f9a9dbf55f",
@@ -796,7 +796,7 @@ Resulting transaction: 02000000000101bc2165a4797d59358f31a0a20b2c94534bff89a38d9
 
 `bitcoin-cli decoderawtransaction` した witness はこうなって署名が積まれていた。
 
-```
+```log
       "txinwitness": [
         "378405e48058a323a3bed54f8b9018556d9effb74df5ed038697539ece8937abc6f6870122811752fc525497b77081eaa15231a8751adfa291145e2f1ee6cdd2",
         "029000b275209997a497d964fc1a62885b05a51166a65a90df00492c8d7cf61d6accf54803beac",
@@ -850,7 +850,7 @@ btcdeb>
 Branch, Tweak, CheckTapTweak が成功するのも同じなので省略する。  
 次に step 実行すると `OP_CSV` で確認する値がスタックに積まれる。
 
-```
+```log
 btcdeb> step
                 <> PUSH stack 9000
 script                                                             |                                                             stack
@@ -864,7 +864,7 @@ OP_CHECKSIG                                                        |
 
 そして step 実行すると・・・エラーになった。
 
-```
+```log
 btcdeb> step
 error: Locktime requirement not satisfied
 ```
@@ -889,7 +889,7 @@ btcdeb には sighash だけを計算する `tf` はなさそうだが、`OP_CHE
 前回失敗する手前の "#0002 CheckTapTweak" の次から step 実行していくと、`OP_CSV` のところも実行できて最後の `OP_CHECKSIG` でエラーになった。  
 期待通り "schnorr sighash" も出力されている。
 
-```
+```log
 btcdeb> step
                 <> PUSH stack 9000
 script                                                             |                                                             stack
@@ -943,7 +943,7 @@ error: Invalid Schnorr signature
 このとき `tap` が出力した sighash を使うならば `reverse(<sighash>)` にすること。
 (ドキュメントには「出力されているのは big endian なので逆にする必要がある」と書いてあるのだが、ハッシュ値にエンディアンなんてあるんだっけ？)
 
-```
+```log
 btcdeb> tf sign_schnorr reverse(4b9c6931bef8c6ffdc59879a041a1fe0f0e7dfbe370f782f386e7a68ef7350e4) 2bd806c97f0e00af1a1fc3328fa763a9269723c8db8fac4f93af71db186d6e90
 8ae41eda15737a6646d11d68ee7c1959cb2c55118182b6bd7a35ed26db852b8310c1cdb85bd439a6b07089aa9d055899a7dc656ed04e2ebec7bdc540f7eb351a
 ```
@@ -954,7 +954,7 @@ btcdeb> tf sign_schnorr reverse(4b9c6931bef8c6ffdc59879a041a1fe0f0e7dfbe370f782f
 
 これで再度 `btcdeb` でデバッグして・・・成功！
 
-```
+```log
 btcdeb> step
 EvalChecksig() sigversion=3
 Eval Checksig Tapscript
@@ -984,8 +984,6 @@ script                                                             |            
 
 * [btcdeb-test](https://github.com/hirokuma/js-scriptpath/tree/e6ae1e2968e939743dbd63dcd4d26b80fb06a5bd)
   * アドレス作成して送金、1ブロック生成、key path, Bob, Alice(1回目), 143ブロック生成、Alice(2回目)の順
-
-
 
 ## リンク
 

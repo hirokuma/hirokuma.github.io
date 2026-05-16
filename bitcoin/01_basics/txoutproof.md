@@ -43,7 +43,7 @@ $ bitcoin-cli verifytxoutproof 0000cc20e74e69db30fe908461c810b9eba24151cef87e792
 他のデータと同じく、compact size 型ではない整数型は Little Endian、ハッシュ値などは Internal Byte Order である。
 
 | item | size | unit |
-|---|---|---|
+| --- | --- | --- |
 | [block header](./blocks.md#参照) | 80 | `char[80]` |
 | [Partial Merkle tree](#partial-merkle-tree) | - | - |
 
@@ -53,7 +53,7 @@ $ bitcoin-cli verifytxoutproof 0000cc20e74e69db30fe908461c810b9eba24151cef87e792
 Merkle tree 全体ではなく必要とする最低限の leaf で構成するので、Partial Merkle tree / Merkle proof / Merkle branch などと呼ぶ。
 
 | item | size | unit |
-|---|---|---|
+| --- | --- | --- |
 | transactions | 4 | `uint32` |
 | hash_count | 1-3 | [`compact size`](value.md) |
 | hashes | 32n | `char[32n]` |
@@ -116,7 +116,7 @@ txoutproof のデータは Bitcoin Core の [class CMerkleBlock](https://github.
 
 ## gettxoutproof 関数
 
-`src/rpc/txoutproof.cpp` の `gettxoutproof()` では[最後](https://github.com/bitcoin/bitcoin/blob/v29.0/src/rpc/txoutproof.cpp#L119-L123)に `CMerkleBock をシリアライズして文字列にしている様子がうかがえる。
+`src/rpc/txoutproof.cpp` の `gettxoutproof()` では[最後](https://github.com/bitcoin/bitcoin/blob/v29.0/src/rpc/txoutproof.cpp#L119-L123)に `CMerkleBock` をシリアライズして文字列にしている様子がうかがえる。
 おそらく [SERIALIZE_METHODS](https://github.com/bitcoin/bitcoin/blob/v29.0/src/merkleblock.h#L152) がやっているのだろう。  
 `obj.header` と `obj.txn` はそれぞれメンバ変数の `CBlockHeader header` と `CPartialMerkleTree txn` だろう。
 

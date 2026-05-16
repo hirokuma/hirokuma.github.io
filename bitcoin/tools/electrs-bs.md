@@ -166,8 +166,7 @@ $ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "i
 
 ### Esplora API
 
-Blockstream版のelectrsはブラウザで見る[Esplora](./esplora.md)のバックエンドになるため 
-`--http-addr` で指定したURLでEsplora APIが呼び出せるはずである。
+Blockstream版のelectrsはブラウザで見る[Esplora](./esplora.md)のバックエンドになるため `--http-addr` で指定したURLでEsplora APIが呼び出せるはずである。
 少なくとも[dockerコンテナ](https://hub.docker.com/r/blockstream/esplora)を使った場合にはアクセスできた。
 
 * [esplora/API.md at master · Blockstream/esplora](https://github.com/blockstream/esplora/blob/master/API.md)

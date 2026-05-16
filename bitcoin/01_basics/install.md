@@ -190,6 +190,7 @@ gpg: Signature made Wed Jan  8 23:17:43 2025 JST
 gpg:                using RSA key 0CCBAAFD76A2ECE2CCD3141DE2FFD5B1D88CA97D
 gpg: Can't check signature: No public key
 ```
+
 #### `verify.py` を使ったダウンロード
 
 `SHA256SUMS` のチェックなどをいちいちやるのは面倒だ。  

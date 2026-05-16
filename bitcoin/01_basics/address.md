@@ -36,7 +36,7 @@ mainnet ならアドレスの始まりが "1" や "3" の文字列である。
 
 Bitcoin Core のソースコードでは [`TxoutType`](https://github.com/bitcoin/bitcoin/blob/v28.1/src/script/solver.h#L22-L35) と呼ばれている。
 
-| Type | BIP | Address encode | scriptPubKey
+| Type | BIP | Address encode | scriptPubKey |
 | ---- | ---- | ---- | ---- |
 | P2PK | - | (未調査) | - |
 | MultiSig | BIP-11 | (未調査) | - |

@@ -184,7 +184,7 @@ CTS/RTS の無効化もできる。
 
 ルートノードの位置に `&` で始まるノードがあった場合、それは
 
-**ボード定義ファイル**
+##### **ボード定義ファイル**
 
 ```dts
 // common.dtsi
@@ -216,7 +216,7 @@ CTS/RTS の無効化もできる。
     };
 ```
 
-**オーバーレイファイル**
+##### **オーバーレイファイル**
 
 ```dts
 &uart0_default {
@@ -244,7 +244,7 @@ CTS/RTS の無効化もできる。
 
 1. Devicetree から設定したい node identifier(以下 nodeID) を得る
 2. API で操作するための構造体アドレスを取得する(GPIOであれば[GPIO_DT_SPEC_GET()](https://docs.nordicsemi.com/bundle/zephyr-apis-latest/page/group_gpio_interface.html#ga2fa6bb5880f46984f9fc29c70f7d503e)、I2Cであれば[I2C_DT_SPEC_GET()](https://docs.nordicsemi.com/bundle/zephyr-apis-latest/page/group_i2c_interface.html#gabb3ae5225cea677f3f3b36e4477ed045)など)
-  * 汎用の [DEVICE_DT_GET()](https://docs.nordicsemi.com/bundle/zephyr-apis-latest/page/group_device_model.html#ga9a65996ce21f43acb7db061e23b48ec7)もある
+   * 汎用の [DEVICE_DT_GET()](https://docs.nordicsemi.com/bundle/zephyr-apis-latest/page/group_device_model.html#ga9a65996ce21f43acb7db061e23b48ec7)もある
 
 nodeID を取得するマクロはいくつか種類があるが、個人的にはエイリアスから取得するのがよいと思う。  
 Devicetree ではノード名、ラベル名、エイリアス名で同じ文字列が使えるが、エイリアスは Devicetree のノード記述に名前を付けているだけなので依存が少ないからだ。  

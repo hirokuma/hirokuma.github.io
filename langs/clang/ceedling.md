@@ -43,7 +43,7 @@ $ ceedling new sample-ceedling1
 🌱 New project 'sample-ceedling1' created at ./sample-ceedling1/
 ```
 
-### `hello_world`モジュールの追加。
+### `hello_world`モジュールの追加
 
 ```shell
 $ ceedling module:create[hello_world]
@@ -121,6 +121,6 @@ IGNORED: 0
 Ceedling operations completed in 288 milliseconds
 ```
 
-## 
+## memo
 
 [Ceedling/docs/CeedlingPacket.md at master · ThrowTheSwitch/Ceedling](https://github.com/ThrowTheSwitch/Ceedling/blob/c50ff9dd9a73301f4c930cc37f39123f8aaa2cb8/docs/CeedlingPacket.md)

@@ -32,7 +32,7 @@ $ sudo make install
 ### 備考
 
 * `pkg-config --cflags --libs wallycore`
-    * `export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig`
+  * `export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig`
 * `--prefix=$HOME/.local` などとするとインストール先を変更できる。
   * install に `sudo` はいらないので楽だと思うが、それ以外のことが面倒になるので、ここは好みで。
     * include path や library の置き場所が標準ではないのでビルド時などに指定が必要になるなど
@@ -182,7 +182,7 @@ struct ext_key {
 
 BIP-44 に従う場合、master 以下は深度が 5つまである([HDウォレット参照](../01_basics/wallet.md))。
 
-```
+```text
 m / purpose' / coin_type' / account' / change / address_index
 ```
 
@@ -246,7 +246,7 @@ m / purpose' / coin_type' / account' / change / address_index
 ### テストデータ
 
 * [BIP32 Test Vectors](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vectors)
-  * seed と ext pub/prv 
+  * seed と ext pub/prv
 * [BIP39 Test vectors](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki#user-content-Test_vectors)
   * Trezor と bip32JP のテストコード
 

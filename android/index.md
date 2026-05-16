@@ -53,7 +53,7 @@ Android では後者に力を入れている。
     * UI elements で表示するデータの元ネタ
     * `ViewModel`を使う
     * データは UI State `data class` を作って、UI には `StateFlow` で提供する
-      * 画面回転などで Activity が作り直されると UI elements で持つ `MutableStateOf` の値は破棄されるが `ViewModel` 
+      * 画面回転などで Activity が作り直されると UI elements で持つ `MutableStateOf` の値は破棄されるが `ViewModel`
 * [Domain Layer(optional)](https://developer.android.com/topic/architecture/domain-layer?hl=ja)
 * [Data Layer](https://developer.android.com/topic/architecture/data-layer?hl=ja)
   * Repository

@@ -173,7 +173,7 @@ $ sudo chown hoge:hoge /mnt/usb
 
 ### fstab
 
-再起動のたびに`mount`するのは面倒ならば`/etc/fstab`に書いておくとよい。 
+再起動のたびに`mount`するのは面倒ならば`/etc/fstab`に書いておくとよい。  
 項目のどれがなんだったかは忘れやすい([fstab](https://www.man7.org/linux/man-pages/man5/fstab.5.html))。  
 項目間はタブ文字かスペースなので、特に4番目はコンマで区切るときにスペースをうっかり挟まないこと。
 
@@ -282,7 +282,8 @@ $ sudo vi /etc/dphys-swapfile
 ```
 
 編集内容
-```
+
+```ini
 CONF_SWAPFILE=/mnt/usb/swapfile
 CONF_SWAPSIZE=2048
 ```

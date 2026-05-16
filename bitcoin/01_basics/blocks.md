@@ -113,7 +113,7 @@ coinbaseトランザクションにはいくつか自由に使ってよい領域
   * [Block Headers](https://developer.bitcoin.org/reference/block_chain.html#block-headers)
 
 | item | size | unit |
-|---|---|---|
+| --- | --- | --- |
 | version | 4 | `int32_t` |
 | previous block header hash | 32 | `char[32]` |
 | Merkle root hash | 32 | `char[32]` |
@@ -196,7 +196,7 @@ $ curl -sSL "https://mempool.space/api/block/000000000003ba27aa200b1cecaad478d2b
 
 Merkle tree は 2回出てくる。
 
-* ブロックヘッダの Merkle root hash 
+* ブロックヘッダの Merkle root hash
 * coinbase トランザクションの commitment hash
 
 順番としては、まず coinbase トランザクションを作ることになるため commitment hash が先である。

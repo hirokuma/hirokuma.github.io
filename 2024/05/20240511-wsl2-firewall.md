@@ -49,11 +49,10 @@ Windows側のファイアウォール設定をリセットしたところ、GitH
 SSHが遮断されているようで、アプリ名なしで22番の送信を許可すると動いた。  
 `apt update` なども通らない。
 
-[Hyper-V ファイアウォール - Microsoft Learn](https://learn.microsoft.com/ja-jp/windows/security/operating-system-security/network-security/windows-firewall/hyper-v-firewall)
+* [Hyper-V ファイアウォール - Microsoft Learn](https://learn.microsoft.com/ja-jp/windows/security/operating-system-security/network-security/windows-firewall/hyper-v-firewall)
   * [New-NetFirewallHyperVRule (NetSecurity) - Microsoft Learn](https://learn.microsoft.com/en-us/powershell/module/netsecurity/new-netfirewallhypervrule?view=windowsserver2025-ps)
   * [Get-NetFirewallHyperVRule (NetSecurity) - Microsoft Learn](https://learn.microsoft.com/en-us/powershell/module/netsecurity/get-netfirewallhypervrule?view=windowsserver2025-ps)
   * [Remove-NetFirewallHyperVRule (NetSecurity) - Microsoft Learn](https://learn.microsoft.com/en-us/powershell/module/netsecurity/remove-netfirewallhypervrule?view=windowsserver2025-ps)
-
 
 ```powershell
 > New-NetFirewallHyperVRule -Name HTTPS443 -DisplayName "HTTPS443" -Direction Outbound -VMCreatorId '{40E0AC32-46A5-438A-A0B2-2B479E8F2E90}' -Protocol TCP -RemotePorts 443
@@ -151,4 +150,3 @@ PortStatuses          : {
                         EnforcementStatus: OK
                         }
 ```
-

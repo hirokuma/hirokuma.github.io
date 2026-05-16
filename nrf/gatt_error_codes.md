@@ -10,7 +10,7 @@ date: "2024/11/19"
 ## Core v5.1, Vol.3, Part F "3.4.1.1 Error Response"
 
 | Name | Error Code | Description |
-|---|---|---|
+| --- | --- | --- |
 | Invalid Handle | 0x01 | The attribute handle given was not valid on this server. |
 | Read Not Permitted | 0x02 | The attribute cannot be read. |
 | Write Not Permitted | 0x03 | The attribute cannot be written. |
@@ -40,7 +40,7 @@ date: "2024/11/19"
 * 戻り値として使うときは`BT_GATT_ERR()`で囲む。これは単にマイナス値にするだけである。
 
 | #define | value | Description |
-|---|---|---|
+| --- | --- | --- |
 | BT_ATT_ERR_SUCCESS | 0x00 | The ATT operation was   successful |
 | BT_ATT_ERR_INVALID_HANDLE | 0x01 | The attribute handle given was not valid on the server |
 | BT_ATT_ERR_READ_NOT_PERMITTED | 0x02 | The attribute cannot be   read |
@@ -71,7 +71,7 @@ date: "2024/11/19"
 * [元データ](https://android.googlesource.com/platform/external/bluetooth/bluedroid/+/master/stack/include/gatt_api.h)
 
 | #define | value |
-|---|---|
+| --- | --- |
 | GATT_SUCCESS | 0x00 |
 | GATT_INVALID_HANDLE | 0x01 |
 | GATT_READ_NOT_PERMIT | 0x02 |

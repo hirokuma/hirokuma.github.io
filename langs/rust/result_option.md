@@ -224,7 +224,7 @@ impl<T> const ops::Try for Option<T> {
 * [use anyhow::{Context, Result};](https://docs.rs/anyhow/latest/anyhow/)
 
 「いろいろ」といっても `anyhow::Error` に合致する必要はある。  
-単にエラー文字列を返したいときは `return Err(anyhow!(msg))` や `anyhow::bail!(msg)` 
+単にエラー文字列を返したいときは `return Err(anyhow!(msg))` や `anyhow::bail!(msg)`
 
 `anyhow` で便利なのは `?` でエラーを返すときにメッセージを付与する `.context(msg)?` という書き方ができるところだ。  
 
@@ -272,7 +272,7 @@ fn main() {
 
 ## Result から T を得る早見表
 
-### .unwrap() : T か panic
+### Result::unwrap() : T か panic
 
 ```rust
 fn main() {
@@ -282,7 +282,7 @@ fn main() {
 }
 ```
 
-### .unwrap_or_else(f) : T かクロージャ f の結果
+### Result::unwrap_or_else(f) : T かクロージャ f の結果
 
 こちらは `Option` と違ってクロージャの引数がある。
 
@@ -294,7 +294,7 @@ fn main() {
 }
 ```
 
-### .unwrap_or(v) : T か値 v
+### Result::unwrap_or(v) : T か値 v
 
 ```rust
 fn main() {
@@ -304,7 +304,7 @@ fn main() {
 }
 ```
 
-### .unwrap_or_default() : T かT型のデフォルト値
+### Result::unwrap_or_default() : T かT型のデフォルト値
 
 `T::default()` の値。例えば `String::default()` なら空文字列。
 
@@ -333,9 +333,9 @@ fn main() {
 
 ## Option 早見表
 
-### .unwrap() : T か panic
+### Option::unwrap() : T か panic
 
-### .unwrap_or_else(f) : T かクロージャ f の結果
+### Option::unwrap_or_else(f) : T かクロージャ f の結果
 
 こちらは `Result` と違ってクロージャの引数がない。
 
@@ -347,7 +347,7 @@ fn main() {
 }
 ```
 
-### .unwrap_or(v) : T か値 v
+### Option::unwrap_or(v) : T か値 v
 
 ```rust
 fn main() {

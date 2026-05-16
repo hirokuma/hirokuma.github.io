@@ -475,7 +475,7 @@ input の UTXO 情報を更新する。
 
 #### [walletprocesspsbt](https://developer.bitcoin.org/reference/rpc/walletprocesspsbt.html)
 
-`finalizepsbt` 
+`finalizepsbt`
 
 ## 使用例
 

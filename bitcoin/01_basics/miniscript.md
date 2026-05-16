@@ -269,7 +269,7 @@ $ make miniscript.js
 
 公開鍵 `key_1` による署名を要求する。
 
-```
+```text
 # Policy
 pk(key_1)
 
@@ -280,7 +280,7 @@ pk(key_1)
 Bitcoinスクリプトで解くときはこうなる(未確認)。
 `<<～>>` は redeem する witness スタックである。
 
-```
+```text
 <<signature with key_1>>
 <key_1>
 OP_CHECKSIG
@@ -311,7 +311,7 @@ OP_CHECKSIG
 
 面白いのは「鍵の確率は等しい(equally likely)」の記述だ。
 
-```
+```text
 # Policy
 or(pk(key_1),pk(key_2))
 
@@ -322,7 +322,7 @@ or_b(pk(key_1),s:pk(key_2))
 Bitcoinスクリプトで解くときはこうなる(未確認)。
 `<<～>>` は redeem する witness スタックである。
 
-```
+```text
 <<signature A>>
 <<signature B>>
 <key_1> OP_CHECKSIG OP_SWAP <key_2> OP_CHECKSIG OP_BOOLOR
@@ -348,7 +348,7 @@ Policy の `N@` は、そちらの Policy の方がデフォルトよりも `N` 
 それ以外にも、平均的なトランザクションサイズの計算にも使われる。
 likelyが発生する確率が高いと平均的なトランザクションサイズにもそれが反映されるというわけである。
 
-```
+```text
 # Policy
 or(99@pk(key_likely),pk(key_unlikely))
 
@@ -359,7 +359,7 @@ or_d(pk(key_likely),pkh(key_unlikely))
 Bitcoinスクリプトで解くときはこうなる(未確認)。
 `<<～>>` は redeem する witness スタックである。
 
-```
+```text
 OP_FALSE
 <<key_unlikely>>
 <<signature B>>
@@ -386,7 +386,7 @@ OP_ENDIF
 
 なぜスクリプトに `<key_unlikely>` を直接埋め込まないかというと、おそらくそちらの方が確率が高い方の鍵だった場合のサイズが小さくなるからだ。
 
-#### 計算
+#### 計算2
 
 * Policy to Miniscript: `or(99@pk(key_likely),pk(key_unlikely))` --> `or_d(pk(key_likely),pkh(key_unlikely))`
   * Script
@@ -404,7 +404,7 @@ OP_ENDIF
       * stack#1: `<key_unilikely>`: 1 + 33
       * stack#2: `<signature_unlikely>`: 1 + 2 + (2+32～33) + (2+32～33) + 1 = 72～74
       * 合計: 35 + 73(平均) = 108
-    * 合計: ((73 * 99) + (108 * 1)) / 100 = 73.35
+    * 合計: ((73 x 99) + (108 x 1)) / 100 = 73.35
       * policy の優先度 `99@` が影響している
   * Total
     * 63 + 73.35 = 136.35
@@ -457,7 +457,7 @@ max ops は関数コメントが "Return the maximum number of ops needed to sat
 
 ### A user and a 2FA service need to sign off, but after 90 days the user alone is enough
 
-```
+```text
 # Policy
 and(pk(key_user),or(99@pk(key_service),older(12960)))
 
@@ -472,7 +472,7 @@ OP_ENDIF
 
 ### A 3-of-3 that turns into a 2-of-3 after 90 days
 
-```
+```text
 # Policy
 thresh(3,pk(key_1),pk(key_2),pk(key_3),older(12960))
 
@@ -491,7 +491,7 @@ OP_ADD 3 OP_EQUAL
 
 ### The BOLT #3 to_local policy
 
-```
+```text
 # Policy
 or(pk(key_revocation),and(pk(key_local),older(1008)))
 
@@ -508,7 +508,7 @@ OP_ENDIF
 
 ### The BOLT #3 offered HTLC policy
 
-```
+```text
 # Policy
 or(pk(key_revocation),and(pk(key_remote),or(pk(key_local),hash160(H))))
 
@@ -526,7 +526,7 @@ OP_ENDIF
 
 ### The BOLT #3 received HTLC policy
 
-```
+```text
 # Policy
 or(pk(key_revocation),and(pk(key_remote),or(and(pk(key_local),hash160(H)),older(1008))))
 

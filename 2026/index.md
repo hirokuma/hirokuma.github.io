@@ -3,8 +3,6 @@ title: "年間リスト"
 thisyear: "2026"
 ---
 
-# 年間リスト
-
 ## {{ page.thisyear }}年
 
 <ul>

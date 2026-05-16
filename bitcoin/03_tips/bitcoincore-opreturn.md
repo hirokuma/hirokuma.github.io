@@ -68,7 +68,7 @@ bcrt1qaq0zf78zeshdx0uywktg4qfcwpllm7gxxetln2
 `OP_RETURN` に載せるデータはバイナリ値になるので何でも良い。  
 コマンドラインではHEX文字列を使う。
 
-```
+```text
 414243001123646566
 ```
 
