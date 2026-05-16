@@ -49,11 +49,8 @@ body {
         border: solid 1px #777777;
     }
     code {
-        margin-left: 0.15em;
-        margin-right: 0.15em;
-    }
-    code.highlighter-rouge {
-        color: #ee56cf;
+        margin-left: 0.1em;
+        margin-right: 0.1em;
     }
     blockquote {
         background: #242424;
@@ -89,6 +86,7 @@ body {
     }
     code.highlighter-rouge {
         color: #00b7ff;
+        border: none;
     }
 
     .date {
