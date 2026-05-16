@@ -35,9 +35,9 @@ Master Seed は 128～512 bits の乱数を求める(推奨は 256 bit)。
 できるだけちゃんとした乱数を使用すること。
 
 Master Seed はそのまま使うのでは無く、
-Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし、それを長さで半分に分割し $I_L$、$I_R$ とする(左半分と右半分)。  
+Key="Bitcoin seed"、Data=seed で HMAC-SHA512 計算をした値を `I` とし、それを長さで半分に分割しI~L~、I~R~ とする(左半分と右半分)。  
 左半分が master secret key、右半分が master chain code でそれぞれ長さは 256 bit である。  
-$I_L$ が 0 と等しいか `n` 以上だと NG。  
+I~L~が0と等しいか`n`以上だと NG。  
 両方ひっくるめて Master Key `m` と呼び、これから階層を下りながら生成していく extended key の親玉である。
 
 ウォレットを作る際に 12単語や24単語のメモを求められたことがあると思うが、あれは "mnemonic code(ニモニックコード)" と呼ばれる。  
