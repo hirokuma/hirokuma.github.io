@@ -4,7 +4,8 @@ title: "janoside/btc-rpc-explorer"
 tags:
   - bitcoin
 daily: false
-date: "2025/08/03"
+create: "2025/08/03"
+date: "2026/05/19"
 ---
 
 ## サイト
@@ -24,7 +25,7 @@ $ npm install
 
 グローバルインストールしない場合は `.env`ファイルを使うのが無難そう。
 
-```bash
+```toml
 BTCEXP_PORT=8080
 BTCEXP_BITCOIND_URI=bitcoin://testuser:testpass@127.0.0.1:18443?timeout=10000
 ```
@@ -33,4 +34,14 @@ BTCEXP_BITCOIND_URI=bitcoin://testuser:testpass@127.0.0.1:18443?timeout=10000
 
 ```console
 $ npm start
+```
+
+## Address API
+
+アドレスで検索できるようにするには何らかのAddress API設定が必要である。
+ローカル環境の場合は[electrs](./electrs.md)を立てるのが簡単か。
+
+```toml
+BTCEXP_ELECTRUM_SERVERS=tcp://127.0.0.1:50001
+BTCEXP_ADDRESS_API=electrum
 ```
