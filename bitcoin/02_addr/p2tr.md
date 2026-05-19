@@ -4,7 +4,8 @@ title: "P2TR および BIP-341周辺"
 tags:
   - bitcoin
 daily: false
-date: "2025/10/21"
+create: "2025/10/21"
+date: "2026/05/19"
 ---
 
 P2TR に関するトランザクションを作るための説明である。  
@@ -26,6 +27,7 @@ Bitcoin で新しく追加された方式(2025年03月現在)。
 * アドレスとしてシングル鍵とスクリプトの違いがなくなった。
 * スクリプトから支払う際、これまではスクリプト全体を載せていたが、P2TRスクリプトの場合は条件を満たすスクリプトだけで済む。
 * witness version 1
+  * アドレスは`bc1p`のようにbech32mの区切り文字`1`の次が`p`になる(P2WSHなどは`bc1q`)
 
 ## internal key は `internal_pubkey`
 
@@ -171,7 +173,7 @@ OP_CHECKSIG
 ブロックデータのマークルツリーは平たくしないと他の人が検証できないが、
 P2TR のスクリプトはマークルルートが計算できるかどうかしか検証できないので構成は比較的自由である。
 
-### internal_key を使わない
+### internal_key を使わない場合
 
 スクリプトを解く場合の control block には `internal_pubkey` が載っている(BIP-341 で "internal key" となっているが公開鍵である)。  
 これはシングル鍵署名でも解くことができるもので、スクリプトの中にシングル鍵で解くことができる経路が 1つ以上ある場合に一番確率が高い鍵を指定するというものである。
@@ -238,3 +240,4 @@ BIP-341 周辺の P2TR について概要をまとめた。
   * [btc: libwally-core で script path (2)](/2025/02/20250205-btc.html)
   * [btc: シュノア署名のトリック](https://blog.hirokuma.work/2025/04/20250428-btc.html)
   * [btc: シュノア署名のトリック(2)](https://blog.hirokuma.work/2025/08/20250827-btc.html)
+  * [btc: miniscript (6) - hiro99ma blog](https://blog.hirokuma.work/2026/05/20260510-bdk.html)
