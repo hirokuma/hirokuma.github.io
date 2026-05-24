@@ -4,16 +4,17 @@ title: "Bitcoin Coreをregtestで動かす"
 tags:
   - bitcoin
 daily: false
-date: "2025/11/26"
+create: "2025/11/26"
+date: "2026/05/20"
 ---
 
 ## はじめに
 
 よほど野心的でない限り Bitcoin のフルノードを自作しようとは思わないだろう。  
 ここでは最も一般的と思われる Bitcoin Core(bitcoind) のビルドとオプションについてメモを残す。  
-Ubuntu 22.04 (WSL2) で確認している。
+Ubuntu 24.04 (WSL2) で確認している。
 
-現時点で Bitcoin Core の最新バージョンは v29.0 のためそれを使っていく。  
+現時点(2026/05/20)で Bitcoin Core の最新バージョンは v31.0 である。  
 以前のバージョン表記は `v0.XX.YY`(v0.21.2まで) だったが、比較的最近から `vXX.YY`(v22.0～) に変わった。
 もし「v0.」で始まっている記事があっても、それがものすごく古いとは限らないことは覚えておいて良いだろう。
 ただ記事の更新日時が新しいのに「v0.」の場合は単に日付だけ新しいだけなので気をつけよう。  
@@ -46,7 +47,7 @@ blockfilterindex=1
 peerblockfilters=1
 ```
 
-`rpcuser` と `rpcpassword` は JSON-RPC で通信したい場合に設定する。
+`rpcuser`と`rpcpassword`はJSON-RPCで通信したい場合に設定する(rpcauthを設定したときも同様)。
 
 ```console
 $ curl --user testuser:testpass --data-binary '{"jsonrpc": "2.0", "id": "curltest", "method": "getblockcount", "params": []}' -H 'content-type: application/json' http://127.0.0.1:18443/
@@ -55,7 +56,7 @@ $ curl --user testuser:testpass --data-binary '{"jsonrpc": "2.0", "id": "curltes
 
 ### rpcauth
 
-`rpcuser`と`rpcpassword`は推奨されておらず、[rpcauth](https://github.com/bitcoin/bitcoin/tree/v28.1/share/rpcauth)を使う方が望ましい。
+`rpcuser`と`rpcpassword`での認証よりも、[rpcauth](https://github.com/bitcoin/bitcoin/tree/v31.0/share/rpcauth)の方が推奨されている。
 
 ```console
 $ ./share/rpcauth/rpcauth.py user pass
