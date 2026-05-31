@@ -6,7 +6,9 @@
 
 * [よく見る記号](./symbol.md)
 * [クレート](./crate.md)
-* [Result, Option](./result_option.md)
+* 戻り値
+  * [Result, Option](./result_option.md)
+  * [anyhow, thiserror](./result_thiserror.md)
 * [タプル構造体](./tuple_struct.md)
 
 ### デバッグ
