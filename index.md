@@ -37,12 +37,14 @@ recentlies: 5
     <ul>
 {% assign posts = site.pages | where: "daily", true | where: "draft", false | sort: "date" | reverse %}
 {% for post in posts limit:page.recentlies %}
+{% unless post.tags contains "web" %}
       <li>
         {{ post.date }} <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
           {% for tag in post.tags %}
             <a href="{{ 'tags/' | append: tag | relative_url }}" class="post-tag"><small><span>#{{ tag }}</span></small></a>
           {% endfor %}
       </li>
+{% endunless %}
 {% endfor %}
     </ul>
   </li>
