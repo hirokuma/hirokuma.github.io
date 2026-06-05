@@ -12,18 +12,20 @@ date: "2026/05/19"
 
 * [repository: github.com/janoside/btc-rpc-explorer](https://github.com/janoside/btc-rpc-explorer)
 
-直接 `bitcoind` を参照するので、regtestで構築するだけならこちらが楽か。  
-Electrum APIの設定もあるので、そちらでも使えるかも(試していない)？
+直接 `bitcoind` を参照するタイプである。  
+Electrum APIの設定をするとアドレスでの検索やリンクができる。
 
 ## インストール
 
 ```console
 $ git clone https://github.com/janoside/btc-rpc-explorer.git
 $ cd btc-rpc-explorer
+$ cp .env-sample .env
+$ vi .env
 $ npm install
 ```
 
-グローバルインストールしない場合は `.env`ファイルを使うのが無難そう。
+グローバルインストールしない場合は `.env`ファイルを使うのがよい。
 
 ```toml
 BTCEXP_PORT=8080

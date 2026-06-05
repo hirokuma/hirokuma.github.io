@@ -139,7 +139,7 @@ blockstream_esplora
 
 ### 補足
 
-Docker Hubに[bitcoin/bitcoin](https://hub.docker.com/r/bitcoin/bitcoin)があるが、書いてあるようにこれは**オフィシャルではない**。
+Docker Hubに[bitcoin/bitcoin](https://hub.docker.com/r/bitcoin/bitcoin)があるが、説明文に書いてあるようにこれは<u>オフィシャルではない</u>。
 このコンテナは信用できないとかBlockstreamのコンテナは信用できるとか、そういう評価は私にはできない。
 
 ## その他
