@@ -186,7 +186,7 @@ Lightning Networkの [anchor](https://github.com/lightning/bolts/blob/master/03-
 
 ### C++
 
-```console
+```shell
 $ git clone https://github.com/sipa/miniscript.git
 $ cd miniscript
 $ make
@@ -198,7 +198,7 @@ X    108.0000000000    35 pk(key_1) pk(key_1)
 オリジナルをビルドしたコマンドで出力が少ないので、forkして[sipaサイト](https://bitcoin.sipa.be/miniscript/)で出力している項目を追加した。  
 policy のコンパイルと Miniscript のコンパイルのコマンドも分けた。
 
-```console
+```shell
 $ git clone https://github.com/hirokuma/miniscript.git
 $ cd miniscript
 $ make
@@ -252,7 +252,7 @@ OP_ENDIF
 
 JavaScriptとWASMのコードも生成できる。
 
-```console
+```shell
 $ sudo apt install emscripten
 $ make miniscript.js
 ```

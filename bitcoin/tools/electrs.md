@@ -96,7 +96,7 @@ electrum_rpc_addr = "127.0.0.1:50001"
 実行すると bitcoind との同期が始まる。  
 同期にかかった時間は計測していないが、`bitcoin-cli getblockchaininfo` の `"size_on_disk"` が `740028923219`(690GBくらい) で 50 GB 程度になった。
 
-```console
+```shell
 $ du -h
 50G     ./db/bitcoin
 50G     ./db

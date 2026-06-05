@@ -52,7 +52,7 @@ ncs v2.8 以降は sysbuild がデフォルトになるので、ここでは sys
 
 Go言語のツールなので事前に `go` のインストールをしておくこと。
 
-```console
+```shell
 $ go install github.com/apache/mynewt-mcumgr-cli/mcumgr@latest
 ```
 
@@ -61,14 +61,14 @@ $ go install github.com/apache/mynewt-mcumgr-cli/mcumgr@latest
 * 通信経路の設定
   * これは "ssci" という設定名で `/dev/ttyUSB0` を登録している
 
-```console
+```shell
 $ mcumgr conn add ssci type="serial" connstring="dev=/dev/ttyUSB0,baud=115200,mtu=512"
 ```
 
 * Flash のスロット確認
   * これはスロットが 2つ(0, 1)あって、それぞれにイメージがある状態
 
-```console
+```shell
 $ mcumgr -c ssci image list
 Images:
  image=0 slot=0
@@ -87,7 +87,7 @@ Split status: N/A (0)
 * イメージのアップロード
   * [from MCUboot で試したとき](https://blog.hirokuma.work/2024/12/20241205-ncs.html)は自動で slot 0 に上書きされたし、[from app で試したとき](https://blog.hirokuma.work/2024/12/20241207-ncs.html)は slot 1 に書き込まれていた。
 
-```console
+```shell
 $ mcumgr -c ssci image upload build/l8_e1/zephyr/zephyr.signed.bin
 ```
 
@@ -95,14 +95,14 @@ $ mcumgr -c ssci image upload build/l8_e1/zephyr/zephyr.signed.bin
   * [from app](https://blog.hirokuma.work/2024/12/20241207-ncs.html) で試した
   * `test` は必須か分からないが推奨される手順である
 
-```console
+```shell
 $ mcumgr -c ssci image test <ハッシュ値>
 ```
 
 * リセット
   * アップロードされた状態で行うとイメージの入替(swap-moveか?)が行われる
 
-```console
+```shell
 $ mcumgr -c ssci reset
 ```
 

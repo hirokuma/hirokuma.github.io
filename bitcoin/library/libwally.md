@@ -18,7 +18,7 @@ _調査日:2026/04/17_: v1.5.3
 
 v1.5.0から `--enable-minimal` と `--with-system-secp256k1` の両方は設定できなくなったようだ。
 
-```console
+```shell
 $ git clone https://github.com/ElementsProject/libwally-core.git
 $ cd libwally-core
 $ git checkout -b v1.5.3 refs/tags/release_1.5.3

@@ -15,7 +15,7 @@ date: "2025/06/19"
 * [gettxoutproof(v29.0.0)](https://bitcoincore.org/en/doc/29.0.0/rpc/blockchain/gettxoutproof/)
 * [verifytxoutproof(v29.0.0)](https://bitcoincore.org/en/doc/29.0.0/rpc/blockchain/verifytxoutproof/)
 
-```console
+```shell
 $ bitcoin-cli gettxoutproof "[\"<TXID>\", ...]" [blockhash]
 
 $ bitcoin-cli verifytxoutproof <proof string>
@@ -26,7 +26,7 @@ $ bitcoin-cli verifytxoutproof <proof string>
 [901,846ブロック](https://mempool.space/ja/block/000000000000000000019fda9794e3ead682f1b6a1cc68c3bd0d95a35f4db0b8) で確認しよう。  
 [60d9...40b7](https://mempool.space/ja/tx/60d9a845bf9518ac982e6da8d96fa5ce2c81fbd05c87644c8b0f8e4fe47d40b7) を使う(誰のトランザクションかは知らない)。
 
-```console
+```shell
 # gettxoutproof
 $ bitcoin-cli gettxoutproof "[\"60d9a845bf9518ac982e6da8d96fa5ce2c81fbd05c87644c8b0f8e4fe47d40b7\"]"
 0000cc20e74e69db30fe908461c810b9eba24151cef87e792bd401000000000000000000a01c882adabe4bbec11589f2932c935899e43af3fa4b2027f9c4f63717b3cb5898755368043a02178c51f26fb9000000098053e31823ccf1bb4de37aaeeed1e922584dac851bbf921682c24fad3943350a2691b8e84f8272c91bad54a7bdc8d4c33e957f2f4b01b06dd213703bf286722b64f4cf0fc2a4001a9b7d98c127d4b68d8d19613160bdb4c91db83af9f763bb5af185023cb7489f1f636ec2b5668830890fb1484f708a3ffe504e121f9823399fb7407de44f8e0f8b4c64875cd0fb812ccea56fd9a86d2e98ac1895bf45a8d960233e59b2fca56ed1c8b178b0808d7a235d9a355071a6f5395fe1328dfd712d4a8be740030e3e296e0e685f4594e15d19698418213862628990a91e21b5715e562b4d8db89eac431ab6d0e3dbaf863d5616d4307355af0d17175eca4cbbbc725cb4e868aebda7ff853da5b8b306be68bf38b3ac197bfbb264c91f61228ecd127c036f1500
@@ -125,7 +125,7 @@ txoutproof のデータは Bitcoin Core の [class CMerkleBlock](https://github.
 この class にも [SERIALIZE_METHODS](https://github.com/bitcoin/bitcoin/blob/v29.0/src/primitives/block.h#L37) があるが、
 雰囲気としては Block Header の 80バイトそのままである。
 
-```console
+```shell
 $ bitcoin-cli getblockheader 000000000000000000019fda9794e3ead682f1b6a1cc68c3bd0d95a35f4db0b8 false
 0000cc20e74e69db30fe908461c810b9eba24151cef87e792bd401000000000000000000a01c882adabe4bbec11589f2932c935899e43af3fa4b2027f9c4f63717b3cb5898755368043a02178c51f26f
 ```

@@ -31,7 +31,7 @@ C言語のテストフレームワーク fff を紹介する。
 
 * [hirokuma/fff_examples at d67e16b11f7c9297ffbff90e77e6fe5d66f4ba93](https://github.com/hirokuma/fff_examples/tree/d67e16b11f7c9297ffbff90e77e6fe5d66f4ba93)
 
-```console
+```shell
 $ make test
 ./build/tst
 Running main() from /home/xxx/fff_examples/tests/fff/build/_deps/googletest-src/googletest/src/gtest_main.cc

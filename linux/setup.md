@@ -114,7 +114,7 @@ sudo apt install jq
 初めて commit しようとしたときにエラーになって気付くから意識しなくてもよいとは思う。  
 仕事で別のアカウントで作業することもあるだろうから、そういうときはわざと設定せず、`--global` をつけずリポジトリごとに付けるようにすると良いだろう。
 
-```console
+```shell
 $ git config --global user.name "ほげほげ"
 $ git config --global user.email "はにゃはにゃ"
 ```

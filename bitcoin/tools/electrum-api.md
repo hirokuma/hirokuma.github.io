@@ -27,7 +27,7 @@ Electrum ServerはBitcoin Coreの外側に立ち、Electrum Protocolを提供す
 `socat` はRaspberry Piでは `sudo apt install socat` でインストールした。  
 `netcat` でもよいが待機状態になるため `-N` をつけるか、使えないなら `-w 1` などとして自動切断するとよい。
 
-```console
+```shell
 $ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "id": 0}' | socat - TCP4:192.168.0.30:50001
 {"id":0,"jsonrpc":"2.0","result":["electrs/0.10.9","1.4"]}
 ```
@@ -36,14 +36,14 @@ $ echo '{"jsonrpc": "2.0", "method": "server.version", "params": ["", "1.4"], "i
 [blockchain.block.header](https://electrum-protocol.readthedocs.io/en/latest/protocol-methods.html#blockchain-block-header) はこう。  
 `cp_height` を付けるとエラーになるが[electrumがそうだから](https://github.com/romanz/electrs/issues/1080)だそうだ。
 
-```console
+```shell
  $ echo '{"jsonrpc": "2.0", "method": "blockchain.block.header", "params": [5], "id": 0}' | socat - TCP4:192.168.0.30:50001
 {"id":0,"jsonrpc":"2.0","result":"0100000085144a84488ea88d221c8bd6c059da090e88f8a2c99690ee55dbba4e00000000e11c48fecdd9e72510ca84f023370c9a38bf91ac5cae88019bee94d24528526344c36649ffff001d1d03e477"}
 ```
 
 `bitcoin-cli` で確認するとデータは一致している。
 
-```console
+```shell
 $ bitcoin-cli getblockhash 5
 000000009b7262315dbf071787ad3656097b892abffd1f95a1a022f896f533fc
 $ bitcoin-cli getblockheader 000000009b7262315dbf071787ad3656097b892abffd1f95a1a022f896f533fc false
