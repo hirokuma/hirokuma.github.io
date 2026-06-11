@@ -8,14 +8,14 @@ layout: default
 
 <h1>{{ page.title }}</h1>
 
-<div class="toc"><small>
+<div class="toc">
   目次
   {% if page.create %}
   <div class="date"><em>作成日:{{ page.create | date: "%Y/%m/%d" }}</em></div>
   {% endif %}
   <div class="date"><em>更新日:{{ page.date | date: "%Y/%m/%d" }}</em></div>
   {% include toc.html html=content %}
-</small></div>
+</div>
 
 {{content}}
 
