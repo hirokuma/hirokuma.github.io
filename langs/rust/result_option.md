@@ -18,9 +18,12 @@ date: "2026/03/01"
 
 * `Result<T, E>`
   * `T` を取得したいときは `?` か `.unwrap()` 系を使う(`match` もできたはず)
+    * `if let Ok() = ... else`で局所的にすることもできる
   * `?` を使ったときは伝播するので関数の戻り値も同じ `Result<T, E>` にする
 * `Option<T>`
   * `T` を取得したいときは `?` か `match` か `.unwrap()` 系を使う
+    * `let Some() = ... else`や`.ok_or()?`で`None`だったらさっさと終わるということもできる
+    * `if let else`で局所的にすることもできる
   * `?` を使ったときは伝播するので関数の戻り値も同じ `Option<T>` にする
 
 ```rust
@@ -369,5 +372,36 @@ fn main() {
       return;
     };
     println!("v = {}", v);
+}
+```
+
+### ok_or : None ならエラーを返す
+
+これは`?`が使える箇所だけだと思われる。  
+`None`なら即エラーで、エラーを作るコストがほとんどかからないときはこっちだそうだ。
+つまりこのサンプルコードはあまりよろしくない。  
+ちょっとでも複雑になるようだったらクロージャを使う次の`ok_or_else()`の方がエラーの時しか作動しないのでよいらしい。
+
+```rust
+fn main() -> std::result::Result<(), String> {
+    let f = || -> Option<String> { None };
+    let v = f().ok_or("I am None!".to_string())?;
+    println!("v = {}", v);
+    Ok(())
+}
+
+```
+
+### ok_or_else : None ならエラーを返す
+
+これも`ok_or()`と同じく`?`が使える箇所だけかな？  
+クロージャのため`None`の場合しかエラー処理されないらしい。
+
+```rust
+fn main() -> std::result::Result<(), String> {
+    let f = || -> Option<String> { None };
+    let v = f().ok_or_else(|| "I am None!".to_string())?;
+    println!("v = {}", v);
+    Ok(())
 }
 ```

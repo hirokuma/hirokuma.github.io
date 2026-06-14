@@ -1792,7 +1792,7 @@
   </url>
   <url>
     <loc>https://blog.hirokuma.work/2026/04/20260426-rust.html</loc>
-    <lastmod>2026-04-29T00:00:00+00:00</lastmod>
+    <lastmod>2026-05-31T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://blog.hirokuma.work/2026/05/20260502-web.html</loc>
@@ -1816,11 +1816,27 @@
   </url>
   <url>
     <loc>https://blog.hirokuma.work/2026/05/20260524-btc.html</loc>
-    <lastmod>2026-05-25T00:00:00+00:00</lastmod>
+    <lastmod>2026-06-09T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://blog.hirokuma.work/2026/05/20260529-rust.html</loc>
     <lastmod>2026-05-29T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.hirokuma.work/2026/06/20260602-web.html</loc>
+    <lastmod>2026-06-02T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.hirokuma.work/2026/06/20260607-rust.html</loc>
+    <lastmod>2026-06-07T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.hirokuma.work/2026/06/20260614-rust.html</loc>
+    <lastmod>2026-06-14T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.hirokuma.work/2026/06/20260614-rust2.html</loc>
+    <lastmod>2026-06-14T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://blog.hirokuma.work/2026/index.html</loc>
@@ -2041,6 +2057,10 @@
   <url>
     <loc>https://blog.hirokuma.work/langs/rust/result_option.html</loc>
     <lastmod>2026-03-01T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.hirokuma.work/langs/rust/result_thiserror.html</loc>
+    <lastmod>2026-05-31T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://blog.hirokuma.work/langs/rust/subscriber.html</loc>
