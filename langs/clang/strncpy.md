@@ -57,11 +57,11 @@ void string_copy(char *dst, const char *src)
 char* strncpy(char* restrict dest, const char* restrict src, size_t n);
 ```
 
-`strncpy`は`src`の先頭から最大`n`文字を`dst`にコピーする。  
-それまでに`src`に`\0`が見つかると`dst`の残りは`\0`で埋める。  
+`strncpy`は`src`の先頭から最大`n`文字を`dest`にコピーする。  
+それまでに`src`に`\0`が見つかると`dest`の残りは`\0`で埋める。  
 仕様はそのくらいのようだ。
 
-では`dst`の終わりまで`src`の中に`\0`がなかったら？
+では`dest`の終わりまで`src`の中に`\0`がなかったら？
 
 ```c
 #include <stdio.h>
@@ -112,7 +112,7 @@ $ ./tst
 
 ```c
   strncpy(dest, src, dest_len);
-  dst[dest_len - 1] = '\0';
+  dest[dest_len - 1] = '\0';
 ```
 
 `strncpy`側で自動的に`\0`を書き込むようにすればよさそうだが、関数仕様にないのでやらない。  
