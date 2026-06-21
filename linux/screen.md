@@ -33,7 +33,7 @@ returnキーを押すと、一旦その状態から抜ける。
 
 ![image](images/screen1.png)
 
-キーボードから`Ctrl+A,d`と入力するとデタッチして元のコンソールに戻る。
+キーボードから`Ctrl+A,d`と入力するとデタッチして元のコンソールに戻る(`Ctrl+A, Ctrl+d`でも`Ctrl+A``d`でも反応する)。
 
 ![image](images/screen2.png)
 
@@ -42,6 +42,8 @@ returnキーを押すと、一旦その状態から抜ける。
 ### screenに復帰
 
 次にSSHでログインした後、デタッチしたものが1つだけなら`screen -r`コマンドで戻してくれる。
+
+接続中のセッションがなければ`screen -ls`でエラーが返るようなので`$?`で判定できそう。
 
 ## tmux
 
@@ -66,4 +68,13 @@ $ tmux
 
 ```shell
 $ tmux attach
+```
+
+接続中のセッションがなかった場合 `tmux ls`がエラーを返すようなので、SSHで戻す使い方なら`.bashrc`などに仕込んでおいてもよさそう。
+
+```shell
+tmux ls > /dev/null 2>&1
+if [[ $? -eq 0 ]]; then
+  echo "You have tmux session: tmux attach"
+fi
 ```
