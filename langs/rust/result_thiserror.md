@@ -78,6 +78,7 @@ fn main() -> Result<()> {
 * 開発日記
   * [rust: thiserror で自作のエラー型を作る - hiro99ma blog](https://blog.hirokuma.work/2025/12/20251214-rst.html)
   * [rust: thiserrorでのジェネリックなエラー型 - hiro99ma blog](https://blog.hirokuma.work/2026/04/20260426-rust.html)
+  * [rust: thiserrorとの付き合い方 - hiro99ma blog](https://blog.hirokuma.work/2026/06/20260628-rust.html)
 
 私はこういう感じで追加している。
 まだ初心者で技がないのだ。
