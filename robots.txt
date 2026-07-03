@@ -150,6 +150,9 @@ User-agent: YouBot
 User-agent: ZanistaBot
 Disallow: /
 
+User-agent: Baiduspider
+Disallow: /
+
 # my settings
 User-agent: *
 Disallow: /2011/
