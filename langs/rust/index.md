@@ -15,6 +15,7 @@
 
 * [log](./log.md)
 * [tracing_subscriber](./subscriber.md)
+  * [tracingサンプル](./tracing.md)
 * [tokio-console](./tokio-console.md)
 * [vscode デバッグ](./debug.md)
 
