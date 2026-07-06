@@ -27,6 +27,8 @@ tracing-subscriber = "0.3.23"
 
 ### instrument
 
+{% raw %}
+
 ```rust
 use std::{error::Error, result::Result};
 
@@ -85,6 +87,8 @@ fn main() {
     });
 }
 ```
+
+{% endraw %}
 
 #### instrument: そのまま実行
 
