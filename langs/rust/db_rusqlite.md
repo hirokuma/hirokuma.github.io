@@ -19,6 +19,18 @@ Rust用のSQLite APIラッパー。
 記憶が曖昧だ。。。  
 ともかく[関数やマクロが多い](https://sqlite.org/keyword_index.html)。
 
+## bundled feature
+
+rusqliteのfeatureに"bundled"というのがある。
+デフォルトではシステムに存在するSQLiteライブラリを使おうとするそうなので、なかったら実行時にエラーになるんじゃなかろうか。
+
+* [Notes on building rusqlite and libsqlite3-sys](https://github.com/rusqlite/rusqlite#notes-on-building-rusqlite-and-libsqlite3-sys)
+
+"bundled"的なfeaturesを指定しておくとlibsqlite3-sysがSQLiteライブラリをビルドして同梱するっぽい。
+
+アプリが直接指定する場合はよいが、使っているクレートの誰かがrusqliteを使っているような場合はどうするんだろうね。
+同じバージョンを上の方でもdependenciesに入れるのかしら。
+
 ### サンプルコード
 
 [Usage](https://github.com/rusqlite/rusqlite#usage)に書いてあるコードをそのまま動かした。
