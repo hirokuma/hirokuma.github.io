@@ -153,3 +153,12 @@ GitHubのstarも4.3kついているしね。
 資源が1つしか使えないのであれば入口を絞ってmutexなどで排他制御すればよかろう。  
 `Arc<Mutex<rusqlite::Connection>>`みたいなので固めれば良さそうな気がする。試してないのだがね。
 
+単一スレッドアプリだったが念のため`Arc<Connection>`だけにしたところ、エラーにはならないもののclippyでwarningが出る。
+
+> warning: usage of an `Arc` that is not `Send` and `Sync`
+
+`Connection`は`Send`ではあるが`Sync`ではないそうだし、
+
+* [DeepWiki](https://deepwiki.com/search/rusqliteconnection_99c1b1c2-df0a-4bfa-a273-0af7467cec28?mode=fast)
+
+そもそもやるなら`Arc`じゃなくて`Mutex`だったな。
