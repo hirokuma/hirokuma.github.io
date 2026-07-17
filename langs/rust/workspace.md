@@ -4,7 +4,8 @@ title: "cargo workspace"
 tags:
   - rust
 daily: false
-date: "2026/01/10"
+create: "2026/01/10"
+date: "2026/07/17"
 ---
 
 `cargo new` で1つのプロジェクトを作る。  
@@ -55,13 +56,12 @@ default-members = []
 ### パッケージの追加
 
 通常のパッケージ作成と同じくワークスペースの中で `cargo new` する(追加するからと `cargo add` としないよう注意)。  
-ただ、オプションを付けないと `.git/` も作ってしまうので、作りたくないなら `--vcs none` をつける。  
 ワークスペースの中で実行するとこのようにワークスペースに追加したというメッセージが出力される。
 
 ```shell
-$ cargo new abc --vcs none
+$ cargo new abc
     Creating binary (application) `abc` package
-      Adding `abc` as member of workspace at `/home/hirokuma/rust/workspace`
+      Adding `abc` as member of workspace at `/home/hirokuma/rust/workspace-sample`
 note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 ```
 
