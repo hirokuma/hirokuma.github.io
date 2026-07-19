@@ -5,7 +5,7 @@ tags:
   - bitcoin
 daily: false
 create: "2026/02/19"
-date: "2026/02/19"
+date: "2026/07/19"
 ---
 
 Bitcoin Coreはフルノードでブロック情報をすべて持っている(pruneしていなければ)。  
@@ -50,6 +50,19 @@ $ bitcoin-cli getblockheader 000000009b7262315dbf071787ad3656097b892abffd1f95a1a
 0100000085144a84488ea88d221c8bd6c059da090e88f8a2c99690ee55dbba4e00000000e11c48fecdd9e72510ca84f023370c9a38bf91ac5cae88019bee94d24528526344c36649ffff001d1d03e477
 ```
 
+### scriptPubKeyはSHA256して逆転
+
+[blockchain.scriptpubkey.get_history](https://electrum-protocol.readthedocs.io/en/latest/protocol-methods.html#blockchain-scriptpubkey-get-history)などは引数に`scriptPubKey`を取るようになっている。
+が、これは純粋な`scriptPubKey`ではなく[sha256した値](https://electrum-protocol.readthedocs.io/en/latest/protocol-basics.html#scriptpubkeys)を使う。
+そしてさらにエンディアンを逆転させる。
+
+(2026/07/19)  
+・・・とあるのだが、regtestで動作確認できなかった。  
+グローバルのAPIでは"get_history"は負荷が重たくなるためかどこもサポートしていなさそうだった。  
+動作確認取れたら更新しよう。  
+なお、regtestで動作確認できなかったというのは、どれで指定しても値が返ってこなかったのだ。
+RustのElectrumを呼ぶAPIでそれっぽいものを使えば値が取れているのでローカルで動かしているElectrum Serverがダメなわけではないと思う。
+
 ### confirmation数の取得
 
 TXIDからconfirmation数を得るには、APIがサポートしているなら[blockchain.transaction.get](https://electrum-protocol.readthedocs.io/en/latest/protocol-methods.html#blockchain-transaction-get)の第2引数 `verbose` を `true` にするとよい。  
@@ -71,4 +84,3 @@ TXIDからconfirmation数を得るには、APIがサポートしているなら[
 * [Blockstream/electrs](./electrs-bs.md)
 * [mempool/electrs](./electrs-ms.md)
 * [spesmilo/electrumx](https://github.com/spesmilo/electrumx)
-
