@@ -4,7 +4,7 @@ title: "Bitcoin調査"
 tags:
   - bitcoin
 daily: false
-date: "2026/05/02"
+date: "2026/07/19"
 ---
 
 ## ⚠注意⚠
@@ -43,7 +43,9 @@ date: "2026/05/02"
 ### API(リンクのみ)
 
 * [Bitcoin Core RPC - developer.bitcoin.org](https://developer.bitcoin.org/reference/rpc/)
-* [Electrum Protocol - electrum-protocol.readthedocs.io](https://electrum-protocol.readthedocs.io/en/latest/)
+* Electrum Protocol(プロトコルバージョンに要注意)
+  * [Protocol Methods — ElectrumX ElectrumX 1.20.2 documentation](https://electrumx.readthedocs.io/en/latest/protocol-methods.html)
+  * [Electrum Protocol — electrum-protocol Electrum Protocol 1.7.x documentation](https://electrum-protocol.readthedocs.io/en/latest/)
 * [Esplora HTTP API - github.com/blockstream/esplora](https://github.com/blockstream/esplora/blob/master/API.md)
 
 ## 小技

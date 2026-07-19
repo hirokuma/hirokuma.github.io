@@ -18,7 +18,17 @@ Electrum ServerはBitcoin Coreの外側に立ち、Electrum Protocolを提供す
 
 ## Electrum Protocol
 
-* [Electrum Protocol — electrum-protocol Electrum Protocol 1.6.x documentation](https://electrum-protocol.readthedocs.io/en/latest/)
+* [Protocol Methods — ElectrumX ElectrumX 1.20.2 documentation](https://electrumx.readthedocs.io/en/latest/protocol-methods.html)
+* [Electrum Protocol — electrum-protocol Electrum Protocol 1.7.x documentation](https://electrum-protocol.readthedocs.io/en/latest/)
+
+### ⚠バージョンに注意
+
+上にリンクを2つ載せているが、どちらもプロトコルバージョンを指定したリンクがない。  
+今実装されているプロトコルバージョンはv1.4が一番多いと思われる(2026/07月の感想)。  
+
+例えば、v1.7のドキュメントに`blockchain.scriptpubkey.get_history`があったのだが、
+これはそれまで`blockchain.scripthash.get_history`という名前だった。  
+頭の中で"get_history"だけ覚えていて調べると存在しないメソッド名のほうが見つかることがあるのだ。
 
 ### APIアクセス
 
@@ -52,16 +62,25 @@ $ bitcoin-cli getblockheader 000000009b7262315dbf071787ad3656097b892abffd1f95a1a
 
 ### scriptPubKeyはSHA256して逆転
 
-[blockchain.scriptpubkey.get_history](https://electrum-protocol.readthedocs.io/en/latest/protocol-methods.html#blockchain-scriptpubkey-get-history)などは引数に`scriptPubKey`を取るようになっている。
+[blockchain.scriptpubkey.get_history](https://electrumx.readthedocs.io/en/latest/protocol-methods.html#blockchain-scripthash-get-history)などは引数に`scriptPubKey`を取るようになっている。
 が、これは純粋な`scriptPubKey`ではなく[sha256した値](https://electrum-protocol.readthedocs.io/en/latest/protocol-basics.html#scriptpubkeys)を使う。
 そしてさらにエンディアンを逆転させる。
 
-(2026/07/19)  
-・・・とあるのだが、regtestで動作確認できなかった。  
-グローバルのAPIでは"get_history"は負荷が重たくなるためかどこもサポートしていなさそうだった。  
-動作確認取れたら更新しよう。  
-なお、regtestで動作確認できなかったというのは、どれで指定しても値が返ってこなかったのだ。
-RustのElectrumを呼ぶAPIでそれっぽいものを使えば値が取れているのでローカルで動かしているElectrum Serverがダメなわけではないと思う。
+```shell
+$ bitcoin-cli getnewaddress
+bcrt1qj0p2kqyx83ufrw69vmverfdhpsqlwj668ge5h4
+$ bitcoin-cli getaddressinfo bcrt1qj0p2kqyx83ufrw69vmverfdhpsqlwj668ge5h4 | jq .scriptPubKey
+"001493c2ab00863c7891bb4566d991a5b70c01f74b5a"
+```
+
+* このアドレスに適当に送金してconfirmさせておく
+* `001493c2ab00863c7891bb4566d991a5b70c01f74b5a`を[cryptii.com](https://cryptii.com/pipes/hash-function/)などでSHA256エンコードして`2a91aa44b9f7d8ebe6f04c0ab4bc200a39635f87c47a0ab9cc0cffde59407616`
+* エンディアン逆転して`16764059deff0cccb90a7ac4875f63390a20bcb40a4cf0e6ebd8f7b944aa912a`
+
+```shell
+$ echo '{"jsonrpc": "2.0", "method": "blockchain.scripthash.get_history", "params": ["16764059deff0cccb90a7ac4875f63390a20bcb40a4cf0e6ebd8f7b944aa912a"], "id": 0}' | socat - TCP4:localhost:50001
+{"id":0,"jsonrpc":"2.0","result":[{"height":204,"tx_hash":"b9449731c81b29d1f04bf477a6b11dccd640165e774478cec8ca9bd938b8528a"},{"height":204,"tx_hash":"d6c769c4c68830822f53a0e8750b7ddde66a9641807fd38aadb5c8cd66e29f92"}]}
+```
 
 ### confirmation数の取得
 
