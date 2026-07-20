@@ -82,6 +82,8 @@ $ echo '{"jsonrpc": "2.0", "method": "blockchain.scripthash.get_history", "param
 {"id":0,"jsonrpc":"2.0","result":[{"height":204,"tx_hash":"b9449731c81b29d1f04bf477a6b11dccd640165e774478cec8ca9bd938b8528a"},{"height":204,"tx_hash":"d6c769c4c68830822f53a0e8750b7ddde66a9641807fd38aadb5c8cd66e29f92"}]}
 ```
 
+* [btc: blockchain.scripthash.get_historyの挙動 - hiro99ma blog](https://blog.hirokuma.work/2026/07/20260720-btc.html)
+
 ### confirmation数の取得
 
 TXIDからconfirmation数を得るには、APIがサポートしているなら[blockchain.transaction.get](https://electrum-protocol.readthedocs.io/en/latest/protocol-methods.html#blockchain-transaction-get)の第2引数 `verbose` を `true` にするとよい。  
@@ -97,9 +99,11 @@ TXIDからconfirmation数を得るには、APIがサポートしているなら[
 
 ## 主なElectrum Protocol実装
 
-おそらく今はRust言語で実装したelectrs系が多いと思う。
+おそらく今はRust言語で実装したelectrs系が多いと思う。  
+プロトコルの管理をしているのはElectrum Walletなどを出しているspesmiloである。
 
+* [spesmilo/electrumx](https://github.com/spesmilo/electrumx)
+  * [spesmilo/electrum-protocol: client-server JSON-RPC protocol for bitcoin light clients](https://github.com/spesmilo/electrum-protocol)
 * [romanz/electrs](./electrs.md)
 * [Blockstream/electrs](./electrs-bs.md)
 * [mempool/electrs](./electrs-ms.md)
-* [spesmilo/electrumx](https://github.com/spesmilo/electrumx)

@@ -5,8 +5,7 @@ tags:
   - bitcoin
 daily: false
 create: "2025/08/01"
-date: "2026/05/10"
-draft: true
+date: "2026/07/20"
 ---
 
 ## Hash Time-Locked Contracts
@@ -79,13 +78,13 @@ Bobはランダムな32byte値を作る。
 これを "preimage" と呼ぶ。
 
 そして、そのランダム値をSHA256した値を計算しておく。
-これを "payment hash" と呼ぶ。
+これを "preimage_hash" と呼ぶ(Lightning Networkだと"payment_hash"と呼んでいたので決まった名称はないのかも)。
 
 呼び名はLightning Networkで使われている名称を使った。
 
 ### 2. Bob -> Alice
 
-BobはAliceに`1`で作ったpayment hashと、BobのBitcoinアドレスの元になった公開鍵を渡す。
+BobはAliceに`1`で作ったpreimage_hashと、BobのBitcoinアドレスの元になった公開鍵を渡す。
 preimageは渡したり公開したりしないこと。
 
 ### 3. Alice
@@ -107,7 +106,10 @@ preimageを知っていれば解くことができるコントラクトなので
 BobはBitcoin上で「このSHA256の値の元データを知っている人はAliceに送金でき、それ以外で1日経過したらBobに送金するBitcoinスクリプト」をBitcoin上に展開する。  
 Aliceが展開してconfirmしたのを確認し、そのスマートコントラクトが受け入れる期間よりも確実に短くなるようにする。
 
+## HTLCの鍵はウォレットと別にするのが良い
 
+HTLCのスクリプトでは、だいたい署名の検証まで行うようにする。
+そうしないと条件が一致してしまったら誰でもspendできてしまうからだ。
 
-
-
+その検証に関する鍵だが、別にウォレットと関係している必要はない。
+preimageがこの場限りの値であるのと同様に一時的な鍵セットでよいのだ。
