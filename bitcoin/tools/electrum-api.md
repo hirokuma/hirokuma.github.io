@@ -62,7 +62,7 @@ $ bitcoin-cli getblockheader 000000009b7262315dbf071787ad3656097b892abffd1f95a1a
 
 ### scriptPubKeyはSHA256して逆転
 
-[blockchain.scriptpubkey.get_history](https://electrumx.readthedocs.io/en/latest/protocol-methods.html#blockchain-scripthash-get-history)などは引数に`scriptPubKey`を取るようになっている。
+[blockchain.scripthash.get_history](https://electrumx.readthedocs.io/en/latest/protocol-methods.html#blockchain-scripthash-get-history)などは引数に`scriptPubKey`を取るようになっている。
 が、これは純粋な`scriptPubKey`ではなく[sha256した値](https://electrum-protocol.readthedocs.io/en/latest/protocol-basics.html#scriptpubkeys)を使う。
 そしてさらにエンディアンを逆転させる。
 
