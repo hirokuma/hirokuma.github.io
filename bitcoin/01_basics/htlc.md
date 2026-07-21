@@ -5,7 +5,7 @@ tags:
   - bitcoin
 daily: false
 create: "2025/08/01"
-date: "2026/07/20"
+date: "2026/07/21"
 ---
 
 ## Hash Time-Locked Contracts
