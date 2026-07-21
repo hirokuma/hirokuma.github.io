@@ -73,7 +73,9 @@ Ethereumでなくても以下のような条件があれば使えるはずだ。
 Ethereumを持つAliceとBitcoinを持つBobがいたとする。
 AliceがBobにEthereumを支払い、BobがAliceにBitcoinを支払う、という交換をしたい。
 
-どちらかが始めないといけないので、上のスクリプトに合わせてBobからにする。
+どちらかが始めないといけないので、上のスクリプトに合わせてBobからにする。  
+事前に、お互いのEthereumアカウント(ETH-Alice, ETH-Bob)と、HTLCのタイムアウト時間(HTLC-CSV, HTLC-Timestamp)は決めておいたものとする。  
+また、EthereumのHTLCスマートコントラクトは展開済みとする。
 
 ### 1. Bob
 
@@ -83,31 +85,59 @@ Bobはランダムな32byte値を作る。
 そして、そのランダム値をSHA256した値を計算しておく。
 これを "preimage_hash" と呼ぶ(Lightning Networkだと"payment_hash"と呼んでいたので決まった名称はないのかも)。
 
-呼び名はLightning Networkで使われている名称を使った。
-
 ### 2. Bob -> Alice
 
-BobはAliceに`1`で作ったpreimage_hashと、BobのBitcoinアドレスの元になった公開鍵を渡す。
-preimageは渡したり公開したりしないこと。
+BobはAliceに以下を渡す。
+
+* `1`で作ったpreimage_hash
+* タイムアウトしたときのルートで署名検証する公開鍵(PUBKEY-Bob)
+
+Bobはpreimageを知っているが、そのルートのスクリプトを解いても次に必要なのはAliceの公開鍵検証に成功しなくてはならないので、実質的にBobにはそのルートを通すことができない。  
+できるのは、スクリプトがタイムアウトしてBobが支払った分を取り戻す経路を通すことだけである。
 
 ### 3. Alice
 
-BobはAliceにBobのEthereumアドレスを渡す。
+AliceはBobに、preimageでスクリプトを解いた後に署名検証する公開鍵(PUBKEY-Alice)を渡す。  
+`2`でBobからもらったデータと、Aliceの公開鍵を組み合わせることでBitcoinのHTLCスクリプトを作ることができる。
+
+```text
+OP_SHA256 <preimage_hash> OP_EQUALVERIFY <PUBKEY-Alice> OP_CHECKSIG
+```
+
+```text
+<HTLC-CSV> OP_CHECKSEQUENCEVERIFY OP_DROP <PUBKEY-Bob> OP_CHECKSIG
+```
+
+AliceもBobも同じスクリプトを作るデータを持っているので、HTLCアドレスも同じものになる。
+
+preimageを知っているBobが有利なので、先にBobがHTLCアドレスにBTCを送金しておく。
 
 ### 4. Alice
 
-Alice
+AliceはBobがHTLCアドレスに送金したことを確認すると、Ethereum側のスマートコントラクトの呼び出しを行う。  
+EtehreumのHTLCの方が関数になっていてわかりやすいかもしれない。AIで生成できるくらいには普通のやり方である。
 
-「このSHA256の値の元データであるpreimageを知っている人はAliceに送金でき、それ以外で2日経過したらBobに送金するスクリプト」を展開する。  
+* lock : preimage_hash、送金元、送金先、金額などをハッシュにしたキーにして、そこにAliceのETHを送金して資金をロックする
+* claim: 資金をロックしたときと同じパラメータで、preimage_hashの代わりにpreimageを与えることができればロックした資金を送金先に自動で送る
 
+ここでAliceが呼び出すのはlockの方である。  
+lock成功時にEventを発行するようにしておき、Bobはブロックチェーンから直接lockが実行されたことを知ることができる。
 
-今はAliceだけがpreimageを知っている。  
-preimageを知っていれば解くことができるコントラクトなので、
+### 5. Bob
 
-#### 3b. Bob
+preimageを知っているBobはclaim関数を呼び出すことができる。
+もしパラメータをすべて知っていれば、Bobでなくても誰でもこのclaim関数呼び出しを成功させることはできる。
+しかし、その送金先はあらかじめ決められているので特に利点はない。
+Gas代がかかるのでむしろマイナスである。
 
-BobはBitcoin上で「このSHA256の値の元データを知っている人はAliceに送金でき、それ以外で1日経過したらBobに送金するBitcoinスクリプト」をBitcoin上に展開する。  
-Aliceが展開してconfirmしたのを確認し、そのスマートコントラクトが受け入れる期間よりも確実に短くなるようにする。
+claim成功時にも同様にEventを発行するようにしておく。
+これでようやくAliceもpreimageを手に入れることができた。
+
+### 6. Alice
+
+preimageがあり、AliceがHTLCに組み込んだ秘密鍵があればBitcoinのHTLCスクリプトを解くことができる。  
+Ethereum側と違って署名検証が必要なのは、Bitcoinの場合はスクリプトを解いてしまえばその送金先は自由に設定できるからだ。
+現在のBitcoinではそういうことはできないので、署名検証を挟むことで本人確認のようなことをしているわけである。
 
 ## HTLCの鍵はウォレットと別にするのが良い
 
