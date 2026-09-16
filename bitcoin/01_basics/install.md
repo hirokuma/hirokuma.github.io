@@ -4,7 +4,8 @@ title: "Bitcoin Core(bitcoind) のインストール"
 tags:
   - bitcoin
 daily: false
-date: "2026/01/14"
+create: "2026/01/14"
+date: "2026/09/16"
 ---
 
 ## はじめに
@@ -194,31 +195,132 @@ gpg: Can't check signature: No public key
 #### `verify.py` を使ったダウンロード
 
 `SHA256SUMS` のチェックなどをいちいちやるのは面倒だ。  
-ダウンロードと検証を行うスクリプトがある。
+ダウンロードと検証を行うスクリプトがある。こちらの方がビルドした人の公開鍵でチェックすることもあって厳しそうだ。
 
-* [bitcoin/contrib/verify-binaries/README.md at 31.x · bitcoin/bitcoin](https://github.com/bitcoin/bitcoin/blob/31.x/contrib/verify-binaries/README.md)
+* [bitcoin/contrib/verify-binaries at master · bitcoin/bitcoin](https://github.com/bitcoin/bitcoin/tree/master/contrib/verify-binaries)
+  * [masterブランチのverify.py履歴](https://github.com/bitcoin/bitcoin/commits/master/contrib/verify-binaries/verify.py)
 
 `verify.py`を実行すると、鍵がインポートされていればダウンロードして`/tmp/`にディレクトリを作ってダウンロードする。
 
+2026/09/16時点でリリースされているものではv31.1が最新なのでそれで試す。  
+`verify.py`だけダウンロードして実行したところエラーになった。
+
 ```shell
-$ ./verify.py pub 30.2-x86_64-linux
-[INFO] got file https://bitcoincore.org/bin/bitcoin-core-30.2/SHA256SUMS.asc as SHA256SUMS.asc
-[WARNING] https://bitcoin.org failed to provide file (https://bitcoin.org/bin/bitcoin-core-30.2/SHA256SUMS.asc). Continuing based solely upon https://bitcoincore.org.
-[INFO] got file https://bitcoincore.org/bin/bitcoin-core-30.2/SHA256SUMS as SHA256SUMS
-[WARNING] https://bitcoin.org failed to provide file (https://bitcoin.org/bin/bitcoin-core-30.2/SHA256SUMS). Continuing based solely upon https://bitcoincore.org.
-[INFO] got 3 good signatures
-[INFO] GOOD SIGNATURE (untrusted): SigData('E2FFD5B1D88CA97D', '.0xB10C <b10c@b10c.me>', trusted=False, status='')
-[INFO] GOOD SIGNATURE (untrusted): SigData(略)
-[INFO] GOOD SIGNATURE (untrusted): SigData(略)
-[WARNING] UNKNOWN SIGNATURE: SigData(略)
-[WARNING] UNKNOWN SIGNATURE: SigData(略)
-[WARNING] UNKNOWN SIGNATURE: SigData(略)
-[WARNING] UNKNOWN SIGNATURE: SigData(略)
-[WARNING] UNKNOWN SIGNATURE: SigData(略)
-[INFO] removing *-debug binaries (bitcoin-30.2-x86_64-linux-gnu-debug.tar.gz) from verification since https://bitcoincore.org does not host *-debug binaries
-[INFO] downloading bitcoin-30.2-x86_64-linux-gnu.tar.gz to /tmp/bitcoin_verify_binaries.30.2-x86_64-linux
-[INFO] did not clean up /tmp/bitcoin_verify_binaries.30.2-x86_64-linux
-VERIFIED: bitcoin-30.2-x86_64-linux-gnu.tar.gz
+$ python verify.py pub 31.1-x86_64-linux
+[INFO] got file https://bitcoincore.org/bin/bitcoin-core-31.1/SHA256SUMS.asc as SHA256SUMS.asc
+[WARNING] https://bitcoin.org failed to provide file (https://bitcoin.org/bin/bitcoin-core-31.1/SHA256SUMS.asc). Continuing based solely upon https://bitcoincore.org.
+[INFO] got file https://bitcoincore.org/bin/bitcoin-core-31.1/SHA256SUMS as SHA256SUMS
+[WARNING] https://bitcoin.org failed to provide file (https://bitcoin.org/bin/bitcoin-core-31.1/SHA256SUMS). Continuing based solely upon https://bitcoincore.org.
+[INFO] got 2 good signatures
+[INFO] Maybe you need to import (`gpg --keyserver hkps://keys.openpgp.org --recv-keys <key-id>`) some of the following keys:
+[INFO]
+[INFO]     17565732E08E5E41 (me@achow101.com)
+[INFO]     410108112E7EA81F (hebasto@gmail.com)
+[INFO]     D7CC770B81FD22A8 (benthecarman@live.com)
+[INFO]     BF131C2D0536F8AC ()
+[INFO]     E7E2984B6289C93A (pinheadmz@gmail.com)
+[INFO]     3152347D07DA627C ()
+[INFO]     CE6EC49945C17EA6 ()
+[INFO]     57FF9BDBCC301009 ()
+[INFO]     9B79B45691DB4173 (seb.kung@gmail.com)
+[INFO]
+[ERROR] not enough trusted sigs to meet threshold (2 vs. 3)
+```
+
+guix.sigからビルドした人たちのGPG公開鍵を持ってきてインストールする。  
+commit-idは`a7b8e98d71c374dd77c93777988cc0a77c6b46ca`である。
+
+```shell
+$ git clone https://github.com/bitcoin-core/guix.sigs.git
+$ cd guix.sigs/builder-keys/
+$ gpg --import *.gpg
+gpg: key 188CBB2648416AD5: 6 signatures not checked due to missing keys
+gpg: key 188CBB2648416AD5: ".0xB10C <b10c@b10c.me>" 9 new signatures
+gpg: key A5E0907A0380E6C3: public key "CoinForensics (SigningKey) <59567284+coinforensics@users.noreply.github.com>" imported
+gpg: key 2EBB056FD847F8A7: 12 signatures not checked due to missing keys
+gpg: key 2EBB056FD847F8A7: public key "Stephan Oeste (it) <it@oeste.de>" imported
+gpg: key 57FF9BDBCC301009: 53 signatures not checked due to missing keys
+gpg: key 57FF9BDBCC301009: public key "Sjors Provoost <sjors@sprovoost.nl>" imported
+gpg: key 9303B33A305224CB: 15 signatures not checked due to missing keys
+gpg: key 9303B33A305224CB: public key "Sebastian Kung (TheCharlatan) <seb.kung@gmail.com>" imported
+gpg: key 17565732E08E5E41: public key "Ava Chow <me@achow101.com>" imported
+gpg: key D7CC770B81FD22A8: 2 signatures not checked due to missing keys
+gpg: key D7CC770B81FD22A8: public key "Ben Carman <benthecarman@live.com>" imported
+gpg: key 1C2491FFEB0EF770: 2 signatures not checked due to missing keys
+gpg: key 1C2491FFEB0EF770: public key "Cory Fields <cfields@bitcoinfoundation.org>" imported
+gpg: key E13FC145CD3F4304: 15 signatures not checked due to missing keys
+gpg: key E13FC145CD3F4304: public key "Antoine Poinsot <darosior@protonmail.com>" imported
+gpg: key 10F2A3D26839321E: public key "davidgumberg <davidzgumberg@gmail.com>" imported
+gpg: key C37B1C1D44C786EE: public key "Duncan Dean <duncangleeddean@gmail.com>" imported
+gpg: key 944D35F9AC3DB76A: 18 signatures not checked due to missing keys
+gpg: key 944D35F9AC3DB76A: "Michael Ford (bitcoin-otc) <fanquake@gmail.com>" 20 new signatures
+gpg: key 8F617F1200A6D25C: 8 signatures not checked due to missing keys
+gpg: key 8F617F1200A6D25C: public key "Gloria Zhao <gloriazhao@berkeley.edu>" imported
+gpg: key 8E4256593F177720: 1 signature not checked due to a missing key
+gpg: key 8E4256593F177720: "Oliver Gugger <gugger@gmail.com>" 4 new signatures
+gpg: key 410108112E7EA81F: public key "Hennadii Stepanov (GitHub key) <32963518+hebasto@users.noreply.github.com>" imported
+gpg: key 0E3908F364989888: public key "Abubakar Sadiq Ismail <abubakarsadiqismail@proton.me>"
+imported
+gpg: key D11BD4F33F1DB499: public key "jackielove4u <jackielove4u@hotmail.com>" imported
+gpg: key 8ADCB558C4F33D65: public key "josibake@protonmail.com <josibake@protonmail.com>" imported
+gpg: key F62711DBDCA8AE56: public key "Dimitri <kvaciral@protonmail.com>" imported
+gpg: key 74810B012346C9A6: 104 signatures not checked due to missing keys
+gpg: key 74810B012346C9A6: public key "Wladimir J. van der Laan <laanwj@protonmail.com>" imported
+gpg: key A291A2C45D0C504A: public key "Luke Dashjr (Codesigning) <luke-jr+git@utopios.org>" imported
+gpg: key B66D427F873CB1A3: public key "m3dwards <me@maxedwards.me>" imported
+gpg: key F9C5154E44D75DF8: public key "maflcko <*~=`'#}+{/-|&$^_@721217.xyz>" imported
+gpg: key BF131C2D0536F8AC: public key "marcofleon <marleo23@proton.me>" imported
+gpg: key D5DBABC9625AB5BE: public key "Nkatha <nkathakaburu0@gmail.com>" imported
+gpg: key E7E2984B6289C93A: 1 signature not checked due to a missing key
+gpg: key E7E2984B6289C93A: public key "Matthew Zipkin (GitHub Signing Key) <pinheadmz@gmail.com>" imported
+gpg: key 747A7AE2FB0FD25B: public key "satsie <staciewaleyko@gmail.com>" imported
+gpg: key 9303B33A305224CB: "Sebastian Kung (TheCharlatan) <seb.kung@gmail.com>" 1 new user ID
+gpg: key 9303B33A305224CB: "Sebastian Kung (TheCharlatan) <seb.kung@gmail.com>" 4 new signatures
+gpg: key 860FEB804E669320: 59 signatures not checked due to missing keys
+gpg: key 860FEB804E669320: public key "Pieter Wuille <pieter@wuille.net>" imported
+gpg: key 0A41BDC3F4FAFF1C: public key "Aaron Clauson (sipsorcery) <aaron@sipsorcery.com>" imported
+gpg: key CFB2C83C66CD792A: public key "Sebastian van Staa <sebastian.van.staa@gmail.com>" imported
+gpg: key 7B18557E3AF1CDA5: public key "tapcrafter <tapcrafter@proton.me>" imported
+gpg: key C2371D91CB716EA7: public key "Sebastian Falbesoner (theStack) <sebastian.falbesoner@gmail.com>" imported
+gpg: key A7BEB2621678D37D: public key "vertion <vertion@protonmail.com>" imported
+gpg: key 3B8F814A784218F8: 1 signature not checked due to a missing key
+gpg: key 3B8F814A784218F8: public key "Will Clark <will@256k1.dev>" imported
+gpg: key 8E3A8F3247DBCBBF: public key "Willy Ko <willyk@syscoin.org>" imported
+gpg: key 9F81364FD4AF0DF6: public key "xyephy <ziphyr.xyeag@gmail.com>" imported
+gpg: key EB562DE99F42B3D1: public key "xyzconstant <263061129+xyzconstant@users.noreply.github.com>" imported
+gpg: key CA247AC78DF0509C: public key "yuvicc (yuvicc-sign-release) <yuvichh01@gmail.com>" imported
+gpg: Total number processed: 39
+gpg:               imported: 35
+gpg:           new user IDs: 1
+gpg:         new signatures: 37
+gpg: no ultimately trusted keys found
+```
+
+改めて実行。
+
+```shell
+$ python verify.py pub 31.1-x86_64-linux
+[INFO] got file https://bitcoincore.org/bin/bitcoin-core-31.1/SHA256SUMS.asc as SHA256SUMS.asc
+[WARNING] https://bitcoin.org failed to provide file (https://bitcoin.org/bin/bitcoin-core-31.1/SHA256SUMS.asc). Continuing based solely upon https://bitcoincore.org.
+[INFO] got file https://bitcoincore.org/bin/bitcoin-core-31.1/SHA256SUMS as SHA256SUMS
+[WARNING] https://bitcoin.org failed to provide file (https://bitcoin.org/bin/bitcoin-core-31.1/SHA256SUMS). Continuing based solely upon https://bitcoincore.org.
+[INFO] got 11 good signatures
+[INFO] GOOD SIGNATURE (untrusted): SigData('17565732E08E5E41', 'Ava Chow <me@achow101.com>', trusted=False, status='')
+[INFO] GOOD SIGNATURE (untrusted): SigData('2EEB9F5CC09526C1', 'Michael Ford (bitcoin-otc) <fanquake@gmail.com>', trusted=False, status='')
+[INFO] GOOD SIGNATURE (untrusted): SigData('410108112E7EA81F', 'Hennadii Stepanov (GitHub key) <32963518+hebasto@users.noreply.github.com>', trusted=False, status='')
+[INFO] GOOD SIGNATURE (untrusted): SigData('D7CC770B81FD22A8', 'Ben Carman <benthecarman@live.com>', trusted=False, status='')
+[INFO] GOOD SIGNATURE (untrusted): SigData('8E4256593F177720', 'Oliver Gugger <gugger@gmail.com>', trusted=False, status='')
+[INFO] GOOD SIGNATURE (untrusted): SigData('BF131C2D0536F8AC', 'marcofleon <marleo23@proton.me>', trusted=False, status='')
+[INFO] GOOD SIGNATURE (untrusted): SigData('E7E2984B6289C93A', 'Matthew Zipkin (GitHub Signing Key) <pinheadmz@gmail.com>', trusted=False, status='')
+[INFO] GOOD SIGNATURE (untrusted): SigData('3152347D07DA627C', 'Stephan Oeste (it) <it@oeste.de>', trusted=False, status='')
+[INFO] GOOD SIGNATURE (untrusted): SigData('CE6EC49945C17EA6', 'Will Clark <will@256k1.dev>',
+trusted=False, status='')
+[INFO] GOOD SIGNATURE (untrusted): SigData('57FF9BDBCC301009', 'Sjors Provoost <sjors@sprovoost.nl>', trusted=False, status='')
+[INFO] GOOD SIGNATURE (untrusted): SigData('9B79B45691DB4173', 'sedited <seb.kung@gmail.com>', trusted=False, status='')
+[INFO] removing *-debug binaries (bitcoin-31.1-x86_64-linux-gnu-debug.tar.gz) from verification since https://bitcoincore.org does not host *-debug binaries
+[INFO] downloading bitcoin-31.1-x86_64-linux-gnu.tar.gz to /tmp/bitcoin_verify_binaries.31.1-x86_64-linux
+[INFO] did not clean up /tmp/bitcoin_verify_binaries.31.1-x86_64-linux
+VERIFIED: bitcoin-31.1-x86_64-linux-gnu.tar.gz
 ```
 
 ### その3: Dockerコンテナ
