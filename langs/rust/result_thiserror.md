@@ -86,9 +86,10 @@ fn main() -> Result<()> {
 * モジュールごとに`#[derive(thiserror::Error, Debug)]`な`enum XxxError`を用意する
 * そのモジュールの中でエラーを返す可能性がある関数は`std::result::Result<T, XxxError>`を返す
 * `?`がエラーになっているようだったら`XxxError`に`HogeError(#[from] abc::def::HogeError)`のようなのを追加する
-  * メッセージは`#[error(transparent)]`に任せる
+  * メッセージは`#[error(transparent)]`に任せるのもよいが`cargo clippy`で小言を言われたりもする
 * 自分でエラーを返したいなら適当に追加する(`String`か`&'static str`)
 * `cargo clippy`で"very large"と言われたらそのエラーを`Box<>`で囲み`?`は`.map_err(Box::new)?`にする
+  * [very large](https://blog.hirokuma.work/2026/04/20260426-rust.html#very-large)
 
 `enum`のそれぞれのvariant名を`AbcError`や`DefError`のように同じサフィックスにしていたら`cargo clippy`で"enum_variant_names"のwarningが出た。
 エラーなんやけんお尻にErrorって付いたほうがわかりやすいやん、と思って私は`allow`を付けて無視した。
