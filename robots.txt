@@ -178,6 +178,7 @@ Disallow: /
 
 # Cloudflare One
 User-agent: Baiduspider
+User-agent: Bingbot
 Disallow: /
 
 # my settings
