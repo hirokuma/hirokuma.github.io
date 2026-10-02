@@ -160,7 +160,9 @@ GUIなので、GitHub Actionsなどで環境を作ってテストに使うとい
 
 Polar と同じようなプロジェクトで [Nigiri](https://nigiri.vulpem.com/) がある。  
 こちらは GUI ではなく CUIで、主に環境の立ち上げを行ってくれる。  
-2026/10/02時点でv0.5.17である。
+2026/10/02時点でv0.5.17である。  
+`/usr/local/bin/`にインストールしようとするので、いやなら`curl https://getnigiri.vulpem.com > install_nigiri.sh`などとして取ってきて、
+`BIN="$HOME/.local/bin"`などとし、`sudo`を削除してから実行すればよかろう。
 
 Dockerが動く環境がいる。
 bitcoindイメージは[getumbrel](https://github.com/vulpemventures/nigiri/blob/b91e00c8ff16c421f685d7a731f7a2c735d1c169/cmd/nigiri/resources/docker-compose.yml#L5)のものを使っていた。
