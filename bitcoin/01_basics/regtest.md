@@ -207,6 +207,13 @@ $ nigiri start
 ```
 
 `http://localhost:5000`をブラウザで見るとEsploraが立ち上がっているのが確認できる。  
+Esplora APIも使用可能。
+
+```shell
+$ curl http://localhost:30000/blocks/tip/height
+103
+```
+
 `nigiri rpc`で`bitcoin-cli`のような操作ができる。
 `nigiri faucet`は`sendtoaddress`のようなコマンドだがブロックを進めるので注意。その代わり同時に立てた"lnd"などのノードに名前で送金できる。
 
@@ -241,6 +248,25 @@ $ nigiri start --ln
 ✓ nbxplorer: localhost:32838
 ✓ electrs: localhost:50000
 ✓ bitcoin: localhost:18443
+```
+
+```shell
+$ nigiri faucet lnd
+txId: b4c75a06561b98ce2fb3bff53138c85e4458eada1ddb10246af75c4064a2d69a
+$ nigiri lnd walletbalance
+{
+    "total_balance": "100000000",
+    "confirmed_balance": "100000000",
+    "unconfirmed_balance": "0",
+    "locked_balance": "0",
+    "reserved_balance_anchor_chan": "0",
+    "account_balance": {
+        "default": {
+            "confirmed_balance": "100000000",
+            "unconfirmed_balance": "0"
+        }
+    }
+}
 ```
 
 
