@@ -173,7 +173,8 @@ bitcoindイメージは[getumbrel](https://github.com/vulpemventures/nigiri/blob
 #### nigiri起動
 
 `nigiri start`で起動。  
-デフォルトでBitcoin Regtestノードが立ち上がる。
+デフォルトでBitcoin Regtestノードが立ち上がる。Electrsなどいろいろ立ち上がる。
+nbxplorerはArkのときだけあればよいかと思ったのだが、とにかく立ち上がる。
 
 ```shell
 $ nigiri start --help
@@ -193,7 +194,7 @@ OPTIONS:
 
 $ nigiri start
 ......
-🍣 nigiri configuration located at /home/ueno/.nigiri/nigiri.config.json
+🍣 nigiri configuration located at /home/hirokuma/.nigiri/nigiri.config.json
 
 🍜 ENDPOINTS
 ✓ chopsticks: localhost:3000
@@ -221,6 +222,27 @@ txId: a32684b0ff9f3d681c6fc50a85278b0a96e98bb334cbf335df47f520acf19f98
 $ nigiri rpc getreceivedbyaddress bcrt1qhqjxr348lh49k9m3j6j6rejkuwe5dplku7w3m4
 0.01
 ```
+
+`--ln`を付けるとcln, lnd, tapが立ち上がる。
+
+```shell
+$ nigiri start --ln
+......
+🍣 nigiri configuration located at /home/hirokuma/.nigiri/nigiri.config.json
+
+🍜 ENDPOINTS
+✓ lnd: localhost:9735
+✓ tap: localhost:10029
+✓ cln: localhost:9835
+✓ esplora: localhost:5000
+✓ postgres: localhost:39372
+✓ electrum-ws: ws://localhost:50003
+✓ chopsticks: localhost:3000
+✓ nbxplorer: localhost:32838
+✓ electrs: localhost:50000
+✓ bitcoin: localhost:18443
+```
+
 
 ## 関連ページ
 
