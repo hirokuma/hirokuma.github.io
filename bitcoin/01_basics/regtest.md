@@ -150,13 +150,23 @@ Docker Hubに[bitcoin/bitcoin](https://hub.docker.com/r/bitcoin/bitcoin)があ�
 GUI で操作は比較的簡単である。  
 Lightning Network 開発用だが、Bitcoin Core だけを立ち上げることもできる。
 
+複数のノードを立てられるし、Bitcoinノードの接続関係やチャネル接続もGUIでできる。
+ノードのバージョンもそれぞれ変更できる(選択項目にあれば)し、パラメータも手動で変更できる。  
+なかなか強力なツールである。
+
+GUIなので、GitHub Actionsなどで環境を作ってテストに使うというのは難しいだろう。
+
 ### Nigiri
 
 Polar と同じようなプロジェクトで [Nigiri](https://nigiri.vulpem.com/) がある。  
 こちらは GUI ではなく CUIで、主に環境の立ち上げを行ってくれる。  
 2026/10/02時点でv0.5.17である。
 
-Dockerが動く環境がいる。GitHubの方が見やすい気がする。
+Dockerが動く環境がいる。
+bitcoindイメージは[getumbrel](https://github.com/vulpemventures/nigiri/blob/b91e00c8ff16c421f685d7a731f7a2c735d1c169/cmd/nigiri/resources/docker-compose.yml#L5)のものを使っていた。
+あとはオリジナルがあればそれを、そうでなければリポジトリの人がイメージを作っているようだ。
+
+説明はGitHubの方が見やすいだろう。
 
 * [https://github.com/vulpemventures/nigiri](https://github.com/vulpemventures/nigiri)
 
