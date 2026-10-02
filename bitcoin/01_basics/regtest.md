@@ -5,7 +5,7 @@ tags:
   - bitcoin
 daily: false
 create: "2025/11/26"
-date: "2026/05/20"
+date: "2026/10/02"
 ---
 
 ## はじめに
@@ -154,7 +154,63 @@ Lightning Network 開発用だが、Bitcoin Core だけを立ち上げること�
 
 Polar と同じようなプロジェクトで [Nigiri](https://nigiri.vulpem.com/) がある。  
 こちらは GUI ではなく CUIで、主に環境の立ち上げを行ってくれる。  
-それほど使ったことがないので、ここでは紹介だけしておく。
+2026/10/02時点でv0.5.17である。
+
+Dockerが動く環境がいる。GitHubの方が見やすい気がする。
+
+* [https://github.com/vulpemventures/nigiri](https://github.com/vulpemventures/nigiri)
+
+#### nigiri起動
+
+`nigiri start`で起動。  
+デフォルトでBitcoin Regtestノードが立ち上がる。
+
+```shell
+$ nigiri start --help
+NAME:
+   nigiri start - start nigiri
+
+USAGE:
+   nigiri start [command options] [arguments...]
+
+OPTIONS:
+   --liquid    enable liquid (default: false)
+   --ln        enable Lightning Network (default: false)
+   --ark       enable Ark Network (default: false)
+   --ci        runs in headless mode without esplora for continuous integration environments (default: false)
+   --remember  remember the flags used in this command for future runs (default: false)
+   --help, -h  show help (default: false)
+
+$ nigiri start
+......
+🍣 nigiri configuration located at /home/ueno/.nigiri/nigiri.config.json
+
+🍜 ENDPOINTS
+✓ chopsticks: localhost:3000
+✓ bitcoin: localhost:18443
+✓ postgres: localhost:39372
+✓ electrs: localhost:50000
+✓ esplora: localhost:5000
+✓ electrum-ws: ws://localhost:50003
+✓ nbxplorer: localhost:32838
+```
+
+`http://localhost:5000`をブラウザで見るとEsploraが立ち上がっているのが確認できる。  
+`nigiri rpc`で`bitcoin-cli`のような操作ができる。
+`nigiri faucet`は`sendtoaddress`のようなコマンドだがブロックを進めるので注意。その代わり同時に立てた"lnd"などのノードに名前で送金できる。
+
+```shell
+$ nigiri rpc getblockcount
+101
+$ nigiri rpc getbalance
+50
+$ nigiri rpc getnewaddress
+bcrt1qhqjxr348lh49k9m3j6j6rejkuwe5dplku7w3m4
+$ nigiri faucet bcrt1qhqjxr348lh49k9m3j6j6rejkuwe5dplku7w3m4 0.01
+txId: a32684b0ff9f3d681c6fc50a85278b0a96e98bb334cbf335df47f520acf19f98
+$ nigiri rpc getreceivedbyaddress bcrt1qhqjxr348lh49k9m3j6j6rejkuwe5dplku7w3m4
+0.01
+```
 
 ## 関連ページ
 
