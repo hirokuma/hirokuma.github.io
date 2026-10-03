@@ -271,6 +271,15 @@ $ nigiri lnd walletbalance
 }
 ```
 
+#### クリア
+
+nigiriを起動するとデータなどは再起動しても消えない。
+`stop`時にオプションを指定する。
+
+```shell
+$ nigiri stop --delete
+```
+
 
 ## 関連ページ
 
