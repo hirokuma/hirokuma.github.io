@@ -4,6 +4,9 @@
 
 ### 基礎
 
+* 名前が出てこないあれ
+  * `struct`の中にある名前とデータ型: フィールド(fields) [url](https://doc.rust-lang.org/book/ch05-01-defining-structs.html#defining-and-instantiating-structs)
+  * `enum`の中で列挙しているやつ: 列挙子(variants) [url](https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html#defining-an-enum)
 * [よく見る記号](./symbol.md)
 * [クレート](./crate.md)
 * 戻り値
