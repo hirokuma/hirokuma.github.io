@@ -56,11 +56,32 @@ tracing_subscriber::fmt::Subscriber::builder()
 * `FormatEvent` を使ったカスタマイズが可能
   * [deep wiki](https://deepwiki.com/search/withfile_06d63fd0-a59b-42ac-97c2-95210e76e49b?mode=fast)
 
-こういう設定の仕方もある。
-`filter_directives` は文字列で、`RUST_LOG` に設定する形式で書くことができる。  
-`layer()` の下につなげて書くことができるメソッドは上に書いた内容とは実は異なる。
+
 
 ```rust
+    tracing_subscriber::registry()
+        .with(
+            Targets::new()
+                .with_default(LevelFilter::TRACE)
+                .with_target("ldk_node_sample", LevelFilter::DEBUG) // 指定しないと"ldk_node"にマッチしてしまう
+                .with_target("ldk_node", LevelFilter::WARN)
+                .with_target("lightning", LevelFilter::WARN)
+        )
+        .with(tracing_subscriber::fmt::layer())
+        .init();
+```
+
+`.with()`と`layer()`を使う書き方もある。  
+`filter_directives` は文字列で、`RUST_LOG` に設定する形式で書くことができる。
+与える文字列はコンマ区切りで、イコールがなければ全体反映、イコールがあれば左辺の名前でマッチしたら反映。  
+ポイントはクレート名でマッチするのではなく名前でマッチするらしいということだ。
+例えば、"ldk_node_sample"というアプリを作っているときに`"info,ldk_node=warn"`と書いていたのだが、アプリが"ldk_node_sample"なので`ldk_node=warn`の方にマッチしてinfoログが出なかった。
+
+また`layer()` の下につなげて書くことができるメソッドは上に書いた内容とは異なるので気をつけよう。
+あたまが`tracing_subscriber::fmt::Subscriber::builder()`と`tracing_subscriber::Registry::default()`と異なるのでそういうものだろうと思っているが、あまり調べていない。
+
+```rust
+let filter_directives = "info,my_crate1=warn,my_crate2=trace";
 let filter = EnvFilter::builder().parse_lossy(filter_directives);
 tracing_subscriber::Registry::default()
     .with(console_subscriber::spawn())

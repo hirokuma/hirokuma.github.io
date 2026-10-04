@@ -133,3 +133,18 @@ span出力から`opening{msg="みゃー"}`がなくなった。
 2026-07-05T22:33:53.005437Z ERROR open{msg="みゃー"}: hello: src/main.rs:34: invalid header (expected "こうであってほしい", found "こうだった")
 2026-07-05T22:33:53.005462Z ERROR hello: src/main.rs:49: open error: invalid header (expected "こうであってほしい", found "こうだった")
 ```
+
+### directive
+
+`RUST_LOG`的なものをコードで書くときにはこうやっている。
+
+```rust
+    tracing_subscriber::Registry::default()
+        .with(
+            tracing_subscriber::fmt::layer().with_filter(
+                EnvFilter::builder()
+                    .parse_lossy("trace,ldk_node::=warn,lightning::=warn,electrum_client::=warn"),
+            ),
+        )
+        .init();
+```
