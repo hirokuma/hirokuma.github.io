@@ -232,6 +232,14 @@ $ nigiri rpc getreceivedbyaddress bcrt1qhqjxr348lh49k9m3j6j6rejkuwe5dplku7w3m4
 0.01
 ```
 
+[bitcoin.conf](https://github.com/vulpemventures/nigiri/blob/b91e00c8ff16c421f685d7a731f7a2c735d1c169/cmd/nigiri/resources/bitcoin.conf)の設定も読んでおくと良い。
+`rpcuser=admin1`, `rpcpassword=123`である。
+
+```shell
+$ curl --user admin1:123 --data-binary '{"jsonrpc": "2.0", "id": "curltest", "method": "getblockcount", "params": []}' -H 'content-type: application/json' http://127.0.0.1:18443/
+{"jsonrpc":"2.0","result":101,"id":"curltest"}
+```
+
 `--ln`を付けるとcln, lnd, tapが立ち上がる。
 
 ```shell
